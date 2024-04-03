@@ -7,9 +7,20 @@
 
 #include <vector>
 
+#include "Storage.hpp"
+
 namespace simgrid {
 namespace module {
 namespace fs {
+
+class XBT_PUBLIC FileSystem {
+  std::vector<Partition*> partitions_;
+  static int max_file_descriptors_;
+  // Created lazily on need
+  std::unique_ptr<std::vector<int>> file_descriptor_table = nullptr;
+  StoragePtr storage_;
+
+};
 
 class XBT_PRIVATE Path {
 public:
