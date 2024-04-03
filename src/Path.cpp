@@ -1,4 +1,3 @@
-
 #ifndef FILE_SYSTEM_MODULE_PATH_H
 #define FILE_SYSTEM_MODULE_PATH_H
 
@@ -10,7 +9,7 @@ namespace simgrid::module::fs {
     /**
      * @brief A method to simplify a path string
      * @param path_string: an arbitrary path string
-     * @return a new path string that has been sanitized
+     * @return A new path string that has been sanitized
      * (i.e., remove redundant slashes, resolved ".."'s and "."'s)
      */
     std::string Path::simplify_path_string(const std::string &path_string) {
@@ -20,7 +19,7 @@ namespace simgrid::module::fs {
     /**
      * @brief A method to determine whether a path goes "up" (i.e., it starts with "../")
      * @param simplified_path: a SIMPLIFIED path
-     * @return true if the path goes up, false otherwise
+     * @return True if the path goes up, false otherwise
      */
     bool Path::goes_up(const std::string &simplified_path) {
         return simplified_path.rfind("..",0) == 0;
@@ -61,7 +60,7 @@ namespace simgrid::module::fs {
      */
     std::string Path::path_at_mount_point(const std::string &simplified_absolute_path, const std::string &mount_point) {
         if (simplified_absolute_path.rfind(mount_point, 0) != 0) {
-            throw std::logic_error("Path '" + simplified_absolute_path + "' is bit at mount point");
+            throw std::logic_error("Path '" + simplified_absolute_path + "' is not at mount point");
         } else {
             return simplified_absolute_path.substr(mount_point.length());
         }
