@@ -48,17 +48,12 @@ class XBT_PUBLIC File {
 class XBT_PRIVATE Path {
 public:
     static std::string simplify_path_string(const std::string &path);
-    static bool path_goes_up(const std::string &path);
-    static sg_size_t find_mount_point(const std::string &user_path,
+    static bool goes_up(const std::string &simplified_path);
+    static std::vector<std::string>::const_iterator find_mount_point(const std::string &simplified_absolute_path,
                                      const std::vector<std::string> &mount_points);
-    static bool is_at_mount_point(const std::string &user_path, const std::string &mount_point);
-    static std::string path_at_mount_point(const std::string &user_path, const std::string &mount_point);
+    static bool is_at_mount_point(const std::string &simplified_absolute_path, const std::string &mount_point);
+    static std::string path_at_mount_point(const std::string &simplified_absolute_path, const std::string &mount_point);
 
-//    std::string full_path_;
-//    std::string path_at_mountpoint_;
-//
-//public:
-//    Path(const Partition &partition, const std::string &path_at_mountpoint);
 };
 /// Cruft
 
