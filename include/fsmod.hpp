@@ -2,10 +2,13 @@
 #define SIMGRID_MODULE_FILE_SYSTEM_H_
 
 #include <simgrid/forward.h> // sg_size_t
+#include <xbt.h>
+#include <xbt/config.h>
+
 
 namespace simgrid {
 
-extern template class XBT_PUBLIC xbt::Extendable<s4u::File>;
+//extern template class XBT_PUBLIC xbt::Extendable<s4u::File>;
 
 namespace module {
 namespace fs {
@@ -40,9 +43,26 @@ class XBT_PUBLIC File {
   sg_size_t size_ = 0;
   int desc_id     = 0;
 
-}
+};
+
+class XBT_PRIVATE Path {
+public:
+    static std::string simplify_path_string(const std::string &path);
+    static bool path_goes_up(const std::string &path);
+    static sg_size_t find_mount_point(const std::string &user_path,
+                                     const std::vector<std::string> &mount_points);
+    static bool is_at_mount_point(const std::string &user_path, const std::string &mount_point);
+    static std::string path_at_mount_point(const std::string &user_path, const std::string &mount_point);
+
+//    std::string full_path_;
+//    std::string path_at_mountpoint_;
+//
+//public:
+//    Path(const Partition &partition, const std::string &path_at_mountpoint);
+};
 /// Cruft
 
+#if 0
 class XBT_PUBLIC File : public xbt::Extendable<File> {
   sg_size_t size_ = 0;
   std::string path_;
@@ -116,6 +136,7 @@ class XBT_PUBLIC FileDescriptorHostExt {
 public:
   static simgrid::xbt::Extension<Host, FileDescriptorHostExt> EXTENSION_ID;
 };
+#endif
 
 } // namespace fs
 } // namespace module
