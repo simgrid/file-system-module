@@ -1,6 +1,11 @@
 #ifndef SIMGRID_MODULE_FS_STORAGE_H_
 #define SIMGRID_MODULE_FS_STORAGE_H_
 
+#include <atomic>
+#include <boost/intrusive_ptr.hpp>
+
+#include "Partition.hpp"
+
 namespace simgrid::module::fs {
 
 class Storage;

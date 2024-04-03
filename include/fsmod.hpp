@@ -5,6 +5,7 @@
 #include <xbt.h>
 #include <xbt/config.h>
 
+#include <memory>
 #include <vector>
 
 #include "Storage.hpp"
