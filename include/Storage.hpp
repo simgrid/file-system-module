@@ -1,24 +1,30 @@
 #ifndef SIMGRID_MODULE_FS_STORAGE_H_
 #define SIMGRID_MODULE_FS_STORAGE_H_
 
-namespace simgrid {
-namespace module {
-namespace fs {
+namespace simgrid::module::fs {
+
+class Storage;
+using StoragePtr = boost::intrusive_ptr<Storage>;
 
 class XBT_PUBLIC Storage {
-  std::vector<Partition*> partitions_;
   std::vector<s4u::Disk*> disks_;
   s4u::Host* controller_host_;
   s4u::ActorPtr controller_;
-  static int max_file_descriptors_;
-  // Created lazily on need
-  std::unique_ptr<std::vector<int>> file_descriptor_table = nullptr;
+  std::atomic_int_fast32_t refcount_{1};
 
-  public:
+public:
+#ifndef DOXYGEN
+  friend void intrusive_ptr_release(Storage* storage)
+  {
+    if (storage->refcount_.fetch_sub(1, std::memory_order_release) == 1) {
+      std::atomic_thread_fence(std::memory_order_acquire);
+      delete storage;
+    }
+  }
+  friend void intrusive_ptr_add_ref(Storage* storage) { storage->refcount_.fetch_add(1, std::memory_order_relaxed); }
+#endif
 };
 
-} // namespace fs
-} // namespace module
-} // namespace simgrid
+} // namespace simgrid::module::fs
 
 #endif
