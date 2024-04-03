@@ -28,7 +28,7 @@ namespace simgrid::module::fs {
 
     /**
      * @brief A method to identify the mount point for an absolute path
-     * @param simplified_absolute_path: a SIMPLIFIED absolute path that does not go up
+     * @param simplified_absolute_path: a SIMPLIFIED absolute path that DOES NOT GO UP
      * @param mount_points: a list of possible mount points
      * @return An iterator to the found mount point or to std::vector::end
      */
@@ -44,7 +44,7 @@ namespace simgrid::module::fs {
 
     /**
      * @brief A method to find out whether an absolute path is at a given mount point
-     * @param simplified_absolute_path: a SIMPLIFIED absolute path that does not go up
+     * @param simplified_absolute_path: a SIMPLIFIED absolute path that DOES NOT GO UP
      * @param mount_point: a mount point
      * @return True if mount_point is a prefix of  simplified_absolute_path, false otherwise
      */
@@ -54,7 +54,7 @@ namespace simgrid::module::fs {
 
     /**
      * @brief A method to extract the path at a mount point given an absolute path
-     * @param simplified_absolute_path: a SIMPLIFIED absolute path that does not go up
+     * @param simplified_absolute_path: a SIMPLIFIED absolute path that DOES NOT GO UP
      * @param mount_point: a mount point
      * @return The path at the mount point
      * @throws std::logic_error If the path is not at that mount point
