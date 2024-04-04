@@ -23,7 +23,7 @@ class XBT_PUBLIC FileSystem {
 
 };
 
-class XBT_PRIVATE Path {
+class XBT_PUBLIC Path {
 public:
     static std::string simplify_path_string(const std::string &path);
     static bool goes_up(const std::string &simplified_path);
