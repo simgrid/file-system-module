@@ -8,7 +8,7 @@
 #include <memory>
 #include <vector>
 
-#include "Storage.hpp"
+#include "Partition.hpp"
 
 namespace simgrid {
 namespace module {
@@ -19,7 +19,7 @@ class XBT_PUBLIC FileSystem {
   static int max_file_descriptors_;
   // Created lazily on need
   std::unique_ptr<std::vector<int>> file_descriptor_table = nullptr;
-  StoragePtr storage_;
+
 
 };
 
