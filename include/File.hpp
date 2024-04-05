@@ -5,6 +5,16 @@ namespace simgrid {
 namespace module {
 namespace fs {
 
+class XBT_PUBLIC FileMetadata {
+    sg_size_t current_size_;
+    sg_size_t future_size_;
+    double modification_date_ = 0.0;
+    double access_date_ = 0.0;
+    unsigned int num_current_writes = 0;
+public:
+
+};
+
 class XBT_PUBLIC File {
   std::string name_;
   std::string path_;
