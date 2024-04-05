@@ -10,9 +10,7 @@
 
 #include "Partition.hpp"
 
-namespace simgrid {
-namespace module {
-namespace fs {
+namespace simgrid::module::fs {
 
 class XBT_PUBLIC FileSystem {
   std::vector<Partition*> partitions_;
@@ -20,17 +18,6 @@ class XBT_PUBLIC FileSystem {
   // Created lazily on need
   std::vector<int> file_descriptor_table;
 public:
-
-};
-
-class XBT_PUBLIC Path {
-public:
-    static std::string simplify_path_string(const std::string &path);
-    static bool goes_up(const std::string &simplified_path);
-    static std::vector<std::string>::const_iterator find_mount_point(const std::string &simplified_absolute_path,
-                                     const std::vector<std::string> &mount_points);
-    static bool is_at_mount_point(const std::string &simplified_absolute_path, const std::string &mount_point);
-    static std::string path_at_mount_point(const std::string &simplified_absolute_path, const std::string &mount_point);
 
 };
 
@@ -84,8 +71,6 @@ public:
 };
 #endif
 
-} // namespace fs
-} // namespace module
-} // namespace simgrid
+} // namespace
 
 #endif

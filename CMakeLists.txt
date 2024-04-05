@@ -21,7 +21,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #)
 
 add_library(fsmod SHARED
-		src/Path.cpp)
+		src/PathUtil.cpp)
 
 add_executable(path_test examples/path_test.cpp)
 target_link_libraries(path_test fsmod)
