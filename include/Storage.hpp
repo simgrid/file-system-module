@@ -3,6 +3,8 @@
 
 #include <atomic>
 #include <boost/intrusive_ptr.hpp>
+#include <simgrid/s4u/Disk.hpp>
+#include <simgrid/s4u/Host.hpp>
 
 #include "Partition.hpp"
 

@@ -3,55 +3,42 @@
 
 #include <simgrid/forward.h>
 
+#include "FileMetadata.hpp"
+#include "Partition.hpp"
+
 namespace simgrid::module::fs {
 
-class XBT_PUBLIC FileMetadata {
-    sg_size_t current_size_;
-    sg_size_t future_size_;
-    double modification_date_ = 0.0;
-    double access_date_ = 0.0;
-    unsigned int num_current_writes = 0;
-public:
+    class XBT_PUBLIC File {
+        std::string path_;
+        sg_size_t current_position_ = SEEK_SET;
+        int desc_id     = 0;
+        FileMetadata* metadata;
+        Partition* partition;
 
-};
+    protected:
+        File(const std::string& fullpath);
+        File(const File&) = delete;
+        File& operator=(const File&) = delete;
+        ~File();
 
-class XBT_PUBLIC File {
-  std::string name_;
-  std::string path_;
-  sg_size_t size_ = 0;
-  sg_size_t current_position_ = SEEK_SET;
-  int desc_id     = 0;
+    public:
 
-protected:
-  File(const std::string& name, const std::string& fullpath);
-  File(const File&) = delete;
-  File& operator=(const File&) = delete;
-  ~File();
+        void read(sg_size_t size);
+        void write(sg_size_t size);
 
-public:
-  static File* open(const std::string& name, const std::string& fullpath);
-  static File* create(const std::string& name, const std::string& fullpath, sg_size_t size);
+        void append(sg_size_t size);
+        void truncate(sg_size_t to_size);
 
-  void read(sg_size_t size);
-  void write(sg_size_t size);
+        void seek(sg_offset_t pos);             /** Sets the file head to the given position. */
+        void seek(sg_offset_t pos, int origin); /** Sets the file head to the given position from a given origin. */
+        sg_size_t tell() const;                 /** Retrieves the current file position */
 
-  void append(sg_size_t size);
-  void truncate(sg_size_t to_size);
+        void close();
 
-  void seek(sg_offset_t pos);             /** Sets the file head to the given position. */
-  void seek(sg_offset_t pos, int origin); /** Sets the file head to the given position from a given origin. */
-  sg_size_t tell() const;                 /** Retrieves the current file position */
+        void dump() const;
+    };
 
-  void move(const std::string& fullpath) const;
-  void copy(const std::string& fullpath) const;
+} // namespace simgrid::module::fs
 
-  void close();
-  int unlink() const; /** Remove a file from the contents of a disk */
-
-  sg_size_t size() const;
-  void dump() const;
-};
-
-} // namespace
 
 #endif

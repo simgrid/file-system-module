@@ -9,22 +9,38 @@
 #include <vector>
 
 #include "Partition.hpp"
+#include "File.hpp"
 
 namespace simgrid::module::fs {
 
-class XBT_PUBLIC FileSystem {
-  std::vector<Partition*> partitions_;
-  static int max_file_descriptors_;
-  // Created lazily on need
-  std::vector<int> file_descriptor_table;
-public:
+    class XBT_PUBLIC FileSystem {
 
-};
+        // A map of mount points to partitions
+        std::map<std::string, std::shared_ptr<Partition>> partitions_;
+
+        static int max_file_descriptors_;
+        std::vector<int> available_file_descriptors;
+        std::unordered_map<int, std::shared_ptr<File>> file_descriptor_table;
+
+    public:
+
+        FileSystem() = default;
+        void add_partition(const std::string &mount_point, std::shared_ptr<Partition> partition);
+        std::shared_ptr<Partition> get_partition(const std::string &mount_point);
+
+        File* open(const std::string& fullpath);
+        void create(const std::string& fullpath, sg_size_t size);
+        void move(const std::string& fullpath) const;
+        void copy(const std::string& fullpath) const;
+        void unlink(const std::string& fullpath) const;
+        sg_size_t size(const std::string& fullpath) const;
+
+    };
 
 /// Cruft
 
 #if 0
-class XBT_PUBLIC File : public xbt::Extendable<File> {
+    class XBT_PUBLIC File : public xbt::Extendable<File> {
   sg_size_t size_ = 0;
   std::string path_;
   std::string fullpath_;
@@ -71,6 +87,7 @@ public:
 };
 #endif
 
-} // namespace
+} // namespace simgrid::module::fs
+
 
 #endif

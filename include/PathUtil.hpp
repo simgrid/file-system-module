@@ -21,6 +21,6 @@ namespace simgrid::module::fs {
 
     };
 
-} // namespace
+} // namespace simgrid::module::fs
 
 #endif
