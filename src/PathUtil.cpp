@@ -21,7 +21,7 @@ namespace simgrid::module::fs {
      * @param simplified_path: a SIMPLIFIED path
      * @return True if the path goes up, false otherwise
      */
-    bool PathUtil::goes_up(const std::string &simplified_path) {
+    bool PathUtil::goes_up(const std::string &simplified_path) { // TODO: LIKELY USELESS
         return simplified_path.rfind("..",0) == 0;
     }
 
@@ -31,6 +31,7 @@ namespace simgrid::module::fs {
      * @param mount_points: a list of possible mount points
      * @return An iterator to the found mount point or to std::vector::end
      */
+     // TODO: LIKELY USELESS
     std::vector<std::string>::const_iterator PathUtil::find_mount_point(const std::string &simplified_absolute_path,
                                                                     const std::vector<std::string> &mount_points) {
         for (auto it = mount_points.begin(); it != mount_points.end(); it++) {

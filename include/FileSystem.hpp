@@ -18,17 +18,16 @@ namespace simgrid::module::fs {
         // A map of mount points to partitions
         std::map<std::string, std::shared_ptr<Partition>> partitions_;
 
-        static int max_file_descriptors_;
-        std::vector<int> available_file_descriptors;
-        std::unordered_map<int, std::shared_ptr<File>> file_descriptor_table;
+        int max_num_open_files_;
+        int num_open_files_ = 0;
 
     public:
 
-        FileSystem() = default;
+        explicit FileSystem(int max_num_open_files) : max_num_open_files_(max_num_open_files) {};
         void add_partition(const std::string &mount_point, std::shared_ptr<Partition> partition);
         std::shared_ptr<Partition> get_partition(const std::string &mount_point);
 
-        File* open(const std::string& fullpath);
+        std::shared_ptr<File> open(const std::string& fullpath);
         void create(const std::string& fullpath, sg_size_t size);
         void move(const std::string& fullpath) const;
         void copy(const std::string& fullpath) const;

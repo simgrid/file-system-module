@@ -9,17 +9,26 @@
 namespace simgrid::module::fs {
 
     class XBT_PUBLIC File {
+        friend class FileSystem;
+
         std::string path_;
         sg_size_t current_position_ = SEEK_SET;
         int desc_id     = 0;
-        FileMetadata* metadata;
-        Partition* partition;
+        FileMetadata* metadata_;
+        Partition* partition_;
+
+    public:
+        virtual ~File() = default;
 
     protected:
-        File(const std::string& fullpath);
+        static std::shared_ptr<File> createInstance(const std::string& fullpath, FileMetadata *metadata, Partition *partition);
+
+    private:
+        File(const std::string& fullpath, FileMetadata *metadata, Partition *partition) :
+                path_(fullpath), metadata_(metadata), partition_(partition) {}
+
         File(const File&) = delete;
         File& operator=(const File&) = delete;
-        ~File();
 
     public:
 
