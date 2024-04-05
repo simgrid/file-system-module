@@ -1,5 +1,5 @@
-#ifndef SIMGRID_MODULE_FILE_SYSTEM_H_
-#define SIMGRID_MODULE_FILE_SYSTEM_H_
+#ifndef SIMGRID_MODULE_FILESYSTEM_H_
+#define SIMGRID_MODULE_FILESYSTEM_H_
 
 #include <simgrid/forward.h> // sg_size_t
 #include <xbt.h>

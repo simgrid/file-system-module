@@ -1,6 +1,6 @@
 
 #include <iostream>
-#include "../include/fsmod.hpp"
+#include "../include/PathUtil.hpp"
 
 int main() {
 
@@ -20,7 +20,7 @@ int main() {
         };
 
         for (const auto &path: paths) {
-            std::cout << "  - \"" << path << "\" --> \"" << simgrid::module::fs::Path::simplify_path_string(path)
+            std::cout << "  - \"" << path << "\" --> \"" << simgrid::module::fs::PathUtil::simplify_path_string(path)
                       << "\"\n";
         }
     }
@@ -37,9 +37,9 @@ int main() {
         };
 
         for (const auto &path: paths) {
-            auto simplified_path = simgrid::module::fs::Path::simplify_path_string(path);
+            auto simplified_path = simgrid::module::fs::PathUtil::simplify_path_string(path);
             std::cout << "  - \"" << path << "\" --> \"" << simplified_path << "\" : \"" <<
-                      (simgrid::module::fs::Path::goes_up(simplified_path) ? "TRUE" : "FALSE") << "\"\n";
+                      (simgrid::module::fs::PathUtil::goes_up(simplified_path) ? "TRUE" : "FALSE") << "\"\n";
         }
     }
 
@@ -67,8 +67,8 @@ int main() {
         }
 
         for (const auto &path: paths) {
-            auto simplified_path = simgrid::module::fs::Path::simplify_path_string(path);
-            auto it = simgrid::module::fs::Path::find_mount_point(simplified_path, mount_points);
+            auto simplified_path = simgrid::module::fs::PathUtil::simplify_path_string(path);
+            auto it = simgrid::module::fs::PathUtil::find_mount_point(simplified_path, mount_points);
             std::cout << "  - \"" << path << "\" --> \"" << simplified_path << "\": \"" << (it == mount_points.end() ? "NONE" : (*it)) << "\"\n";
         }
     }
@@ -87,10 +87,10 @@ int main() {
                 "/dev/a/../a/fioo"
         };
         for (const auto &path: paths) {
-            auto simplified_path = simgrid::module::fs::Path::simplify_path_string(path);
+            auto simplified_path = simgrid::module::fs::PathUtil::simplify_path_string(path);
             std::string path_at_mount_point;
             try {
-                path_at_mount_point = simgrid::module::fs::Path::path_at_mount_point(simplified_path, "/dev/a");
+                path_at_mount_point = simgrid::module::fs::PathUtil::path_at_mount_point(simplified_path, "/dev/a");
             } catch (std::logic_error &e) {
                 path_at_mount_point = "Exception";
             }

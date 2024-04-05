@@ -1,9 +1,9 @@
 #ifndef SIMGRID_MODULE_FS_FILE_H_
 #define SIMGRID_MODULE_FS_FILE_H_
 
-namespace simgrid {
-namespace module {
-namespace fs {
+#include <simgrid/forward.h>
+
+namespace simgrid::module::fs {
 
 class XBT_PUBLIC FileMetadata {
     sg_size_t current_size_;
@@ -52,8 +52,6 @@ public:
   void dump() const;
 };
 
-} // namespace fs
-} // namespace module
-} // namespace simgrid
+} // namespace
 
 #endif

@@ -3,7 +3,6 @@
 
 #include <xbt.h>
 #include <xbt/config.h>
-
 #include <memory>
 #include <vector>
 
@@ -22,6 +21,6 @@ namespace simgrid::module::fs {
 
     };
 
-} // namespace 
+} // namespace
 
 #endif
