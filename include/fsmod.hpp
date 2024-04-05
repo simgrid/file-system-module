@@ -18,8 +18,8 @@ class XBT_PUBLIC FileSystem {
   std::vector<Partition*> partitions_;
   static int max_file_descriptors_;
   // Created lazily on need
-  std::unique_ptr<std::vector<int>> file_descriptor_table = nullptr;
-
+  std::vector<int> file_descriptor_table;
+public:
 
 };
 
