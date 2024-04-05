@@ -14,8 +14,7 @@ namespace simgrid::module::fs {
     public:
         static std::string simplify_path_string(const std::string &path);
         static bool goes_up(const std::string &simplified_path);
-        static std::vector<std::string>::const_iterator find_mount_point(const std::string &simplified_absolute_path,
-                                                                         const std::vector<std::string> &mount_points);
+        static bool is_absolute(const std::string &simplified_path);
         static bool is_at_mount_point(const std::string &simplified_absolute_path, const std::string &mount_point);
         static std::string path_at_mount_point(const std::string &simplified_absolute_path, const std::string &mount_point);
 

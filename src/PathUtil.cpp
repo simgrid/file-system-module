@@ -26,20 +26,12 @@ namespace simgrid::module::fs {
     }
 
     /**
-     * @brief A method to identify the mount point for an absolute path
-     * @param simplified_absolute_path: a SIMPLIFIED absolute path that DOES NOT GO UP
-     * @param mount_points: a list of possible mount points
-     * @return An iterator to the found mount point or to std::vector::end
+     * @brief A method to determine whether a path is absolute (i.e., it starts with "/")
+     * @param simplified_path: a path
+     * @return True if the path starts with '/'
      */
-     // TODO: LIKELY USELESS
-    std::vector<std::string>::const_iterator PathUtil::find_mount_point(const std::string &simplified_absolute_path,
-                                                                    const std::vector<std::string> &mount_points) {
-        for (auto it = mount_points.begin(); it != mount_points.end(); it++) {
-            if (simplified_absolute_path.rfind((*it), 0) == 0) {
-                return it;
-            }
-        }
-        return mount_points.end();
+    bool PathUtil::is_absolute(const std::string &simplified_path) { // TODO: LIKELY USELESS
+        return simplified_path.rfind("/",0) == 0;
     }
 
     /**

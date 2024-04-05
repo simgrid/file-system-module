@@ -43,35 +43,25 @@ int main() {
         }
     }
 
-    {
-        // Path goes up
-        std::cerr << "\n** FIND MOUNT POINTS: \n";
-        std::vector<std::string> mount_points = {
-                "/dev/a",
-                "/dev/b"
-        };
 
+    {
+        // Path is absolute
+        std::cerr << "\n** PATH IS ABSOLUTE: \n";
         std::vector<std::string> paths = {
-                "////../",
-                "/dev/a/foo/bar/",
-                "/dev/a/foo/../bar/",
-                "/dev/a////foo/../../",
-                "/dev/b/foo/../bar/bar2/",
-                "/dev/b/foo/../bar/bar2",
-                "/foo/dev/b/foo/bar/../",
-                "/dev/a/../a/fioo"
+                "/../../",
+                "../foo/",
+                "/a/b/c/../../../",
+                "/a/b/c/../../../../",
+                "/aa/bb/cc/dd/../../ee/ff/"
         };
-        std::cout << "  Mount points:\n";
-        for (const auto &mp : mount_points) {
-            std::cout << "    - " << mp << "\n";
-        }
 
         for (const auto &path: paths) {
             auto simplified_path = simgrid::module::fs::PathUtil::simplify_path_string(path);
-            auto it = simgrid::module::fs::PathUtil::find_mount_point(simplified_path, mount_points);
-            std::cout << "  - \"" << path << "\" --> \"" << simplified_path << "\": \"" << (it == mount_points.end() ? "NONE" : (*it)) << "\"\n";
+            std::cout << "  - \"" << path << "\" --> \"" << simplified_path << "\" : \"" <<
+                      (simgrid::module::fs::PathUtil::is_absolute(simplified_path) ? "TRUE" : "FALSE") << "\"\n";
         }
     }
+
 
     {
         // Path at mount point
