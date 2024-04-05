@@ -21,12 +21,8 @@ namespace simgrid::module::fs {
         virtual ~File() = default;
 
     protected:
-        static std::shared_ptr<File> createInstance(const std::string& fullpath, FileMetadata *metadata, Partition *partition);
-
-    private:
         File(const std::string& fullpath, FileMetadata *metadata, Partition *partition) :
-                path_(fullpath), metadata_(metadata), partition_(partition) {}
-
+                path_(fullpath), metadata_(metadata), partition_(partition) {};
         File(const File&) = delete;
         File& operator=(const File&) = delete;
 

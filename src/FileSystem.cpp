@@ -36,10 +36,10 @@ namespace simgrid::module::fs {
         auto path_at_mount_point = PathUtil::path_at_mount_point(simplified_path, mount_point);
 
         // Get the FileMetadata raw pointer
-        auto file_metadata = partition->get_content().at(path_at_mount_point).get();
+        auto metadata = partition->get_content().at(path_at_mount_point).get();
 
         // Create the file object
-        auto file = File::createInstance(simplified_path, file_metadata, partition);
+        auto file =  std::shared_ptr<File>(new File(fullpath, metadata, partition));
 
         this->num_open_files_++;
         return file;
