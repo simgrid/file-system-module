@@ -26,12 +26,13 @@ namespace simgrid::module::fs {
         explicit FileSystem(int max_num_open_files) : max_num_open_files_(max_num_open_files) {};
         void mount_partition(const std::string &mount_point, sg_size_t size);
 
-        std::shared_ptr<File> open(const std::string& fullpath);
         void create(const std::string& fullpath, sg_size_t size);
         void move(const std::string& fullpath) const;
         void copy(const std::string& fullpath) const;
         void unlink(const std::string& fullpath) const;
         sg_size_t size(const std::string& fullpath) const;
+
+        std::shared_ptr<File> open(const std::string& fullpath);
 
     };
 

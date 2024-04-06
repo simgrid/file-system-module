@@ -9,11 +9,18 @@ int main() {
     auto fs = new simgrid::module::fs::FileSystem(1024);
     std::cerr << "Mounting a 100KB partition...\n";
     fs->mount_partition("/dev/bogus/", 100*KB);
-    std::cerr << "Opening a file...\n";
+    std::cerr << "Creating a 10KB file...\n";
+    fs->create("/dev/bogus/file.txt", 10*KB);
+    std::cerr << "The file size it: " << fs->size("/dev/bogus/../bogus/file.txt") << "\n";
+    std::cerr << "Opening the file...\n";
     auto file = fs->open("/dev/bogus/file.txt");
-    std::cerr << "Writing 1GB to it...\n";
-    file->write(10*KB, false);
+    std::cerr << "Seek to offset 5KB...\n";
+    file->seek(5*KB);
+    std::cerr << "Writing 6GB to it at offset 0...\n";
+    file->write(6*KB, false);
     std::cerr << "Closing file...\n";
     file->close();
+    std::cerr << "The file size it: " << fs->size("/dev/bogus/../bogus/file.txt") << "\n";
+
 
 }

@@ -26,7 +26,7 @@ namespace simgrid::module::fs {
         sg_size_t get_size() const { return size_; }
         sg_size_t get_free_space() const { return free_space_; }
         StoragePtr get_storage() const { return storage_; }
-        const std::map<std::string, std::unique_ptr<FileMetadata>, std::less<>>& get_content() const { return content_; }
+        std::map<std::string, std::unique_ptr<FileMetadata>, std::less<>>& get_content() { return content_; }
     };
 
 } // namespace simgrid::module::fs

@@ -32,7 +32,6 @@ namespace simgrid::module::fs {
             throw std::runtime_error("EXCEPTION: WRONG MOUNT POINT"); // TODO
         }
 
-
         auto mount_point = it->first;
         auto partition = it->second.get();
 
@@ -46,11 +45,9 @@ namespace simgrid::module::fs {
 
         // Get the FileMetadata raw pointer
         auto metadata = partition->get_content().at(path_at_mount_point).get();
-        std::cerr << "HERE\n";
 
         // Create the file object
         auto file =  std::shared_ptr<File>(new File(fullpath, metadata, partition));
-        std::cerr << "HERE\n";
 
         this->num_open_files_++;
         return file;
@@ -74,5 +71,67 @@ namespace simgrid::module::fs {
         }
         this->partitions_[mount_point] = std::shared_ptr<Partition>(new Partition(mount_point, size));
     }
+
+
+    /**
+     * @brief Create a new file on the file system in zero time
+     * @param fullpath: the absolute path to the file
+     * @param size: the file size
+     */
+    void FileSystem::create(const std::string& fullpath, sg_size_t size) {
+        std::string simplified_path = PathUtil::simplify_path_string(fullpath);
+
+        // Identify the mount point and path at mount point partition
+        auto it = std::find_if(this->partitions_.begin(),
+                               this->partitions_.end(),
+                               [simplified_path](const std::pair<std::string, std::shared_ptr<Partition>>& element) {
+                                   return PathUtil::is_at_mount_point(simplified_path, element.first);
+                               });
+        if (it == this->partitions_.end()) {
+            throw std::runtime_error("EXCEPTION: WRONG MOUNT POINT"); // TODO
+        }
+        auto path_at_mount_point = PathUtil::path_at_mount_point(simplified_path, it->first);
+        auto partition = it->second;
+
+        // Check that the file doesn't already exist
+        if (it->second->get_content().find(path_at_mount_point) != it->second->get_content().end()) {
+            throw std::runtime_error("EXCEPTION: FILE ALREADY EXISTS"); // TODO
+        }
+
+        // Create FileMetaData
+        auto metadata = std::make_unique<FileMetadata>(size);
+
+        // Add the file to the content
+        partition->get_content()[path_at_mount_point] = std::move(metadata);
+    }
+
+    /**
+     * @brief
+     * @param fullpath: an absolute file path
+     * @return the file size in bytes
+     */
+    sg_size_t FileSystem::size(const std::string& fullpath) const {
+        std::string simplified_path = PathUtil::simplify_path_string(fullpath);
+
+        // Identify the mount point and path at mount point partition
+        auto it = std::find_if(this->partitions_.begin(),
+                               this->partitions_.end(),
+                               [simplified_path](const std::pair<std::string, std::shared_ptr<Partition>>& element) {
+                                   return PathUtil::is_at_mount_point(simplified_path, element.first);
+                               });
+        if (it == this->partitions_.end()) {
+            throw std::runtime_error("EXCEPTION: WRONG MOUNT POINT"); // TODO
+        }
+        auto path_at_mount_point = PathUtil::path_at_mount_point(simplified_path, it->first);
+        auto partition = it->second;
+
+        // Check that the file exist
+        if (it->second->get_content().find(path_at_mount_point) == it->second->get_content().end()) {
+            throw std::runtime_error("EXCEPTION: FILE DOES NOT EXISTS"); // TODO
+        }
+
+        return it->second->get_content().at(path_at_mount_point)->get_current_size();
+    }
+
 
 }
