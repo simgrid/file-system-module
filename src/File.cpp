@@ -7,6 +7,9 @@ namespace simgrid::module::fs {
      * @brief Write data to the file
      * @param num_bytes: the number of bytes to write
      */
+    void File::write(const std::string& num_bytes, bool simulate_it) {
+        write(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")), simulate_it);
+    }
     void File::write(sg_size_t num_bytes, bool simulate_it) {
 
         // Check whether there is enough space

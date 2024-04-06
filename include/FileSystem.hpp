@@ -4,6 +4,7 @@
 #include <simgrid/forward.h> // sg_size_t
 #include <xbt.h>
 #include <xbt/config.h>
+#include <xbt/parse_units.hpp>
 
 #include <memory>
 #include <vector>
@@ -25,8 +26,10 @@ namespace simgrid::module::fs {
 
         explicit FileSystem(int max_num_open_files) : max_num_open_files_(max_num_open_files) {};
         void mount_partition(const std::string &mount_point, sg_size_t size);
+        void mount_partition(const std::string &mount_point, const std::string& size);
 
         void create(const std::string& fullpath, sg_size_t size);
+        void create(const std::string& fullpath, const std::string& size);
         void move(const std::string& fullpath) const;
         void copy(const std::string& fullpath) const;
         void unlink(const std::string& fullpath) const;
