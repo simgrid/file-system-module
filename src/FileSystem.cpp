@@ -3,10 +3,13 @@
 #include "PathUtil.hpp"
 #include "Partition.hpp"
 #include <algorithm>
-#include <iostream>
 #include <memory>
 
 namespace simgrid::module::fs {
+
+    std::shared_ptr<FileSystem> FileSystem::create(const std::string &name, int max_num_open_files) {
+        return std::shared_ptr<FileSystem>(new FileSystem(name, max_num_open_files));
+    }
 
     /**
      * @brief Open a file
@@ -43,10 +46,11 @@ namespace simgrid::module::fs {
      * @param mount_point: the partition's mount point
      * @param partition: the partition
      */
-    void FileSystem::mount_partition(const std::string &mount_point, const std::string& size) {
-      mount_partition(mount_point, static_cast<sg_size_t>(xbt_parse_get_size("", 0, size, "")));
+    void FileSystem::mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, const std::string& size) {
+      mount_partition(mount_point, storage, static_cast<sg_size_t>(xbt_parse_get_size("", 0, size, "")));
     }
-    void FileSystem::mount_partition(const std::string &mount_point, sg_size_t size) {
+    void FileSystem::mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, sg_size_t size) {
+
         if (PathUtil::simplify_path_string(mount_point) != mount_point or not PathUtil::is_absolute(mount_point)) {
             throw std::invalid_argument("simgrid::module::fs::FileSystem::add_partition(): Mount point should be a simple absolute path");
         }
@@ -57,7 +61,7 @@ namespace simgrid::module::fs {
                                             "') - mount points cannot be prefixes of each other.");
             }
         }
-        this->partitions_[mount_point] = std::shared_ptr<Partition>(new Partition(mount_point, size));
+        this->partitions_[mount_point] = std::shared_ptr<Partition>(new Partition(mount_point, storage, size));
     }
 
 
@@ -66,10 +70,10 @@ namespace simgrid::module::fs {
      * @param fullpath: the absolute path to the file
      * @param size: the file size
      */
-    void FileSystem::create(const std::string& fullpath, const std::string& size) {
-        create(fullpath, static_cast<sg_size_t>(xbt_parse_get_size("", 0, size, "")));
+    void FileSystem::create_file(const std::string& fullpath, const std::string& size) {
+        create_file(fullpath, static_cast<sg_size_t>(xbt_parse_get_size("", 0, size, "")));
     }
-    void FileSystem::create(const std::string& fullpath, sg_size_t size) {
+    void FileSystem::create_file(const std::string& fullpath, sg_size_t size) {
         // Get the partition and path
         std::string simplified_path = PathUtil::simplify_path_string(fullpath);
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
@@ -91,7 +95,7 @@ namespace simgrid::module::fs {
      * @param fullpath: an absolute file path
      * @return the file size in bytes
      */
-    sg_size_t FileSystem::size(const std::string& fullpath) const {
+    sg_size_t FileSystem::file_size(const std::string& fullpath) const {
         // Get the partition and path
         std::string simplified_path = PathUtil::simplify_path_string(fullpath);
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);

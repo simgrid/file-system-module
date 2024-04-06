@@ -1,5 +1,5 @@
-#ifndef FSMOD_ONEDISKSTORAGE_H
-#define FSMOD_ONEDISKSTORAGE_H
+#ifndef FSMOD_ONEDISKSTORAGE_HPP
+#define FSMOD_ONEDISKSTORAGE_HPP
 
 #include "Storage.hpp"
 
@@ -24,4 +24,4 @@ namespace simgrid::module::fs {
 
 }
 
-#endif //FSMOD_ONEDISKSTORAGE_H
+#endif //FSMOD_ONEDISKSTORAGE_HPP

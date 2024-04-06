@@ -1,7 +1,6 @@
-#include "OneDiskStorage.h"
+#include "OneDiskStorage.hpp"
 
 namespace simgrid::module::fs {
-
 
     /**
      * @brief Method to create an instance of a one-disk storage
@@ -38,7 +37,7 @@ namespace simgrid::module::fs {
     }
 
     void OneDiskStorage::write(sg_size_t size) {
-        throw std::runtime_error("OneDiskStorage::write(): NOT IMPLEMENTED YET");
+        this->disks_.front()->write(size);
     }
 
 }

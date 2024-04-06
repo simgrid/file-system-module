@@ -20,8 +20,8 @@ namespace simgrid::module::fs {
         std::map<std::string, std::unique_ptr<FileMetadata>, std::less<>> content_;
 
     protected:
-        explicit Partition(const std::string& name, sg_size_t size)
-                : name_(name), size_(size), free_space_(size) {}
+        explicit Partition(const std::string& name, std::shared_ptr<Storage> storage, sg_size_t size)
+                : name_(name), storage_(std::move(storage)), size_(size), free_space_(size) {}
 
     public:
         ~Partition() = default;
