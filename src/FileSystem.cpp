@@ -64,4 +64,4 @@ namespace simgrid::module::fs {
         this->partitions_[mount_point] = partition;
     }
 
-};
+}

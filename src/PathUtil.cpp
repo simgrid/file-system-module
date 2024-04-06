@@ -31,7 +31,7 @@ namespace simgrid::module::fs {
      * @return True if the path starts with '/'
      */
     bool PathUtil::is_absolute(const std::string &simplified_path) { // TODO: LIKELY USELESS
-        return simplified_path.rfind("/",0) == 0;
+        return simplified_path.rfind('/',0) == 0;
     }
 
     /**
