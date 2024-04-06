@@ -28,7 +28,6 @@ namespace simgrid::module::fs {
 
     public:
 
-        sg_size_t get_free_space() const { return get_free_space(); }
         void read(sg_size_t num_bytes);
         void write(sg_size_t num_bytes, bool simulate_it);
 
