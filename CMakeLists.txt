@@ -26,7 +26,7 @@ add_library(fsmod SHARED
 		src/File.cpp)
 
 add_executable(path_test examples/path_test.cpp)
-target_link_libraries(path_test fsmod)
+target_link_libraries(path_test fsmod ${SimGrid_LIBRARY})
 
 set_target_properties(fsmod PROPERTIES
 		SOVERSION 0.1
@@ -34,6 +34,7 @@ set_target_properties(fsmod PROPERTIES
 		PUBLIC_HEADER fsmod.hpp)
 
 target_include_directories(fsmod PRIVATE include)
+target_link_libraries(fsmod PUBLIC ${SimGrid_LIBRARY})
 
 install(TARGETS fsmod
 		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

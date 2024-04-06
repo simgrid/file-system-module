@@ -28,11 +28,12 @@ namespace simgrid::module::fs {
 
     public:
 
-        void read(sg_size_t size);
-        void write(sg_size_t size);
+        sg_size_t get_free_space() const { return get_free_space(); }
+        void read(sg_size_t num_bytes);
+        void write(sg_size_t num_bytes, bool simulate_it);
 
-        void append(sg_size_t size);
-        void truncate(sg_size_t to_size);
+        void append(sg_size_t num_bytes);
+        void truncate(sg_size_t num_bytes);
 
         void seek(sg_offset_t pos);             /** Sets the file head to the given position. */
         void seek(sg_offset_t pos, int origin); /** Sets the file head to the given position from a given origin. */
