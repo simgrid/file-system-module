@@ -31,8 +31,6 @@ namespace simgrid::module::fs {
         // Update
         metadata_->set_access_date(simgrid::s4u::Engine::get_clock());
         metadata_->set_modification_date(simgrid::s4u::Engine::get_clock());
-
-
     }
 
     /**
