@@ -13,16 +13,31 @@ XBT_LOG_NEW_DEFAULT_CATEGORY(fs_test, "File System Test");
 namespace sg4 = simgrid::s4u;
 namespace sgfs = simgrid::module::fs;
 
-class MyActor {
+class FileWriterActor {
 private:
     std::shared_ptr<sgfs::FileSystem> fs_;
+    std::string file_path_;
+    double sleep_time_;
+    sg_size_t offset_;
+    sg_size_t num_bytes_;
+
 public:
-    explicit MyActor(std::shared_ptr<sgfs::FileSystem> fs) : fs_(std::move(fs)) {}
+    explicit FileWriterActor(std::shared_ptr<sgfs::FileSystem> fs,
+                             std::string file_path,
+                             double sleep_time,
+                             sg_size_t offset,
+                             sg_size_t num_bytes) :
+            fs_(std::move(fs)),
+            file_path_(std::move(file_path)),
+            sleep_time_(sleep_time),
+            offset_(offset),
+            num_bytes_(num_bytes)
+    {}
 
     void operator()() {
 
-
-
+        XBT_INFO("New FileWriter for file %s: time: %.2lf, offset=%llu, num_bytes=%llu", file_path_.c_str(), sleep_time_, offset_, num_bytes_);
+        sg4::this_actor::sleep_for(sleep_time_);
         XBT_INFO("Opening the file...");
         auto file = fs_->open("/dev/bogus/file.txt");
         XBT_INFO("Seek to offset 5kB...");
@@ -46,8 +61,8 @@ int main(int argc, char **argv) {
     auto *my_zone = sg4::create_full_zone("AS");
     auto my_host = my_zone->create_host("my_host", "100Gf")->set_core_count(1);
     auto my_disk = my_host->create_disk("my_disk",
-                         "1kBps",
-                         "2kBps")->seal();
+                                        "1kBps",
+                                        "2kBps")->seal();
     my_host->seal();
     my_zone->seal();
 
@@ -58,13 +73,15 @@ int main(int argc, char **argv) {
     XBT_INFO("Mounting a 100kB partition...");
     fs->mount_partition("/dev/bogus/", ods, "100kB");
 
+    std::string file_path = "/dev//bogus/../bogus/file.txt";
     XBT_INFO("Creating a 10kB file...");
-    fs->create_file("/dev/bogus/file.txt", "10kB");
-    XBT_INFO("The file size it: %llu", fs->file_size("/dev/bogus/../bogus/file.txt"));
+    fs->create_file(file_path, "10kB");
+    XBT_INFO("The file size it: %llu", fs->file_size(file_path));
 
 
-    XBT_INFO("Creating one actor that will do everything...");
-    sg4::Actor::create("MyActor", my_host, MyActor(fs));
+    XBT_INFO("Creating file writer actors...");
+    sg4::Actor::create("MyActor1", my_host, FileWriterActor(fs, file_path, 10, 5*1000, 6*1000));
+    sg4::Actor::create("MyActor2", my_host, FileWriterActor(fs, file_path, 10.5, 5*1000, 8*1000));
 
     XBT_INFO("Launching the simulation...");
     engine->run();
