@@ -2,6 +2,7 @@
 #define SIMGRID_MODULE_FS_FILE_H_
 
 #include <simgrid/forward.h>
+#include <xbt/parse_units.hpp>
 
 #include "FileMetadata.hpp"
 #include "Partition.hpp"
@@ -28,7 +29,9 @@ namespace simgrid::module::fs {
 
     public:
 
+        //void read(const std::string& num_bytes);
         void read(sg_size_t num_bytes);
+        void write(const std::string& num_bytes, bool simulate_it);
         void write(sg_size_t num_bytes, bool simulate_it);
 
         void append(sg_size_t num_bytes);
