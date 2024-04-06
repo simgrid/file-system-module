@@ -1,10 +1,14 @@
 #ifndef SIMGRID_MODULE_FS_PARTITION_H_
 #define SIMGRID_MODULE_FS_PARTITION_H_
 
-#include "Storage.hpp"
+#include <string>
+#include <map>
+
 #include "FileMetadata.hpp"
 
 namespace simgrid::module::fs {
+
+    class Storage;
 
     class XBT_PUBLIC Partition {
         friend class FileSystem;
@@ -12,7 +16,7 @@ namespace simgrid::module::fs {
         std::string name_;
         sg_size_t size_ = 0;
         sg_size_t free_space_ = 0;
-        StoragePtr storage_;
+        std::shared_ptr<Storage> storage_;
         std::map<std::string, std::unique_ptr<FileMetadata>, std::less<>> content_;
 
     protected:
@@ -25,7 +29,7 @@ namespace simgrid::module::fs {
         const char* get_cname() const { return name_.c_str(); }
         sg_size_t get_size() const { return size_; }
         sg_size_t get_free_space() const { return free_space_; }
-        StoragePtr get_storage() const { return storage_; }
+        std::shared_ptr<Storage> get_storage() const { return storage_; }
         std::map<std::string, std::unique_ptr<FileMetadata>, std::less<>>& get_content() { return content_; }
     };
 

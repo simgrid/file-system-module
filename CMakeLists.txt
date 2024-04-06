@@ -8,6 +8,9 @@ project(fsmod VERSION 0.1 DESCRIPTION "SimGrid-based File System simulation modu
 include(GNUInstallDirs)
 find_package(SimGrid 3.35.1 REQUIRED)
 
+#add_definitions("-DBOOST_ALLOW_DEPRECATED_HEADERS")
+
+
 include_directories(
 		${SimGrid_INCLUDE_DIR}
 		${CMAKE_BINARY_DIR}/include
@@ -23,7 +26,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_library(fsmod SHARED
 		src/PathUtil.cpp
 		src/FileSystem.cpp
-		src/File.cpp src/Partition.cpp)
+		src/File.cpp
+		src/Partition.cpp
+		src/Storage.cpp
+		src/OneDiskStorage.cpp
+		)
 
 add_executable(path_test examples/path_test.cpp)
 target_link_libraries(path_test fsmod ${SimGrid_LIBRARY})
