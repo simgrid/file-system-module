@@ -23,10 +23,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_library(fsmod SHARED
 		src/PathUtil.cpp
 		src/FileSystem.cpp
-		src/File.cpp)
+		src/File.cpp src/Partition.cpp)
 
 add_executable(path_test examples/path_test.cpp)
 target_link_libraries(path_test fsmod ${SimGrid_LIBRARY})
+
+add_executable(open_seek_write_test examples/open_seek_write_test.cpp)
+target_link_libraries(open_seek_write_test fsmod ${SimGrid_LIBRARY})
 
 set_target_properties(fsmod PROPERTIES
 		SOVERSION 0.1

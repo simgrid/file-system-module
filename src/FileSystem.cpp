@@ -1,7 +1,10 @@
 #include "FileSystem.hpp"
 #include "File.hpp"
 #include "PathUtil.hpp"
+#include "Partition.hpp"
 #include <algorithm>
+#include <iostream>
+#include <memory>
 
 namespace simgrid::module::fs {
 
@@ -26,8 +29,9 @@ namespace simgrid::module::fs {
                                    return PathUtil::is_at_mount_point(simplified_path, element.first);
                                });
         if (it == this->partitions_.end()) {
-            throw std::runtime_error("EXCEPTION"); // TODO
+            throw std::runtime_error("EXCEPTION: WRONG MOUNT POINT"); // TODO
         }
+
 
         auto mount_point = it->first;
         auto partition = it->second.get();
@@ -35,11 +39,18 @@ namespace simgrid::module::fs {
         // Get the path at the mount point
         auto path_at_mount_point = PathUtil::path_at_mount_point(simplified_path, mount_point);
 
+        // Check that file is there
+        if (partition->get_content().find(path_at_mount_point) == partition->get_content().end()) {
+            throw std::runtime_error("EXCEPTION: FILE NOT FOUND"); // TODO
+        }
+
         // Get the FileMetadata raw pointer
         auto metadata = partition->get_content().at(path_at_mount_point).get();
+        std::cerr << "HERE\n";
 
         // Create the file object
         auto file =  std::shared_ptr<File>(new File(fullpath, metadata, partition));
+        std::cerr << "HERE\n";
 
         this->num_open_files_++;
         return file;
@@ -50,8 +61,8 @@ namespace simgrid::module::fs {
      * @param mount_point: the partition's mount point
      * @param partition: the partition
      */
-    void FileSystem::mount(const std::string &mount_point, const std::shared_ptr<Partition>& partition) {
-        if (PathUtil::simplify_path_string(mount_point) != mount_point or PathUtil::is_absolute(mount_point)) {
+    void FileSystem::mount_partition(const std::string &mount_point, sg_size_t size) {
+        if (PathUtil::simplify_path_string(mount_point) != mount_point or not PathUtil::is_absolute(mount_point)) {
             throw std::invalid_argument("simgrid::module::fs::FileSystem::add_partition(): Mount point should be a simple absolute path");
         }
         for (auto const &mp : this->partitions_) {
@@ -61,7 +72,7 @@ namespace simgrid::module::fs {
                                             "') - mount points cannot be prefixes of each other.");
             }
         }
-        this->partitions_[mount_point] = partition;
+        this->partitions_[mount_point] = std::shared_ptr<Partition>(new Partition(mount_point, size));
     }
 
 }

@@ -34,4 +34,24 @@ namespace simgrid::module::fs {
 
 
     }
+
+    /**
+     * @brief Seek to a position in the file
+     * @param pos: the position as an offset from the first byte of the file
+     */
+    void File::seek(sg_offset_t pos) {
+        if (pos > metadata_->get_current_size()) {
+            throw std::runtime_error("EXCEPTION"); // TODO
+        }
+        current_position_ = pos;
+    }
+
+    /**
+     * @brief Closes the file. After closing, using the file has undefined
+     * behavior.
+     */
+    void File::close() {
+        // nothing?
+    }
+
 }
