@@ -34,6 +34,9 @@ namespace simgrid::module::fs {
 
         std::shared_ptr<File> open(const std::string& fullpath);
 
+    private:
+        std::pair<std::shared_ptr<Partition>, std::string> find_path_at_mount_point(const std::string &fullpath) const;
+
     };
 
 /// Cruft

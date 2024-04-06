@@ -19,24 +19,9 @@ namespace simgrid::module::fs {
             throw std::runtime_error("EXCEPTION"); // TODO
         }
 
-        // Compute the simplified path
-        auto simplified_path = PathUtil::simplify_path_string(fullpath);
-
-        // Identify the mount point and partition
-        auto it = std::find_if(this->partitions_.begin(),
-                               this->partitions_.end(),
-                               [simplified_path](const std::pair<std::string, std::shared_ptr<Partition>>& element) {
-                                   return PathUtil::is_at_mount_point(simplified_path, element.first);
-                               });
-        if (it == this->partitions_.end()) {
-            throw std::runtime_error("EXCEPTION: WRONG MOUNT POINT"); // TODO
-        }
-
-        auto mount_point = it->first;
-        auto partition = it->second.get();
-
-        // Get the path at the mount point
-        auto path_at_mount_point = PathUtil::path_at_mount_point(simplified_path, mount_point);
+        // Get the partition and path
+        std::string simplified_path = PathUtil::simplify_path_string(fullpath);
+        auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
 
         // Check that file is there
         if (partition->get_content().find(path_at_mount_point) == partition->get_content().end()) {
@@ -47,7 +32,7 @@ namespace simgrid::module::fs {
         auto metadata = partition->get_content().at(path_at_mount_point).get();
 
         // Create the file object
-        auto file =  std::shared_ptr<File>(new File(fullpath, metadata, partition));
+        auto file =  std::shared_ptr<File>(new File(simplified_path, metadata, partition.get()));
 
         this->num_open_files_++;
         return file;
@@ -79,22 +64,12 @@ namespace simgrid::module::fs {
      * @param size: the file size
      */
     void FileSystem::create(const std::string& fullpath, sg_size_t size) {
+        // Get the partition and path
         std::string simplified_path = PathUtil::simplify_path_string(fullpath);
-
-        // Identify the mount point and path at mount point partition
-        auto it = std::find_if(this->partitions_.begin(),
-                               this->partitions_.end(),
-                               [simplified_path](const std::pair<std::string, std::shared_ptr<Partition>>& element) {
-                                   return PathUtil::is_at_mount_point(simplified_path, element.first);
-                               });
-        if (it == this->partitions_.end()) {
-            throw std::runtime_error("EXCEPTION: WRONG MOUNT POINT"); // TODO
-        }
-        auto path_at_mount_point = PathUtil::path_at_mount_point(simplified_path, it->first);
-        auto partition = it->second;
+        auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
 
         // Check that the file doesn't already exist
-        if (it->second->get_content().find(path_at_mount_point) != it->second->get_content().end()) {
+        if (partition->get_content().find(path_at_mount_point) != partition->get_content().end()) {
             throw std::runtime_error("EXCEPTION: FILE ALREADY EXISTS"); // TODO
         }
 
@@ -111,7 +86,24 @@ namespace simgrid::module::fs {
      * @return the file size in bytes
      */
     sg_size_t FileSystem::size(const std::string& fullpath) const {
+        // Get the partition and path
         std::string simplified_path = PathUtil::simplify_path_string(fullpath);
+        auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
+
+        // Check that the file exist
+        if (partition->get_content().find(path_at_mount_point) == partition->get_content().end()) {
+            throw std::runtime_error("EXCEPTION: FILE DOES NOT EXISTS"); // TODO
+        }
+
+        return partition->get_content().at(path_at_mount_point)->get_current_size();
+    }
+
+    /**
+     * @brief Method to find the partition and path at mount point for an absolute path
+     * @param fullpath: an absolute simplified file path
+     * @return
+     */
+    std::pair<std::shared_ptr<Partition>, std::string> FileSystem::find_path_at_mount_point(const std::string &simplified_path) const {
 
         // Identify the mount point and path at mount point partition
         auto it = std::find_if(this->partitions_.begin(),
@@ -124,13 +116,7 @@ namespace simgrid::module::fs {
         }
         auto path_at_mount_point = PathUtil::path_at_mount_point(simplified_path, it->first);
         auto partition = it->second;
-
-        // Check that the file exist
-        if (it->second->get_content().find(path_at_mount_point) == it->second->get_content().end()) {
-            throw std::runtime_error("EXCEPTION: FILE DOES NOT EXISTS"); // TODO
-        }
-
-        return it->second->get_content().at(path_at_mount_point)->get_current_size();
+        return std::make_pair(partition, path_at_mount_point);
     }
 
 
