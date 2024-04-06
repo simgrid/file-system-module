@@ -18,14 +18,14 @@ private:
     std::shared_ptr<sgfs::FileSystem> fs_;
     std::string file_path_;
     double sleep_time_;
-    sg_size_t offset_;
+    sg_offset_t offset_;
     sg_size_t num_bytes_;
 
 public:
     explicit FileWriterActor(std::shared_ptr<sgfs::FileSystem> fs,
                              std::string file_path,
                              double sleep_time,
-                             sg_size_t offset,
+                             sg_offset_t offset,
                              sg_size_t num_bytes) :
             fs_(std::move(fs)),
             file_path_(std::move(file_path)),
@@ -39,14 +39,14 @@ public:
         XBT_INFO("New FileWriter for file %s: time: %.2lf, offset=%llu, num_bytes=%llu", file_path_.c_str(), sleep_time_, offset_, num_bytes_);
         sg4::this_actor::sleep_for(sleep_time_);
         XBT_INFO("Opening the file...");
-        auto file = fs_->open("/dev/bogus/file.txt");
-        XBT_INFO("Seek to offset 5kB...");
-        file->seek(5000);
-        XBT_INFO("Writing 6kB to it at offset 0...");
-        file->write("6kB");
+        auto file = fs_->open(file_path_);
+        XBT_INFO("Seek to offset %llu...", offset_);
+        file->seek(offset_);
+        XBT_INFO("Writing %llu to it at offset %llu...", num_bytes_, offset_);
+        file->write(num_bytes_);
         XBT_INFO("Closing file...");
         file->close();
-        XBT_INFO("The file size it: %llu", fs_->file_size("/dev/bogus/../bogus/file.txt"));
+        XBT_INFO("The file size it: %llu", fs_->file_size(file_path_));
 
     }
 };

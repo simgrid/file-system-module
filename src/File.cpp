@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "File.hpp"
 #include "Storage.hpp"
 #include <simgrid/s4u/Engine.hpp>
