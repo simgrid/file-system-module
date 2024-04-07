@@ -1,8 +1,9 @@
 #ifndef SIMGRID_MODULE_FS_PARTITION_H_
 #define SIMGRID_MODULE_FS_PARTITION_H_
 
-#include <string>
 #include <map>
+#include <memory>
+#include <string>
 
 #include "FileMetadata.hpp"
 
