@@ -30,6 +30,8 @@ namespace simgrid::module::fs {
         const char* get_cname() const { return name_.c_str(); }
         sg_size_t get_size() const { return size_; }
         sg_size_t get_free_space() const { return free_space_; }
+        void decrease_free_space(sg_size_t num_bytes) { free_space_ -= num_bytes; }
+        void increase_free_space(sg_size_t num_bytes) { free_space_ += num_bytes; }
         std::shared_ptr<Storage> get_storage() const { return storage_; }
         std::map<std::string, std::unique_ptr<FileMetadata>, std::less<>>& get_content() { return content_; }
     };

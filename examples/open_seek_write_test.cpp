@@ -36,7 +36,7 @@ public:
 
     void operator()() {
 
-        XBT_INFO("New FileWriter for file %s: time: %.2lf, offset=%llu, num_bytes=%llu", file_path_.c_str(), sleep_time_, offset_, num_bytes_);
+        XBT_INFO("New FileWriter for file %s: sleep_time: %.2lf, offset=%llu, num_bytes=%llu", file_path_.c_str(), sleep_time_, offset_, num_bytes_);
         sg4::this_actor::sleep_for(sleep_time_);
         XBT_INFO("Opening the file...");
         auto file = fs_->open(file_path_);
