@@ -41,16 +41,30 @@ namespace simgrid::module::fs {
         if (simulate_it) {
             try {
                 partition_->get_storage()->write(num_bytes);
-            } catch (simgrid::StorageFailureException &e) {
-                throw simgrid::xbt::UnimplementedError("Handling of hardware resource failures not implemented");
+            } catch (StorageFailureException &e) {
+                throw xbt::UnimplementedError("Handling of hardware resource failures not implemented");
             }
         }
 
 
         // Update
-        metadata_->set_access_date(simgrid::s4u::Engine::get_clock());
-        metadata_->set_modification_date(simgrid::s4u::Engine::get_clock());
+        metadata_->set_access_date(s4u::Engine::get_clock());
+        metadata_->set_modification_date(s4u::Engine::get_clock());
         metadata_->notify_write_end(my_sequence_number);
+    }
+
+    void File::update_current_position(sg_offset_t pos) {
+        xbt_assert(pos >= 0, "Error in seek, cannot seek before file %s", path_.c_str());
+        current_position_ = pos;
+        metadata_->set_access_date(s4u::Engine::get_clock());
+
+        if(current_position_ > metadata_->get_current_size()) {
+            // XBT_DEBUG("Updating size of file %s from %llu to %lld", path_.c_str(),
+            //           metadata_->get_current_size(), pos);
+            partition_->decrease_free_space(pos - metadata_->get_current_size());
+            metadata_->set_current_size(current_position_);
+            metadata_->set_modification_date(s4u::Engine::get_clock());
+        }
     }
 
     /**
@@ -58,10 +72,29 @@ namespace simgrid::module::fs {
      * @param pos: the position as an offset from the first byte of the file
      */
     void File::seek(sg_offset_t pos) {
-        if (pos > metadata_->get_current_size()) {
-            throw std::runtime_error("EXCEPTION"); // TODO
+        update_current_position(pos);
+    }
+
+    /**
+     * @brief Seek to a position in the file from a given origin
+     * @param pos: the position as an offset from the given origin in the file
+     * @param origin: where to start adding the offset in the file
+     */
+    void File::seek(sg_offset_t pos, int origin) {
+        switch (origin) {
+            case SEEK_SET:
+                update_current_position(pos);
+                break;
+            case SEEK_CUR:
+                update_current_position(current_position_ + pos);
+                break;
+            case SEEK_END:
+                update_current_position(metadata_->get_current_size() + pos);
+                break;
+            default:
+                update_current_position(origin + pos);
+                break;
         }
-        current_position_ = pos;
     }
 
     /**

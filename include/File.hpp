@@ -18,6 +18,7 @@ namespace simgrid::module::fs {
         FileMetadata* metadata_;
         Partition* partition_;
 
+        void update_current_position(sg_offset_t pos);
     public:
         virtual ~File() = default;
 
@@ -39,7 +40,8 @@ namespace simgrid::module::fs {
 
         void seek(sg_offset_t pos);             /** Sets the file head to the given position. */
         void seek(sg_offset_t pos, int origin); /** Sets the file head to the given position from a given origin. */
-        sg_size_t tell() const;                 /** Retrieves the current file position */
+        /** Retrieves the current file position */
+        sg_size_t tell() const {return current_position_; }
 
         void close();
 
