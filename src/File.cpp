@@ -5,6 +5,8 @@
 #include <simgrid/s4u/Engine.hpp>
 #include <simgrid/Exception.hpp>
 
+XBT_LOG_NEW_DEFAULT_CATEGORY(fsmode_file, "File System module: File management related logs");
+
 namespace simgrid::module::fs {
 
    /**
@@ -56,14 +58,12 @@ namespace simgrid::module::fs {
 
         // Compute the new tentative file size
         sg_size_t new_file_size_if_i_succeed = metadata_->get_future_size() + added_bytes;
-
+        // Decrease the available space on partition of what is going to be added by that write
+        partition_->decrease_free_space(added_bytes);
+        // Update metadata
         metadata_->notify_write_start(my_sequence_number, new_file_size_if_i_succeed);
 
-        // "Reserve" space for the write operation
-        partition_->decrease_free_space(new_file_size_if_i_succeed - metadata_->get_current_size());
-
-
-        // Do the I/O simulation if need be
+         // Do the I/O simulation if need be
         if (simulate_it) {
             try {
                 partition_->get_storage()->write(num_bytes);
@@ -71,7 +71,6 @@ namespace simgrid::module::fs {
                 throw xbt::UnimplementedError("Handling of hardware resource failures not implemented");
             }
         }
-
 
         // Update
         metadata_->set_access_date(s4u::Engine::get_clock());
