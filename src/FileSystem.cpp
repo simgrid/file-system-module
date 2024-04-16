@@ -95,6 +95,8 @@ namespace simgrid::module::fs {
 
         // Add the file to the content
         partition->get_content()[path_at_mount_point] = std::move(metadata);
+        // Decrease free space on partition
+        partition->decrease_free_space(size);
     }
 
    /**
