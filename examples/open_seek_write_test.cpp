@@ -47,7 +47,6 @@ public:
         XBT_INFO("Closing file...");
         file->close();
         XBT_INFO("The file size it: %llu", fs_->file_size(file_path_));
-
     }
 };
 
@@ -73,6 +72,7 @@ int main(int argc, char **argv) {
     XBT_INFO("Mounting a 100kB partition...");
     fs->mount_partition("/dev/bogus/", ods, "100kB");
 
+
     std::string file_path = "/dev//bogus/../bogus/file.txt";
     XBT_INFO("Creating a 10kB file...");
     fs->create_file(file_path, "10kB");
@@ -85,4 +85,10 @@ int main(int argc, char **argv) {
 
     XBT_INFO("Launching the simulation...");
     engine->run();
+
+    auto partition = fs->partition_by_name("/dev/bogus/");
+    XBT_INFO("%llu bytes free on %s", partition->get_free_space(), partition->get_cname());
+    XBT_INFO("Unlink %s", file_path.c_str());
+    fs->unlink_file(file_path);
+    XBT_INFO("%llu bytes free on %s", partition->get_free_space(), partition->get_cname());
 }

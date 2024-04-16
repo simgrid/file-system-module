@@ -25,6 +25,9 @@ namespace simgrid::module::fs {
         void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, sg_size_t size);
         void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, const std::string& size);
 
+        std::shared_ptr<Partition> partition_by_name(const std::string& name) const;
+        std::shared_ptr<Partition> partition_by_name_or_null(const std::string& name) const;
+
         void create_file(const std::string& fullpath, sg_size_t size);
         void create_file(const std::string& fullpath, const std::string& size);
         void move_file(const std::string& fullpath) const;
