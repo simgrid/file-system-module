@@ -7,6 +7,32 @@
 
 namespace simgrid::module::fs {
 
+   /**
+     * @brief Read data from the file
+     * @param num_bytes: the number of bytes to read
+     */
+    void File::read(const std::string& num_bytes, bool simulate_it) {
+        read(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")), simulate_it);
+    }
+    void File::read(sg_size_t num_bytes, bool simulate_it) {
+        if (num_bytes == 0) /* Nothing to read, return */
+            return;
+        // if the current position is close to the end of the file, we may not be able to read the requested size
+        sg_size_t num_bytes_to_read   = std::min(num_bytes, metadata_->get_current_size() - current_position_);
+
+        // Do the I/O simulation if need be
+        if (simulate_it) {
+            try {
+                partition_->get_storage()->read(num_bytes_to_read);
+            } catch (StorageFailureException &e) {
+                throw xbt::UnimplementedError("Handling of hardware resource failures not implemented");
+            }
+        }
+        // Update
+        current_position_ += num_bytes_to_read;
+        metadata_->set_access_date(s4u::Engine::get_clock());
+    }
+
     /**
      * @brief Write data to the file
      * @param num_bytes: the number of bytes to write

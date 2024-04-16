@@ -73,6 +73,7 @@ namespace simgrid::module::fs {
     void FileSystem::create_file(const std::string& fullpath, const std::string& size) {
         create_file(fullpath, static_cast<sg_size_t>(xbt_parse_get_size("", 0, size, "")));
     }
+
     void FileSystem::create_file(const std::string& fullpath, sg_size_t size) {
         // Get the partition and path
         std::string simplified_path = PathUtil::simplify_path_string(fullpath);
