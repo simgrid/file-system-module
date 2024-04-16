@@ -6,6 +6,28 @@
 #include <memory>
 
 namespace simgrid::module::fs {
+    /**
+     * @brief Private method to find the partition and path at mount point for an absolute path
+     * @param fullpath: an absolute simplified file path
+     * @return
+     */
+    std::pair<std::shared_ptr<Partition>, std::string> FileSystem::find_path_at_mount_point(const std::string &simplified_path) const {
+
+        // Identify the mount point and path at mount point partition
+        auto it = std::find_if(this->partitions_.begin(),
+                               this->partitions_.end(),
+                               [simplified_path](const std::pair<std::string, std::shared_ptr<Partition>>& element) {
+                                   return PathUtil::is_at_mount_point(simplified_path, element.first);
+                               });
+        if (it == this->partitions_.end()) {
+            throw std::runtime_error("EXCEPTION: WRONG MOUNT POINT"); // TODO
+        }
+        auto path_at_mount_point = PathUtil::path_at_mount_point(simplified_path, it->first);
+        auto partition = it->second;
+        return std::make_pair(partition, path_at_mount_point);
+    }
+
+    /*********************** PUBLIC INTERFACE *****************************/
 
     std::shared_ptr<FileSystem> FileSystem::create(const std::string &name, int max_num_open_files) {
         return std::shared_ptr<FileSystem>(new FileSystem(name, max_num_open_files));
@@ -107,27 +129,6 @@ namespace simgrid::module::fs {
         }
 
         return partition->get_content().at(path_at_mount_point)->get_current_size();
-    }
-
-    /**
-     * @brief Method to find the partition and path at mount point for an absolute path
-     * @param fullpath: an absolute simplified file path
-     * @return
-     */
-    std::pair<std::shared_ptr<Partition>, std::string> FileSystem::find_path_at_mount_point(const std::string &simplified_path) const {
-
-        // Identify the mount point and path at mount point partition
-        auto it = std::find_if(this->partitions_.begin(),
-                               this->partitions_.end(),
-                               [simplified_path](const std::pair<std::string, std::shared_ptr<Partition>>& element) {
-                                   return PathUtil::is_at_mount_point(simplified_path, element.first);
-                               });
-        if (it == this->partitions_.end()) {
-            throw std::runtime_error("EXCEPTION: WRONG MOUNT POINT"); // TODO
-        }
-        auto path_at_mount_point = PathUtil::path_at_mount_point(simplified_path, it->first);
-        auto partition = it->second;
-        return std::make_pair(partition, path_at_mount_point);
     }
 
 

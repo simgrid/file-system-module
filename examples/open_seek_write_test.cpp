@@ -66,10 +66,10 @@ int main(int argc, char **argv) {
     my_host->seal();
     my_zone->seal();
 
-    XBT_INFO("Creating a file system...");
-    auto fs = sgfs::FileSystem::create("my_fs", 1024);
     XBT_INFO("Creating a one-disk storage on the host's disk...");
     auto ods = sgfs::OneDiskStorage::create("my_storage", my_disk);
+    XBT_INFO("Creating a file system...");
+    auto fs = sgfs::FileSystem::create("my_fs");
     XBT_INFO("Mounting a 100kB partition...");
     fs->mount_partition("/dev/bogus/", ods, "100kB");
 

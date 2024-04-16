@@ -41,7 +41,7 @@ namespace simgrid::module::fs {
         void seek(sg_offset_t pos);             /** Sets the file head to the given position. */
         void seek(sg_offset_t pos, int origin); /** Sets the file head to the given position from a given origin. */
         /** Retrieves the current file position */
-        sg_size_t tell() const {return current_position_; }
+        sg_size_t tell() const { return current_position_; }
 
         void close();
 
