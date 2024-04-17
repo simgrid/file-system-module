@@ -53,7 +53,7 @@ namespace simgrid::module::fs {
         // Check whether there is enough space
         sg_size_t added_bytes = std::max<sg_size_t >(0, current_position_ + num_bytes - metadata_->get_future_size());
         if (added_bytes > partition_->get_free_space()) {
-            throw std::runtime_error("EXCEPTION"); // TODO
+            throw std::runtime_error("EXCEPTION: NOT ENOUGH SPACE"); // TODO
         }
 
         // Compute the new tentative file size
@@ -78,18 +78,15 @@ namespace simgrid::module::fs {
         metadata_->notify_write_end(my_sequence_number);
     }
 
+    /**
+     * @brief Change the file pointer position
+     * @param pos: the new offset
+     */
     void File::update_current_position(sg_offset_t pos) {
-        xbt_assert(pos >= 0, "Error in seek, cannot seek before file %s", path_.c_str());
-        current_position_ = pos;
-        metadata_->set_access_date(s4u::Engine::get_clock());
-
-        if(current_position_ > metadata_->get_current_size()) {
-            // XBT_DEBUG("Updating size of file %s from %llu to %lld", path_.c_str(),
-            //           metadata_->get_current_size(), pos);
-            partition_->decrease_free_space(pos - metadata_->get_current_size());
-            metadata_->set_current_size(current_position_);
-            metadata_->set_modification_date(s4u::Engine::get_clock());
+        if (pos < 0) {
+            throw std::runtime_error("EXCEPTION: CANNOT SEEK BEFORE FILE BEGIN");
         }
+        current_position_ = pos;
     }
 
     /**
@@ -127,7 +124,7 @@ namespace simgrid::module::fs {
      * behavior.
      */
     void File::close() {
-        // nothing?
+        metadata_->decrease_file_refcount();
     }
 
 }

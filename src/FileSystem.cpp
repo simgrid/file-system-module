@@ -90,11 +90,17 @@ namespace simgrid::module::fs {
             throw std::runtime_error("EXCEPTION: FILE ALREADY EXISTS"); // TODO
         }
 
+        // Check that there is enough space
+        if (partition->get_free_space() < size) {
+            throw std::runtime_error("EXCEPTION: NOT ENOUGH SPACE"); // TODO
+        }
+
         // Create FileMetaData
         auto metadata = std::make_unique<FileMetadata>(size);
 
         // Add the file to the content
         partition->get_content()[path_at_mount_point] = std::move(metadata);
+
         // Decrease free space on partition
         partition->decrease_free_space(size);
     }
@@ -121,6 +127,7 @@ namespace simgrid::module::fs {
 
         // Get the FileMetadata raw pointer
         auto metadata = partition->get_content().at(path_at_mount_point).get();
+        metadata->increase_file_refcount();
 
         // Create the file object
         auto file =  std::shared_ptr<File>(new File(simplified_path, metadata, partition.get()));
@@ -152,14 +159,18 @@ namespace simgrid::module::fs {
         std::string simplified_path = PathUtil::simplify_path_string(fullpath);
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
 
-        sg_size_t file_size = 0;
+        FileMetadata *metadata_ptr = nullptr;
         try {
-            file_size = partition->get_content().at(path_at_mount_point)->get_current_size();
+            metadata_ptr = partition->get_content().at(path_at_mount_point).get();
         } catch (std::out_of_range& e) {
             throw std::runtime_error("EXCEPTION: FILE DOES NOT EXISTS"); // TODO
         }
-        // "Liberate" space on partition and remove from content
-        partition->increase_free_space(file_size);
+
+        if (metadata_ptr->get_file_refcount() > 0) {
+            throw std::runtime_error("EXCEPTION: CANNOT UNLINK A FILE THAT IS OPEN");
+        }
+        // Free space on partition and remove from content
+        partition->increase_free_space(metadata_ptr->get_current_size());
         partition->get_content().erase(path_at_mount_point);
     }
 }

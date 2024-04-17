@@ -13,6 +13,7 @@ namespace simgrid::module::fs {
         double modification_date_ = 0.0;
         double access_date_ = 0.0;
         std::unordered_map<int, sg_size_t> ongoing_writes_;
+        unsigned file_refcount_ = 0;
 
     public:
         explicit FileMetadata(sg_size_t initial_size) : current_size_(initial_size), future_size_(initial_size) {}
@@ -23,6 +24,9 @@ namespace simgrid::module::fs {
         void set_modification_date(double date) { modification_date_ = date; }
         [[nodiscard]] double get_access_date() const { return access_date_; }
         void set_access_date(double date) { access_date_ = date; }
+        unsigned get_file_refcount() { return file_refcount_; }
+        unsigned increase_file_refcount() { file_refcount_++; }
+        unsigned decrease_file_refcount() { file_refcount_--; }
 
         void notify_write_start(int write_id, sg_size_t new_size) {
             ongoing_writes_[write_id] = new_size;

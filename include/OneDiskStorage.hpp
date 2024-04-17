@@ -1,7 +1,9 @@
 #ifndef FSMOD_ONEDISKSTORAGE_HPP
 #define FSMOD_ONEDISKSTORAGE_HPP
 
+#include <simgrid/s4u/MessageQueue.hpp>
 #include "Storage.hpp"
+
 
 namespace simgrid::module::fs {
 
@@ -19,6 +21,7 @@ namespace simgrid::module::fs {
 
     protected:
         OneDiskStorage(const std::string &name, simgrid::s4u::Disk *disk);
+        s4u::MessageQueue mq_;
 
     };
 

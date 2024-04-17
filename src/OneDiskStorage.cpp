@@ -1,4 +1,5 @@
 #include "OneDiskStorage.hpp"
+#include <simgrid/s4u/Actor.hpp>
 
 namespace simgrid::module::fs {
 
@@ -13,6 +14,13 @@ namespace simgrid::module::fs {
 
     OneDiskStorage::OneDiskStorage(const std::string &name, simgrid::s4u::Disk *disk) : Storage(name) {
         disks_.push_back(disk);
+        controller_host_ = disk->get_host();
+        // Create a no-op controller
+        mq_ = s4u::MessageQueue::by_name(name+"_controller_mq");
+        controller_ = s4u::Actor::create(name+"_controller", controller_host_, [this](){
+            mq_->get();
+        });
+        controller_->daemonize();
     }
 
     s4u::ActivityPtr OneDiskStorage::read_init(sg_size_t size) {
