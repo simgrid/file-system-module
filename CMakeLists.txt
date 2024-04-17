@@ -30,8 +30,7 @@ add_library(fsmod SHARED
 		src/File.cpp
 		src/Partition.cpp
 		src/Storage.cpp
-		src/OneDiskStorage.cpp
-		)
+		src/OneDiskStorage.cpp)
 
 add_executable(path_test examples/path_test.cpp)
 target_link_libraries(path_test fsmod ${SimGrid_LIBRARY})

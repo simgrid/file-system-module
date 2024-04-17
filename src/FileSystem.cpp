@@ -1,9 +1,13 @@
+#include <algorithm>
+#include <memory>
+
+#include <simgrid/s4u/Engine.hpp>
+
 #include "FileSystem.hpp"
 #include "File.hpp"
 #include "PathUtil.hpp"
 #include "Partition.hpp"
-#include <algorithm>
-#include <memory>
+#include "FileSystemException.h"
 
 namespace simgrid::module::fs {
     /**
@@ -21,7 +25,7 @@ namespace simgrid::module::fs {
                                    return PathUtil::is_at_mount_point(simplified_path, element.first);
                                });
         if (it == this->partitions_.end()) {
-            throw std::runtime_error("EXCEPTION: WRONG MOUNT POINT"); // TODO
+            throw FileSystemException(XBT_THROW_POINT, "No partition found for path " + simplified_path + " at file system " + name_);
         }
         auto path_at_mount_point = PathUtil::path_at_mount_point(simplified_path, it->first);
         auto partition = it->second;
@@ -213,6 +217,11 @@ namespace simgrid::module::fs {
             dst_metadata = partition->get_content().at(dst_path_at_mount_point).get();
         } catch (std::out_of_range &ignore) {}
 
+        // No-op mv?
+        if (src_metadata == dst_metadata) {
+            return; // just like in the real world
+        }
+
         // Sanity checks
         if (src_metadata->get_file_refcount() > 0) {
             throw std::runtime_error("EXCEPTION: CANNOT MOV A FILE THAT IS OPEN"); // TODO
@@ -240,6 +249,81 @@ namespace simgrid::module::fs {
         std::unique_ptr<FileMetadata> uniq_ptr = std::move(partition->get_content().at(src_path_at_mount_point));
         partition->get_content().erase(src_path_at_mount_point);
         partition->get_content()[dst_path_at_mount_point] = std::move(uniq_ptr);
+
+    }
+
+
+    /**
+     * @brief Copy a file
+     * @param src_full_path: the source path
+     * @param dst_full_path: the destination path
+     */
+    void FileSystem::copy_file(const std::string &src_full_path, const std::string &dst_full_path) const {
+
+        std::string simplified_src_path = PathUtil::simplify_path_string(src_full_path);
+        auto [src_partition, src_path_at_mount_point] = this->find_path_at_mount_point(simplified_src_path);
+
+        std::string simplified_dst_path = PathUtil::simplify_path_string(dst_full_path);
+        auto [dst_partition, dst_path_at_mount_point] = this->find_path_at_mount_point(simplified_dst_path);
+
+        // Get the src metadata, which must exit
+        FileMetadata *src_metadata;
+        try {
+            src_metadata = src_partition->get_content().at(src_path_at_mount_point).get();
+        } catch (std::out_of_range &e) {
+            throw std::runtime_error("EXCEPTION: FILE DOES NOT EXISTS"); // TODO
+        }
+
+        // Get the dst metadata, if any
+        FileMetadata *dst_metadata = nullptr;
+        try {
+            dst_metadata = dst_partition->get_content().at(dst_path_at_mount_point).get();
+        } catch (std::out_of_range &ignore) {}
+
+        // No-op cp?
+        if (src_metadata == dst_metadata) {
+            return; // just like in the real world (which prints a warning though...)
+        }
+
+        // Sanity checks
+        if (src_metadata->get_file_refcount() > 0) {
+            throw std::runtime_error("EXCEPTION: CANNOT CP A FILE THAT IS OPEN"); // TODO
+        }
+        if (dst_metadata and dst_metadata->get_file_refcount()) {
+            throw std::runtime_error("EXCEPTION: CANNOT CP A FILE TO A DESTINATION FILE THAT IS OPEN"); // TODO
+        }
+
+        // Update free space if needed
+        if (not dst_metadata) {
+            if (dst_partition->get_free_space() < src_metadata->get_current_size()) {
+                throw std::runtime_error("EXCEPTION: NOT ENOUGH SPACE"); // TODO
+            }
+        } else {
+            auto src_size = src_metadata->get_current_size();
+            auto dst_size = dst_metadata->get_current_size();
+            if (dst_size > src_size) {
+                dst_partition->increase_free_space(dst_size - src_size);
+            } else {
+                if (src_size - dst_size <= dst_partition->get_free_space()) {
+                    dst_partition->decrease_free_space(src_size - dst_size);
+                } else {
+                    throw std::runtime_error("EXCEPTION: NOT ENOUGH SPACE"); // TODO
+                }
+            }
+        }
+
+        // Do the copy, which involves simulation :(
+        // TODO: Buffering? SHOULD WE DO THIS AT ALL?
+
+        // Update content
+        if (dst_metadata) {
+            dst_partition->get_content().erase(src_path_at_mount_point);
+        }
+
+        auto new_meta_data = new FileMetadata(src_metadata->get_current_size());
+        new_meta_data->set_modification_date(s4u::Engine::get_clock());
+        new_meta_data->set_access_date(s4u::Engine::get_clock());
+        dst_partition->get_content()[dst_path_at_mount_point] = std::unique_ptr<FileMetadata>(new_meta_data);
 
     }
 }
