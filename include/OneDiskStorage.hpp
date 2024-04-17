@@ -21,7 +21,7 @@ namespace simgrid::module::fs {
 
     protected:
         OneDiskStorage(const std::string &name, simgrid::s4u::Disk *disk);
-        s4u::MessageQueue mq_;
+        s4u::MessageQueue *mq_;
 
     };
 

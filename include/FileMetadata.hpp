@@ -25,8 +25,8 @@ namespace simgrid::module::fs {
         [[nodiscard]] double get_access_date() const { return access_date_; }
         void set_access_date(double date) { access_date_ = date; }
         unsigned get_file_refcount() { return file_refcount_; }
-        unsigned increase_file_refcount() { file_refcount_++; }
-        unsigned decrease_file_refcount() { file_refcount_--; }
+        void increase_file_refcount() { file_refcount_++; }
+        void decrease_file_refcount() { file_refcount_--; }
 
         void notify_write_start(int write_id, sg_size_t new_size) {
             ongoing_writes_[write_id] = new_size;

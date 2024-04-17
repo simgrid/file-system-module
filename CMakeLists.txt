@@ -14,6 +14,7 @@ find_package(SimGrid 3.35.1 REQUIRED)
 include_directories(
 		${SimGrid_INCLUDE_DIR}
 		${CMAKE_BINARY_DIR}/include
+		/opt/local/include
 )
 
 set(CMAKE_CXX_STANDARD 17)

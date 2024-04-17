@@ -18,7 +18,7 @@ namespace simgrid::module::fs {
         // Create a no-op controller
         mq_ = s4u::MessageQueue::by_name(name+"_controller_mq");
         controller_ = s4u::Actor::create(name+"_controller", controller_host_, [this](){
-            mq_->get();
+            mq_->get<void*>();
         });
         controller_->daemonize();
     }
