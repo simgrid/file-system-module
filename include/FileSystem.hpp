@@ -29,21 +29,21 @@ namespace simgrid::module::fs {
         [[nodiscard]] std::shared_ptr<Partition> partition_by_name(const std::string& name) const;
         [[nodiscard]] std::shared_ptr<Partition> partition_by_name_or_null(const std::string& name) const;
 
-        void create_file(const std::string& fullpath, sg_size_t size);
-        void create_file(const std::string& fullpath, const std::string& size);
-        void move_file(const std::string& src_fullpath, const std::string& dst_fullpath) const;
-        void copy_file(const std::string& src_fullpath, const std::string& dst_fullpath) const;
-        void unlink_file(const std::string& fullpath) const;
-        [[nodiscard]] sg_size_t file_size(const std::string& fullpath) const;
+        void create_file(const std::string& full_path, sg_size_t size);
+        void create_file(const std::string& full_path, const std::string& size);
+        void move_file(const std::string& src_full_path, const std::string& dst_full_path) const;
+        void copy_file(const std::string& src_full_path, const std::string& dst_full_path) const;
+        void unlink_file(const std::string& full_path) const;
+        [[nodiscard]] sg_size_t file_size(const std::string& full_path) const;
 
-        std::shared_ptr<File> open(const std::string& fullpath);
+        std::shared_ptr<File> open(const std::string& full_path);
         virtual ~FileSystem() = default;
 
     protected:
         explicit FileSystem(std::string name, int max_num_open_files) : name_(std::move(name)), max_num_open_files_(max_num_open_files) {};
 
     private:
-        [[nodiscard]] std::pair<std::shared_ptr<Partition>, std::string> find_path_at_mount_point(const std::string &fullpath) const;
+        [[nodiscard]] std::pair<std::shared_ptr<Partition>, std::string> find_path_at_mount_point(const std::string &full_path) const;
 
         std::map<std::string, std::shared_ptr<Partition>> partitions_;
 

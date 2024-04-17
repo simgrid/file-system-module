@@ -23,8 +23,8 @@ namespace simgrid::module::fs {
         virtual ~File() = default;
 
     protected:
-        File(const std::string& fullpath, FileMetadata *metadata, Partition *partition) :
-                path_(fullpath), metadata_(metadata), partition_(partition) {};
+        File(const std::string& full_path, FileMetadata *metadata, Partition *partition) :
+                path_(full_path), metadata_(metadata), partition_(partition) {};
         File(const File&) = delete;
         File& operator=(const File&) = delete;
 
