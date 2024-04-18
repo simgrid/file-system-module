@@ -54,7 +54,7 @@ public:
 
 int main(int argc, char **argv) {
 
-    auto engine = new sg4::Engine(&argc, argv);
+    sg4::Engine engine(&argc, argv);
 
     XBT_INFO("Creating a platform with one host and one disk...");
     auto *my_zone = sg4::create_full_zone("zone");
@@ -83,7 +83,7 @@ int main(int argc, char **argv) {
     sg4::Actor::create("MyActor2", my_host, FileWriterActor(fs, file_path, 10.5, 5*1000, 8*1000));
 
     XBT_INFO("Launching the simulation...");
-    engine->run();
+    engine.run();
 
     XBT_INFO("%llu bytes free on %s", partition->get_free_space(), partition->get_cname());
     XBT_INFO("Unlink %s", file_path.c_str());
