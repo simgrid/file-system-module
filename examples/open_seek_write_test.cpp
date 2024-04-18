@@ -57,12 +57,9 @@ int main(int argc, char **argv) {
     auto engine = new sg4::Engine(&argc, argv);
 
     XBT_INFO("Creating a platform with one host and one disk...");
-    auto *my_zone = sg4::create_full_zone("AS");
-    auto my_host = my_zone->create_host("my_host", "100Gf")->set_core_count(1);
-    auto my_disk = my_host->create_disk("my_disk",
-                                        "1kBps",
-                                        "2kBps")->seal();
-    my_host->seal();
+    auto *my_zone = sg4::create_full_zone("zone");
+    auto my_host = my_zone->create_host("my_host", "100Gf");
+    auto my_disk = my_host->create_disk("my_disk", "1kBps", "2kBps");
     my_zone->seal();
 
     XBT_INFO("Creating a one-disk storage on the host's disk...");
