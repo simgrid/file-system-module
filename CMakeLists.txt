@@ -17,9 +17,9 @@ include_directories(
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-#set(CMAKEFILES_TXT
-#  tests/s4u/CMakeLists.txt
-#)
+set(CMAKEFILES_TXT
+  		examples/CMakeLists.txt
+)
 
 set(SOURCE_FILES
 		src/PathUtil.cpp
@@ -27,12 +27,10 @@ set(SOURCE_FILES
 		src/File.cpp
 		src/Partition.cpp
 		src/Storage.cpp
+		src/JBODStorage.cpp
 		src/OneDiskStorage.cpp)
 
 add_library(fsmod SHARED ${SOURCE_FILES})
-
-add_executable(open_seek_write_test examples/open_seek_write_test.cpp)
-target_link_libraries(open_seek_write_test fsmod ${SimGrid_LIBRARY})
 
 set_target_properties(fsmod PROPERTIES
 		SOVERSION 0.1
@@ -46,11 +44,13 @@ install(TARGETS fsmod
 		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 		PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
+add_custom_target(examples    COMMENT "Recompiling the examples")
+
 ### Define subdirectories
-#foreach(cmakefile ${CMAKEFILES_TXT})
-#  string(REPLACE "/CMakeLists.txt" "" repository ${cmakefile})
-#  add_subdirectory("${CMAKE_HOME_DIRECTORY}/${repository}")
-#endforeach()
+foreach(cmakefile ${CMAKEFILES_TXT})
+  string(REPLACE "/CMakeLists.txt" "" repository ${cmakefile})
+  add_subdirectory("${CMAKE_HOME_DIRECTORY}/${repository}")
+endforeach()
 
 # Google test
 find_library(GTEST_LIBRARY NAMES gtest)
