@@ -8,11 +8,11 @@ namespace simgrid::module::fs {
      * @param disk: the disk
      * @return
      */
-    std::shared_ptr<OneDiskStorage> OneDiskStorage::create(const std::string &name, simgrid::s4u::Disk *disk) {
+    std::shared_ptr<OneDiskStorage> OneDiskStorage::create(const std::string& name, s4u::Disk* disk) {
         return  std::shared_ptr<OneDiskStorage>(new OneDiskStorage(name, disk));
     }
 
-    OneDiskStorage::OneDiskStorage(const std::string &name, simgrid::s4u::Disk *disk) : Storage(name) {
+    OneDiskStorage::OneDiskStorage(const std::string& name, s4u::Disk* disk) : Storage(name) {
         disks_.push_back(disk);
         controller_host_ = disk->get_host();
         // Create a no-op controller

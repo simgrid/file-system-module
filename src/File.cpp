@@ -51,7 +51,10 @@ namespace simgrid::module::fs {
         //      that FileMetadata know the partition....
 
         // Check whether there is enough space
-        sg_size_t added_bytes = std::max<sg_size_t >(0, current_position_ + num_bytes - metadata_->get_future_size());
+        sg_size_t added_bytes = 0;
+        if (current_position_ + num_bytes > metadata_->get_future_size())
+            added_bytes = current_position_ + num_bytes > metadata_->get_future_size();
+
         if (added_bytes > partition_->get_free_space()) {
             throw std::runtime_error("EXCEPTION: NOT ENOUGH SPACE"); // TODO
         }
