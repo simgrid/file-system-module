@@ -23,7 +23,7 @@ TEST_F(PathUtilTest, PathSimplification)  {
             {"/////foo/////././././bar/../bar/..///../../", "/"},
             {"./foo/.../........", "foo/.../........"},
             {"./foo/", "foo"},
-            {"./foo", "foo"},
+            {"./foo", "foo"}
     };
 
     for (const auto &test_item : input_output) {
