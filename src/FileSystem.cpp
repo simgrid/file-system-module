@@ -2,6 +2,7 @@
 #include <memory>
 
 #include <simgrid/s4u/Engine.hpp>
+#include <utility>
 
 #include "FileSystem.hpp"
 #include "File.hpp"
@@ -45,25 +46,28 @@ namespace simgrid::module::fs {
      */
     void FileSystem::mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage,
                                      const std::string &size) {
-        mount_partition(mount_point, storage, static_cast<sg_size_t>(xbt_parse_get_size("", 0, size, "")));
+        mount_partition(mount_point, std::move(storage), static_cast<sg_size_t>(xbt_parse_get_size("", 0, size, "")));
     }
 
     void FileSystem::mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, sg_size_t size) {
 
-        if (PathUtil::simplify_path_string(mount_point) != mount_point or not PathUtil::is_absolute(mount_point)) {
+        auto cleanup_mount_point = mount_point;
+        PathUtil::remove_trailing_slashes(cleanup_mount_point);
+        if (PathUtil::simplify_path_string(mount_point) != cleanup_mount_point or not PathUtil::is_absolute(cleanup_mount_point)) {
             throw std::invalid_argument(
-                    "simgrid::module::fs::FileSystem::add_partition(): Mount point should be a simple absolute path");
+                    "simgrid::module::fs::FileSystem::mount_partition(): Mount point should be a simple absolute path");
         }
         for (auto const &mp: this->partitions_) {
-            if ((mp.first.rfind(mount_point, 0) == 0) or (mount_point.rfind(mp.first, 0) == 0)) {
+            if ((mp.first.rfind(cleanup_mount_point, 0) == 0) or (cleanup_mount_point.rfind(mp.first, 0) == 0)) {
                 throw std::invalid_argument(
-                        "simgrid::module::fs::FileSystem::add_partition(): New mount point '" + mount_point +
+                        "simgrid::module::fs::FileSystem::add_partition(): New mount point '" + cleanup_mount_point +
                         "' would conflict with existing mount point '" + mp.first +
                         "') - mount points cannot be prefixes of each other.");
             }
         }
-        this->partitions_[mount_point] = std::shared_ptr<Partition>(new Partition(mount_point, storage, size));
+        this->partitions_[cleanup_mount_point] = std::shared_ptr<Partition>(new Partition(cleanup_mount_point, std::move(storage), size));
     }
+
 
     std::shared_ptr<Partition> FileSystem::partition_by_name(const std::string &name) const {
         auto partition = partition_by_name_or_null(name);

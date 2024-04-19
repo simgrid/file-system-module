@@ -14,11 +14,21 @@ namespace simgrid::module::fs {
      */
     std::string PathUtil::simplify_path_string(const std::string &path_string) {
         auto lexically_normal =  std::string(std::filesystem::path(path_string).lexically_normal());
-        // Remove trailing "/" if any, for absolute consistency
-        if (lexically_normal != "/") {
-            while (lexically_normal.at(lexically_normal.size()-1) == '/') lexically_normal.pop_back();
-        }
+        PathUtil::remove_trailing_slashes(lexically_normal);
         return lexically_normal;
+    }
+
+    /**
+     * @brief A method to remove extraneous trailing slashes
+     * @param path_string: an arbitrary path string
+     * @return A new path string where trailing slashes have been removed
+     */
+    void PathUtil::remove_trailing_slashes(std::string &path) {
+        if (path != "/") {
+            while (path.at(path.size()-1) == '/') {
+                path.pop_back();
+            }
+        }
     }
 
     /**

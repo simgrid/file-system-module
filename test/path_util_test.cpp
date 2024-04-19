@@ -2,10 +2,9 @@
 #include <iostream>
 #include "../include/PathUtil.hpp"
 
-namespace fsmod=simgrid::module::fs;
+namespace sgfs=simgrid::module::fs;
 
-// Ugly macro, but nec
-// essary for knowing what's happening
+// Ugly macro, but useful for these specific tests for knowing what's happening
 #define MY_ASSERT_EQ(lhs, rhs, message) if (lhs != rhs) ASSERT_EQ(lhs, rhs) << "Test failed on input string: " << message
 
 class PathUtilTest : public ::testing::Test {
@@ -28,7 +27,7 @@ TEST_F(PathUtilTest, PathSimplification)  {
     };
 
     for (const auto &test_item : input_output) {
-        MY_ASSERT_EQ(fsmod::PathUtil::simplify_path_string(test_item.first), test_item.second, test_item.first);
+        MY_ASSERT_EQ(sgfs::PathUtil::simplify_path_string(test_item.first), test_item.second, test_item.first);
     }
 }
 
@@ -42,8 +41,8 @@ TEST_F(PathUtilTest, PathGoesUp)  {
     };
 
     for (const auto &test_item : input_output) {
-        auto simplified_path = fsmod::PathUtil::simplify_path_string(test_item.first);
-        MY_ASSERT_EQ(fsmod::PathUtil::goes_up(simplified_path), test_item.second, test_item.first);
+        auto simplified_path = sgfs::PathUtil::simplify_path_string(test_item.first);
+        MY_ASSERT_EQ(sgfs::PathUtil::goes_up(simplified_path), test_item.second, test_item.first);
     }
 }
 
@@ -56,8 +55,8 @@ TEST_F(PathUtilTest, PathIsAbsolute) {
             {"/aa/bb/cc/dd/../../ee/ff/", true}
     };
     for (const auto &test_item: input_output) {
-        auto simplified_path = fsmod::PathUtil::simplify_path_string(test_item.first);
-        MY_ASSERT_EQ(fsmod::PathUtil::is_absolute(simplified_path), test_item.second, test_item.first);
+        auto simplified_path = sgfs::PathUtil::simplify_path_string(test_item.first);
+        MY_ASSERT_EQ(sgfs::PathUtil::is_absolute(simplified_path), test_item.second, test_item.first);
     }
 }
 

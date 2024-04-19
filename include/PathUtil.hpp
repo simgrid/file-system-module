@@ -13,6 +13,7 @@ namespace simgrid::module::fs {
     class XBT_PUBLIC PathUtil {
     public:
         static std::string simplify_path_string(const std::string &path);
+        static void remove_trailing_slashes(std::string &path);
         static bool goes_up(const std::string &simplified_path);
         static bool is_absolute(const std::string &simplified_path);
         static bool is_at_mount_point(const std::string &simplified_absolute_path, const std::string &mount_point);
