@@ -8,9 +8,6 @@ project(fsmod VERSION 0.1 DESCRIPTION "SimGrid-based File System simulation modu
 include(GNUInstallDirs)
 find_package(SimGrid 3.35.1 REQUIRED)
 
-#add_definitions("-DBOOST_ALLOW_DEPRECATED_HEADERS")
-
-
 include_directories(
 		${SimGrid_INCLUDE_DIR}
 		${CMAKE_BINARY_DIR}/include
@@ -24,7 +21,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #  tests/s4u/CMakeLists.txt
 #)
 
-add_library(fsmod SHARED
+set(SOURCE_FILES
 		src/PathUtil.cpp
 		src/FileSystem.cpp
 		src/File.cpp
@@ -32,8 +29,7 @@ add_library(fsmod SHARED
 		src/Storage.cpp
 		src/OneDiskStorage.cpp)
 
-add_executable(path_test examples/path_test.cpp)
-target_link_libraries(path_test fsmod ${SimGrid_LIBRARY})
+add_library(fsmod SHARED ${SOURCE_FILES})
 
 add_executable(open_seek_write_test examples/open_seek_write_test.cpp)
 target_link_libraries(open_seek_write_test fsmod ${SimGrid_LIBRARY})
@@ -50,9 +46,24 @@ install(TARGETS fsmod
 		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 		PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-#add_custom_target(tests    COMMENT "Recompiling the tests")
 ### Define subdirectories
 #foreach(cmakefile ${CMAKEFILES_TXT})
 #  string(REPLACE "/CMakeLists.txt" "" repository ${cmakefile})
 #  add_subdirectory("${CMAKE_HOME_DIRECTORY}/${repository}")
 #endforeach()
+
+# Google test
+find_library(GTEST_LIBRARY NAMES gtest)
+if(GTEST_LIBRARY)
+	set(TEST_FILES
+			test/path_util_test.cpp
+			test/main.cpp)
+	add_definitions(-DGTEST_USED)
+	add_executable(unit_tests EXCLUDE_FROM_ALL ${TEST_FILES})
+	target_link_libraries(unit_tests ${GTEST_LIBRARY} ${SIMGRID_LIBRARY} fsmod -lpthread -lm)
+	set_target_properties(unit_tests PROPERTIES COMPILE_FLAGS "-g -O0 --coverage")
+	set_target_properties(unit_tests PROPERTIES LINK_FLAGS "--coverage")
+	add_custom_command(TARGET unit_tests COMMAND find . -name *.gcda -delete)
+else()
+	add_custom_target(unit_tests echo "ERROR: Cannot build unit_tests because Google Test (libgtest) was not found by cmake." COMMAND echo "       If you have installed Google Test, re-run cmake." VERBATIM)
+endif()

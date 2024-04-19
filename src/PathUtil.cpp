@@ -13,7 +13,12 @@ namespace simgrid::module::fs {
      * (i.e., remove redundant slashes, resolved ".."'s and "."'s)
      */
     std::string PathUtil::simplify_path_string(const std::string &path_string) {
-        return std::filesystem::path(path_string).lexically_normal();
+        auto lexically_normal =  std::string(std::filesystem::path(path_string).lexically_normal());
+        // Remove trailing "/" if any, for absolute consistency
+        if (lexically_normal != "/") {
+            while (lexically_normal.at(lexically_normal.size()-1) == '/') lexically_normal.pop_back();
+        }
+        return lexically_normal;
     }
 
     /**

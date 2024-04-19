@@ -17,8 +17,8 @@
     }                                                                                                                  \
   }
 
-
 namespace simgrid::module::fs {
+
     DECLARE_SIMGRID_EXCEPTION(FileSystemException);
     FileSystemException::~FileSystemException() = default;
 }
