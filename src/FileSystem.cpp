@@ -78,7 +78,7 @@ namespace simgrid::module::fs {
 
     std::shared_ptr<Partition> FileSystem::partition_by_name_or_null(const std::string &name) const {
 
-        auto partition = partitions_.find(name);
+        auto partition = partitions_.find(PathUtil::simplify_path_string(name));
         if (partition != partitions_.end())
             return partition->second;
         else
