@@ -25,7 +25,7 @@ namespace simgrid::module::fs {
      */
     void PathUtil::remove_trailing_slashes(std::string &path) {
         if (path != "/") {
-            while (path.at(path.size()-1) == '/') {
+            while (path.size() > 1 && path.at(path.size()-1) == '/') {
                 path.pop_back();
             }
         }
