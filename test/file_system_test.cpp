@@ -57,7 +57,7 @@ TEST_F(FileSystemTest, FileCreate)  {
 
     // Run the simulation
     ASSERT_NO_THROW(engine_->run());
-    
+
     // Redundant check, just for kicks
     ASSERT_DOUBLE_EQ(this->fs_->partition_by_name("/dev/a")->get_free_space(), 90*1000);
 
