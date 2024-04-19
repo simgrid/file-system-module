@@ -1,3 +1,7 @@
+# emacs/jed  backup files
+*~
+.*~
+
 # Prerequisites
 *.d
 
@@ -30,3 +34,7 @@
 *.exe
 *.out
 *.app
+
+# Build and lib directories
+build/
+lib/
