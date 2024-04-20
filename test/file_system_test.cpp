@@ -20,14 +20,8 @@ class FileSystemTest : public ::testing::Test {
 public:
     std::shared_ptr<sgfs::FileSystem> fs_;
     sg4::Host * host_{};
-    int argc_;
-    char **argv_;
 
-    FileSystemTest() {
-        argc_ = 1;
-        argv_ = (char **) calloc(argc_, sizeof(char *));
-        argv_[0] = strdup("unit_test");
-    }
+    FileSystemTest() = default;
 
     void setup_platform() {
         XBT_INFO("Creating a platform with one host and one disk...");
@@ -48,47 +42,48 @@ public:
 
 TEST_F(FileSystemTest, FileCreate)  {
     DO_TEST_WITH_FORK([this]() {
-        sg4::Engine engine(&argc_, argv_);
         this->setup_platform();
 
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
         sg4::Actor::create("FileCreator", host_, [this]() {
-            XBT_INFO("Creating a 10MB file at /foo/foo.txt, which should fail");
+            XBT_INFO("Create a 10MB file at /foo/foo.txt, which should fail");
             ASSERT_THROW(this->fs_->create_file("/foo/foo.txt", "10MB"), sgfs::FileSystemException);
-            XBT_INFO("Creating a 10MB file at /dev/a/foo.txt, which should fail");
+            XBT_INFO("Create a 10MB file at /dev/a/foo.txt, which should fail");
             ASSERT_THROW(this->fs_->create_file("/dev/a/foo.txt", "10MB"), sgfs::FileSystemException);
-            XBT_INFO("Creating a 10kB file at /dev/a/foo.txt, which should work");
+            XBT_INFO("Create a 10kB file at /dev/a/foo.txt, which should work");
             ASSERT_NO_THROW(this->fs_->create_file("/dev/a/foo.txt", "10kB"));
-            XBT_INFO("Checking remaining space");
+            XBT_INFO("Check remaining space");
             ASSERT_DOUBLE_EQ(this->fs_->partition_by_name("/dev/a")->get_free_space(), 90 * 1000);
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(engine.run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
         ASSERT_DOUBLE_EQ(this->fs_->partition_by_name("/dev/a")->get_free_space(), 90 * 1000);
     });
 }
 
+
 TEST_F(FileSystemTest, Directories)  {
     DO_TEST_WITH_FORK([this]() {
-        sg4::Engine engine(&argc_, argv_);
         this->setup_platform();
 
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
         sg4::Actor::create("FileCreator", host_, [this]() {
-            XBT_INFO("Creating a 10kB file at /dev/a/foo.txt");
+            XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
-            XBT_INFO("Creating a 10kB file at /dev/a/b/c/foo.txt");
+            XBT_INFO("Create a 10kB file at /dev/a/b/c/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/b/c/foo.txt", "10kB"));
             ASSERT_TRUE(fs_->file_exists("/dev/a/b/c/foo.txt"));
-            XBT_INFO("Creating a 10kB file at /dev/a/b/c, which should fail");
+            XBT_INFO("Create a 10kB file at /dev/a/b/c, which should fail");
             ASSERT_THROW(fs_->create_file("/dev/a/b/c/", "10kB"), sgfs::FileSystemException);
+            XBT_INFO("Check that what should (not) exist does (not)");
             ASSERT_FALSE(fs_->file_exists("/dev/a/b/c"));
             ASSERT_TRUE(fs_->directory_exists("/dev/a/b/c"));
-
+            XBT_INFO("Check free space");
+            ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a//////")->get_free_space(), 80*1000);
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(engine.run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
