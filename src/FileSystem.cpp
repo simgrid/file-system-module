@@ -203,4 +203,30 @@ namespace simgrid::module::fs {
         partition->move_file(src_dir, src_file_name, dst_dir, dst_file_name);
     }
 
+
+    /**
+     * @brief Method to check that a file exists at a given path
+     * @param full_path: the file path
+     * @return true if the file exists, false otherwise
+     */
+    bool FileSystem::file_exists(const std::string& full_path) {
+        std::string simplified_path = PathUtil::simplify_path_string(full_path);
+        auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
+        auto [dir, file_name] = PathUtil::split_path(path_at_mount_point);
+        return (partition->get_file_metadata(dir, file_name) != nullptr);
+    }
+
+    /**
+     * @brief Method to check that a directory exists
+     * @param dir_path: the directory path
+     * @return true if the directory exists, false otherwise
+     */
+    bool FileSystem::directory_exists(const std::string& dir_path) {
+        std::string simplified_path = PathUtil::simplify_path_string(dir_path);
+        auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
+        return partition->directory_exists(path_at_mount_point);
+    }
+
+
+
 }

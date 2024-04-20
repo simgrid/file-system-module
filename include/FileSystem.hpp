@@ -31,8 +31,13 @@ namespace simgrid::module::fs {
 
         void create_file(const std::string& full_path, sg_size_t size);
         void create_file(const std::string& full_path, const std::string& size);
+
+        [[nodiscard]] bool file_exists(const std::string& full_path);
+        [[nodiscard]] bool directory_exists(const std::string& dir_path);
+
         void move_file(const std::string& src_full_path, const std::string& dst_full_path) const;
         void unlink_file(const std::string& full_path) const;
+
         [[nodiscard]] sg_size_t file_size(const std::string& full_path) const;
 
         std::shared_ptr<File> open(const std::string& full_path);
