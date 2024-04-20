@@ -62,6 +62,13 @@ namespace simgrid::module::fs {
         }
     }
 
+    /**
+     * @brief Move a file
+     * @param src_dir_path: source directory path
+     * @param src_file_name: source file name
+     * @param dst_dir_path: destination directory path
+     * @param dst_file_name: destination file name
+     */
     void Partition::move_file(const std::string& src_dir_path, const std::string& src_file_name,
                               const std::string& dst_dir_path, const std::string& dst_file_name) {
 

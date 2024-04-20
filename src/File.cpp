@@ -13,11 +13,18 @@ namespace simgrid::module::fs {
 
    /**
      * @brief Read data from the file
-     * @param num_bytes: the number of bytes to read
+     * @param num_bytes: the number of bytes to read as a string with units
+     * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
      */
     void File::read(const std::string& num_bytes, bool simulate_it) {
         read(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")), simulate_it);
     }
+
+    /**
+     * @brief Read data from the file
+     * @param num_bytes: the number of bytes to read
+     * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
+     */
     void File::read(sg_size_t num_bytes, bool simulate_it) {
         if (num_bytes == 0) /* Nothing to read, return */
             return;
@@ -39,12 +46,18 @@ namespace simgrid::module::fs {
 
     /**
      * @brief Write data to the file
-     * @param num_bytes: the number of bytes to write
+     * @param num_bytes: the number of bytes to write as a string with units
+     * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
      */
     void File::write(const std::string& num_bytes, bool simulate_it) {
         write(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")), simulate_it);
     }
 
+    /**
+     * @brief Write data to the file
+     * @param num_bytes: the number of bytes to write
+     * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
+     */
     void File::write(sg_size_t num_bytes, bool simulate_it) {
         static int sequence_number = -1;
         int my_sequence_number = ++sequence_number;
@@ -85,11 +98,11 @@ namespace simgrid::module::fs {
 
     /**
      * @brief Change the file pointer position
-     * @param pos: the new offset
+     * @param pos: the position as an offset from the first byte of the file
      */
     void File::update_current_position(sg_offset_t pos) {
         if (pos < 0) {
-            throw std::runtime_error("EXCEPTION: CANNOT SEEK BEFORE FILE BEGIN");
+            throw FileSystemException(XBT_THROW_POINT, "Cannot seek before the first byte of the file");
         }
         current_position_ = pos;
     }

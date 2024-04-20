@@ -5,7 +5,8 @@
 namespace sgfs=simgrid::module::fs;
 
 // Ugly macro, but useful for these specific tests for knowing what's happening
-#define MY_ASSERT_EQ(lhs, rhs, message) if (lhs != rhs) ASSERT_EQ(lhs, rhs) << "Test failed on input string: " << message
+#define MY_ASSERT_EQ(lhs, rhs, message) if ((lhs) != (rhs)) ASSERT_EQ((lhs), (rhs)) \
+    << "Test failed on input string: " << (message)
 
 class PathUtilTest : public ::testing::Test {
 };
