@@ -7,20 +7,21 @@
 namespace simgrid::module::fs {
 
     /**
-     * @brief A method to simplify a path string
+     * @brief A method to simplify a path string (which is either absolute or relative to /)
      * @param path_string: an arbitrary path string
      * @return A new path string that has been sanitized
      * (i.e., remove redundant slashes, resolved ".."'s and "."'s)
      */
     std::string PathUtil::simplify_path_string(const std::string &path_string) {
-        auto lexically_normal =  std::string(std::filesystem::path(path_string).lexically_normal());
+        // Prepend with "/" as that's always the working directory
+        auto lexically_normal =  std::string(std::filesystem::path("/"+path_string).lexically_normal());
         PathUtil::remove_trailing_slashes(lexically_normal);
         return lexically_normal;
     }
 
     /**
      * @brief A method to remove extraneous trailing slashes
-     * @param path_string: an arbitrary path string
+     * @param path_string: an arbitrary path string (which is either absolute or relative to /)
      * @return A new path string where trailing slashes have been removed
      */
     void PathUtil::remove_trailing_slashes(std::string &path) {
@@ -30,21 +31,24 @@ namespace simgrid::module::fs {
     }
 
     /**
-     * @brief A method to determine whether a path goes "up" (i.e., it starts with "../")
-     * @param simplified_path: a SIMPLIFIED path
-     * @return True if the path goes up, false otherwise
+     * @brief A method to split a path (which is either absolute or relative to /) into a prefix (the "directory")
+     *        and a suffix (the "file")
+     * @param path_string: a simplified path string
+     * @return a <prefix , suffix> pair, where either one of them could be empty
      */
-    bool PathUtil::goes_up(const std::string &simplified_path) { // TODO: LIKELY USELESS
-        return simplified_path.rfind("..",0) == 0;
-    }
-
-    /**
-     * @brief A method to determine whether a path is absolute (i.e., it starts with "/")
-     * @param simplified_path: a path
-     * @return True if the path starts with '/'
-     */
-    bool PathUtil::is_absolute(const std::string &simplified_path) { // TODO: LIKELY USELESS
-        return simplified_path.rfind('/',0) == 0;
+    std::pair<std::string, std::string> PathUtil::split_path(std::string &path) {
+        std::string dir;
+        std::string file;
+        auto last_slash = path.find_last_of('/');
+        if (last_slash == std::string::npos) {
+            dir = "";
+            file = path;
+        } else {
+            dir = path.substr(0, last_slash);
+            if (dir.empty()) dir = "/"; // ugly special case
+            file = path.substr(last_slash + 1, std::string::npos);
+        }
+        return std::make_pair(dir, file);
     }
 
     /**

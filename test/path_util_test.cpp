@@ -16,14 +16,14 @@ TEST_F(PathUtilTest, PathSimplification)  {
             {"////", "/"},
             {"////foo", "/foo"},
             {"/////foo", "/foo"},
-            {"../../../././././/////foo", "../../../foo"},
-            {"../../", "../.."},
+            {"../../../././././/////foo", "/foo"},
+            {"../../", "/"},
             {"/../../","/"},
-            {"foo/bar/../", "foo"},
+            {"foo/bar/../", "/foo"},
             {"/////foo/////././././bar/../bar/..///../../", "/"},
-            {"./foo/.../........", "foo/.../........"},
-            {"./foo/", "foo"},
-            {"./foo", "foo"}
+            {"./foo/.../........", "/foo/.../........"},
+            {"./foo/", "/foo"},
+            {"./foo", "/foo"}
     };
 
     for (const auto &test_item : input_output) {
@@ -31,32 +31,21 @@ TEST_F(PathUtilTest, PathSimplification)  {
     }
 }
 
-TEST_F(PathUtilTest, PathGoesUp)  {
-    std::vector<std::pair<std::string, bool>> input_output = {
-            {"/../../", false},
-            {"../foo/", true},
-            {"/a/b/c/../../../", false},
-            {"/a/b/c/../../../../", false},
-            {"/aa/bb/cc/dd/../../ee/ff/", false}
-    };
 
-    for (const auto &test_item : input_output) {
-        auto simplified_path = sgfs::PathUtil::simplify_path_string(test_item.first);
-        MY_ASSERT_EQ(sgfs::PathUtil::goes_up(simplified_path), test_item.second, test_item.first);
-    }
-}
-
-TEST_F(PathUtilTest, PathIsAbsolute) {
-    std::vector<std::pair<std::string, bool>> input_output = {
-            {"/../../",                   true},
-            {"../foo/",                   false},
-            {"/a/b/c/../../../",          true},
-            {"/a/b/c/../../../../",       true},
-            {"/aa/bb/cc/dd/../../ee/ff/", true}
+TEST_F(PathUtilTest, SplitPath) {
+    std::vector<std::pair<std::string, std::pair<std::string, std::string>>> input_output = {
+            {"/a/b/c/d",                     {"/a/b/c", "d"}},
+            {"/a/b////c/d",                  {"/a/b/c", "d"}},
+            {"/",                            {"/", ""}},
+            {"a",                            {"/", "a"}},
     };
     for (const auto &test_item: input_output) {
         auto simplified_path = sgfs::PathUtil::simplify_path_string(test_item.first);
-        MY_ASSERT_EQ(sgfs::PathUtil::is_absolute(simplified_path), test_item.second, test_item.first);
+        auto [dir, file] = sgfs::PathUtil::split_path(simplified_path);
+//        std::cerr << "DIR = " << dir << "\n";
+//        std::cerr << "FILE = " << file << "\n";
+        MY_ASSERT_EQ(dir, test_item.second.first, test_item.first + "(wrong directory)");
+        MY_ASSERT_EQ(file, test_item.second.second, test_item.first + "(wrong directory)");
     }
 }
 

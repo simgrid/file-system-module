@@ -1,9 +1,11 @@
 #include <iostream>
 
-#include "File.hpp"
-#include "Storage.hpp"
 #include <simgrid/s4u/Engine.hpp>
 #include <simgrid/Exception.hpp>
+
+#include "File.hpp"
+#include "Storage.hpp"
+#include "FileSystemException.hpp"
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(fsmode_file, "File System module: File management related logs");
 
@@ -56,7 +58,7 @@ namespace simgrid::module::fs {
             added_bytes = current_position_ + num_bytes > metadata_->get_future_size();
 
         if (added_bytes > partition_->get_free_space()) {
-            throw std::runtime_error("EXCEPTION: NOT ENOUGH SPACE"); // TODO
+            throw FileSystemException(XBT_THROW_POINT, "write(): Not enough space");
         }
 
         // Compute the new tentative file size
