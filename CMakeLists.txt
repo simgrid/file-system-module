@@ -58,7 +58,7 @@ if(GTEST_LIBRARY)
 	set(TEST_FILES
 			test/path_util_test.cpp
 			test/file_system_test.cpp
-			test/main.cpp)
+			test/main.cpp test/test_util.hpp)
 	add_definitions(-DGTEST_USED)
 	add_executable(unit_tests EXCLUDE_FROM_ALL ${TEST_FILES})
 	target_link_libraries(unit_tests ${GTEST_LIBRARY} ${SIMGRID_LIBRARY} fsmod -lpthread -lm)

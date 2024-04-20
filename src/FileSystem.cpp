@@ -1,14 +1,13 @@
 #include <algorithm>
 #include <memory>
 
-#include <simgrid/s4u/Engine.hpp>
 #include <utility>
 
 #include "FileSystem.hpp"
 #include "File.hpp"
 #include "PathUtil.hpp"
 #include "Partition.hpp"
-#include "FileSystemException.h"
+#include "FileSystemException.hpp"
 
 namespace simgrid::module::fs {
     /**
@@ -53,7 +52,7 @@ namespace simgrid::module::fs {
 
         auto cleanup_mount_point = mount_point;
         PathUtil::remove_trailing_slashes(cleanup_mount_point);
-        if (PathUtil::simplify_path_string(mount_point) != cleanup_mount_point or not PathUtil::is_absolute(cleanup_mount_point)) {
+        if (PathUtil::simplify_path_string(mount_point) != cleanup_mount_point) {
             throw std::invalid_argument(
                     "simgrid::module::fs::FileSystem::mount_partition(): Mount point should be a simple absolute path");
         }
@@ -99,24 +98,18 @@ namespace simgrid::module::fs {
         std::string simplified_path = PathUtil::simplify_path_string(full_path);
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
 
-        // Check that the file doesn't already exist
-        if (partition->get_content().find(path_at_mount_point) != partition->get_content().end()) {
-            throw std::runtime_error("EXCEPTION: FILE ALREADY EXISTS"); // TODO
+        // Check that the path doesn't match an existing directory
+        // TODO: This is weak, since if directory "a/b/c/d" exists, director "a/b" does not!
+        // TODO: (we don't _really_ have directories, just prefixes before the file name)
+        if (partition->directory_exists(path_at_mount_point)) {
+            throw FileSystemException(XBT_THROW_POINT, "create_file(): provided file path is that of an existing directory");
         }
 
-        // Check that there is enough space
-        if (partition->get_free_space() < size) {
-            throw std::runtime_error("EXCEPTION: NOT ENOUGH SPACE"); // TODO
-        }
-
-        // Create FileMetaData
-        auto metadata = std::make_unique<FileMetadata>(size);
+        // Split the path
+        auto [dir, file_name] = PathUtil::split_path(path_at_mount_point);
 
         // Add the file to the content
-        partition->get_content()[path_at_mount_point] = std::move(metadata);
-
-        // Decrease free space on partition
-        partition->decrease_free_space(size);
+        partition->create_new_file(dir, file_name, size);
     }
 
     /**
@@ -125,22 +118,25 @@ namespace simgrid::module::fs {
       * @return
       */
     std::shared_ptr<File> FileSystem::open(const std::string &full_path) {
-        // Get a file descriptor
+        // "Get a file descriptor"
         if (this->num_open_files_ >= this->max_num_open_files_) {
-            throw std::runtime_error("EXCEPTION"); // TODO
+            throw FileSystemException(XBT_THROW_POINT, "open(): Too many open file descriptors");
         }
 
         // Get the partition and path
         std::string simplified_path = PathUtil::simplify_path_string(full_path);
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
 
-        // Check that file is there
-        if (partition->get_content().find(path_at_mount_point) == partition->get_content().end()) {
-            throw std::runtime_error("EXCEPTION: FILE NOT FOUND"); // TODO
+        // Split the path
+        auto [dir, file_name] = PathUtil::split_path(path_at_mount_point);
+
+        // Get the file metadata
+        auto metadata = partition->get_file_metadata(dir, file_name);
+        if (not metadata) {
+            throw FileSystemException(XBT_THROW_POINT, "open(): File not found");
         }
 
-        // Get the FileMetadata raw pointer
-        auto metadata = partition->get_content().at(path_at_mount_point).get();
+        // Increase the refcount
         metadata->increase_file_refcount();
 
         // Create the file object
@@ -160,32 +156,28 @@ namespace simgrid::module::fs {
         std::string simplified_path = PathUtil::simplify_path_string(full_path);
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
 
+        auto [dir, file_name] = PathUtil::split_path(path_at_mount_point);
+
         // Check that the file exist
-        if (partition->get_content().find(path_at_mount_point) == partition->get_content().end()) {
-            throw std::runtime_error("EXCEPTION: FILE DOES NOT EXISTS"); // TODO
+        auto file_metadata = partition->get_file_metadata(dir, file_name);
+        if (not file_metadata) {
+            throw FileSystemException(XBT_THROW_POINT, "file_size(): File not found");
         }
 
-        return partition->get_content().at(path_at_mount_point)->get_current_size();
+        return file_metadata->get_current_size();
     }
 
+    /**
+     * @brief Unlike a file
+     * @param full_path: the file path
+     */
     void FileSystem::unlink_file(const std::string &full_path) const {
         // Get the partition and path
         std::string simplified_path = PathUtil::simplify_path_string(full_path);
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
+        auto [dir, file_name] = PathUtil::split_path(path_at_mount_point);
 
-        FileMetadata *metadata_ptr = nullptr;
-        try {
-            metadata_ptr = partition->get_content().at(path_at_mount_point).get();
-        } catch (std::out_of_range &e) {
-            throw std::runtime_error("EXCEPTION: FILE DOES NOT EXISTS"); // TODO
-        }
-
-        if (metadata_ptr->get_file_refcount() > 0) {
-            throw std::runtime_error("EXCEPTION: CANNOT UNLINK A FILE THAT IS OPEN"); // TODO
-        }
-        // Free space on partition and remove from content
-        partition->increase_free_space(metadata_ptr->get_current_size());
-        partition->get_content().erase(path_at_mount_point);
+        partition->delete_file(dir, file_name);
     }
 
     /**
@@ -203,57 +195,29 @@ namespace simgrid::module::fs {
 
         // No mv across partitions (just like in the real world)
         if (src_partition != dst_partition) {
-            throw std::runtime_error("EXCEPTION: CANNOT DO A MOVE OPERATION ACROSS PARTITIONS"); // TODO
+            throw FileSystemException(XBT_THROW_POINT, "move_file(): Cannot move file across partitions");
         }
+
+        auto [src_dir, src_file_name] = PathUtil::split_path(src_path_at_mount_point);
+        auto [dst_dir, dst_file_name] = PathUtil::split_path(dst_path_at_mount_point);
+
         auto partition = src_partition;
-
-        // Get the src metadata, which must exit
-        FileMetadata *src_metadata;
-        try {
-            src_metadata = partition->get_content().at(src_path_at_mount_point).get();
-        } catch (std::out_of_range &e) {
-            throw std::runtime_error("EXCEPTION: FILE DOES NOT EXISTS"); // TODO
-        }
-
-        // Get the dst metadata, if any
-        FileMetadata *dst_metadata = nullptr;
-        try {
-            dst_metadata = partition->get_content().at(dst_path_at_mount_point).get();
-        } catch (std::out_of_range &ignore) {}
-
-        // No-op mv?
-        if (src_metadata == dst_metadata) {
-            return; // just like in the real world
-        }
-
-        // Sanity checks
-        if (src_metadata->get_file_refcount() > 0) {
-            throw std::runtime_error("EXCEPTION: CANNOT MOV A FILE THAT IS OPEN"); // TODO
-        }
-        if (dst_metadata and dst_metadata->get_file_refcount()) {
-            throw std::runtime_error("EXCEPTION: CANNOT MOV A FILE TO A DESTINATION FILE THAT IS OPEN"); // TODO
-        }
-
-        // Update free space if needed
-        if (dst_metadata) {
-            auto src_size = src_metadata->get_current_size();
-            auto dst_size = dst_metadata->get_current_size();
-            if (dst_size > src_size) {
-                partition->increase_free_space(dst_size - src_size);
-            } else {
-                if (src_size - dst_size <= partition->get_free_space()) {
-                    partition->decrease_free_space(src_size - dst_size);
-                } else {
-                    throw std::runtime_error("EXCEPTION: NOT ENOUGH SPACE"); // TODO
-                }
-            }
-        }
-
-        // Do the move (reusing the original unique ptr, just in case)
-        std::unique_ptr<FileMetadata> uniq_ptr = std::move(partition->get_content().at(src_path_at_mount_point));
-        partition->get_content().erase(src_path_at_mount_point);
-        partition->get_content()[dst_path_at_mount_point] = std::move(uniq_ptr);
-
+        partition->move_file(src_dir, src_file_name, dst_dir, dst_file_name);
     }
+
+
+    /**
+     * @brief Method to check that a file exists at a given path
+     * @param full_path: the file path
+     * @return true if the file exists, false otherwise
+     */
+    bool FileSystem::file_exists(const std::string& full_path) {
+        std::string simplified_path = PathUtil::simplify_path_string(full_path);
+        auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
+        auto [dir, file_name] = PathUtil::split_path(path_at_mount_point);
+        return (partition->get_file_metadata(dir, file_name) != nullptr);
+    }
+
+
 
 }
