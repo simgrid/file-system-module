@@ -99,6 +99,8 @@ namespace simgrid::module::fs {
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
 
         // Check that the path doesn't match an existing directory
+        // TODO: This is weak, since if directory "a/b/c/d" exists, director "a/b" does not!
+        // TODO: (we don't _really_ have directories, just prefixes before the file name)
         if (partition->directory_exists(path_at_mount_point)) {
             throw FileSystemException(XBT_THROW_POINT, "create_file(): provided file path is that of an existing directory");
         }
@@ -214,17 +216,6 @@ namespace simgrid::module::fs {
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
         auto [dir, file_name] = PathUtil::split_path(path_at_mount_point);
         return (partition->get_file_metadata(dir, file_name) != nullptr);
-    }
-
-    /**
-     * @brief Method to check that a directory exists
-     * @param dir_path: the directory path
-     * @return true if the directory exists, false otherwise
-     */
-    bool FileSystem::directory_exists(const std::string& dir_path) {
-        std::string simplified_path = PathUtil::simplify_path_string(dir_path);
-        auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
-        return partition->directory_exists(path_at_mount_point);
     }
 
 

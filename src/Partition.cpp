@@ -91,15 +91,12 @@ namespace simgrid::module::fs {
         if (dst_metadata) {
             auto src_size = src_metadata->get_current_size();
             auto dst_size = dst_metadata->get_current_size();
-            if (dst_size > src_size) {
-                free_space_ += (dst_size - src_size);
-            } else {
-                if (src_size - dst_size <= this->get_free_space()) {
-                    free_space_ -= (src_size - dst_size);
-                } else {
+            if (dst_size < src_size) {
+                if (src_size - dst_size > this->get_free_space()) {
                     throw FileSystemException(XBT_THROW_POINT, "move_file(): Not enough space");
                 }
             }
+            free_space_ += dst_size;
         }
 
         // Do the move (reusing the original unique ptr, just in case)
