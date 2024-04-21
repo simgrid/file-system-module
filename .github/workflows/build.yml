@@ -1,0 +1,50 @@
+name: Build-Linux
+
+on:
+  push:
+    paths-ignore:
+      - 'doc/**'
+      - '**.md'
+      - '**.rst'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+      - uses: actions/checkout@v2
+
+      - name: Install SimGrid
+        run: |
+          git clone https://framagit.org/simgrid/simgrid.git
+          cd simgrid
+          git checkout e3bfee0abad43d0b16c84b093b8c4d921fa91ddf
+          mkdir build
+          cd build
+          cmake ..
+          make -j8
+          make install
+
+      - name: Install Google Tests
+        run: |
+          wget https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz
+          tar xf release-1.11.0.tar.gz
+          cd googletest-release-1.11.0
+          cmake .
+          make -j8
+          make install
+
+      - name: Build tests
+        run: |
+          git clone git@github.com:frs69wq/file-system-module.git
+          cd file-system-module
+          mkdir build
+          cd build
+          cmake ..
+          make -j8 unit_tests
+          ./unit_tests
+
