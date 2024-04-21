@@ -19,8 +19,8 @@ jobs:
 
       - name: Install prereqs
         run: |
-          apt-get update
-          apt-get install -y libgraphviz-dev libboost-all-dev
+          sudo apt-get update
+          sudo apt-get install -y libgraphviz-dev libboost-all-dev
       - name: Install SimGrid
         run: |
           git clone https://framagit.org/simgrid/simgrid.git
@@ -30,7 +30,7 @@ jobs:
           cd build
           cmake ..
           make -j8
-          make install
+          sudo make install
 
       - name: Install Google Tests
         run: |
@@ -39,7 +39,7 @@ jobs:
           cd googletest-release-1.11.0
           cmake .
           make -j8
-          make install
+          sudo make install
 
       - name: Build tests
         run: |
