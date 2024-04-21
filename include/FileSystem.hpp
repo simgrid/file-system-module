@@ -15,6 +15,9 @@
 
 namespace simgrid::module::fs {
 
+	/**
+	 * @brief A CLASS
+	 */
     class XBT_PUBLIC FileSystem {
 
         const std::string name_;

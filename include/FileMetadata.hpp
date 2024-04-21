@@ -7,6 +7,8 @@
 
 namespace simgrid::module::fs {
 
+    /** \cond EXCLUDE_FROM_DOCUMENTATION    */
+
     class XBT_PUBLIC FileMetadata {
         sg_size_t current_size_;
         sg_size_t future_size_;
@@ -38,6 +40,9 @@ namespace simgrid::module::fs {
             ongoing_writes_.erase(write_id);
         }
     };
+
+    /** \endcond **/
+
 
 } // namespace
 

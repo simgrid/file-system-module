@@ -9,6 +9,9 @@
 
 namespace simgrid::module::fs {
 
+    /**
+     * @brief A class that implemented a file abstraction
+     */
     class XBT_PUBLIC File {
         friend class FileSystem;
 

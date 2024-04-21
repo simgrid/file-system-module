@@ -17,6 +17,19 @@ include_directories(
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# build the version number
+set(FSMOD_VERSION_MAJOR "0")
+set(FSMOD_VERSION_MINOR "1")
+set(FSMOD_VERSION_PATCH "0")
+set(FSMOD_VERSION_EXTRA "dev")
+
+if (${FSMOD_VERSION_PATCH} EQUAL "0")
+    set(FSMOD_RELEASE_VERSION "${FSMOD_VERSION_MAJOR}.${FSMOD_VERSION_MINOR}")
+else ()
+    set(FSMOD_RELEASE_VERSION "${FSMOD_VERSION_MAJOR}.${FSMOD_VERSION_MINOR}.${FSMOD_VERSION_PATCH}")
+endif ()
+
+
 set(CMAKEFILES_TXT
   		examples/CMakeLists.txt
 )
@@ -68,3 +81,7 @@ if(GTEST_LIBRARY)
 else()
 	add_custom_target(unit_tests echo "ERROR: Cannot build unit_tests because Google Test (libgtest) was not found by cmake." COMMAND echo "       If you have installed Google Test, re-run cmake." VERBATIM)
 endif()
+
+# Documentation
+include(${CMAKE_HOME_DIRECTORY}/conf/cmake/Documentation.cmake)
+

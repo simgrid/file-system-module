@@ -45,7 +45,7 @@ jobs:
         run: |
           sudo apt-get -y install lcov
 
-      - name: Build tests
+      - name: Build and run tests
         run: |
           git clone https://github.com/frs69wq/file-system-module.git
           cd file-system-module
@@ -66,6 +66,14 @@ jobs:
 #         name: codecov-umbrella
 #         token: ${{ secrets.CODECOV_TOKEN }}
 #         verbose: true
+
+      - name: Install Doxygen and Sphinx
+        run: |
+          sudo apt-get -y install doxygen
+          sudo apt-get -y install python3-sphinx
+
+      - name: Build Documentation
+        run: |
 
 
 

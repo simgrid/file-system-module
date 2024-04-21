@@ -13,6 +13,8 @@ namespace simgrid::module::fs {
 
     class Storage;
 
+    /** \cond EXCLUDE_FROM_DOCUMENTATION    */
+
     class XBT_PUBLIC Partition {
         friend class FileSystem;
 
@@ -48,6 +50,9 @@ namespace simgrid::module::fs {
                        const std::string& dst_dir_path, const std::string& dst_file_name);
 
     };
+
+    /** \endcond **/
+
 
 } // namespace simgrid::module::fs
 
