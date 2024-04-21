@@ -46,13 +46,16 @@ if (DOXYGEN_FOUND)
 
     add_custom_target(doc DEPENDS fsmod ${FSMOD_SECTIONS_LIST})
 
-    add_custom_command(TARGET doc COMMAND python3 
+    add_custom_command(TARGET doc
+            COMMAND rm -rf ${CMAKE_HOME_DIRECTORY}/docs/source
+            COMMAND cp -r ${CMAKE_HOME_DIRECTORY}/doc/source ${CMAKE_HOME_DIRECTORY}/docs)
+    add_custom_command(TARGET doc COMMAND python3
                         ${CMAKE_HOME_DIRECTORY}/doc/scripts/generate_rst.py 
                         ${CMAKE_HOME_DIRECTORY}/docs/${FSMOD_RELEASE_VERSION}
-                        ${CMAKE_HOME_DIRECTORY}/doc/source
+                        ${CMAKE_HOME_DIRECTORY}/docs/source
                         ${FSMOD_RELEASE_VERSION})
     add_custom_command(TARGET doc COMMAND sphinx-build 
-                        ${CMAKE_HOME_DIRECTORY}/doc/source 
+                        ${CMAKE_HOME_DIRECTORY}/docs/source
                         ${CMAKE_HOME_DIRECTORY}/docs/build/${FSMOD_RELEASE_VERSION})
     add_custom_command(TARGET doc COMMAND cp -R
                         ${CMAKE_HOME_DIRECTORY}/docs/build/${FSMOD_RELEASE_VERSION}
