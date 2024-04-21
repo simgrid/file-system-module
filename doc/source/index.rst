@@ -127,16 +127,6 @@ The main channel to reach the WRENCH team is via the support email:
 
 
 .. toctree::
-   :hidden:
-   :caption: Quickstart
-   :maxdepth: 1
-
    installation.rst
    getting_started.rst
-
-.. toctree:: 
-   :hidden:
-   :caption: API Reference
-   :maxdepth: 1
-
    api_user.rst

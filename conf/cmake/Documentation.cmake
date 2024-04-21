@@ -62,6 +62,7 @@ if (DOXYGEN_FOUND)
                         ${CMAKE_HOME_DIRECTORY}/docs/build/latest)
     add_custom_command(TARGET doc 
 	    COMMAND rm -rf ${CMAKE_HOME_DIRECTORY}/docs/${FSMOD_RELEASE_VERSION}
+	    COMMAND rm -rf ${CMAKE_HOME_DIRECTORY}/docs/latest
 	    COMMAND rm -rf ${CMAKE_HOME_DIRECTORY}/docs/logs
 	    COMMAND rm -rf ${CMAKE_HOME_DIRECTORY}/docs/source
 	    COMMAND mv ${CMAKE_HOME_DIRECTORY}/docs/build/* ${CMAKE_HOME_DIRECTORY}/docs
