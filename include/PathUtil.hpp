@@ -10,16 +10,19 @@
 
 namespace simgrid::module::fs {
 
+    /** \cond EXCLUDE_FROM_DOCUMENTATION */
+
     class XBT_PUBLIC PathUtil {
     public:
         static std::string simplify_path_string(const std::string &path);
         static void remove_trailing_slashes(std::string &path);
         static std::pair<std::string, std::string> split_path(std::string &path);
-//        static bool is_absolute(const std::string &simplified_path);
         static bool is_at_mount_point(const std::string &simplified_absolute_path, const std::string &mount_point);
         static std::string path_at_mount_point(const std::string &simplified_absolute_path, const std::string &mount_point);
 
     };
+
+    /** \endcond */
 
 } // namespace simgrid::module::fs
 
