@@ -43,7 +43,7 @@ jobs:
 
       - name: Build tests
         run: |
-          git clone git@github.com:frs69wq/file-system-module.git
+          git clone https://github.com/frs69wq/file-system-module.git
           cd file-system-module
           mkdir build
           cd build
