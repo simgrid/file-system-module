@@ -129,3 +129,41 @@ TEST_F(FileSystemTest, FileMove)  {
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
+
+
+TEST_F(FileSystemTest, FileOpenClose)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+
+//        xbt_log_control_set("root.thresh:info");
+
+        // Create one actor (for this test we could likely do it all in the maestro but what the hell)
+        sg4::Actor::create("FileCreator", host_, [this]() {
+            XBT_INFO("Create a 10kB file at /dev/a/stuff/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/stuff/foo.txt", "10kB"));
+            XBT_INFO("Create a 10kB file at /dev/a/stuff/other.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/stuff/other.txt", "10kB"));
+
+            XBT_INFO("Opening the file");
+            std::shared_ptr<sgfs::File> file;
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/stuff/foo.txt"));
+
+            XBT_INFO("Trying to move the file");
+            ASSERT_THROW(fs_->move_file("/dev/a/stuff/foo.txt", "/dev/a/bar.txt"), sgfs::FileSystemException);
+            XBT_INFO("Trying to unlink the file");
+            ASSERT_THROW(fs_->unlink_file("/dev/a/stuff/foo.txt"), sgfs::FileSystemException);
+            XBT_INFO("Trying to overwrite the file");
+            ASSERT_THROW(fs_->move_file("/dev/a/stuff/other.txt", "/dev/a/stuff/foo.txt"), sgfs::FileSystemException);
+
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(file->close());
+            XBT_INFO("Trying to unlink the file");
+            ASSERT_NO_THROW(fs_->unlink_file("/dev/a/stuff/foo.txt"));
+            ASSERT_FALSE(fs_->file_exists("/dev/a/stuff/foo.txt"));
+
+        });
+
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
