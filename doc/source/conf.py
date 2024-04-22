@@ -71,16 +71,7 @@ breathe_default_project = "user"
 # The full version, including alpha/beta/rc tags
 
 breathe_projects = {
-    "user": "../../docs/2.2-dev/user/xml/"
-}
-version = '0.1-dev'
-release = '0.1-dev'
-
-
-breathe_projects = {
     "user": "../../docs/0.1/user/xml/",
-    "developer": "../../docs/0.1/developer/xml/",
-    "internal": "../../docs/0.1/internal/xml/",
 }
 version = '0.1'
 release = '0.1'

@@ -10,9 +10,10 @@
 #include "FileSystemException.hpp"
 
 namespace simgrid::module::fs {
+
     /**
      * @brief Private method to find the partition and path at mount point for an absolute path
-     * @param full_path: an absolute simplified file path
+     * @param simplified_path: an absolute simplified file path
      * @return
      */
     std::pair<std::shared_ptr<Partition>, std::string>

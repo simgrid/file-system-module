@@ -8,7 +8,8 @@ namespace simgrid::module::fs {
     }
     /**
      * @brief Method to create an instance of a JBOD (Just a Bunch of Disks) storage
-     * @param disks: the disks
+     * @param name: the storage's name
+     * @param disks: the storage's disks
      * @return
      */
     std::shared_ptr<JBODStorage> JBODStorage::create(const std::string& name, const std::vector<s4u::Disk*>& disks) {

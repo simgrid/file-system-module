@@ -5,7 +5,8 @@ namespace simgrid::module::fs {
 
     /**
      * @brief Method to create an instance of a one-disk storage
-     * @param disk: the disk
+     * @param name: the storage's name
+     * @param disk: the storage's disk
      * @return
      */
     std::shared_ptr<OneDiskStorage> OneDiskStorage::create(const std::string& name, s4u::Disk* disk) {

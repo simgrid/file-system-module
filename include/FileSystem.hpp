@@ -16,8 +16,8 @@
 namespace simgrid::module::fs {
 
 	/**
-	 * @brief A CLASS
-	 */
+ 	* @brief A class that implements a file system abstraction
+ 	*/
     class XBT_PUBLIC FileSystem {
 
         const std::string name_;
@@ -28,9 +28,6 @@ namespace simgrid::module::fs {
 
         void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, sg_size_t size);
         void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, const std::string& size);
-
-        [[nodiscard]] std::shared_ptr<Partition> partition_by_name(const std::string& name) const;
-        [[nodiscard]] std::shared_ptr<Partition> partition_by_name_or_null(const std::string& name) const;
 
         void create_file(const std::string& full_path, sg_size_t size);
         void create_file(const std::string& full_path, const std::string& size);
@@ -43,6 +40,12 @@ namespace simgrid::module::fs {
         [[nodiscard]] sg_size_t file_size(const std::string& full_path) const;
 
         std::shared_ptr<File> open(const std::string& full_path);
+	
+	/** \cond EXCLUDE_FROM_DOCUMENTATION    */
+
+        [[nodiscard]] std::shared_ptr<Partition> partition_by_name(const std::string& name) const;
+        [[nodiscard]] std::shared_ptr<Partition> partition_by_name_or_null(const std::string& name) const;
+
         virtual ~FileSystem() = default;
 
     protected:
@@ -54,6 +57,8 @@ namespace simgrid::module::fs {
         std::map<std::string, std::shared_ptr<Partition>> partitions_;
 
         int num_open_files_ = 0;
+
+	/** \endcond */
 
     };
 

@@ -1,12 +1,15 @@
 .. _mainpage:
 
-.. figure::  images/simgrid_logo.png 
-   :scale:   20%
 
-TO WRITE
+The SimGrid File System Module: API Reference
+*********************************************
+
+Explore the API using the left search box and navigation bar.
 
 
 .. toctree::
-   installation.rst
-   getting_started.rst
-   api_user.rst
+  :hidden:
+  :glob:
+
+  api_user/*
+
