@@ -43,8 +43,6 @@ TEST_F(PathUtilTest, SplitPath) {
     for (const auto &test_item: input_output) {
         auto simplified_path = sgfs::PathUtil::simplify_path_string(test_item.first);
         auto [dir, file] = sgfs::PathUtil::split_path(simplified_path);
-//        std::cerr << "DIR = " << dir << "\n";
-//        std::cerr << "FILE = " << file << "\n";
         MY_ASSERT_EQ(dir, test_item.second.first, test_item.first + "(wrong directory)");
         MY_ASSERT_EQ(file, test_item.second.second, test_item.first + "(wrong directory)");
     }

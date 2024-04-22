@@ -71,7 +71,7 @@ namespace simgrid::module::fs {
             added_bytes = current_position_ + num_bytes - metadata_->get_future_size();
 
         if (added_bytes > partition_->get_free_space()) {
-            throw FileSystemException(XBT_THROW_POINT, "write(): Not enough space");
+            throw FileSystemException(XBT_THROW_POINT, "Not enough space in partition");
         }
 
         // Compute the new tentative file size
@@ -102,7 +102,7 @@ namespace simgrid::module::fs {
      */
     void File::update_current_position(sg_offset_t pos) {
         if (pos < 0) {
-            throw FileSystemException(XBT_THROW_POINT, "Cannot seek before the first byte of the file");
+            throw FileSystemException(XBT_THROW_POINT, "Cannot seek before the first byte");
         }
         current_position_ = pos;
     }

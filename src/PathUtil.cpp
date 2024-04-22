@@ -70,7 +70,7 @@ namespace simgrid::module::fs {
      */
     std::string PathUtil::path_at_mount_point(const std::string &simplified_absolute_path, const std::string &mount_point) {
         if (simplified_absolute_path.rfind(mount_point, 0) != 0) {
-            throw std::logic_error("Path '" + simplified_absolute_path + "' is not at mount point");
+            throw std::logic_error("Path not found at mount point");
         } else {
             return simplified_absolute_path.substr(mount_point.length());
         }

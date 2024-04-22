@@ -27,12 +27,12 @@ namespace simgrid::module::fs {
     void Partition::create_new_file(const std::string &dir_path, const std::string &file_name, sg_size_t size) {
         // Check that there is enough space
         if (free_space_ < size) {
-            throw FileSystemException(XBT_THROW_POINT, "create_new_file(): Not enough space");
+            throw FileSystemException(XBT_THROW_POINT, "Not enough space");
         }
 
         // Check that the file doesn't already exit
         if (this->get_file_metadata(dir_path, file_name)) {
-            throw FileSystemException(XBT_THROW_POINT, "create_new_file(): file already exists");
+            throw FileSystemException(XBT_THROW_POINT, "File already exists");
         }
 
         content_[dir_path][file_name] = std::make_unique<FileMetadata>(size);
@@ -48,11 +48,11 @@ namespace simgrid::module::fs {
     void Partition::delete_file(const std::string &dir_path, const std::string &file_name) {
         FileMetadata *metadata_ptr = this->get_file_metadata(dir_path, file_name);
         if (not metadata_ptr) {
-            throw FileSystemException(XBT_THROW_POINT, "delete_file(): File not found);");
+            throw FileSystemException(XBT_THROW_POINT, "File not found);");
         }
 
         if (metadata_ptr->get_file_refcount() > 0) {
-            throw FileSystemException(XBT_THROW_POINT, "delete_file(): Cannot unlink a file that is opened");
+            throw FileSystemException(XBT_THROW_POINT, "Cannot unlink a file that is opened");
         }
 
         auto meta_data = this->get_file_metadata(dir_path, file_name);
@@ -75,7 +75,7 @@ namespace simgrid::module::fs {
         // Get the src metadata, which must exist
         FileMetadata *src_metadata = this->get_file_metadata(src_dir_path, src_file_name);
         if (not src_metadata) {
-            throw FileSystemException(XBT_THROW_POINT, "move_file(): file not found");
+            throw FileSystemException(XBT_THROW_POINT, "File not found");
         }
 
         // Get the dst metadata, if any
@@ -88,10 +88,10 @@ namespace simgrid::module::fs {
 
         // Sanity checks
         if (src_metadata->get_file_refcount() > 0) {
-            throw FileSystemException(XBT_THROW_POINT, "move_file(): Cannot move a file that is open");
+            throw FileSystemException(XBT_THROW_POINT, "Cannot move a file that is open");
         }
         if (dst_metadata and dst_metadata->get_file_refcount()) {
-            throw FileSystemException(XBT_THROW_POINT, "move_file(): Cannot move to a destination file that is open");
+            throw FileSystemException(XBT_THROW_POINT, "Cannot move to a destination file that is open");
         }
 
         // Update free space if needed
@@ -100,7 +100,7 @@ namespace simgrid::module::fs {
             auto dst_size = dst_metadata->get_current_size();
             if (dst_size < src_size) {
                 if (src_size - dst_size > this->get_free_space()) {
-                    throw FileSystemException(XBT_THROW_POINT, "move_file(): Not enough space");
+                    throw FileSystemException(XBT_THROW_POINT, "Not enough space");
                 }
             }
             free_space_ += dst_size;
@@ -114,7 +114,7 @@ namespace simgrid::module::fs {
 
     std::set<std::string> Partition::list_files_in_directory(const std::string &dir_path) {
         if (content_.find(dir_path) == content_.end()) {
-            throw FileSystemException(XBT_THROW_POINT, "list_files_in_directory(): Directory does not exist");
+            throw FileSystemException(XBT_THROW_POINT, "Directory does not exist");
         }
         std::set<std::string> keys;
         for (auto const &key: content_[dir_path]) {
@@ -125,12 +125,13 @@ namespace simgrid::module::fs {
 
     void Partition::delete_directory(const std::string &dir_path) {
         if (content_.find(dir_path) == content_.end()) {
-            throw FileSystemException(XBT_THROW_POINT, "unlink_directory(): Directory does not exist");
+            throw FileSystemException(XBT_THROW_POINT, "Directory does not exist");
         }
         // Check that no file is open
         for (const auto &item : content_.at(dir_path)) {
             if (item.second->get_file_refcount() != 0) {
-                throw FileSystemException(XBT_THROW_POINT, "delete_directory(): Cannot delete a file that is open - no content deleted");
+                throw FileSystemException(XBT_THROW_POINT,
+                                          "Cannot delete a file that is open - no content deleted in directory");
             }
         }
         // Wipe everything out
