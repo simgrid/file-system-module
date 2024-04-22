@@ -48,11 +48,11 @@ namespace simgrid::module::fs {
     void Partition::delete_file(const std::string &dir_path, const std::string &file_name) {
         FileMetadata *metadata_ptr = this->get_file_metadata(dir_path, file_name);
         if (not metadata_ptr) {
-            throw FileSystemException(XBT_THROW_POINT, "unlink_file(): File not found);");
+            throw FileSystemException(XBT_THROW_POINT, "delete_file(): File not found);");
         }
 
         if (metadata_ptr->get_file_refcount() > 0) {
-            throw FileSystemException(XBT_THROW_POINT, "unlink_file(): Cannot unlink a file that is opened");
+            throw FileSystemException(XBT_THROW_POINT, "delete_file(): Cannot unlink a file that is opened");
         }
 
         auto meta_data = this->get_file_metadata(dir_path, file_name);
@@ -112,4 +112,28 @@ namespace simgrid::module::fs {
         content_[dst_dir_path][dst_file_name] = std::move(uniq_ptr);
     }
 
+    std::set<std::string> Partition::list_files_in_directory(const std::string &dir_path) {
+        if (content_.find(dir_path) == content_.end()) {
+            throw FileSystemException(XBT_THROW_POINT, "list_files_in_directory(): Directory does not exist");
+        }
+        std::set<std::string> keys;
+        for (auto const &key: content_[dir_path]) {
+            keys.insert(key.first);
+        }
+        return keys;
+    }
+
+    void Partition::delete_directory(const std::string &dir_path) {
+        if (content_.find(dir_path) == content_.end()) {
+            throw FileSystemException(XBT_THROW_POINT, "unlink_directory(): Directory does not exist");
+        }
+        // Check that no file is open
+        for (const auto &item : content_.at(dir_path)) {
+            if (item.second->get_file_refcount() != 0) {
+                throw FileSystemException(XBT_THROW_POINT, "delete_directory(): Cannot delete a file that is open - no content deleted");
+            }
+        }
+        // Wipe everything out
+        content_.erase(dir_path);
+    }
 }

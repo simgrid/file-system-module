@@ -219,6 +219,37 @@ namespace simgrid::module::fs {
         return (partition->get_file_metadata(dir, file_name) != nullptr);
     }
 
+    /**
+     * @brief Method to check that a directory exists at a given path
+     * @param full_path: the directory path
+     * @return true if the directory exists, false otherwise
+     */
+    bool FileSystem::directory_exists(const std::string& full_path) {
+        std::string simplified_path = PathUtil::simplify_path_string(full_path);
+        auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
+        return partition->directory_exists(path_at_mount_point);
+    }
 
+    /**
+     * @brief Method to get the list of names of files in a directory
+     * @param full_dir_path: the path to the directory
+     * @return
+     */
+    std::set<std::string> FileSystem::list_files_in_directory(const std::string &full_dir_path) {
+        std::string simplified_path = PathUtil::simplify_path_string(full_dir_path);
+        auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
+        return partition->list_files_in_directory(path_at_mount_point);
+    }
+
+    /**
+     * @brief Method to remove a directory and the files it contains
+     * @param full_dir_path: the path to the directory
+     * @return
+     */
+    void FileSystem::unlink_directory(const std::string &full_dir_path) {
+        std::string simplified_path = PathUtil::simplify_path_string(full_dir_path);
+        auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
+        partition->delete_directory(path_at_mount_point);
+    }
 
 }

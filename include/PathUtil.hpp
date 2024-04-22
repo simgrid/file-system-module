@@ -19,7 +19,6 @@ namespace simgrid::module::fs {
         static std::pair<std::string, std::string> split_path(std::string &path);
         static bool is_at_mount_point(const std::string &simplified_absolute_path, const std::string &mount_point);
         static std::string path_at_mount_point(const std::string &simplified_absolute_path, const std::string &mount_point);
-
     };
 
     /** \endcond */

@@ -2,6 +2,7 @@
 #define SIMGRID_MODULE_FS_PARTITION_H_
 
 #include <map>
+#include <set>
 #include <unordered_map>
 #include <memory>
 #include <string>
@@ -41,6 +42,9 @@ namespace simgrid::module::fs {
         [[nodiscard]] std::shared_ptr<Storage> get_storage() const { return storage_; }
 
         [[nodiscard]] bool directory_exists(const std::string& dir_path) { return content_.find(dir_path) != content_.end(); }
+        std::set<std::string> list_files_in_directory(const std::string &dir_path);
+        void delete_directory(const std::string &dir_path);
+
         [[nodiscard]] FileMetadata* get_file_metadata(const std::string& dir_path, const std::string& file_name);
         void create_new_file(const std::string& dir_path,
                              const std::string& file_name,

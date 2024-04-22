@@ -80,6 +80,17 @@ TEST_F(FileSystemTest, Directories)  {
             ASSERT_FALSE(fs_->file_exists("/dev/a/b/c"));
             XBT_INFO("Check free space");
             ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a//////")->get_free_space(), 80*1000);
+            XBT_INFO("Create a 10kB file at /dev/a/b/c/faa.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/b/c/faa.txt", "10kB"));
+                std::set<std::string> found_files;
+                ASSERT_NO_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c"));
+                ASSERT_TRUE(found_files.find("foo.txt") != found_files.end());
+                ASSERT_TRUE(found_files.find("faa.txt") != found_files.end());
+                ASSERT_NO_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c/"));
+                ASSERT_TRUE(found_files.find("foo.txt") != found_files.end());
+                ASSERT_TRUE(found_files.find("faa.txt") != found_files.end());
+            ASSERT_NO_THROW(fs_->unlink_directory("/dev/a/b/c"));
+            ASSERT_FALSE(fs_->directory_exists("/dev/a/b/c"));
         });
 
         // Run the simulation
