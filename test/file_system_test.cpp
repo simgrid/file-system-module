@@ -26,14 +26,14 @@ public:
     FileSystemTest() = default;
 
     void setup_platform() {
-        XBT_INFO("Creating a platform with one host and one disk...");
+        XBT_INFO("Creating a platform with one host and two disks...");
         auto *my_zone = sg4::create_full_zone("zone");
         host_ = my_zone->create_host("my_host", "100Gf");
         disk_one_ = host_->create_disk("disk_one", "1kBps", "2kBps");
         disk_two_ = host_->create_disk("disk_two", "1kBps", "2kBps");
         my_zone->seal();
 
-        XBT_INFO("Creating a one-disk storage on the host's disk...");
+        XBT_INFO("Creating a one-disk storage on the host's first disk...");
         auto ods = sgfs::OneDiskStorage::create("my_storage", disk_one_);
         XBT_INFO("Creating a file system...");
         fs_ = sgfs::FileSystem::create("my_fs");
@@ -43,13 +43,13 @@ public:
 
 };
 
-
 TEST_F(FileSystemTest, MountPartition)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
 
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
         sg4::Actor::create("TestActor", host_, [this]() {
+            XBT_INFO("Creating a one-disk storage on the host's second disk...");
             auto ods = sgfs::OneDiskStorage::create("my_storage", disk_two_);
             XBT_INFO("Mount a new partition with a name conflict, which shouldn't work");
             ASSERT_THROW(fs_->mount_partition("/dev/a", ods, "100kB"), std::invalid_argument);
@@ -86,7 +86,6 @@ TEST_F(FileSystemTest, FileCreate)  {
     });
 }
 
-
 TEST_F(FileSystemTest, Directories)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
@@ -122,7 +121,6 @@ TEST_F(FileSystemTest, Directories)  {
     });
 }
 
-
 TEST_F(FileSystemTest, FileMove)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
@@ -154,12 +152,9 @@ TEST_F(FileSystemTest, FileMove)  {
     });
 }
 
-
 TEST_F(FileSystemTest, FileOpenClose)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-
-//        xbt_log_control_set("root.thresh:info");
 
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
         sg4::Actor::create("TestActor", host_, [this]() {
