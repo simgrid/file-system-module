@@ -33,8 +33,8 @@ namespace simgrid::module::fs {
 
     public:
 
-        void read(const std::string& num_bytes, bool simulate_it=true);
-        void read(sg_size_t num_bytes, bool simulate_it=true);
+        sg_size_t read(const std::string& num_bytes, bool simulate_it=true);
+        sg_size_t read(sg_size_t num_bytes, bool simulate_it=true);
         void write(const std::string& num_bytes, bool simulate_it=true);
         void write(sg_size_t num_bytes, bool simulate_it=true);
 

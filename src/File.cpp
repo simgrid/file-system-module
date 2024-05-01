@@ -15,21 +15,23 @@ namespace simgrid::module::fs {
      * @brief Read data from the file
      * @param num_bytes: the number of bytes to read as a string with units
      * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
+     * @return the actual number of bytes read in the file
      */
-    void File::read(const std::string& num_bytes, bool simulate_it) {
-        read(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")), simulate_it);
+    sg_size_t File::read(const std::string& num_bytes, bool simulate_it) {
+        return read(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")), simulate_it);
     }
 
     /**
      * @brief Read data from the file
      * @param num_bytes: the number of bytes to read
      * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
+     * @return the actual number of bytes read in the file
      */
-    void File::read(sg_size_t num_bytes, bool simulate_it) {
+    sg_size_t File::read(sg_size_t num_bytes, bool simulate_it) {
         if (num_bytes == 0) /* Nothing to read, return */
-            return;
+            return 0;
         // if the current position is close to the end of the file, we may not be able to read the requested size
-        sg_size_t num_bytes_to_read   = std::min(num_bytes, metadata_->get_current_size() - current_position_);
+        sg_size_t num_bytes_to_read = std::min(num_bytes, metadata_->get_current_size() - current_position_);
 
         // Do the I/O simulation if need be
         if (simulate_it) {
@@ -42,6 +44,7 @@ namespace simgrid::module::fs {
         // Update
         current_position_ += num_bytes_to_read;
         metadata_->set_access_date(s4u::Engine::get_clock());
+        return num_bytes_to_read;
     }
 
     /**
