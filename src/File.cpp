@@ -11,6 +11,29 @@ XBT_LOG_NEW_DEFAULT_CATEGORY(fsmode_file, "File System module: File management r
 
 namespace simgrid::module::fs {
 
+    s4u::IoPtr File::read_async(const std::string& num_bytes) {
+        return read_async(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")));
+    }
+
+    s4u::IoPtr File::read_async(sg_size_t num_bytes) {
+        // if the current position is close to the end of the file, we may not be able to read the requested size
+        sg_size_t num_bytes_to_read = std::min(num_bytes, metadata_->get_current_size() - current_position_);
+        return boost::dynamic_pointer_cast<s4u::Io>(partition_->get_storage()->read_async(num_bytes_to_read));
+    }
+
+    sg_size_t File::read_wait(s4u::IoPtr read) {
+        try {
+           read->wait();
+        } catch (StorageFailureException &e) {
+           throw xbt::UnimplementedError("Handling of hardware resource failures not implemented");
+        }
+        sg_size_t num_bytes_read = read->get_performed_ioops();
+        // Update
+        current_position_ += num_bytes_read;
+        metadata_->set_access_date(s4u::Engine::get_clock());
+        return num_bytes_read;
+    }
+
    /**
      * @brief Read data from the file
      * @param num_bytes: the number of bytes to read as a string with units

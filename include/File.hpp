@@ -33,6 +33,9 @@ namespace simgrid::module::fs {
 
     public:
 
+        s4u::IoPtr read_async(const std::string& num_bytes);
+        s4u::IoPtr read_async(sg_size_t num_bytes);
+        sg_size_t read_wait(s4u::IoPtr io);
         sg_size_t read(const std::string& num_bytes, bool simulate_it=true);
         sg_size_t read(sg_size_t num_bytes, bool simulate_it=true);
         void write(const std::string& num_bytes, bool simulate_it=true);
