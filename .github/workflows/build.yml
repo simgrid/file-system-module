@@ -74,7 +74,7 @@ jobs:
 
       - name: Build and Deploy Documentation
         run: |
-          cd
+          git clone https://github.com/frs69wq/file-system-module.git
           cd file-system-module
           mkfir build
           cd build
