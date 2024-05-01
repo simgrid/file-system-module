@@ -25,20 +25,19 @@ namespace simgrid::module::fs {
     }
 
     s4u::ActivityPtr OneDiskStorage::read_async(sg_size_t size) {
-        throw std::runtime_error("OneDiskStorage::read_async(): NOT IMPLEMENTED YET");
+        return disks_.front()->read_async(size);
     }
 
     void OneDiskStorage::read(sg_size_t size) {
-        throw std::runtime_error("OneDiskStorage::read(): NOT IMPLEMENTED YET");
-
+        disks_.front()->read(size);
     }
 
     s4u::ActivityPtr OneDiskStorage::write_async(sg_size_t size) {
-        throw std::runtime_error("OneDiskStorage::write_async(): NOT IMPLEMENTED YET");
+        return disks_.front()->write_async(size);
     }
 
     void OneDiskStorage::write(sg_size_t size) {
-        this->disks_.front()->write(size);
+        disks_.front()->write(size);
     }
 
 }
