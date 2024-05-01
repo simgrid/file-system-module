@@ -75,7 +75,10 @@ jobs:
       - name: Build and Deploy Documentation
         run: |
           cd
-          cd file-system-module/build
+          cd file-system-module
+          mkfir build
+          cd build
+          cmake ..
           make doc
 
 
