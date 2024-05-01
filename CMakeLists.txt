@@ -69,6 +69,7 @@ endforeach()
 find_library(GTEST_LIBRARY NAMES gtest)
 if(GTEST_LIBRARY)
 	set(TEST_FILES
+			test/one_disk_storage_test.cpp
 			test/path_util_test.cpp
 			test/file_system_test.cpp
 			test/main.cpp test/test_util.hpp)
@@ -84,4 +85,3 @@ endif()
 
 # Documentation
 include(${CMAKE_HOME_DIRECTORY}/conf/cmake/Documentation.cmake)
-
