@@ -72,11 +72,11 @@ jobs:
           sudo apt-get -y install doxygen
           sudo apt-get -y install python3-sphinx
 
-     - name: Build and Deploy Documentation
-       run: |
-         cd
-         cd file-system-module/build
-         make doc
+      - name: Build and Deploy Documentation
+        run: |
+          cd
+          cd file-system-module/build
+          make doc
 
 
 
