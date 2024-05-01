@@ -15,23 +15,25 @@ namespace simgrid::module::fs {
         void set_raid_level(RAID raid_level) { raid_level_ = raid_level; }
         s4u::MessageQueue* mqueue() { return mq_; }
 
-        s4u::ActivityPtr read_init(sg_size_t size) override;
         s4u::ActivityPtr read_async(sg_size_t size) override;
         void read(sg_size_t size) override;
-        s4u::ActivityPtr write_init(sg_size_t size) override;
         s4u::ActivityPtr write_async(sg_size_t size) override;
         void write(sg_size_t size) override;
 
     protected:
         JBODStorage(const std::string& name, const std::vector<simgrid::s4u::Disk*>& disks);
+        void update_parity_disk_idx() { parity_disk_idx_ = (parity_disk_idx_- 1) % num_disks_; }
+
+        int get_next_read_disk_idx() { return (++read_disk_idx_) % num_disks_; }
 
         s4u::MessageQueue* mq_;
 
-    protected:
+    private:
         unsigned int num_disks_;
         RAID raid_level_;
+        unsigned int parity_disk_idx_;
+        int read_disk_idx_ = -1;
     };
-
 }
 
 #endif //FSMOD_JBODSTORAGE_HPP
