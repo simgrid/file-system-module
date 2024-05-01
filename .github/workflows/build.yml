@@ -76,7 +76,6 @@ jobs:
         run: |
           #git clone https://github.com/frs69wq/file-system-module.git
           cd file-system-module
-          mkdir build
           make doc
 
 
