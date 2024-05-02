@@ -1,0 +1,9 @@
+.. _simgrid::module::fs::FileSystem:
+
+simgrid::module::fs::FileSystem
+*******************************
+
+.. doxygenclass:: simgrid::module::fs::FileSystem
+   :project: user
+   :members:
+
