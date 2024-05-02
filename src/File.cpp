@@ -18,20 +18,10 @@ namespace simgrid::module::fs {
     s4u::IoPtr File::read_async(sg_size_t num_bytes) {
         // if the current position is close to the end of the file, we may not be able to read the requested size
         sg_size_t num_bytes_to_read = std::min(num_bytes, metadata_->get_current_size() - current_position_);
-        return boost::dynamic_pointer_cast<s4u::Io>(partition_->get_storage()->read_async(num_bytes_to_read));
-    }
-
-    sg_size_t File::read_wait(s4u::IoPtr read) {
-        try {
-           read->wait();
-        } catch (StorageFailureException &e) {
-           throw xbt::UnimplementedError("Handling of hardware resource failures not implemented");
-        }
-        sg_size_t num_bytes_read = read->get_performed_ioops();
         // Update
-        current_position_ += num_bytes_read;
+        current_position_ += num_bytes_to_read;
         metadata_->set_access_date(s4u::Engine::get_clock());
-        return num_bytes_read;
+        return boost::dynamic_pointer_cast<s4u::Io>(partition_->get_storage()->read_async(num_bytes_to_read));
     }
 
    /**
@@ -55,6 +45,9 @@ namespace simgrid::module::fs {
             return 0;
         // if the current position is close to the end of the file, we may not be able to read the requested size
         sg_size_t num_bytes_to_read = std::min(num_bytes, metadata_->get_current_size() - current_position_);
+        // Update
+        current_position_ += num_bytes_to_read;
+        metadata_->set_access_date(s4u::Engine::get_clock());
 
         // Do the I/O simulation if need be
         if (simulate_it) {
@@ -64,9 +57,6 @@ namespace simgrid::module::fs {
                 throw xbt::UnimplementedError("Handling of hardware resource failures not implemented");
             }
         }
-        // Update
-        current_position_ += num_bytes_to_read;
-        metadata_->set_access_date(s4u::Engine::get_clock());
         return num_bytes_to_read;
     }
 

@@ -2,6 +2,7 @@
 #define SIMGRID_MODULE_FS_FILE_H_
 
 #include <simgrid/forward.h>
+#include <simgrid/s4u/Io.hpp>
 #include <xbt/parse_units.hpp>
 
 #include "FileMetadata.hpp"
@@ -32,10 +33,11 @@ namespace simgrid::module::fs {
         File& operator=(const File&) = delete;
 
     public:
+        /** Get the number of bytes actually read by a given I/O Read activity */
+        sg_size_t get_num_bytes_read(s4u::IoPtr read) { return read->get_performed_ioops(); }
 
         s4u::IoPtr read_async(const std::string& num_bytes);
         s4u::IoPtr read_async(sg_size_t num_bytes);
-        sg_size_t read_wait(s4u::IoPtr io);
         sg_size_t read(const std::string& num_bytes, bool simulate_it=true);
         sg_size_t read(sg_size_t num_bytes, bool simulate_it=true);
         void write(const std::string& num_bytes, bool simulate_it=true);
