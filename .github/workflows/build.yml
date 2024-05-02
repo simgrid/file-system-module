@@ -78,6 +78,8 @@ jobs:
         run: |
           #git clone https://github.com/frs69wq/file-system-module.git
           cd file-system-module/build
+          pwd
+          cmake ..
           make doc
           cd ../..
           cp -r ./docs/ $HOME/gh-pages-to-deploy;
