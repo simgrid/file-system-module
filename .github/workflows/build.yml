@@ -73,6 +73,7 @@ jobs:
           sudo apt-get -y install python3-sphinx
           pip install sphinx_rtd_theme
           pip install recommonmark
+          pip install breathe
 
       - name: Build and Deploy Documentation
         env:
