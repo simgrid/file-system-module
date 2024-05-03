@@ -1,4 +1,5 @@
 [![Build-Linux](https://github.com/frs69wq/file-system-module/actions/workflows/build.yml/badge.svg)](https://github.com/frs69wq/file-system-module/actions/workflows/build.yml)
+[![codecov](https://codecov.io/gh/henricasanova/file-system-module/graph/badge.svg?token=2RDPPKLBQY)](https://codecov.io/gh/henricasanova/file-system-module)
 
 
 # FSMod: File System Module for SimGrid
