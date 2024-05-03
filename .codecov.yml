@@ -1,3 +1,5 @@
+ignore:
+  - "test"
 coverage:
   status:
     project:
