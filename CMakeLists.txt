@@ -41,7 +41,20 @@ set(SOURCE_FILES
 		src/Partition.cpp
 		src/Storage.cpp
 		src/JBODStorage.cpp
-		src/OneDiskStorage.cpp)
+		src/OneDiskStorage.cpp
+		)
+
+set(HEADER_FILES
+	include/File.hpp                
+	include/FileSystemException.hpp 
+	include/Partition.hpp
+	include/FileMetadata.hpp        
+	include/JBODStorage.hpp         
+	include/PathUtil.hpp
+	include/FileSystem.hpp          
+	include/OneDiskStorage.hpp      
+	include/Storage.hpp
+	)
 
 add_library(fsmod SHARED ${SOURCE_FILES})
 
@@ -72,13 +85,15 @@ if(GTEST_LIBRARY)
 			test/one_disk_storage_test.cpp
 			test/path_util_test.cpp
 			test/file_system_test.cpp
-			test/main.cpp test/test_util.hpp)
+			test/main.cpp 
+			test/test_util.hpp)
 	add_definitions(-DGTEST_USED)
-	add_executable(unit_tests EXCLUDE_FROM_ALL ${TEST_FILES})
+	add_executable(unit_tests EXCLUDE_FROM_ALL ${SOURCE_FILES} ${HEADER_FILES} ${TEST_FILES})
+	target_include_directories(unit_tests PRIVATE include)
 	target_link_libraries(unit_tests ${GTEST_LIBRARY} ${SIMGRID_LIBRARY} fsmod -lpthread -lm)
 	set_target_properties(unit_tests PROPERTIES COMPILE_FLAGS "-g -O0 --coverage")
 	set_target_properties(unit_tests PROPERTIES LINK_FLAGS "--coverage")
-	add_custom_command(TARGET unit_tests COMMAND find . -name *.gcda -delete)
+	#add_custom_command(TARGET unit_tests COMMAND find . -name *.gcda -delete)
 else()
 	add_custom_target(unit_tests echo "ERROR: Cannot build unit_tests because Google Test (libgtest) was not found by cmake." COMMAND echo "       If you have installed Google Test, re-run cmake." VERBATIM)
 endif()
