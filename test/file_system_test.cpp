@@ -4,7 +4,6 @@
 #include <simgrid/s4u/Engine.hpp>
 #include <simgrid/s4u/Actor.hpp>
 
-#include "../include/PathUtil.hpp"
 #include "../include/FileSystem.hpp"
 #include "../include/OneDiskStorage.hpp"
 #include "../include/FileSystemException.hpp"

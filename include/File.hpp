@@ -3,6 +3,7 @@
 
 #include <simgrid/forward.h>
 #include <simgrid/s4u/Io.hpp>
+#include <utility>
 #include <xbt/parse_units.hpp>
 
 #include "FileMetadata.hpp"
@@ -17,7 +18,7 @@ namespace simgrid::module::fs {
         friend class FileSystem;
 
         std::string path_;
-        sg_size_t current_position_ = SEEK_SET;
+        sg_offset_t current_position_ = SEEK_SET;
         int desc_id     = 0;
         FileMetadata* metadata_;
         Partition* partition_;
@@ -27,11 +28,11 @@ namespace simgrid::module::fs {
 
     public:
         virtual ~File() = default;
+        File(const File&) = delete;
 
     protected:
-        File(const std::string& full_path, FileMetadata *metadata, Partition *partition) :
-                path_(full_path), metadata_(metadata), partition_(partition) {};
-        File(const File&) = delete;
+        File(std::string full_path, FileMetadata *metadata, Partition *partition) :
+                path_(std::move(full_path)), metadata_(metadata), partition_(partition) {};
         File& operator=(const File&) = delete;
 
     public:
