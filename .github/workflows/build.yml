@@ -46,6 +46,8 @@ jobs:
           sudo apt-get -y install lcov
 
       - name: Run tests, compute coverage
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: |
           git clone https://github.com/frs69wq/file-system-module.git
           cd file-system-module
