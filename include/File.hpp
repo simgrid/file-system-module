@@ -18,7 +18,7 @@ namespace simgrid::module::fs {
         friend class FileSystem;
 
         std::string path_;
-        sg_offset_t current_position_ = SEEK_SET;
+        sg_size_t current_position_ = SEEK_SET;
         int desc_id     = 0;
         FileMetadata* metadata_;
         Partition* partition_;

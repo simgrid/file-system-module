@@ -14,7 +14,7 @@ namespace simgrid::module::fs {
     /**
      * @brief Asynchronously read data from the file
      * @param num_bytes: the number of bytes to read as a string with units
-     * @return A smart pointer on the correspondinf I/O activity
+     * @return A smart pointer on the corresponding I/O activity
      */
      s4u::IoPtr File::read_async(const std::string& num_bytes) {
         return read_async(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")));
@@ -23,7 +23,7 @@ namespace simgrid::module::fs {
     /**
      * @brief Asynchronously read data from the file
      * @param num_bytes: the number of bytes to read
-     * @return A smart pointer on the correspondinf I/O activity
+     * @return A smart pointer on the corresponding I/O activity
      */
     s4u::IoPtr File::read_async(sg_size_t num_bytes) {
         // if the current position is close to the end of the file, we may not be able to read the requested size
@@ -99,7 +99,7 @@ namespace simgrid::module::fs {
     /**
      * @brief Asynchronously write data from the file
      * @param num_bytes: the number of bytes to read as a string with units
-     * @return A smart pointer on the correspondinf I/O activity
+     * @return A smart pointer on the corresponding I/O activity
      */
      s4u::IoPtr File::write_async(const std::string& num_bytes) {
         return write_async(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")));
@@ -108,7 +108,7 @@ namespace simgrid::module::fs {
     /**
      * @brief Asynchronously write data from the file
      * @param num_bytes: the number of bytes to read
-     * @return A smart pointer on the correspondinf I/O activity
+     * @return A smart pointer on the corresponding I/O activity
      */
     s4u::IoPtr File::write_async(sg_size_t num_bytes) {
         int my_sequence_number = write_init_checks(num_bytes);
