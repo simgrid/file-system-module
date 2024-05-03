@@ -127,8 +127,8 @@ namespace simgrid::module::fs {
      * @param num_bytes: the number of bytes to write as a string with units
      * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
      */
-    void File::write(const std::string& num_bytes, bool simulate_it) {
-        write(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")), simulate_it);
+    sg_size_t File::write(const std::string& num_bytes, bool simulate_it) {
+        return write(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")), simulate_it);
     }
 
     /**
@@ -136,10 +136,10 @@ namespace simgrid::module::fs {
      * @param num_bytes: the number of bytes to write
      * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
      */
-    void File::write(sg_size_t num_bytes, bool simulate_it) {
+    sg_size_t File::write(sg_size_t num_bytes, bool simulate_it) {
         int my_sequence_number = write_init_checks(num_bytes);
 
-         // Do the I/O simulation if need be
+        // Do the I/O simulation if need be
         if (simulate_it) {
             try {
                 partition_->get_storage()->write(num_bytes);
@@ -152,6 +152,8 @@ namespace simgrid::module::fs {
         metadata_->set_access_date(s4u::Engine::get_clock());
         metadata_->set_modification_date(s4u::Engine::get_clock());
         metadata_->notify_write_end(my_sequence_number);
+
+        return num_bytes;
     }
 
     /**
