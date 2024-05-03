@@ -1,9 +1,0 @@
-.. _simgrid::module::fs::FileSystemException:
-
-simgrid::module::fs::FileSystemException
-****************************************
-
-.. doxygenclass:: simgrid::module::fs::FileSystemException
-   :project: user
-   :members:
-

@@ -1,9 +1,0 @@
-.. _simgrid::module::fs::Storage:
-
-simgrid::module::fs::Storage
-****************************
-
-.. doxygenclass:: simgrid::module::fs::Storage
-   :project: user
-   :members:
-
