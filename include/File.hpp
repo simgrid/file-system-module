@@ -37,7 +37,7 @@ namespace simgrid::module::fs {
 
     public:
         /** Get the number of bytes actually read by a given I/O Read activity */
-        sg_size_t get_num_bytes_read(s4u::IoPtr read) { return read->get_performed_ioops(); }
+        sg_size_t get_num_bytes_read(const s4u::IoPtr& read) { return read->get_performed_ioops(); }
 
         s4u::IoPtr read_async(const std::string& num_bytes);
         s4u::IoPtr read_async(sg_size_t num_bytes);
@@ -54,7 +54,7 @@ namespace simgrid::module::fs {
         void seek(sg_offset_t pos);             /** Sets the file head to the given position. */
         void seek(sg_offset_t pos, int origin); /** Sets the file head to the given position from a given origin. */
         /** Retrieves the current file position */
-        sg_size_t tell() const { return current_position_; }
+        [[nodiscard]] sg_size_t tell() const { return current_position_; }
 
         void close();
 
