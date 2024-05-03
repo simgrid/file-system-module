@@ -85,19 +85,20 @@ jobs:
           pwd
           cmake ..
           make doc
-          cp -r ./docs/latest/* $HOME/gh-pages-to-deploy;
+          mkdir $HOME/gh-pages-to-deploy
+          cp -r ./docs/latest/* $HOME/gh-pages-to-deploy/
           cd ../..
           echo "Updating gh-pages branch..."
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
-          git clone --quiet --branch=gh-pages https://${TOKEN_GITHUB}@github.com/henricasanova/file-system-module.git gh-pages > /dev/null;
+          git clone --quiet --branch=gh-pages https://${TOKEN_GITHUB}@github.com/henricasanova/file-system-module.git gh-pages > /dev/null
           cd gh-pages
-          cp -Rf $HOME/gh-pages-to-deploy/* .;
-          touch .nojekyll;
-          git add -f .;
-          git diff-index --quiet HEAD || git commit -m "GitHub build $GITHUB_RUN_NUMBER";
-          git push -fq origin gh-pages > /dev/null;
-          echo "Done updating gh-pages!";
+          cp -Rf $HOME/gh-pages-to-deploy/* .
+          touch .nojekyll
+          git add -f .
+          git diff-index --quiet HEAD || git commit -m "GitHub build $GITHUB_RUN_NUMBER"
+          git push -fq origin gh-pages > /dev/null
+          echo "Done updating gh-pages!"
 
          
 
