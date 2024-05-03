@@ -96,3 +96,30 @@ TEST_F(OneDiskStorageTest, SingleAsyncRead)  {
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
+
+TEST_F(OneDiskStorageTest, SingleWrite)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+        sg4::Actor::create("TestActor", host_, [this]() {
+            std::shared_ptr<sgfs::File> file;
+            XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "1MB"));
+            XBT_INFO("Check remaining space");
+            ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a")->get_free_space(), 99 * 1000 *1000);
+            XBT_INFO("Open File '/dev/a/foo.txt'");
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            XBT_INFO("Write 0B at /dev/a/foo.txt, which should return 0");
+            ASSERT_DOUBLE_EQ(file->write(0), 0);
+            XBT_INFO("Write 200MB at /dev/a/foo.txt, which should not work");
+            ASSERT_THROW(file->write("200MB"), sgfs::FileSystemException);
+            XBT_INFO("Write 10kB at /dev/a/foo.txt");
+            ASSERT_DOUBLE_EQ(file->write("2MB"), 2000000);
+            XBT_INFO("Check remaining space");
+            ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a")->get_free_space(), 98 * 1000 * 1000);
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(file->close());
+        });
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
