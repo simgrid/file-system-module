@@ -23,6 +23,8 @@ namespace simgrid::module::fs {
         Partition* partition_;
 
         void update_current_position(sg_offset_t pos);
+        int write_init_checks(sg_size_t num_bytes);
+
     public:
         virtual ~File() = default;
 
@@ -40,6 +42,8 @@ namespace simgrid::module::fs {
         s4u::IoPtr read_async(sg_size_t num_bytes);
         sg_size_t read(const std::string& num_bytes, bool simulate_it=true);
         sg_size_t read(sg_size_t num_bytes, bool simulate_it=true);
+        s4u::IoPtr write_async(const std::string& num_bytes);
+        s4u::IoPtr write_async(sg_size_t num_bytes);
         void write(const std::string& num_bytes, bool simulate_it=true);
         void write(sg_size_t num_bytes, bool simulate_it=true);
 

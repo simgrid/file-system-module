@@ -12,7 +12,7 @@ XBT_LOG_NEW_DEFAULT_CATEGORY(fsmode_file, "File System module: File management r
 namespace simgrid::module::fs {
 
     /**
-     * @brief Asynchronously ead data from the file
+     * @brief Asynchronously read data from the file
      * @param num_bytes: the number of bytes to read as a string with units
      * @return A smart pointer on the correspondinf I/O activity
      */
@@ -21,7 +21,7 @@ namespace simgrid::module::fs {
     }
 
     /**
-     * @brief Asynchronously ead data from the file
+     * @brief Asynchronously read data from the file
      * @param num_bytes: the number of bytes to read
      * @return A smart pointer on the correspondinf I/O activity
      */
@@ -70,21 +70,7 @@ namespace simgrid::module::fs {
         return num_bytes_to_read;
     }
 
-    /**
-     * @brief Write data to the file
-     * @param num_bytes: the number of bytes to write as a string with units
-     * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
-     */
-    void File::write(const std::string& num_bytes, bool simulate_it) {
-        write(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")), simulate_it);
-    }
-
-    /**
-     * @brief Write data to the file
-     * @param num_bytes: the number of bytes to write
-     * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
-     */
-    void File::write(sg_size_t num_bytes, bool simulate_it) {
+    int File::write_init_checks(sg_size_t num_bytes) {
         static int sequence_number = -1;
         int my_sequence_number = ++sequence_number;
 
@@ -106,6 +92,52 @@ namespace simgrid::module::fs {
         partition_->decrease_free_space(added_bytes);
         // Update metadata
         metadata_->notify_write_start(my_sequence_number, new_file_size_if_i_succeed);
+
+        return my_sequence_number;
+    }
+
+    /**
+     * @brief Asynchronously write data from the file
+     * @param num_bytes: the number of bytes to read as a string with units
+     * @return A smart pointer on the correspondinf I/O activity
+     */
+     s4u::IoPtr File::write_async(const std::string& num_bytes) {
+        return write_async(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")));
+    }
+
+    /**
+     * @brief Asynchronously write data from the file
+     * @param num_bytes: the number of bytes to read
+     * @return A smart pointer on the correspondinf I/O activity
+     */
+    s4u::IoPtr File::write_async(sg_size_t num_bytes) {
+        int my_sequence_number = write_init_checks(num_bytes);
+        s4u::IoPtr io = boost::dynamic_pointer_cast<s4u::Io>(partition_->get_storage()->write_async(num_bytes));
+        io->on_this_completion_cb([this, my_sequence_number](s4u::Io const&) {
+            // Update
+            metadata_->set_access_date(s4u::Engine::get_clock());
+            metadata_->set_modification_date(s4u::Engine::get_clock());
+            metadata_->notify_write_end(my_sequence_number);
+        });
+        return io;
+    }
+
+    /**
+     * @brief Write data to the file
+     * @param num_bytes: the number of bytes to write as a string with units
+     * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
+     */
+    void File::write(const std::string& num_bytes, bool simulate_it) {
+        write(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")), simulate_it);
+    }
+
+    /**
+     * @brief Write data to the file
+     * @param num_bytes: the number of bytes to write
+     * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
+     */
+    void File::write(sg_size_t num_bytes, bool simulate_it) {
+        int my_sequence_number = write_init_checks(num_bytes);
 
          // Do the I/O simulation if need be
         if (simulate_it) {
