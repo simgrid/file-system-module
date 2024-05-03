@@ -11,10 +11,20 @@ XBT_LOG_NEW_DEFAULT_CATEGORY(fsmode_file, "File System module: File management r
 
 namespace simgrid::module::fs {
 
-    s4u::IoPtr File::read_async(const std::string& num_bytes) {
+    /**
+     * @brief Asynchronously ead data from the file
+     * @param num_bytes: the number of bytes to read as a string with units
+     * @return A smart pointer on the correspondinf I/O activity
+     */
+     s4u::IoPtr File::read_async(const std::string& num_bytes) {
         return read_async(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")));
     }
 
+    /**
+     * @brief Asynchronously ead data from the file
+     * @param num_bytes: the number of bytes to read
+     * @return A smart pointer on the correspondinf I/O activity
+     */
     s4u::IoPtr File::read_async(sg_size_t num_bytes) {
         // if the current position is close to the end of the file, we may not be able to read the requested size
         sg_size_t num_bytes_to_read = std::min(num_bytes, metadata_->get_current_size() - current_position_);
