@@ -58,7 +58,7 @@ jobs:
           ./examples/open_seek_write
           make -j4 unit_tests
           ./unit_tests
-          lcov --directory . --capture --output-file coverage.info
+          lcov --directory . --directory examples/ --capture --output-file coverage.info
           lcov --remove coverage.info '*/test/*' '*/examples/*' '*/include/*'
           bash <(curl -s https://codecov.io/bash) -f coverage.info -t ${CODECOV_TOKEN}
 
