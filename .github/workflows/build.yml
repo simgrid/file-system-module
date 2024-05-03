@@ -55,7 +55,7 @@ jobs:
           cd build
           cmake ..
           make -j4 examples
-          ./open_seek_write_test
+          ./examples/open_seek_write
           make -j4 unit_tests
           ./unit_tests
           lcov --directory . --capture --output-file coverage.info
