@@ -54,7 +54,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">simgrid::module::fs::File</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs4FileE"><code class="docutils literal notranslate"><span class="pre">File</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs4File5closeEv"><code class="docutils literal notranslate"><span class="pre">File::close()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs4File18get_num_bytes_readEN3s4u5IoPtrE"><code class="docutils literal notranslate"><span class="pre">File::get_num_bytes_read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs4File18get_num_bytes_readERKN3s4u5IoPtrE"><code class="docutils literal notranslate"><span class="pre">File::get_num_bytes_read()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs4File4readERKNSt6stringEb"><code class="docutils literal notranslate"><span class="pre">File::read()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs4File4readE9sg_size_tb"><code class="docutils literal notranslate"><span class="pre">File::read()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs4File10read_asyncERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">File::read_async()</span></code></a></li>
@@ -116,8 +116,8 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N7simgrid6module2fs4File18get_num_bytes_readEN3s4u5IoPtrE">
-<span id="_CPPv3N7simgrid6module2fs4File18get_num_bytes_readEN3s4u5IoPtrE"></span><span id="_CPPv2N7simgrid6module2fs4File18get_num_bytes_readEN3s4u5IoPtrE"></span><span id="simgrid::module::fs::File::get_num_bytes_read__s4u::IoPtr"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_file_1a7fd9fd6ee2c498ba53da717eec0856ae"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_num_bytes_read</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">IoPtr</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">read</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid6module2fs4File18get_num_bytes_readEN3s4u5IoPtrE" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid6module2fs4File18get_num_bytes_readERKN3s4u5IoPtrE">
+<span id="_CPPv3N7simgrid6module2fs4File18get_num_bytes_readERKN3s4u5IoPtrE"></span><span id="_CPPv2N7simgrid6module2fs4File18get_num_bytes_readERKN3s4u5IoPtrE"></span><span id="simgrid::module::fs::File::get_num_bytes_read__s4u::IoPtrCR"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_file_1a547e5e5ead974b4b8557722df7de908f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_num_bytes_read</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">IoPtr</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">read</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid6module2fs4File18get_num_bytes_readERKN3s4u5IoPtrE" title="Link to this definition"></a><br /></dt>
 <dd><p>Get the number of bytes actually read by a given I/O Read activity </p>
 </dd></dl>
 
@@ -164,7 +164,7 @@
 <dd class="field-odd"><p><strong>num_bytes</strong> – the number of bytes to read as a string with units </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A smart pointer on the correspondinf I/O activity </p>
+<dd class="field-even"><p>A smart pointer on the corresponding I/O activity </p>
 </dd>
 </dl>
 </dd></dl>
@@ -178,7 +178,7 @@
 <dd class="field-odd"><p><strong>num_bytes</strong> – the number of bytes to read </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A smart pointer on the correspondinf I/O activity </p>
+<dd class="field-even"><p>A smart pointer on the corresponding I/O activity </p>
 </dd>
 </dl>
 </dd></dl>
@@ -252,7 +252,7 @@
 <dd class="field-odd"><p><strong>num_bytes</strong> – the number of bytes to read as a string with units </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A smart pointer on the correspondinf I/O activity </p>
+<dd class="field-even"><p>A smart pointer on the corresponding I/O activity </p>
 </dd>
 </dl>
 </dd></dl>
@@ -266,7 +266,7 @@
 <dd class="field-odd"><p><strong>num_bytes</strong> – the number of bytes to read </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A smart pointer on the correspondinf I/O activity </p>
+<dd class="field-even"><p>A smart pointer on the corresponding I/O activity </p>
 </dd>
 </dl>
 </dd></dl>
