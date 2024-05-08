@@ -60,7 +60,7 @@ namespace simgrid::module::fs {
 
         void close();
 
-        void dump() const;
+        void stat() const;
     };
 
 } // namespace simgrid::module::fs
