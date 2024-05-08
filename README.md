@@ -1,4 +1,7 @@
 
+
+[![codecov](https://codecov.io/gh/simgrid/file-system-module/graph/badge.svg?token=6x9KmpEvpS)](https://codecov.io/gh/simgrid/file-system-module)
+
 # FSMod: File System Module for SimGrid
 
 ## Overview
