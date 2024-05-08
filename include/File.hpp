@@ -37,7 +37,9 @@ namespace simgrid::module::fs {
 
     public:
         /** Get the number of bytes actually read by a given I/O Read activity */
-        sg_size_t get_num_bytes_read(const s4u::IoPtr& read) { return read->get_performed_ioops(); }
+        sg_size_t get_num_bytes_read(const s4u::IoPtr& read) const { return read->get_performed_ioops(); }
+        /** Get the number of bytes actually written by a given I/O Write activity */
+        sg_size_t get_num_bytes_written(const s4u::IoPtr& write) const { return write->get_performed_ioops(); }
 
         s4u::IoPtr read_async(const std::string& num_bytes);
         s4u::IoPtr read_async(sg_size_t num_bytes);
