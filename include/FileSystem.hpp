@@ -51,8 +51,6 @@ namespace simgrid::module::fs {
         [[nodiscard]] std::shared_ptr<Partition> partition_by_name(const std::string& name) const;
         [[nodiscard]] std::shared_ptr<Partition> partition_by_name_or_null(const std::string& name) const;
 
-        virtual ~FileSystem() = default;
-
     protected:
         explicit FileSystem(std::string name, int max_num_open_files) : name_(std::move(name)), max_num_open_files_(max_num_open_files) {};
 
