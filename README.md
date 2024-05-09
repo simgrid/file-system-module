@@ -45,7 +45,7 @@ Example SimGrid simulators that use FSMod are provided in the `examples` directo
 
 ## API Reference
 
-The FSMod API is documented on [this page](https://henricasanova.github.io/file-system-module/).
+The FSMod API is documented on [this page](https://simgrid.github.io/file-system-module/).
 
 
 ---
