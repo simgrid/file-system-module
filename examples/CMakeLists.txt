@@ -1,4 +1,4 @@
-foreach (example  open_seek_write) # jbod skipped until compound branch is merged into Simgrid's master
+foreach (example jbod open_seek_write)
   if(NOT DEFINED _${example}_sources)
     set(_${example}_sources ${example}.cpp)
   endif()
