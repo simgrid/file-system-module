@@ -90,7 +90,7 @@ namespace simgrid::module::fs {
         comm->set_destination(controller_host_);
 
         // Parity Block Computation is now blocked by Comm, start it by assigning it to the controller host
-        parity_block_comp->detach();
+        // parity_block_comp->detach();
         parity_block_comp->set_host(controller_host_);
 
         // Create a no-op Activity that depends on the completion of all I/Os. This is the one ActivityPtr returned
@@ -108,7 +108,7 @@ namespace simgrid::module::fs {
             parity_block_comp->add_successor(io);
             // Have the completion activity depend on every I/O
             io->add_successor(completion_activity);
-            io->detach();
+            // io->detach();
         }
 
         // Completion Actitity is now blocked by I/Os, start it by assigning it to the controller host first disk
