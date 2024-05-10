@@ -41,8 +41,9 @@ namespace simgrid::module::fs {
 
     s4u::ActivityPtr JBODStorage::write_async(sg_size_t size) {
         // Transfer data from the host that requested a write to the controller host of the JBOD
-        auto comm = s4u::Comm::sendto_init(s4u::Host::current(), controller_host_);
-        // Determine what size to write on individual disks according to RAID level, and update information on
+        auto comm = s4u::Comm::sendto_init()->set_payload_size(size)->set_source(s4u::Host::current());
+        comm->set_name("Transfer to JBod");
+
         // parity disk index
         sg_size_t write_size = 0;
         switch(raid_level_) {
@@ -67,8 +68,11 @@ namespace simgrid::module::fs {
             default:
                 throw std::runtime_error("Unsupported RAID level. Supported level are: 0, 1, 4, 5, and 6");
         }
+
         // Compute the parity block (if any)
         s4u::ExecPtr parity_block_comp = nullptr;
+
+        // Determine what size to write on individual disks according to RAID level, and update information on
         if (raid_level_ == RAID::RAID4 || raid_level_ == RAID::RAID5 || raid_level_ == RAID::RAID6) {
             // Assume 1 flop per byte to write per parity block and two for RAID6.
             // Do not assign the Exec yet, will be done after the completion of the CommPtr
@@ -78,17 +82,21 @@ namespace simgrid::module::fs {
                 parity_block_comp = s4u::Exec::init()->set_flops_amount(write_size);
         } else // Create a no-op activity
            parity_block_comp = s4u::Exec::init()->set_flops_amount(0);
+        parity_block_comp->set_name("Parity Block Computation");
 
         // Do not start computing the parity block before the completion of the comm to the controller
         comm->add_successor(parity_block_comp);
-        // Start the comm by setting its payload
-        comm->set_payload_size(size);
-        // Parity Block Computation is now blocked by Comm, start it by assigning it the controller host
+        // Start the comm by setting its destination
+        comm->set_destination(controller_host_);
+
+        // Parity Block Computation is now blocked by Comm, start it by assigning it to the controller host
+        parity_block_comp->detach();
         parity_block_comp->set_host(controller_host_);
 
         // Create a no-op Activity that depends on the completion of all I/Os. This is the one ActivityPtr returned
         // to the caller
         s4u::ExecPtr completion_activity = s4u::Exec::init()->set_flops_amount(0);
+        completion_activity->set_name("JBOD Write Completion");
 
         // Create the I/O activities on individual disks
         std::vector<s4u::IoPtr> ios;
@@ -100,11 +108,11 @@ namespace simgrid::module::fs {
             parity_block_comp->add_successor(io);
             // Have the completion activity depend on every I/O
             io->add_successor(completion_activity);
-            io->start();
+            io->detach();
         }
 
-        // Completion Actitity is now blocked by I/Os, start it
-        completion_activity->start();
+        // Completion Actitity is now blocked by I/Os, start it by assigning it to the controller host
+        completion_activity->set_host(controller_host_);
 
         return completion_activity;
     }
