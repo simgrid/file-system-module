@@ -30,7 +30,7 @@ namespace simgrid::module::fs {
         controller_->daemonize();
     }
 
-    s4u::ActivityPtr JBODStorage::read_async(sg_size_t size) {
+    s4u::IoPtr JBODStorage::read_async(sg_size_t size) {
         throw std::runtime_error("JBODStorage::read_async(): NOT IMPLEMENTED YET");
     }
 
@@ -39,7 +39,7 @@ namespace simgrid::module::fs {
 
     }
 
-    s4u::ActivityPtr JBODStorage::write_async(sg_size_t size) {
+    s4u::IoPtr JBODStorage::write_async(sg_size_t size) {
         // Transfer data from the host that requested a write to the controller host of the JBOD
         auto comm = s4u::Comm::sendto_init()->set_payload_size(size)->set_source(s4u::Host::current());
         comm->set_name("Transfer to JBod");
@@ -95,7 +95,7 @@ namespace simgrid::module::fs {
 
         // Create a no-op Activity that depends on the completion of all I/Os. This is the one ActivityPtr returned
         // to the caller
-        s4u::ExecPtr completion_activity = s4u::Exec::init()->set_flops_amount(0);
+        s4u::IoPtr completion_activity = s4u::Io::init()->set_op_type(s4u::Io::OpType::WRITE)->set_size(0);
         completion_activity->set_name("JBOD Write Completion");
 
         // Create the I/O activities on individual disks
@@ -111,8 +111,8 @@ namespace simgrid::module::fs {
             io->detach();
         }
 
-        // Completion Actitity is now blocked by I/Os, start it by assigning it to the controller host
-        completion_activity->set_host(controller_host_);
+        // Completion Actitity is now blocked by I/Os, start it by assigning it to the controller host first disk
+        completion_activity->set_disk(disks_.front());
 
         return completion_activity;
     }

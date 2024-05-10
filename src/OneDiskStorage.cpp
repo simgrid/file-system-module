@@ -24,7 +24,7 @@ namespace simgrid::module::fs {
         controller_->daemonize();
     }
 
-    s4u::ActivityPtr OneDiskStorage::read_async(sg_size_t size) {
+    s4u::IoPtr OneDiskStorage::read_async(sg_size_t size) {
         return disks_.front()->read_async(size);
     }
 
@@ -32,7 +32,7 @@ namespace simgrid::module::fs {
         disks_.front()->read(size);
     }
 
-    s4u::ActivityPtr OneDiskStorage::write_async(sg_size_t size) {
+    s4u::IoPtr OneDiskStorage::write_async(sg_size_t size) {
         return disks_.front()->write_async(size);
     }
 

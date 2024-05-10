@@ -15,9 +15,9 @@ namespace simgrid::module::fs {
         void set_raid_level(RAID raid_level) { raid_level_ = raid_level; }
         s4u::MessageQueue* mqueue() { return mq_; }
 
-        s4u::ActivityPtr read_async(sg_size_t size) override;
+        s4u::IoPtr read_async(sg_size_t size) override;
         void read(sg_size_t size) override;
-        s4u::ActivityPtr write_async(sg_size_t size) override;
+        s4u::IoPtr write_async(sg_size_t size) override;
         void write(sg_size_t size) override;
 
     protected:

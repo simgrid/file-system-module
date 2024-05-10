@@ -27,10 +27,10 @@ namespace simgrid::module::fs {
         s4u::ActorPtr get_controller() const { return controller_; }
         std::vector<s4u::Disk*> get_disks() const { return disks_; };
 
-        virtual s4u::ActivityPtr read_async(sg_size_t size) = 0;
+        virtual s4u::IoPtr read_async(sg_size_t size) = 0;
         virtual void read(sg_size_t size) = 0;
 
-        virtual s4u::ActivityPtr write_async(sg_size_t size) = 0;
+        virtual s4u::IoPtr write_async(sg_size_t size) = 0;
         virtual void write(sg_size_t size) = 0;
     };
 
