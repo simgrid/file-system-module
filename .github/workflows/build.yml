@@ -25,7 +25,7 @@ jobs:
         run: |
           git clone https://framagit.org/simgrid/simgrid.git
           cd simgrid
-          git checkout e3bfee0abad43d0b16c84b093b8c4d921fa91ddf
+          git checkout 08a091f21feb21701da8ad04c4d14c568df91786
           mkdir build
           cd build
           cmake ..
@@ -105,13 +105,3 @@ jobs:
           git diff-index --quiet HEAD || git commit -m "GitHub build $GITHUB_RUN_NUMBER"
           git push -fq origin gh-pages > /dev/null
           echo "Done updating gh-pages!"
-
-         
-
-
-
-
-          
-
-
-
