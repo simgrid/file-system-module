@@ -22,9 +22,10 @@ namespace simgrid::module::fs {
 
     protected:
         JBODStorage(const std::string& name, const std::vector<simgrid::s4u::Disk*>& disks);
-        void update_parity_disk_idx() { parity_disk_idx_ = (parity_disk_idx_- 1) % num_disks_; }
 
+        void update_parity_disk_idx() { parity_disk_idx_ = (parity_disk_idx_- 1) % num_disks_; }
         int get_next_read_disk_idx() { return (++read_disk_idx_) % num_disks_; }
+        int get_parity_disk_idx() const { return parity_disk_idx_; }
 
         s4u::MessageQueue* mq_;
 
