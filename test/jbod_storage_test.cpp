@@ -1,0 +1,161 @@
+#include <gtest/gtest.h>
+#include <iostream>
+
+#include <simgrid/s4u/Engine.hpp>
+#include <simgrid/s4u/Actor.hpp>
+
+#include "../include/PathUtil.hpp"
+#include "../include/FileSystem.hpp"
+#include "../include/JBODStorage.hpp"
+#include "../include/FileSystemException.hpp"
+
+#include "./test_util.hpp"
+
+namespace sgfs=simgrid::module::fs;
+namespace sg4=simgrid::s4u;
+
+XBT_LOG_NEW_DEFAULT_CATEGORY(jds_io_test, "JBODStorage I/O Test");
+
+class JBODStorageTest : public ::testing::Test {
+public:
+    std::shared_ptr<sgfs::FileSystem> fs_;
+    sg4::Host* fs_client_;
+    sg4::Host* fs_server_;
+    std::vector<sg4::Disk*> disks_;
+
+    JBODStorageTest() = default;
+
+    void setup_platform() {
+        sg4::Engine::set_config("network/crosstraffic:0");
+        XBT_INFO("Creating a platform with two hosts and a 4-disk JBOD...");
+        auto *my_zone = sg4::create_full_zone("zone");
+        fs_client_ = my_zone->create_host("fs_client", "100Mf");
+        fs_server_ = my_zone->create_host("fs_server", "200Mf");
+        for (int i = 0 ; i < 4 ; i++ )
+            disks_.push_back(fs_server_->create_disk("jds_disk" + std::to_string(i), "2MBps", "1MBps"));
+
+        const auto* link = my_zone->create_link("link", 120e6 / 0.97)->set_latency(0);
+        my_zone->add_route(fs_client_, fs_server_, {link});
+        my_zone->seal();
+
+        XBT_INFO("Creating a JBOD storage on fs_server...");
+        auto jds = sgfs::JBODStorage::create("my_storage", disks_);
+        jds->set_raid_level(sgfs::JBODStorage::RAID::RAID5);
+        XBT_INFO("Creating a file system...");
+        fs_ = sgfs::FileSystem::create("my_fs");
+        XBT_INFO("Mounting a 100MB partition...");
+        fs_->mount_partition("/dev/a/", jds, "100MB");
+    }
+};
+
+
+TEST_F(JBODStorageTest, SingleRead)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+        sg4::Actor::create("TestActor", fs_client_, [this]() {
+            std::shared_ptr<sgfs::File> file;
+            XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
+            XBT_INFO("Open File '/dev/a/foo.txt'");
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            XBT_INFO("read 0B at /dev/a/foo.txt, which should return 0");
+            ASSERT_DOUBLE_EQ(file->read(0),0);
+            XBT_INFO("read 100kB at /dev/a/foo.txt, which should return only 10kB");
+            ASSERT_DOUBLE_EQ(file->read("100kB"), 10000);
+            XBT_INFO("read 10kB at /dev/a/foo.txt, which should return O as we are at the end of the file");
+            ASSERT_DOUBLE_EQ(file->read("10kB"), 0);
+            XBT_INFO("Seek back to SEEK_SET and read 9kB at /dev/a/foo.txt");
+            ASSERT_NO_THROW(file->seek(SEEK_SET));
+            ASSERT_DOUBLE_EQ(file->read("9kB"), 9000);
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(file->close());
+        });
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
+
+TEST_F(JBODStorageTest, SingleAsyncRead)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+        sg4::Actor::create("TestActor", fs_client_, [this]() {
+            std::shared_ptr<sgfs::File> file;
+            sg4::IoPtr my_read;
+            sg_size_t num_bytes_read = 0;
+            XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "60MB"));
+            XBT_INFO("Open File '/dev/a/foo.txt'");
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            XBT_INFO("Asynchronously read 6MB at /dev/a/foo.txt");
+            ASSERT_NO_THROW(my_read = file->read_async("12MB"));
+            XBT_INFO("Sleep for 1 second");
+            ASSERT_NO_THROW(sg4::this_actor::sleep_for(1));
+            XBT_INFO("Sleep complete. Clock should be at 1s");
+            ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 1.0);
+            XBT_INFO("Wait for read completion");
+            ASSERT_NO_THROW(my_read->wait());
+            XBT_INFO("Read complete. Clock should be at 2.1s (2s to read, 0.1 to transfer)");
+            ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 2.1);
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(file->close());
+        });
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
+
+TEST_F(JBODStorageTest, SingleWrite)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+        sg4::Actor::create("TestActor", fs_client_, [this]() {
+            std::shared_ptr<sgfs::File> file;
+            XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "1MB"));
+            XBT_INFO("Check remaining space");
+            ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a")->get_free_space(), 99 * 1000 *1000);
+            XBT_INFO("Open File '/dev/a/foo.txt'");
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            XBT_INFO("Write 0B at /dev/a/foo.txt, which should return 0");
+            ASSERT_DOUBLE_EQ(file->write(0), 0);
+            XBT_INFO("Write 200MB at /dev/a/foo.txt, which should not work");
+            ASSERT_THROW(file->write("200MB"), sgfs::FileSystemException);
+            XBT_INFO("Write 10kB at /dev/a/foo.txt");
+            ASSERT_DOUBLE_EQ(file->write("2MB"), 2000000);
+            XBT_INFO("Check remaining space");
+            ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a")->get_free_space(), 98 * 1000 * 1000);
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(file->close());
+        });
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
+
+TEST_F(JBODStorageTest, SingleAsyncWrite)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+        sg4::Actor::create("TestActor", fs_client_, [this]() {
+            std::shared_ptr<sgfs::File> file;
+            sg4::IoPtr my_write;
+            sg_size_t num_bytes_written = 0;
+            XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
+            XBT_INFO("Open File '/dev/a/foo.txt'");
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            XBT_INFO("Asynchronously write 2MB at /dev/a/foo.txt");
+            ASSERT_NO_THROW(my_write = file->write_async("12MB"));
+            XBT_INFO("Sleep for 1 second");
+            ASSERT_NO_THROW(sg4::this_actor::sleep_for(1));
+            XBT_INFO("Sleep complete. Clock is at 1s");
+            ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 1.0);
+            XBT_INFO("Wait for write completion");
+            ASSERT_NO_THROW(my_write->wait());
+            XBT_INFO("Write complete. Clock is at 4.12s (.1s to transfer, 0.02 to compute parity, 4s to write)");
+            ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 4.12);
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(file->close());
+        });
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}

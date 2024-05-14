@@ -45,14 +45,14 @@ set(SOURCE_FILES
 		)
 
 set(HEADER_FILES
-	include/File.hpp                
-	include/FileSystemException.hpp 
+	include/File.hpp
+	include/FileSystemException.hpp
 	include/Partition.hpp
-	include/FileMetadata.hpp        
-	include/JBODStorage.hpp         
+	include/FileMetadata.hpp
+	include/JBODStorage.hpp
 	include/PathUtil.hpp
-	include/FileSystem.hpp          
-	include/OneDiskStorage.hpp      
+	include/FileSystem.hpp
+	include/OneDiskStorage.hpp
 	include/Storage.hpp
 	)
 
@@ -82,10 +82,11 @@ endforeach()
 find_library(GTEST_LIBRARY NAMES gtest)
 if(GTEST_LIBRARY)
 	set(TEST_FILES
+			test/jbod_storage_test.cpp
 			test/one_disk_storage_test.cpp
 			test/path_util_test.cpp
 			test/file_system_test.cpp
-			test/main.cpp 
+			test/main.cpp
 			test/test_util.hpp)
 	add_definitions(-DGTEST_USED)
 	add_executable(unit_tests EXCLUDE_FROM_ALL ${SOURCE_FILES} ${HEADER_FILES} ${TEST_FILES})
