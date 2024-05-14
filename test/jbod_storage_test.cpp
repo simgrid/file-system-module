@@ -119,7 +119,7 @@ TEST_F(JBODStorageTest, SingleWrite)  {
             ASSERT_DOUBLE_EQ(file->write(0), 0);
             XBT_INFO("Write 200MB at /dev/a/foo.txt, which should not work");
             ASSERT_THROW(file->write("200MB"), sgfs::FileSystemException);
-            XBT_INFO("Write 10kB at /dev/a/foo.txt");
+            XBT_INFO("Write 2MB at /dev/a/foo.txt");
             ASSERT_DOUBLE_EQ(file->write("2MB"), 2000000);
             XBT_INFO("Check remaining space");
             ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a")->get_free_space(), 98 * 1000 * 1000);
