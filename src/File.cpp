@@ -137,6 +137,8 @@ namespace simgrid::module::fs {
      * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
      */
     sg_size_t File::write(sg_size_t num_bytes, bool simulate_it) {
+        if (num_bytes == 0) /* Nothing to write, return */
+            return 0;
         int my_sequence_number = write_init_checks(num_bytes);
 
         // Do the I/O simulation if need be
