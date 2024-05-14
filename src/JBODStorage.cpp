@@ -51,12 +51,12 @@ namespace simgrid::module::fs {
             case RAID::RAID5:
                 read_size = size / (num_disks_ - 1);
                 targets = disks_;
-                targets.erase(targets.begin() + (get_parity_disk_idx() + 1 % num_disks_));
+                targets.erase(targets.begin() + ((get_parity_disk_idx() + 1) % num_disks_));
               break;
             case RAID::RAID6:
                 read_size = size / (num_disks_ - 2);
                 targets = disks_;
-                if ( (get_parity_disk_idx() + 2 % num_disks_) == 0 ) {
+                if ( ((get_parity_disk_idx() + 2) % num_disks_) == 0 ) {
                     targets.pop_back();
                     targets.erase(targets.begin());
                 } else if (get_parity_disk_idx() + 1 == static_cast<int>(num_disks_)) {
