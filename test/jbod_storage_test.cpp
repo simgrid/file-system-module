@@ -18,6 +18,7 @@ XBT_LOG_NEW_DEFAULT_CATEGORY(jds_io_test, "JBODStorage I/O Test");
 
 class JBODStorageTest : public ::testing::Test {
 public:
+    std::shared_ptr<sgfs::JBODStorage> jds_;
     std::shared_ptr<sgfs::FileSystem> fs_;
     sg4::Host* fs_client_;
     sg4::Host* fs_server_;
@@ -39,12 +40,12 @@ public:
         my_zone->seal();
 
         XBT_INFO("Creating a JBOD storage on fs_server...");
-        auto jds = sgfs::JBODStorage::create("my_storage", disks_);
-        jds->set_raid_level(sgfs::JBODStorage::RAID::RAID5);
+        jds_ = sgfs::JBODStorage::create("my_storage", disks_);
+        jds_->set_raid_level(sgfs::JBODStorage::RAID::RAID5);
         XBT_INFO("Creating a file system...");
         fs_ = sgfs::FileSystem::create("my_fs");
         XBT_INFO("Mounting a 100MB partition...");
-        fs_->mount_partition("/dev/a/", jds, "100MB");
+        fs_->mount_partition("/dev/a/", jds_, "100MB");
     }
 };
 
@@ -152,6 +153,60 @@ TEST_F(JBODStorageTest, SingleAsyncWrite)  {
             ASSERT_NO_THROW(my_write->wait());
             XBT_INFO("Write complete. Clock is at 4.12s (.1s to transfer, 0.02 to compute parity, 4s to write)");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 4.12);
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(file->close());
+        });
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
+
+TEST_F(JBODStorageTest, ReadWriteRAID0)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+        sg4::Actor::create("TestActor", fs_client_, [this]() {
+            std::shared_ptr<sgfs::File> file;
+            ASSERT_NO_THROW(jds_->set_raid_level(sgfs::JBODStorage::RAID::RAID0));
+            XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
+            XBT_INFO("Open File '/dev/a/foo.txt'");
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            XBT_INFO("Write 2MB at /dev/a/foo.txt");
+            ASSERT_DOUBLE_EQ(file->write("12MB"), 12000000);
+            XBT_INFO("Write complete. Clock is at 3.1s (.1s to transfer, 3s to write)");
+            ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 3.1);
+            XBT_INFO("Seek back to SEEK_SET and read 12MB at /dev/a/foo.txt");
+            ASSERT_NO_THROW(file->seek(SEEK_SET));
+            ASSERT_DOUBLE_EQ(file->read("12MB"), 12000000);
+            XBT_INFO("Read complete. Clock is at 4.7s (1.5s to read, .1s to transfer)");
+            ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 4.7);
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(file->close());
+        });
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
+
+TEST_F(JBODStorageTest, ReadWriteRAID1)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+        sg4::Actor::create("TestActor", fs_client_, [this]() {
+            std::shared_ptr<sgfs::File> file;
+            ASSERT_NO_THROW(jds_->set_raid_level(sgfs::JBODStorage::RAID::RAID1));
+            XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
+            XBT_INFO("Open File '/dev/a/foo.txt'");
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            XBT_INFO("Write 2MB at /dev/a/foo.txt");
+            ASSERT_DOUBLE_EQ(file->write("6MB"), 6000000);
+            XBT_INFO("Write complete. Clock is at 6.05s (.05s to transfer, 6s to write)");
+            ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 6.05);
+            XBT_INFO("Seek back to SEEK_SET and read 6MB at /dev/a/foo.txt");
+            ASSERT_NO_THROW(file->seek(SEEK_SET));
+            ASSERT_DOUBLE_EQ(file->read("6MB"), 6000000);
+            XBT_INFO("Read complete. Clock is at 9.1s (3s to read, .05s to transfer)");
+            ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 9.1);
             XBT_INFO("Close the file");
             ASSERT_NO_THROW(file->close());
         });
