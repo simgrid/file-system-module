@@ -54,8 +54,11 @@ jobs:
           mkdir build
           cd build
           cmake ..
+          make -j4
+          sudo make install
           make -j4 examples
           ./examples/open_seek_write
+          ./examples/jbod
           make -j4 unit_tests
           ./unit_tests
           lcov --directory . --directory examples/ --capture --output-file coverage.info
