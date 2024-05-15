@@ -111,6 +111,9 @@ TEST_F(FileSystemTest, Directories)  {
                 ASSERT_NO_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c/"));
                 ASSERT_TRUE(found_files.find("foo.txt") != found_files.end());
                 ASSERT_TRUE(found_files.find("faa.txt") != found_files.end());
+            XBT_INFO("Try to unlink non-existing directory. This shouldn't work");
+            ASSERT_THROW(fs_->unlink_directory("/dev/a/b/d"), sgfs::FileSystemException);
+
             ASSERT_NO_THROW(fs_->unlink_directory("/dev/a/b/c"));
             ASSERT_FALSE(fs_->directory_exists("/dev/a/b/c"));
         });
@@ -126,10 +129,13 @@ TEST_F(FileSystemTest, FileMove)  {
 
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
         sg4::Actor::create("TestActor", host_, [this]() {
+            XBT_INFO("Try to move a non-existing file. This shouldn't work");
+            ASSERT_THROW(fs_->move_file("/dev/a/foo.txt", "/dev/a/b/c/foo.txt"), sgfs::FileSystemException);
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
             ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a/")->get_free_space(), 90*1000);
-
+            XBT_INFO("Try to move file /dev/a/foo.txt to the same path. This should work (no-op)");
+            ASSERT_NO_THROW(fs_->move_file("/dev/a/foo.txt", "/dev/a/foo.txt"));
             XBT_INFO("Move file /dev/a/foo.txt to /dev/a/b/c/foo.txt");
             ASSERT_NO_THROW(fs_->move_file("/dev/a/foo.txt", "/dev/a/b/c/foo.txt"));
             ASSERT_TRUE(fs_->file_exists("/dev/a/b/c/foo.txt"));
