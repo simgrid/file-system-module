@@ -69,8 +69,12 @@ TEST_F(SeekTest, SeekandTell)  {
             ASSERT_NO_THROW(file->seek(5000, SEEK_CUR));
             XBT_INFO("Check current position, should be 103k");
             ASSERT_DOUBLE_EQ(file->tell(), 103*1000);
-            XBT_INFO("Check file stat, current size should also be 103k");
-            //TODO implement stat()
+            XBT_INFO("Check file size, it should still be 100k");
+            ASSERT_DOUBLE_EQ(fs_->file_size("/dev/a/foo.txt"), 100000);
+            XBT_INFO("Write 1kB to /dev/a/foo.txt");
+            ASSERT_NO_THROW(file->write("1kB"));
+            XBT_INFO("Check file size, it should now be 104k");
+            ASSERT_DOUBLE_EQ(fs_->file_size("/dev/a/foo.txt"), 104000);
             XBT_INFO("Close the file");
             ASSERT_NO_THROW(file->close());
         });
