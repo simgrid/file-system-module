@@ -26,7 +26,7 @@ namespace simgrid::module::fs {
         void set_modification_date(double date) { modification_date_ = date; }
         [[nodiscard]] double get_access_date() const { return access_date_; }
         void set_access_date(double date) { access_date_ = date; }
-        unsigned get_file_refcount() const { return file_refcount_; }
+        [[nodiscard]] unsigned get_file_refcount() const { return file_refcount_; }
         void increase_file_refcount() { file_refcount_++; }
         void decrease_file_refcount() { file_refcount_--; }
 

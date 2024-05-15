@@ -89,8 +89,11 @@ if(GTEST_LIBRARY)
 			test/path_util_test.cpp
 			test/file_system_test.cpp
 			test/seek_test.cpp
+			test/stat_test.cpp
 			test/main.cpp
-			test/test_util.hpp include/fsmod.hpp)
+			test/test_util.hpp
+			include/fsmod.hpp)
+
 	add_definitions(-DGTEST_USED)
 	add_executable(unit_tests EXCLUDE_FROM_ALL ${SOURCE_FILES} ${HEADER_FILES} ${TEST_FILES})
 	target_include_directories(unit_tests PRIVATE include)

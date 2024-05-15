@@ -57,7 +57,7 @@ TEST_F(FileSystemTest, MountPartition)  {
             XBT_INFO("Mount a new partition correctly");
             ASSERT_NO_THROW(fs_->mount_partition("/dev/b", ods, "100kB"));
             XBT_INFO("Try to access a non-existing partition by name, which shouldn't work");
-            ASSERT_THROW(fs_->partition_by_name("/dev/"), std::invalid_argument);
+            ASSERT_THROW(auto part = fs_->partition_by_name("/dev/"), std::invalid_argument);
         });
 
         // Run the simulation

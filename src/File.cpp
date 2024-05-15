@@ -6,6 +6,7 @@
 #include "fsmod/File.hpp"
 #include "fsmod/Storage.hpp"
 #include "fsmod/FileSystemException.hpp"
+#include "fsmod/FileStat.hpp"
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(fsmode_file, "File System module: File management related logs");
 
@@ -205,6 +206,19 @@ namespace simgrid::module::fs {
      */
     void File::close() {
         metadata_->decrease_file_refcount();
+    }
+
+    /**
+     * @brief Obtain information about the file as a
+     * @return A (
+     */
+    std::unique_ptr<FileStat> File::stat() const {
+        auto stat_struct = std::make_unique<FileStat>();
+        stat_struct->size_in_bytes = metadata_->get_current_size();
+        stat_struct->last_access_date = metadata_->get_access_date();
+        stat_struct->last_modification_date = metadata_->get_modification_date();
+        stat_struct->refcount = metadata_->get_file_refcount();
+        return std::move(stat_struct);
     }
 
 }

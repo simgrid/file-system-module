@@ -7,6 +7,7 @@
 #include <xbt/parse_units.hpp>
 
 #include "FileMetadata.hpp"
+#include "FileStat.hpp"
 #include "Partition.hpp"
 
 namespace simgrid::module::fs {
@@ -60,7 +61,7 @@ namespace simgrid::module::fs {
 
         void close();
 
-        void stat() const;
+        std::unique_ptr<FileStat> stat() const;
     };
 
 } // namespace simgrid::module::fs
