@@ -87,6 +87,7 @@ if(GTEST_LIBRARY)
 			test/one_disk_storage_test.cpp
 			test/path_util_test.cpp
 			test/file_system_test.cpp
+			test/seek_test.cpp
 			test/main.cpp
 			test/test_util.hpp include/fsmod.hpp)
 	add_definitions(-DGTEST_USED)
