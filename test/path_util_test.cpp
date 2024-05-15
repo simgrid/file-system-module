@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <iostream>
-#include "../include/PathUtil.hpp"
+#include "PathUtil.hpp"
 
 namespace sgfs=simgrid::module::fs;
 

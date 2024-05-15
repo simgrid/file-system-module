@@ -45,15 +45,15 @@ set(SOURCE_FILES
 		)
 
 set(HEADER_FILES
-	include/File.hpp
-	include/FileSystemException.hpp
-	include/Partition.hpp
-	include/FileMetadata.hpp
-	include/JBODStorage.hpp
-	include/PathUtil.hpp
-	include/FileSystem.hpp
-	include/OneDiskStorage.hpp
-	include/Storage.hpp
+		include/File.hpp
+		include/FileSystemException.hpp
+		include/Partition.hpp
+		include/FileMetadata.hpp
+		include/JBODStorage.hpp
+		include/PathUtil.hpp
+		include/FileSystem.hpp
+		include/OneDiskStorage.hpp
+		include/Storage.hpp
 	)
 
 add_library(fsmod SHARED ${SOURCE_FILES})
@@ -61,14 +61,15 @@ add_library(fsmod SHARED ${SOURCE_FILES})
 set_target_properties(fsmod PROPERTIES
 		SOVERSION 0.1
 		LINKER_LANGUAGE CXX
-		PUBLIC_HEADER fsmod.hpp)
+		PUBLIC_HEADER "${HEADER_FILES}")
 
 target_include_directories(fsmod PRIVATE include)
 target_link_libraries(fsmod PUBLIC ${SimGrid_LIBRARY})
 
 install(TARGETS fsmod
 		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-		PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+		PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/fsmod)
+install(FILES include/fsmod.hpp DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 add_custom_target(examples    COMMENT "Recompiling the examples")
 
@@ -87,7 +88,7 @@ if(GTEST_LIBRARY)
 			test/path_util_test.cpp
 			test/file_system_test.cpp
 			test/main.cpp
-			test/test_util.hpp)
+			test/test_util.hpp include/fsmod.hpp)
 	add_definitions(-DGTEST_USED)
 	add_executable(unit_tests EXCLUDE_FROM_ALL ${SOURCE_FILES} ${HEADER_FILES} ${TEST_FILES})
 	target_include_directories(unit_tests PRIVATE include)

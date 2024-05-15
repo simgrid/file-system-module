@@ -2,7 +2,7 @@
 #define FILE_SYSTEM_MODULE_PATH_H
 
 #include <filesystem>
-#include "../include/PathUtil.hpp"
+#include "PathUtil.hpp"
 
 namespace simgrid::module::fs {
 
