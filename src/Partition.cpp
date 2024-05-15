@@ -1,6 +1,6 @@
-#include "Partition.hpp"
-#include "FileMetadata.hpp"
-#include "FileSystemException.hpp"
+#include "fsmod/Partition.hpp"
+#include "fsmod/FileMetadata.hpp"
+#include "fsmod/FileSystemException.hpp"
 
 namespace simgrid::module::fs {
 

@@ -45,15 +45,15 @@ set(SOURCE_FILES
 		)
 
 set(HEADER_FILES
-		include/File.hpp
-		include/FileSystemException.hpp
-		include/Partition.hpp
-		include/FileMetadata.hpp
-		include/JBODStorage.hpp
-		include/PathUtil.hpp
-		include/FileSystem.hpp
-		include/OneDiskStorage.hpp
-		include/Storage.hpp
+		include/fsmod/File.hpp
+		include/fsmod/FileSystemException.hpp
+		include/fsmod/Partition.hpp
+		include/fsmod/FileMetadata.hpp
+		include/fsmod/JBODStorage.hpp
+		include/fsmod/PathUtil.hpp
+		include/fsmod/FileSystem.hpp
+		include/fsmod/OneDiskStorage.hpp
+		include/fsmod/Storage.hpp
 	)
 
 add_library(fsmod SHARED ${SOURCE_FILES})

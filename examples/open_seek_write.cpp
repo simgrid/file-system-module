@@ -5,8 +5,8 @@
 #include <simgrid/s4u/Actor.hpp>
 #include <utility>
 
-#include "../include/FileSystem.hpp"
-#include "../include/OneDiskStorage.hpp"
+#include "../include/fsmod/FileSystem.hpp"
+#include "../include/fsmod/OneDiskStorage.hpp"
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(fs_test, "File System Test");
 

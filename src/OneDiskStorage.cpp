@@ -1,4 +1,4 @@
-#include "OneDiskStorage.hpp"
+#include "fsmod/OneDiskStorage.hpp"
 #include <simgrid/s4u/Actor.hpp>
 
 namespace simgrid::module::fs {

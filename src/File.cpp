@@ -3,9 +3,9 @@
 #include <simgrid/s4u/Engine.hpp>
 #include <simgrid/Exception.hpp>
 
-#include "File.hpp"
-#include "Storage.hpp"
-#include "FileSystemException.hpp"
+#include "fsmod/File.hpp"
+#include "fsmod/Storage.hpp"
+#include "fsmod/FileSystemException.hpp"
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(fsmode_file, "File System module: File management related logs");
 

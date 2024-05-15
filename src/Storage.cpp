@@ -1,4 +1,4 @@
-#include "Storage.hpp"
+#include "fsmod/Storage.hpp"
 
 namespace simgrid::module::fs {
 

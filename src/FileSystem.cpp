@@ -3,11 +3,11 @@
 
 #include <utility>
 
-#include "FileSystem.hpp"
-#include "File.hpp"
-#include "PathUtil.hpp"
-#include "Partition.hpp"
-#include "FileSystemException.hpp"
+#include "fsmod/FileSystem.hpp"
+#include "fsmod/File.hpp"
+#include "fsmod/PathUtil.hpp"
+#include "fsmod/Partition.hpp"
+#include "fsmod/FileSystemException.hpp"
 
 namespace simgrid::module::fs {
 

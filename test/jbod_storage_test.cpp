@@ -4,10 +4,10 @@
 #include <simgrid/s4u/Engine.hpp>
 #include <simgrid/s4u/Actor.hpp>
 
-#include "PathUtil.hpp"
-#include "FileSystem.hpp"
-#include "JBODStorage.hpp"
-#include "FileSystemException.hpp"
+#include "fsmod/PathUtil.hpp"
+#include "fsmod/FileSystem.hpp"
+#include "fsmod/JBODStorage.hpp"
+#include "fsmod/FileSystemException.hpp"
 
 #include "./test_util.hpp"
 

@@ -4,9 +4,9 @@
 #include <simgrid/s4u/Engine.hpp>
 #include <simgrid/s4u/Actor.hpp>
 
-#include "FileSystem.hpp"
-#include "OneDiskStorage.hpp"
-#include "FileSystemException.hpp"
+#include "fsmod/FileSystem.hpp"
+#include "fsmod/OneDiskStorage.hpp"
+#include "fsmod/FileSystemException.hpp"
 
 #include "./test_util.hpp"
 

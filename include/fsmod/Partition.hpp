@@ -8,7 +8,7 @@
 #include <string>
 #include <utility>
 
-#include "FileMetadata.hpp"
+#include "fsmod/FileMetadata.hpp"
 
 namespace simgrid::module::fs {
 

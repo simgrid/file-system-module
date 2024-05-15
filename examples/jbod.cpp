@@ -5,8 +5,8 @@
 #include <simgrid/s4u/Actor.hpp>
 #include <utility>
 
-#include "../include/FileSystem.hpp"
-#include "../include/JBODStorage.hpp"
+#include "../include/fsmod/FileSystem.hpp"
+#include "../include/fsmod/JBODStorage.hpp"
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(fs_test, "File System Test");
 
