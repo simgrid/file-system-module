@@ -58,8 +58,7 @@ int main(int argc, char **argv) {
     my_zone->seal();
 
     XBT_INFO("Creating a JBOD storage on the server host");
-    auto jds = sgfs::JBODStorage::create("my_storage", my_disks);
-    jds->set_raid_level(sgfs::JBODStorage::RAID::RAID5);
+    auto jds = sgfs::JBODStorage::create("my_storage", my_disks, sgfs::JBODStorage::RAID::RAID5);
 
     XBT_INFO("Creating a file system...");
     auto fs = sgfs::FileSystem::create("my_fs");
