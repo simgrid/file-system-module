@@ -144,7 +144,7 @@ namespace simgrid::module::fs {
             // Assume 1 flop per byte to write per parity block and two for RAID6.
             // Do not assign the Exec yet, will be done after the completion of the CommPtr
             if (raid_level_ == RAID::RAID6)
-                parity_block_comp = s4u::Exec::init()->set_flops_amount(200 * write_size);
+                parity_block_comp = s4u::Exec::init()->set_flops_amount(2 * write_size);
             else
                 parity_block_comp = s4u::Exec::init()->set_flops_amount(write_size);
         } else // Create a no-op activity
