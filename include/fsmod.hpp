@@ -3,6 +3,7 @@
 
 #include <fsmod/File.hpp>
 #include <fsmod/FileMetadata.hpp>
+#include <fsmod/FileSystem.hpp>
 #include <fsmod/FileSystemException.hpp>
 #include <fsmod/JBODStorage.hpp>
 #include <fsmod/OneDiskStorage.hpp>
