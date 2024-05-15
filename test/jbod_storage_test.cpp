@@ -40,7 +40,7 @@ public:
         my_zone->seal();
 
         XBT_INFO("Creating a JBOD storage on fs_server...");
-        jds_ = sgfs::JBODStorage::create("my_storage", disks_);
+        jds_ = sgfs::JBODStorage::create("my_storage", disks_, sgfs::JBODStorage::RAID::RAID0);
         jds_->set_raid_level(sgfs::JBODStorage::RAID::RAID5);
         XBT_INFO("Creating a file system...");
         fs_ = sgfs::FileSystem::create("my_fs");

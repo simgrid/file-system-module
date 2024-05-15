@@ -9,6 +9,7 @@ include(GNUInstallDirs)
 find_package(SimGrid 3.35.1 REQUIRED)
 
 include_directories(
+		${CMAKE_SOURCE_DIR}/include
 		${SimGrid_INCLUDE_DIR}
 		${CMAKE_BINARY_DIR}/include
 		/opt/local/include

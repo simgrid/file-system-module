@@ -26,11 +26,11 @@ public:
 
     }
 
-    virtual const char *what() const throw() {
+    [[nodiscard]] const char *what() const noexcept override {
         // Without the strdup() below, we get some valgrind warnings...
         return strdup(msg_.c_str());
     }
-    ~FileSystemException() = default;
+    ~FileSystemException() override = default;
 };
 }
 

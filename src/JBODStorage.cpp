@@ -1,4 +1,4 @@
-#include "fsmod/JBODStorage.hpp"
+#include "../include/fsmod/JBODStorage.hpp"
 #include <simgrid/s4u/Actor.hpp>
 #include <simgrid/s4u/Comm.hpp>
 #include <simgrid/s4u/Exec.hpp>
@@ -11,10 +11,14 @@ namespace simgrid::module::fs {
      * @brief Method to create an instance of a JBOD (Just a Bunch of Disks) storage
      * @param name: the storage's name
      * @param disks: the storage's disks
+     * @param raid_level: the RAID level
      * @return
      */
-    std::shared_ptr<JBODStorage> JBODStorage::create(const std::string& name, const std::vector<s4u::Disk*>& disks) {
-        return std::shared_ptr<JBODStorage>(new JBODStorage(name, disks));
+    std::shared_ptr<JBODStorage> JBODStorage::create(const std::string& name, const std::vector<s4u::Disk*>& disks, RAID raid_level) {
+        auto storage = std::shared_ptr<JBODStorage>(new JBODStorage(name, disks));
+        // Set the RAID level
+        storage->set_raid_level(raid_level);
+        return storage;
     }
 
     JBODStorage::JBODStorage(const std::string& name, const std::vector<s4u::Disk*>& disks) : Storage(name) {
@@ -28,6 +32,20 @@ namespace simgrid::module::fs {
             //mq_->get<void*>();
         });
         controller_->daemonize();
+    }
+
+    /**
+     * @brief Set the RAID level
+     * @param raid_level: the RAID level
+     */
+    void JBODStorage::set_raid_level(RAID raid_level) {
+        if ((raid_level == RAID::RAID4 || raid_level == RAID::RAID5) && disks_.size() < 3) {
+            throw std::invalid_argument("RAID" + std::to_string((int)raid_level) +"  requires at least 3 disks");
+        }
+        if (raid_level == RAID::RAID6 && disks_.size() < 4) {
+            throw std::invalid_argument("RAID" + std::to_string((int)raid_level) +"  requires at least 4 disks");
+        }
+        raid_level_ = raid_level;
     }
 
     s4u::IoPtr JBODStorage::read_async(sg_size_t size) {
@@ -52,7 +70,7 @@ namespace simgrid::module::fs {
                 read_size = size / (num_disks_ - 1);
                 targets = disks_;
                 targets.erase(targets.begin() + ((get_parity_disk_idx() + 1) % num_disks_));
-              break;
+                break;
             case RAID::RAID6:
                 read_size = size / (num_disks_ - 2);
                 targets = disks_;
@@ -100,7 +118,7 @@ namespace simgrid::module::fs {
         completion_activity->set_disk(disks_.front());
 
         return completion_activity;
-   }
+    }
 
     void JBODStorage::read(sg_size_t size) {
         read_async(size)->wait();
@@ -148,7 +166,7 @@ namespace simgrid::module::fs {
             else
                 parity_block_comp = s4u::Exec::init()->set_flops_amount(write_size);
         } else // Create a no-op activity
-           parity_block_comp = s4u::Exec::init()->set_flops_amount(0);
+            parity_block_comp = s4u::Exec::init()->set_flops_amount(0);
         parity_block_comp->set_name("Parity Block Computation");
 
         // Do not start computing the parity block before the completion of the comm to the controller
@@ -185,6 +203,6 @@ namespace simgrid::module::fs {
     }
 
     void JBODStorage::write(sg_size_t size) {
-       write_async(size)->wait();
+        write_async(size)->wait();
     }
 }

@@ -11,8 +11,9 @@ namespace simgrid::module::fs {
     public:
         enum class RAID {RAID0 = 0, RAID1 = 1, RAID4 = 4 , RAID5 = 5, RAID6 = 6};
 
-        static std::shared_ptr<JBODStorage> create(const std::string& name, const std::vector<simgrid::s4u::Disk*>& disks);
-        void set_raid_level(RAID raid_level) { raid_level_ = raid_level; }
+        static std::shared_ptr<JBODStorage> create(const std::string& name, const std::vector<simgrid::s4u::Disk*>& disks, RAID raid_level);
+        void set_raid_level(RAID raid_level);
+        [[nodiscard]] RAID get_raid_level() { return raid_level_; }
         s4u::MessageQueue* mqueue() { return mq_; }
 
         s4u::IoPtr read_async(sg_size_t size) override;
@@ -25,7 +26,7 @@ namespace simgrid::module::fs {
 
         void update_parity_disk_idx() { parity_disk_idx_ = (parity_disk_idx_- 1) % num_disks_; }
         int get_next_read_disk_idx() { return (++read_disk_idx_) % num_disks_; }
-        int get_parity_disk_idx() const { return parity_disk_idx_; }
+        [[nodiscard]] int get_parity_disk_idx() const { return parity_disk_idx_; }
 
         s4u::MessageQueue* mq_;
 
