@@ -171,14 +171,6 @@ namespace simgrid::module::fs {
     }
 
     /**
-     * @brief Seek to a position in the file
-     * @param pos: the position as an offset from the first byte of the file
-     */
-    void File::seek(sg_offset_t pos) {
-        update_current_position(pos);
-    }
-
-    /**
      * @brief Seek to a position in the file from a given origin
      * @param pos: the position as an offset from the given origin in the file
      * @param origin: where to start adding the offset in the file
