@@ -39,7 +39,9 @@ set(SOURCE_FILES
 		src/PathUtil.cpp
 		src/FileSystem.cpp
 		src/File.cpp
+		src/FileMetadata.cpp
 		src/Partition.cpp
+		src/CachingStrategyNone.cpp
 		src/CachingStrategyFIFO.cpp
 		src/CachingStrategyLRU.cpp
 		src/Storage.cpp

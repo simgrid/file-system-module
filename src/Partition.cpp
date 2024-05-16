@@ -1,9 +1,30 @@
+#include <memory>
+
 #include "fsmod/Partition.hpp"
 #include "fsmod/FileMetadata.hpp"
 #include "fsmod/FileSystemException.hpp"
 #include "fsmod/CachingStrategy.hpp"
 
 namespace simgrid::module::fs {
+
+
+    Partition::Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size, Partition::CachingScheme caching_scheme)
+    : name_(std::move(name)), storage_(std::move(storage)), size_(size), free_space_(size) {
+        switch (caching_scheme) {
+            case CachingScheme::NONE:
+                caching_strategy_ = std::make_shared<CachingStrategyNone>(this);;
+                break;
+            case CachingScheme::FIFO:
+                caching_strategy_ = std::make_shared<CachingStrategyFIFO>(this);
+                break;
+            case CachingScheme::LRU:
+                caching_strategy_ = std::make_shared<CachingStrategyLRU>(this);
+                break;
+            default:
+                throw std::invalid_argument("Unknown/invalid caching scheme");
+        }
+    }
+
 
     /**
      * @brief Retrieve the metadata for a file
@@ -37,7 +58,7 @@ namespace simgrid::module::fs {
             throw FileSystemException(XBT_THROW_POINT, "File already exists");
         }
 
-        content_[dir_path][file_name] = std::make_unique<FileMetadata>(size);
+        content_[dir_path][file_name] = std::make_unique<FileMetadata>(size, this);
         free_space_ -= size;
     }
 
@@ -110,7 +131,7 @@ namespace simgrid::module::fs {
         }
 
         // Do the move (reusing the original unique ptr, just in case)
-        std::unique_ptr<FileMetadata> uniq_ptr = std::move(content_.at(src_dir_path).at(src_file_name));
+        auto uniq_ptr = std::move(content_.at(src_dir_path).at(src_file_name));
         content_.at(src_dir_path).erase(src_file_name);
         content_[dst_dir_path][dst_file_name] = std::move(uniq_ptr);
     }
@@ -139,29 +160,6 @@ namespace simgrid::module::fs {
         }
         // Wipe everything out
         content_.erase(dir_path);
-    }
-
-    void Partition::set_caching_scheme(Partition::CachingScheme caching_scheme) {
-        switch (caching_scheme) {
-            case CachingScheme::NONE:
-                caching_strategy_ = nullptr;
-                break;
-            case CachingScheme::FIFO:
-                caching_strategy_ = std::shared_ptr<CachingStrategyFIFO>(new CachingStrategyFIFO(this));
-                break;
-            case CachingScheme::LRU:
-                caching_strategy_ = std::shared_ptr<CachingStrategyLRU>(new CachingStrategyLRU(this));
-                break;
-            default:
-                throw std::invalid_argument("Unknown/invalid caching scheme");
-        }
-    }
-
-    Partition::CachingScheme Partition::get_caching_scheme() const {
-        if (caching_strategy_ == nullptr) return CachingScheme::NONE;
-        if (std::dynamic_pointer_cast<CachingStrategyFIFO>(caching_strategy_)) return CachingScheme::FIFO;
-        if (std::dynamic_pointer_cast<CachingStrategyLRU>(caching_strategy_)) return CachingScheme::LRU;
-        throw std::runtime_error("Internal error/bug");
     }
 
 

@@ -19,31 +19,30 @@ namespace simgrid::module::fs {
     class XBT_PUBLIC Partition {
         friend class FileSystem;
 
-
         std::string name_;
         sg_size_t size_ = 0;
         sg_size_t free_space_ = 0;
         std::shared_ptr<Storage> storage_;
         std::unordered_map<std::string, std::unordered_map<std::string, std::unique_ptr<FileMetadata>>> content_;
 
-    protected:
-        explicit Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size)
-                : name_(std::move(name)), storage_(std::move(storage)), size_(size), free_space_(size), caching_strategy_(nullptr) {}
-
     public:
         enum class CachingScheme {NONE = 0, FIFO = 1, LRU = 2};
+
+    protected:
+        Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size, Partition::CachingScheme caching_scheme = CachingScheme::NONE);
+
+    public:
         ~Partition() = default;
         [[nodiscard]] const std::string& get_name() const { return name_; }
         [[nodiscard]] const char* get_cname() const { return name_.c_str(); }
         [[nodiscard]] sg_size_t get_size() const { return size_; }
 
         [[nodiscard]] sg_size_t get_free_space() const { return free_space_; }
-        [[nodiscard]] Partition::CachingScheme get_caching_scheme() const;
-        void set_caching_scheme(Partition::CachingScheme);
 
     private:
-        friend class FileSystem;
+//        friend class FileSystem;
         friend class File;
+        friend class FileMetadata;
 
         void decrease_free_space(sg_size_t num_bytes) { free_space_ -= num_bytes; }
         void increase_free_space(sg_size_t num_bytes) { free_space_ += num_bytes; }

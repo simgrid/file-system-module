@@ -16,23 +16,41 @@ namespace simgrid::module::fs {
 
     class XBT_PUBLIC CachingStrategy {
     public:
-        virtual void create_space(sg_size_t num_bytes) = 0;
-        virtual ~CachingStrategy() = default;
+        explicit CachingStrategy(Partition *partition) : partition_(partition) {}
+        virtual ~CachingStrategy() {};
+        virtual void create_space(sg_size_t num_bytes) {};
+        virtual void file_creation(FileMetadata *file_metadata) {};
+        virtual void file_access(FileMetadata *file_metadata) {};
+
+    private:
+        Partition *partition_;
     };
 
+    class XBT_PUBLIC CachingStrategyNone : public CachingStrategy {
+    public:
+        explicit CachingStrategyNone(Partition *partition) : CachingStrategy(partition) {};
+        void create_space(sg_size_t num_bytes) override;
+        void file_creation(FileMetadata *file_metadata) override {};
+        void file_access(FileMetadata *file_metadata) override {};
+    private:
+    };
 
     class XBT_PUBLIC CachingStrategyFIFO : public CachingStrategy {
     public:
-        CachingStrategyFIFO(Partition *partition);
+        explicit CachingStrategyFIFO(Partition *partition);
         void create_space(sg_size_t num_bytes) override;
+        void file_creation(FileMetadata *file_metadata) override ;
+        void file_access(FileMetadata *file_metadata) override {};
     private:
 
     };
 
     class XBT_PUBLIC CachingStrategyLRU : public CachingStrategy {
     public:
-        CachingStrategyLRU(Partition *partition);
+        explicit CachingStrategyLRU(Partition *partition);
         void create_space(sg_size_t num_bytes) override;
+        void file_creation(FileMetadata *file_metadata) override {};
+        void file_access(FileMetadata *file_metadata) override;
     private:
 
     };
