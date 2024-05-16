@@ -3,7 +3,7 @@
 #include <simgrid/s4u/Comm.hpp>
 #include <simgrid/s4u/Exec.hpp>
 
-XBT_LOG_NEW_DEFAULT_CATEGORY(fsmode_jbod, "File System module: JBOD Storage related logs");
+XBT_LOG_NEW_DEFAULT_CATEGORY(fsmod_jbod, "File System module: JBOD Storage related logs");
 
 namespace simgrid::module::fs {
 

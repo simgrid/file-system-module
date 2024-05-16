@@ -8,7 +8,7 @@
 #include "fsmod/FileSystemException.hpp"
 #include "fsmod/FileStat.hpp"
 
-XBT_LOG_NEW_DEFAULT_CATEGORY(fsmode_file, "File System module: File management related logs");
+XBT_LOG_NEW_DEFAULT_CATEGORY(fsmod_file, "File System module: File management related logs");
 
 namespace simgrid::module::fs {
 
@@ -84,7 +84,8 @@ namespace simgrid::module::fs {
             added_bytes = current_position_ + num_bytes - metadata_->get_future_size();
 
         if (added_bytes > partition_->get_free_space()) {
-            throw FileSystemException(XBT_THROW_POINT, "Not enough space in partition");
+            partition_->create_space(added_bytes - partition_->get_free_space());
+//            throw FileSystemException(XBT_THROW_POINT, "Not enough space");
         }
 
         // Compute the new tentative file size

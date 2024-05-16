@@ -9,6 +9,7 @@
 #include <fsmod/JBODStorage.hpp>
 #include <fsmod/OneDiskStorage.hpp>
 #include <fsmod/Partition.hpp>
+#include <fsmod/CachingStrategy.hpp>
 #include <fsmod/Storage.hpp>
 #include <fsmod/Partition.hpp>
 

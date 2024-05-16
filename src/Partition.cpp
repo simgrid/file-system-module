@@ -1,6 +1,7 @@
 #include "fsmod/Partition.hpp"
 #include "fsmod/FileMetadata.hpp"
 #include "fsmod/FileSystemException.hpp"
+#include "fsmod/CachingStrategy.hpp"
 
 namespace simgrid::module::fs {
 
@@ -27,7 +28,8 @@ namespace simgrid::module::fs {
     void Partition::create_new_file(const std::string &dir_path, const std::string &file_name, sg_size_t size) {
         // Check that there is enough space
         if (free_space_ < size) {
-            throw FileSystemException(XBT_THROW_POINT, "Not enough space");
+            this->create_space(size - free_space_);
+//            throw FileSystemException(XBT_THROW_POINT, "Not enough space");
         }
 
         // Check that the file doesn't already exit
@@ -100,7 +102,8 @@ namespace simgrid::module::fs {
             auto dst_size = dst_metadata->get_current_size();
             if (dst_size < src_size) {
                 if (src_size - dst_size > this->get_free_space()) {
-                    throw FileSystemException(XBT_THROW_POINT, "Not enough space");
+                    this->create_space(src_size - dst_size - this->get_free_space());
+//                    throw FileSystemException(XBT_THROW_POINT, "Not enough space");
                 }
             }
             free_space_ += dst_size;
@@ -136,5 +139,37 @@ namespace simgrid::module::fs {
         }
         // Wipe everything out
         content_.erase(dir_path);
+    }
+
+    void Partition::set_caching_scheme(Partition::CachingScheme caching_scheme) {
+        switch (caching_scheme) {
+            case CachingScheme::NONE:
+                caching_strategy_ = nullptr;
+                break;
+            case CachingScheme::FIFO:
+                caching_strategy_ = std::shared_ptr<CachingStrategyFIFO>(new CachingStrategyFIFO(this));
+                break;
+            case CachingScheme::LRU:
+                caching_strategy_ = std::shared_ptr<CachingStrategyLRU>(new CachingStrategyLRU(this));
+                break;
+            default:
+                throw std::invalid_argument("Unknown/invalid caching scheme");
+        }
+    }
+
+    Partition::CachingScheme Partition::get_caching_scheme() const {
+        if (caching_strategy_ == nullptr) return CachingScheme::NONE;
+        if (std::dynamic_pointer_cast<CachingStrategyFIFO>(caching_strategy_)) return CachingScheme::FIFO;
+        if (std::dynamic_pointer_cast<CachingStrategyLRU>(caching_strategy_)) return CachingScheme::LRU;
+        throw std::runtime_error("Internal error/bug");
+    }
+
+
+    void Partition::create_space(sg_size_t num_bytes) {
+        if (not this->caching_strategy_) {
+            throw FileSystemException(XBT_THROW_POINT, "Not enough space");
+        } else {
+            caching_strategy_->create_space(num_bytes);
+        }
     }
 }

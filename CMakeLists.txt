@@ -40,6 +40,8 @@ set(SOURCE_FILES
 		src/FileSystem.cpp
 		src/File.cpp
 		src/Partition.cpp
+		src/CachingStrategyFIFO.cpp
+		src/CachingStrategyLRU.cpp
 		src/Storage.cpp
 		src/JBODStorage.cpp
 		src/OneDiskStorage.cpp
@@ -49,7 +51,9 @@ set(HEADER_FILES
 		include/fsmod/File.hpp
 		include/fsmod/FileSystemException.hpp
 		include/fsmod/Partition.hpp
+		include/fsmod/CachingStrategy.hpp
 		include/fsmod/FileMetadata.hpp
+		include/fsmod/FileStat.hpp
 		include/fsmod/JBODStorage.hpp
 		include/fsmod/PathUtil.hpp
 		include/fsmod/FileSystem.hpp

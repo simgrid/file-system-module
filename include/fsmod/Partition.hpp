@@ -9,15 +9,16 @@
 #include <utility>
 
 #include "fsmod/FileMetadata.hpp"
+#include "CachingStrategy.hpp"
 
 namespace simgrid::module::fs {
 
     class Storage;
 
-    /** \cond EXCLUDE_FROM_DOCUMENTATION    */
 
     class XBT_PUBLIC Partition {
         friend class FileSystem;
+
 
         std::string name_;
         sg_size_t size_ = 0;
@@ -27,17 +28,27 @@ namespace simgrid::module::fs {
 
     protected:
         explicit Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size)
-                : name_(std::move(name)), storage_(std::move(storage)), size_(size), free_space_(size) {}
+                : name_(std::move(name)), storage_(std::move(storage)), size_(size), free_space_(size), caching_strategy_(nullptr) {}
 
     public:
+        enum class CachingScheme {NONE = 0, FIFO = 1, LRU = 2};
         ~Partition() = default;
         [[nodiscard]] const std::string& get_name() const { return name_; }
         [[nodiscard]] const char* get_cname() const { return name_.c_str(); }
         [[nodiscard]] sg_size_t get_size() const { return size_; }
 
         [[nodiscard]] sg_size_t get_free_space() const { return free_space_; }
+        [[nodiscard]] Partition::CachingScheme get_caching_scheme() const;
+        void set_caching_scheme(Partition::CachingScheme);
+
+    private:
+        friend class FileSystem;
+        friend class File;
+
         void decrease_free_space(sg_size_t num_bytes) { free_space_ -= num_bytes; }
         void increase_free_space(sg_size_t num_bytes) { free_space_ += num_bytes; }
+
+        void create_space(sg_size_t num_bytes);
 
         [[nodiscard]] std::shared_ptr<Storage> get_storage() const { return storage_; }
 
@@ -53,9 +64,10 @@ namespace simgrid::module::fs {
         void move_file(const std::string& src_dir_path, const std::string& src_file_name,
                        const std::string& dst_dir_path, const std::string& dst_file_name);
 
+    private:
+        std::shared_ptr<CachingStrategy> caching_strategy_;
     };
 
-    /** \endcond **/
 
 
 } // namespace simgrid::module::fs
