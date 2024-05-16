@@ -75,6 +75,8 @@ TEST_F(SeekTest, SeekandTell)  {
             ASSERT_NO_THROW(file->write("1kB"));
             XBT_INFO("Check file size, it should now be 104k");
             ASSERT_DOUBLE_EQ(fs_->file_size("/dev/a/foo.txt"), 104000);
+            XBT_INFO("Seek from an arbitrary position in file, should work");
+            ASSERT_NO_THROW(file->seek(1000, 2000));
             XBT_INFO("Close the file");
             ASSERT_NO_THROW(file->close());
         });

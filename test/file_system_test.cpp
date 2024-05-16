@@ -77,6 +77,8 @@ TEST_F(FileSystemTest, FileCreate)  {
             ASSERT_THROW(this->fs_->create_file("/dev/a/foo.txt", "10MB"), sgfs::FileSystemException);
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt, which should work");
             ASSERT_NO_THROW(this->fs_->create_file("/dev/a/foo.txt", "10kB"));
+            XBT_INFO("Create the same file again at /dev/a/foo.txt, which should fail");
+            ASSERT_THROW(this->fs_->create_file("/dev/a/foo.txt", "10kB"), sgfs::FileSystemException);
             XBT_INFO("Check remaining space");
             ASSERT_DOUBLE_EQ(this->fs_->partition_by_name("/dev/a")->get_free_space(), 90 * 1000);
         });
@@ -186,7 +188,8 @@ TEST_F(FileSystemTest, FileOpenClose)  {
             XBT_INFO("Trying to unlink the file");
             ASSERT_NO_THROW(fs_->unlink_file("/dev/a/stuff/foo.txt"));
             ASSERT_FALSE(fs_->file_exists("/dev/a/stuff/foo.txt"));
-
+            XBT_INFO("Trying to unlink the file again");
+            ASSERT_THROW(fs_->unlink_file("/dev/a/stuff/foo.txt"), sgfs::FileSystemException);
         });
 
         // Run the simulation
