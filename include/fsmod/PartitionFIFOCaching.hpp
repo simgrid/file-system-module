@@ -13,8 +13,10 @@
 
 namespace simgrid::module::fs {
 
-    class Storage;
 
+    /** \cond EXCLUDE_FROM_DOCUMENTATION    */
+
+    class Storage;
 
     class XBT_PUBLIC PartitionFIFOCaching : public Partition {
 
@@ -31,9 +33,12 @@ namespace simgrid::module::fs {
         void new_file_deletion_event(FileMetadata *file_metadata) override;
 
     private:
+        unsigned long sequence_number_ = 0;
+        std::map<unsigned long, FileMetadata*> fifo_list_;
 
     };
 
+    /** \endcond    */
 
 
 } // namespace simgrid::module::fs

@@ -13,8 +13,9 @@
 
 namespace simgrid::module::fs {
 
-    class Storage;
+    /** \cond EXCLUDE_FROM_DOCUMENTATION    */
 
+    class Storage;
 
     class XBT_PUBLIC PartitionLRUCaching : public Partition {
 
@@ -32,7 +33,7 @@ namespace simgrid::module::fs {
 
     };
 
-
+    /** \endcode     */
 
 } // namespace simgrid::module::fs
 

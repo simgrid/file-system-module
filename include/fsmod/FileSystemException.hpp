@@ -23,7 +23,7 @@ class FileSystemException : public std::exception {
     std::string msg_;
 public:
     FileSystemException(simgrid::xbt::ThrowPoint&& throwpoint, const std::string &msg) {
-
+        msg_ = msg;
     }
 
     [[nodiscard]] const char *what() const noexcept override {

@@ -11,7 +11,13 @@ namespace simgrid::module::fs {
     class Partition;
 
     class XBT_PUBLIC FileMetadata {
+
+        friend class PartitionFIFOCaching;
+
         Partition *partition_;
+        std::string dir_path;
+        std::string file_name;
+
         sg_size_t current_size_;
         sg_size_t future_size_;
         double creation_date_ = 0.0;
@@ -20,8 +26,10 @@ namespace simgrid::module::fs {
         std::unordered_map<int, sg_size_t> ongoing_writes_;
         unsigned file_refcount_ = 0;
 
+        unsigned long sequence_number_; // Used for caching algorithms
+
     public:
-        FileMetadata(sg_size_t initial_size, Partition *partition);
+        FileMetadata(sg_size_t initial_size, Partition *partition, std::string dir_path, std::string file_name);
 
         [[nodiscard]] sg_size_t get_current_size() const { return current_size_; }
         void set_current_size(sg_size_t num_bytes) { current_size_ = num_bytes; }

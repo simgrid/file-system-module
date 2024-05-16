@@ -36,7 +36,6 @@ namespace simgrid::module::fs {
         // Check that there is enough space
         if (free_space_ < size) {
             this->create_space(size - free_space_);
-//            throw FileSystemException(XBT_THROW_POINT, "Not enough space");
         }
 
         // Check that the file doesn't already exit
@@ -44,7 +43,7 @@ namespace simgrid::module::fs {
             throw FileSystemException(XBT_THROW_POINT, "File already exists");
         }
 
-        content_[dir_path][file_name] = std::make_unique<FileMetadata>(size, this);
+        content_[dir_path][file_name] = std::make_unique<FileMetadata>(size, this, dir_path, file_name);
         free_space_ -= size;
     }
 

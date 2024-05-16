@@ -63,10 +63,10 @@ namespace simgrid::module::fs {
         void create_new_file(const std::string& dir_path,
                              const std::string& file_name,
                              sg_size_t size);
-        void delete_file(const std::string& dir_path, const std::string& file_name);
         void move_file(const std::string& src_dir_path, const std::string& src_file_name,
                        const std::string& dst_dir_path, const std::string& dst_file_name);
-
+    protected:
+        void delete_file(const std::string& dir_path, const std::string& file_name);
     };
 
 
