@@ -30,7 +30,6 @@ namespace simgrid::module::fs {
                 : name_(std::move(name)), storage_(std::move(storage)), size_(size), free_space_(size) {}
 
     public:
-        ~Partition() = default;
         [[nodiscard]] const std::string& get_name() const { return name_; }
         [[nodiscard]] const char* get_cname() const { return name_.c_str(); }
         [[nodiscard]] sg_size_t get_size() const { return size_; }
