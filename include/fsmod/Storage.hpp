@@ -21,11 +21,11 @@ namespace simgrid::module::fs {
         explicit Storage(std::string name): name_(std::move(name)){}
 
     public:
-        const std::string& get_name() const { return name_; }
-        const char* get_cname() const { return name_.c_str(); }
-        s4u::Host* get_controller_host() const { return controller_host_; }
-        s4u::ActorPtr get_controller() const { return controller_; }
-        std::vector<s4u::Disk*> get_disks() const { return disks_; };
+        [[nodiscard]] const std::string& get_name() const { return name_; }
+        [[nodiscard]] const char* get_cname() const { return name_.c_str(); }
+        [[nodiscard]] s4u::Host* get_controller_host() const { return controller_host_; }
+        [[nodiscard]] s4u::ActorPtr get_controller() const { return controller_; }
+        [[nodiscard]] std::vector<s4u::Disk*> get_disks() const { return disks_; };
 
         virtual s4u::IoPtr read_async(sg_size_t size) = 0;
         virtual void read(sg_size_t size) = 0;

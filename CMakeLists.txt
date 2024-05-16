@@ -41,10 +41,9 @@ set(SOURCE_FILES
 		src/File.cpp
 		src/FileMetadata.cpp
 		src/Partition.cpp
-		src/CachingStrategyNone.cpp
-		src/CachingStrategyFIFO.cpp
-		src/CachingStrategyLRU.cpp
-		src/Storage.cpp
+		src/PartitionFIFOCaching.cpp
+		src/PartitionLRUCaching.cpp
+        src/Storage.cpp
 		src/JBODStorage.cpp
 		src/OneDiskStorage.cpp
 		)
@@ -54,7 +53,8 @@ set(HEADER_FILES
 		include/fsmod/FileStat.hpp
 		include/fsmod/FileSystemException.hpp
 		include/fsmod/Partition.hpp
-		include/fsmod/CachingStrategy.hpp
+		include/fsmod/PartitionFIFOCaching.hpp
+		include/fsmod/PartitionLRUCaching.hpp
 		include/fsmod/FileMetadata.hpp
 		include/fsmod/JBODStorage.hpp
 		include/fsmod/PathUtil.hpp

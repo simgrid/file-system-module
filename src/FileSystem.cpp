@@ -7,6 +7,8 @@
 #include "fsmod/File.hpp"
 #include "fsmod/PathUtil.hpp"
 #include "fsmod/Partition.hpp"
+#include "fsmod/PartitionFIFOCaching.hpp"
+#include "fsmod/PartitionLRUCaching.hpp"
 #include "fsmod/FileSystemException.hpp"
 
 namespace simgrid::module::fs {
@@ -42,14 +44,25 @@ namespace simgrid::module::fs {
     /**
      * @brief A method to add a partition to the file system
      * @param mount_point: the partition's mount point
-     * @param partition: the partition
+     * @param storage: the storage
+     * @param size: the partition size as a unit string (e.g., "100MB")
+     * @param caching_scheme: the caching scheme (default: Partition::CachingScheme::NONE)
      */
     void FileSystem::mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage,
-                                     const std::string &size) {
-        mount_partition(mount_point, std::move(storage), static_cast<sg_size_t>(xbt_parse_get_size("", 0, size, "")));
+                                     const std::string &size, Partition::CachingScheme caching_scheme) {
+        mount_partition(mount_point, std::move(storage), static_cast<sg_size_t>(xbt_parse_get_size("", 0, size, "")), caching_scheme);
     }
 
-    void FileSystem::mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, sg_size_t size) {
+
+    /**
+     * @brief A method to add a partition to the file system
+     * @param mount_point: the partition's mount point
+     * @param storage: the storage
+     * @param size: the partition size in bytes
+     * @param caching_scheme: the caching scheme (default: Partition::CachingScheme::NONE)
+     */
+    void FileSystem::mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, sg_size_t size,
+                                     Partition::CachingScheme caching_scheme) {
 
         auto cleanup_mount_point = mount_point;
         PathUtil::remove_trailing_slashes(cleanup_mount_point);
@@ -61,7 +74,22 @@ namespace simgrid::module::fs {
                 throw std::invalid_argument("Mount point already exists or is prefix of existing mount point");
             }
         }
-        this->partitions_[cleanup_mount_point] = std::shared_ptr<Partition>(new Partition(cleanup_mount_point, std::move(storage), size));
+
+        Partition *new_partition;
+
+        switch (caching_scheme) {
+            case Partition::CachingScheme::NONE:
+                new_partition = new Partition(cleanup_mount_point, std::move(storage), size);
+                break;
+            case Partition::CachingScheme::FIFO:
+                new_partition = new PartitionFIFOCaching(cleanup_mount_point, std::move(storage), size);
+                break;
+            case Partition::CachingScheme::LRU:
+                new_partition = new PartitionLRUCaching(cleanup_mount_point, std::move(storage), size);
+                break;
+        }
+
+        this->partitions_[cleanup_mount_point] = std::shared_ptr<Partition>(new_partition);
     }
 
 

@@ -10,17 +10,17 @@ namespace simgrid::module::fs {
            current_size_(initial_size), future_size_(initial_size), partition_(partition) {
 
        creation_date_ = s4u::Engine::get_clock();
-       partition_->caching_strategy_->file_creation(this);
+       partition_->new_file_creation_event(this);
 
        access_date_ = s4u::Engine::get_clock();
-       partition_->caching_strategy_->file_access(this);
+       partition_->new_file_access_event(this);
 
        modification_date_ = s4u::Engine::get_clock();
    }
 
     void FileMetadata::set_access_date(double date) {
-       modification_date_ = date;
-       partition_->caching_strategy_->file_access(this);
+       access_date_ = date;
+       partition_->new_file_access_event(this);
    }
 
 }

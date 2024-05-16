@@ -26,8 +26,10 @@ namespace simgrid::module::fs {
     public:
         static std::shared_ptr<FileSystem> create(const std::string &name, int max_num_open_files = 1024);
 
-        void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, sg_size_t size);
-        void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, const std::string& size);
+        void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, sg_size_t size,
+                             Partition::CachingScheme caching_scheme  = Partition::CachingScheme::NONE);
+        void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, const std::string& size,
+                             Partition::CachingScheme caching_scheme  = Partition::CachingScheme::NONE);
 
         void create_file(const std::string& full_path, sg_size_t size);
         void create_file(const std::string& full_path, const std::string& size);

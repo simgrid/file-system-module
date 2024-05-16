@@ -9,7 +9,6 @@
 #include <utility>
 
 #include "fsmod/FileMetadata.hpp"
-#include "CachingStrategy.hpp"
 
 namespace simgrid::module::fs {
 
@@ -29,7 +28,7 @@ namespace simgrid::module::fs {
         enum class CachingScheme {NONE = 0, FIFO = 1, LRU = 2};
 
     protected:
-        Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size, Partition::CachingScheme caching_scheme = CachingScheme::NONE);
+        Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size);
 
     public:
         ~Partition() = default;
@@ -39,6 +38,13 @@ namespace simgrid::module::fs {
 
         [[nodiscard]] sg_size_t get_free_space() const { return free_space_; }
 
+    protected:
+        // Methods to perform caching
+        virtual void create_space(sg_size_t num_bytes);
+        virtual void new_file_creation_event(FileMetadata *file_metadata);
+        virtual void new_file_access_event(FileMetadata *file_metadata);
+        virtual void new_file_deletion_event(FileMetadata *file_metadata);
+
     private:
 //        friend class FileSystem;
         friend class File;
@@ -46,8 +52,6 @@ namespace simgrid::module::fs {
 
         void decrease_free_space(sg_size_t num_bytes) { free_space_ -= num_bytes; }
         void increase_free_space(sg_size_t num_bytes) { free_space_ += num_bytes; }
-
-        void create_space(sg_size_t num_bytes);
 
         [[nodiscard]] std::shared_ptr<Storage> get_storage() const { return storage_; }
 
@@ -63,8 +67,6 @@ namespace simgrid::module::fs {
         void move_file(const std::string& src_dir_path, const std::string& src_file_name,
                        const std::string& dst_dir_path, const std::string& dst_file_name);
 
-    private:
-        std::shared_ptr<CachingStrategy> caching_strategy_;
     };
 
 

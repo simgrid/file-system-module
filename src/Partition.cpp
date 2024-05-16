@@ -3,26 +3,12 @@
 #include "fsmod/Partition.hpp"
 #include "fsmod/FileMetadata.hpp"
 #include "fsmod/FileSystemException.hpp"
-#include "fsmod/CachingStrategy.hpp"
 
 namespace simgrid::module::fs {
 
 
-    Partition::Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size, Partition::CachingScheme caching_scheme)
-    : name_(std::move(name)), storage_(std::move(storage)), size_(size), free_space_(size) {
-        switch (caching_scheme) {
-            case CachingScheme::NONE:
-                caching_strategy_ = std::make_shared<CachingStrategyNone>(this);;
-                break;
-            case CachingScheme::FIFO:
-                caching_strategy_ = std::make_shared<CachingStrategyFIFO>(this);
-                break;
-            case CachingScheme::LRU:
-                caching_strategy_ = std::make_shared<CachingStrategyLRU>(this);
-                break;
-            default:
-                throw std::invalid_argument("Unknown/invalid caching scheme");
-        }
+    Partition::Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size)
+            : name_(std::move(name)), storage_(std::move(storage)), size_(size), free_space_(size) {
     }
 
 
@@ -80,6 +66,7 @@ namespace simgrid::module::fs {
 
         auto meta_data = this->get_file_metadata(dir_path, file_name);
         if (meta_data) {
+            this->new_file_deletion_event(meta_data);
             free_space_ += meta_data->get_current_size();
             content_.at(dir_path).erase(file_name);
         }
@@ -124,9 +111,9 @@ namespace simgrid::module::fs {
             if (dst_size < src_size) {
                 if (src_size - dst_size > this->get_free_space()) {
                     this->create_space(src_size - dst_size - this->get_free_space());
-//                    throw FileSystemException(XBT_THROW_POINT, "Not enough space");
                 }
             }
+            this->new_file_deletion_event(dst_metadata);
             free_space_ += dst_size;
         }
 
@@ -164,10 +151,20 @@ namespace simgrid::module::fs {
 
 
     void Partition::create_space(sg_size_t num_bytes) {
-        if (not this->caching_strategy_) {
             throw FileSystemException(XBT_THROW_POINT, "Not enough space");
-        } else {
-            caching_strategy_->create_space(num_bytes);
-        }
     }
+
+    void Partition::new_file_creation_event(FileMetadata *file_metadata) {
+        // No-op
+    }
+
+    void Partition::new_file_access_event(FileMetadata *file_metadata) {
+        // No-op
+    }
+
+    void Partition::new_file_deletion_event(FileMetadata *file_metadata) {
+        // No-op
+    }
+
+
 }
