@@ -154,7 +154,13 @@ TEST_F(FileSystemTest, FileMove)  {
             ASSERT_FALSE(fs_->file_exists("/dev/a/b/c/foo.txt"));
             ASSERT_TRUE(fs_->file_exists("/dev/a/stuff.txt"));
             ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a/")->get_free_space(), 90*1000);
-        });
+
+            auto ods = sgfs::OneDiskStorage::create("my_storage", disk_two_);
+            XBT_INFO("Mount a new partition");
+            ASSERT_NO_THROW(fs_->mount_partition("/dev/b/", ods, "100kB"));
+            XBT_INFO("Move file /dev/a/stuff.txt to /dev/b/stuff.txt which is forbidden");
+            ASSERT_THROW(fs_->move_file("/dev/a/stuff.txt", "/dev/b/stuff.txt"), sgfs::FileSystemException);
+       });
 
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
