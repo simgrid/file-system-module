@@ -60,7 +60,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs4File4readE9sg_size_tb"><code class="docutils literal notranslate"><span class="pre">File::read()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs4File10read_asyncERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">File::read_async()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs4File10read_asyncE9sg_size_t"><code class="docutils literal notranslate"><span class="pre">File::read_async()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs4File4seekE11sg_offset_t"><code class="docutils literal notranslate"><span class="pre">File::seek()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs4File4seekE11sg_offset_ti"><code class="docutils literal notranslate"><span class="pre">File::seek()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid6module2fs4File4statEv"><code class="docutils literal notranslate"><span class="pre">File::stat()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid6module2fs4File4tellEv"><code class="docutils literal notranslate"><span class="pre">File::tell()</span></code></a></li>
@@ -192,21 +191,9 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N7simgrid6module2fs4File4seekE11sg_offset_t">
-<span id="_CPPv3N7simgrid6module2fs4File4seekE11sg_offset_t"></span><span id="_CPPv2N7simgrid6module2fs4File4seekE11sg_offset_t"></span><span id="simgrid::module::fs::File::seek__sg_offset_t"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_file_1a0bfa4afdd7a6abdbba1c6e180deb78d6"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">seek</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">sg_offset_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">pos</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid6module2fs4File4seekE11sg_offset_t" title="Link to this definition"></a><br /></dt>
-<dd><p>Seek to a position in the file. </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>pos</strong> – the position as an offset from the first byte of the file </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N7simgrid6module2fs4File4seekE11sg_offset_ti">
-<span id="_CPPv3N7simgrid6module2fs4File4seekE11sg_offset_ti"></span><span id="_CPPv2N7simgrid6module2fs4File4seekE11sg_offset_ti"></span><span id="simgrid::module::fs::File::seek__sg_offset_t.i"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_file_1a958e7552b6b6d6fe016c30ee8e629e4c"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">seek</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">sg_offset_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">pos</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">origin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid6module2fs4File4seekE11sg_offset_ti" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N7simgrid6module2fs4File4seekE11sg_offset_ti"></span><span id="_CPPv2N7simgrid6module2fs4File4seekE11sg_offset_ti"></span><span id="simgrid::module::fs::File::seek__sg_offset_t.i"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_file_1ac5c96e3ba459cbb86ad1015f673197ac"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">seek</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">sg_offset_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">pos</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">origin</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">SEEK_SET</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid6module2fs4File4seekE11sg_offset_ti" title="Link to this definition"></a><br /></dt>
 <dd><p>Seek to a position in the file from a given origin. </p>
-<p>Sets the file head to the given position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
