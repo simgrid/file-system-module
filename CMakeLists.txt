@@ -54,7 +54,6 @@ set(HEADER_FILES
 		include/fsmod/Partition.hpp
 		include/fsmod/CachingStrategy.hpp
 		include/fsmod/FileMetadata.hpp
-		include/fsmod/FileStat.hpp
 		include/fsmod/JBODStorage.hpp
 		include/fsmod/PathUtil.hpp
 		include/fsmod/FileSystem.hpp
