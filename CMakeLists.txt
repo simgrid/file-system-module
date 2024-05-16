@@ -47,6 +47,7 @@ set(SOURCE_FILES
 
 set(HEADER_FILES
 		include/fsmod/File.hpp
+		include/fsmod/FileStat.hpp
 		include/fsmod/FileSystemException.hpp
 		include/fsmod/Partition.hpp
 		include/fsmod/FileMetadata.hpp
