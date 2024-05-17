@@ -34,6 +34,9 @@ namespace simgrid::module::fs {
          * @return A RAID level
          */
         [[nodiscard]] RAID get_raid_level() { return raid_level_; }
+        
+        void set_raid_level(RAID raid_level);
+
 
         s4u::IoPtr read_async(sg_size_t size) override;
         void read(sg_size_t size) override;
@@ -50,7 +53,6 @@ namespace simgrid::module::fs {
         [[nodiscard]] int get_parity_disk_idx() const { return parity_disk_idx_; }
         s4u::MessageQueue* mq_;
 
-        void set_raid_level(RAID raid_level);
 
     private:
         unsigned int num_disks_;
