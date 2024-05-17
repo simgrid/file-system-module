@@ -18,7 +18,7 @@ namespace simgrid::module::fs {
      * @param file_name: the file name
      * @return A pointer to MetaData, or nullptr if the directory or file is not found
      */
-    FileMetadata* Partition::get_file_metadata(const std::string& dir_path, const std::string& file_name) {
+    FileMetadata *Partition::get_file_metadata(const std::string &dir_path, const std::string &file_name) {
         try {
             return content_.at(dir_path).at(file_name).get();
         } catch (std::out_of_range &e) {
@@ -78,8 +78,8 @@ namespace simgrid::module::fs {
      * @param dst_dir_path: destination directory path
      * @param dst_file_name: destination file name
      */
-    void Partition::move_file(const std::string& src_dir_path, const std::string& src_file_name,
-                              const std::string& dst_dir_path, const std::string& dst_file_name) {
+    void Partition::move_file(const std::string &src_dir_path, const std::string &src_file_name,
+                              const std::string &dst_dir_path, const std::string &dst_file_name) {
 
         // Get the src metadata, which must exist
         FileMetadata *src_metadata = this->get_file_metadata(src_dir_path, src_file_name);
@@ -126,7 +126,7 @@ namespace simgrid::module::fs {
         if (content_.find(dir_path) == content_.end()) {
             throw FileSystemException(XBT_THROW_POINT, "Directory does not exist");
         }
-        std::set<std::string> keys;
+        std::set < std::string > keys;
         for (auto const &key: content_[dir_path]) {
             keys.insert(key.first);
         }
@@ -138,7 +138,7 @@ namespace simgrid::module::fs {
             throw FileSystemException(XBT_THROW_POINT, "Directory does not exist");
         }
         // Check that no file is open
-        for (const auto &item : content_.at(dir_path)) {
+        for (const auto &item: content_.at(dir_path)) {
             if (item.second->get_file_refcount() != 0) {
                 throw FileSystemException(XBT_THROW_POINT,
                                           "Cannot delete a file that is open - no content deleted in directory");
@@ -150,7 +150,7 @@ namespace simgrid::module::fs {
 
 
     void Partition::create_space(sg_size_t num_bytes) {
-            throw FileSystemException(XBT_THROW_POINT, "Not enough space");
+        throw FileSystemException(XBT_THROW_POINT, "Not enough space");
     }
 
     void Partition::new_file_creation_event(FileMetadata *file_metadata) {

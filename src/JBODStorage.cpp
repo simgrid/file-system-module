@@ -114,7 +114,7 @@ namespace simgrid::module::fs {
         // Start the comm by setting its destination
         comm->set_destination(s4u::Host::current());
 
-        // Completion Actitity is now blocked by tje Comm, start it by assigning it to the controller host first disk
+        // Completion activity is now blocked by tje Comm, start it by assigning it to the controller host first disk
         completion_activity->set_disk(disks_.front());
 
         return completion_activity;
@@ -189,14 +189,14 @@ namespace simgrid::module::fs {
             auto io = s4u::IoPtr(disk->io_init(write_size, s4u::Io::OpType::WRITE));
             io->set_name(disk->get_name());
             ios.push_back(io);
-            // Do no start the I/Os before the completion of the computation of the parity block
+            // Do not start the I/Os before the completion of the computation of the parity block
             parity_block_comp->add_successor(io);
             // Have the completion activity depend on every I/O
             io->add_successor(completion_activity);
             io->detach();
         }
 
-        // Completion Actitity is now blocked by I/Os, start it by assigning it to the controller host first disk
+        // Completion activity is now blocked by I/Os, start it by assigning it to the controller host first disk
         completion_activity->set_disk(disks_.front());
 
         return completion_activity;
