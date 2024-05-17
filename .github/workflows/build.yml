@@ -25,7 +25,6 @@ jobs:
         run: |
           git clone https://framagit.org/simgrid/simgrid.git
           cd simgrid
-          git checkout a0123b157d9d1e7f7d40198198d8776817fb4d46
           mkdir build
           cd build
           cmake -Denable_smpi=OFF -Denable_model-checking=OFF ..
