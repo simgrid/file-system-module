@@ -1,8 +1,7 @@
-#include <iostream>
-
 #include <simgrid/s4u/NetZone.hpp>
 #include <simgrid/s4u/Engine.hpp>
 #include <simgrid/s4u/Actor.hpp>
+#include <iostream>
 #include <utility>
 
 #include "../include/fsmod.hpp"
@@ -13,7 +12,6 @@ namespace sg4 = simgrid::s4u;
 namespace sgfs = simgrid::module::fs;
 
 class FileWriterActor {
-private:
     std::shared_ptr<sgfs::FileSystem> fs_;
     std::string file_path_;
     sg_size_t num_bytes_;
@@ -38,8 +36,6 @@ public:
         XBT_INFO("The file size it: %llu", fs_->file_size(file_path_));
     }
 };
-
-
 
 int main(int argc, char **argv) {
 
