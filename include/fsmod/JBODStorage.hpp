@@ -33,8 +33,8 @@ namespace simgrid::module::fs {
          * @brief Retrieves the storage's RAID level
          * @return A RAID level
          */
-        [[nodiscard]] RAID get_raid_level() { return raid_level_; }
-        
+        [[nodiscard]] RAID get_raid_level() const { return raid_level_; }
+
         void set_raid_level(RAID raid_level);
 
 
@@ -44,7 +44,7 @@ namespace simgrid::module::fs {
         void write(sg_size_t size) override;
 
     protected:
-        s4u::MessageQueue* mqueue() { return mq_; }
+        s4u::MessageQueue* mqueue() const { return mq_; }
 
         JBODStorage(const std::string& name, const std::vector<simgrid::s4u::Disk*>& disks);
         void update_parity_disk_idx() { parity_disk_idx_ = (parity_disk_idx_- 1) % num_disks_; }

@@ -18,7 +18,7 @@ namespace simgrid::module::fs {
      * @param file_name: the file name
      * @return A pointer to MetaData, or nullptr if the directory or file is not found
      */
-    FileMetadata *Partition::get_file_metadata(const std::string &dir_path, const std::string &file_name) {
+    FileMetadata *Partition::get_file_metadata(const std::string &dir_path, const std::string &file_name) const {
         try {
             return content_.at(dir_path).at(file_name).get();
         } catch (std::out_of_range &e) {
@@ -122,12 +122,12 @@ namespace simgrid::module::fs {
         content_[dst_dir_path][dst_file_name] = std::move(uniq_ptr);
     }
 
-    std::set<std::string> Partition::list_files_in_directory(const std::string &dir_path) {
+    std::set<std::string> Partition::list_files_in_directory(const std::string &dir_path) const {
         if (content_.find(dir_path) == content_.end()) {
             throw FileSystemException(XBT_THROW_POINT, "Directory does not exist");
         }
         std::set < std::string > keys;
-        for (auto const &key: content_[dir_path]) {
+        for (auto const &key: content_.at(dir_path)) {
             keys.insert(key.first);
         }
         return keys;

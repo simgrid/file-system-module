@@ -24,7 +24,7 @@ public:
     CachingTest() = default;
 
     void setup_platform() {
-        XBT_INFO("Creating a platform with one host and two disks...");
+        XBT_INFO("Creating a platform with one host and one disk...");
         auto *my_zone = sg4::create_full_zone("zone");
         host_ = my_zone->create_host("my_host", "100Gf");
         disk_ = host_->create_disk("disk", "1kBps", "2kBps");

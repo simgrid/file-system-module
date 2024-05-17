@@ -85,11 +85,11 @@ namespace simgrid::module::fs {
 
         [[nodiscard]] std::shared_ptr<Storage> get_storage() const { return storage_; }
 
-        [[nodiscard]] bool directory_exists(const std::string& dir_path) { return content_.find(dir_path) != content_.end(); }
-        std::set<std::string> list_files_in_directory(const std::string &dir_path);
+        [[nodiscard]] bool directory_exists(const std::string& dir_path) const { return content_.find(dir_path) != content_.end(); }
+        std::set<std::string> list_files_in_directory(const std::string &dir_path) const;
         void delete_directory(const std::string &dir_path);
 
-        [[nodiscard]] FileMetadata* get_file_metadata(const std::string& dir_path, const std::string& file_name);
+        [[nodiscard]] FileMetadata* get_file_metadata(const std::string& dir_path, const std::string& file_name) const;
         void create_new_file(const std::string& dir_path,
                              const std::string& file_name,
                              sg_size_t size);
