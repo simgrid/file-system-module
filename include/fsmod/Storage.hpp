@@ -15,7 +15,6 @@ namespace simgrid::module::fs {
      * @brief A class that iplements a storage abstraction
      */
     class XBT_PUBLIC Storage {
-
     protected:
         std::string name_;
         std::vector<s4u::Disk*> disks_;

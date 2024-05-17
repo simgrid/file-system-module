@@ -12,7 +12,6 @@ namespace simgrid::module::fs {
     class Partition;
 
     class XBT_PUBLIC FileMetadata {
-
         friend class PartitionFIFOCaching;
         friend class PartitionLRUCaching;
 

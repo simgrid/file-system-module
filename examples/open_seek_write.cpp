@@ -13,7 +13,6 @@ namespace sg4 = simgrid::s4u;
 namespace sgfs = simgrid::module::fs;
 
 class FileWriterActor {
-private:
     std::shared_ptr<sgfs::FileSystem> fs_;
     std::string file_path_;
     double sleep_time_;
@@ -34,7 +33,6 @@ public:
     {}
 
     void operator()() {
-
         XBT_INFO("New FileWriter for file %s: sleep_time: %.2lf, offset=%llu, num_bytes=%llu", file_path_.c_str(), sleep_time_, offset_, num_bytes_);
         sg4::this_actor::sleep_for(sleep_time_);
         XBT_INFO("Opening the file...");
@@ -49,10 +47,7 @@ public:
     }
 };
 
-
-
 int main(int argc, char **argv) {
-
     sg4::Engine engine(&argc, argv);
 
     XBT_INFO("Creating a platform with one host and one disk...");
@@ -68,14 +63,12 @@ int main(int argc, char **argv) {
     XBT_INFO("Mounting a 100kB partition...");
     fs->mount_partition("/dev/bogus/", ods, "100kB");
 
-
     std::string file_path = "/dev//bogus/../bogus/file.txt";
     XBT_INFO("Creating a 10kB file...");
     fs->create_file(file_path, "10kB");
     XBT_INFO("The file size it: %llu", fs->file_size(file_path));
     auto partition = fs->partition_by_name("/dev/bogus/");
     XBT_INFO("%llu bytes free on %s", partition->get_free_space(), partition->get_cname());
-
 
     XBT_INFO("Creating file writer actors...");
     sg4::Actor::create("MyActor1", my_host, FileWriterActor(fs, file_path, 10, 5*1000, 6*1000));

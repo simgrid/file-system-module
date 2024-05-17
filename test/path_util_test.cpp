@@ -12,7 +12,6 @@ class PathUtilTest : public ::testing::Test {
 };
 
 TEST_F(PathUtilTest, PathSimplification)  {
-
     std::vector<std::pair<std::string, std::string>> input_output = {
             {"////", "/"},
             {"////foo", "/foo"},

@@ -19,7 +19,6 @@ namespace simgrid::module::fs {
  	* @brief A class that implements a file system abstraction
  	*/
     class XBT_PUBLIC FileSystem {
-
         const std::string name_;
         int max_num_open_files_;
 
@@ -46,7 +45,6 @@ namespace simgrid::module::fs {
 
         std::shared_ptr<File> open(const std::string& full_path);
 
-
         [[nodiscard]] std::shared_ptr<Partition> partition_by_name(const std::string& name) const;
         [[nodiscard]] std::shared_ptr<Partition> partition_by_name_or_null(const std::string& name) const;
 
@@ -59,11 +57,7 @@ namespace simgrid::module::fs {
         std::map<std::string, std::shared_ptr<Partition>> partitions_;
 
         int num_open_files_ = 0;
-
-
     };
-
 } // namespace simgrid::module::fs
-
 
 #endif

@@ -7,9 +7,13 @@
 
 namespace simgrid::module::fs {
 
-   FileMetadata::FileMetadata(sg_size_t initial_size, simgrid::module::fs::Partition *partition, std::string dir_path, std::string file_name) :
-           current_size_(initial_size), future_size_(initial_size), partition_(partition), dir_path_(std::move(dir_path)), file_name_(std::move(file_name)) {
-
+   FileMetadata::FileMetadata(sg_size_t initial_size, simgrid::module::fs::Partition *partition, std::string dir_path,
+                             std::string file_name)
+        : current_size_(initial_size),
+          future_size_(initial_size),
+          partition_(partition),
+          dir_path_(std::move(dir_path)),
+          file_name_(std::move(file_name)) {
        creation_date_ = s4u::Engine::get_clock();
        partition_->new_file_creation_event(this);
 
@@ -23,5 +27,4 @@ namespace simgrid::module::fs {
        access_date_ = date;
        partition_->new_file_access_event(this);
    }
-
-}
+} // namespace simgrid::module::fs

@@ -19,7 +19,6 @@ namespace simgrid::module::fs {
     class Storage;
 
     class XBT_PUBLIC PartitionFIFOCaching : public Partition {
-
     public:
         PartitionFIFOCaching(std::string name, std::shared_ptr<Storage> storage, sg_size_t size) :
                 Partition(std::move(name), std::move(storage), size) {}
@@ -37,7 +36,6 @@ namespace simgrid::module::fs {
     };
 
     /** \endcond    */
-
 
 } // namespace simgrid::module::fs
 

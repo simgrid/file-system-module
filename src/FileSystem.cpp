@@ -20,7 +20,6 @@ namespace simgrid::module::fs {
      */
     std::pair<std::shared_ptr<Partition>, std::string>
     FileSystem::find_path_at_mount_point(const std::string &simplified_path) const {
-
         // Identify the mount point and path at mount point partition
         auto it = std::find_if(this->partitions_.begin(),
                                this->partitions_.end(),
@@ -53,7 +52,6 @@ namespace simgrid::module::fs {
         mount_partition(mount_point, std::move(storage), static_cast<sg_size_t>(xbt_parse_get_size("", 0, size, "")), caching_scheme);
     }
 
-
     /**
      * @brief A method to add a partition to the file system
      * @param mount_point: the partition's mount point
@@ -63,7 +61,6 @@ namespace simgrid::module::fs {
      */
     void FileSystem::mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, sg_size_t size,
                                      Partition::CachingScheme caching_scheme) {
-
         auto cleanup_mount_point = mount_point;
         PathUtil::remove_trailing_slashes(cleanup_mount_point);
         if (PathUtil::simplify_path_string(mount_point) != cleanup_mount_point) {
@@ -92,7 +89,6 @@ namespace simgrid::module::fs {
         this->partitions_[cleanup_mount_point] = std::shared_ptr<Partition>(new_partition);
     }
 
-
     std::shared_ptr<Partition> FileSystem::partition_by_name(const std::string &name) const {
         auto partition = partition_by_name_or_null(name);
         if (not partition)
@@ -101,7 +97,6 @@ namespace simgrid::module::fs {
     }
 
     std::shared_ptr<Partition> FileSystem::partition_by_name_or_null(const std::string &name) const {
-
         auto partition = partitions_.find(PathUtil::simplify_path_string(name));
         if (partition != partitions_.end())
             return partition->second;
@@ -211,7 +206,6 @@ namespace simgrid::module::fs {
      * @param dst_full_path: the destination path
      */
     void FileSystem::move_file(const std::string &src_full_path, const std::string &dst_full_path) const {
-
         std::string simplified_src_path = PathUtil::simplify_path_string(src_full_path);
         auto [src_partition, src_path_at_mount_point] = this->find_path_at_mount_point(simplified_src_path);
 
@@ -229,7 +223,6 @@ namespace simgrid::module::fs {
         auto partition = src_partition;
         partition->move_file(src_dir, src_file_name, dst_dir, dst_file_name);
     }
-
 
     /**
      * @brief Method to check that a file exists at a given path

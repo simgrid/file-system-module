@@ -80,7 +80,6 @@ namespace simgrid::module::fs {
      */
     void Partition::move_file(const std::string &src_dir_path, const std::string &src_file_name,
                               const std::string &dst_dir_path, const std::string &dst_file_name) {
-
         // Get the src metadata, which must exist
         FileMetadata *src_metadata = this->get_file_metadata(src_dir_path, src_file_name);
         if (not src_metadata) {

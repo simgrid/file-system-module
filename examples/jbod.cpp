@@ -26,7 +26,6 @@ public:
     {}
 
     void operator()() {
-
         XBT_INFO("Opening the file...");
         auto file = fs_->open(file_path_);
         XBT_INFO("Writing %llu to it...", num_bytes_);
@@ -38,7 +37,6 @@ public:
 };
 
 int main(int argc, char **argv) {
-
     sg4::Engine engine(&argc, argv);
 
     XBT_INFO("Creating a platform with two hosts, one having a bunch of disks...");

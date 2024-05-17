@@ -39,7 +39,6 @@ public:
         XBT_INFO("Mounting a 100kB partition...");
         fs_->mount_partition("/dev/a/", ods, "100kB");
     }
-
 };
 
 TEST_F(FileSystemTest, MountPartition)  {

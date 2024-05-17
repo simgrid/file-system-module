@@ -15,7 +15,6 @@ namespace simgrid::module::fs {
     class Storage;
 
     class XBT_PUBLIC Partition {
-
     public:
         /**
          * @brief An enum that defines the possible caching schemes that can
@@ -95,13 +94,10 @@ namespace simgrid::module::fs {
                              sg_size_t size);
         void move_file(const std::string& src_dir_path, const std::string& src_file_name,
                        const std::string& dst_dir_path, const std::string& dst_file_name);
+
     protected:
         void delete_file(const std::string& dir_path, const std::string& file_name);
-
     };
-
-
-
 } // namespace simgrid::module::fs
 
 #endif

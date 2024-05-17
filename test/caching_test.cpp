@@ -87,7 +87,6 @@ TEST_F(CachingTest, FIFODontEvictOpenFiles) {
             ASSERT_NO_THROW(file2 = this->fs_->open("/dev/fifo/30mb.txt"));
             XBT_INFO("Create a 60MB file at /dev/fifo/60mb.txt");
             ASSERT_THROW(this->fs_->create_file("/dev/fifo/60mb.txt", "60MB"), sgfs::FileSystemException);
-
         });
 
         // Run the simulation
@@ -95,13 +94,11 @@ TEST_F(CachingTest, FIFODontEvictOpenFiles) {
     });
 }
 
-
 TEST_F(CachingTest, FIFOExtensive)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
         sg4::Actor::create("TestActor", host_, [this]() {
-
             std::vector<std::tuple<std::vector<std::string>, std::vector<std::string>, std::vector<std::string>>> experiments =
                     {
                             {{"create", "f1", "20MB"}, {"f1"}, {}},
@@ -136,7 +133,6 @@ TEST_F(CachingTest, FIFOExtensive)  {
                     ASSERT_FALSE(this->fs_->file_exists("/dev/fifo/" + f));
                 }
             }
-
         });
 
         // Run the simulation
@@ -170,14 +166,11 @@ TEST_F(CachingTest, LRUBasics)  {
     });
 }
 
-
-
 TEST_F(CachingTest, LRUExtensive)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
         sg4::Actor::create("TestActor", host_, [this]() {
-
             std::vector<std::tuple<std::vector<std::string>, std::vector<std::string>, std::vector<std::string>>> experiments =
                     {
                             {{"create", "f1", "20MB"}, {"f1"}, {}},
@@ -218,7 +211,6 @@ TEST_F(CachingTest, LRUExtensive)  {
                     ASSERT_FALSE(this->fs_->file_exists("/dev/lru/" + f));
                 }
             }
-
         });
 
         // Run the simulation

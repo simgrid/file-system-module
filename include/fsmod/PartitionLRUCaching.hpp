@@ -18,7 +18,6 @@ namespace simgrid::module::fs {
     class Storage;
 
     class XBT_PUBLIC PartitionLRUCaching : public PartitionFIFOCaching {
-
     public:
         PartitionLRUCaching(std::string name, std::shared_ptr<Storage> storage, sg_size_t size) :
                 PartitionFIFOCaching(std::move(name), std::move(storage), size) {}
