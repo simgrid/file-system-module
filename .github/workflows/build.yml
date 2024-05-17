@@ -82,6 +82,7 @@ jobs:
           pip install sphinx_rtd_theme
           pip install recommonmark
           pip install breathe
+          pip install defusedxml
 
       - name: Build and Deploy Documentation
         env:

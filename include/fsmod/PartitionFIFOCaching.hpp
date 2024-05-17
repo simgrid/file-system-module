@@ -32,7 +32,6 @@ namespace simgrid::module::fs {
 
         unsigned long sequence_number_ = 0;
         std::map<unsigned long, FileMetadata*> priority_list_;
-
     };
 
     /** \endcond    */

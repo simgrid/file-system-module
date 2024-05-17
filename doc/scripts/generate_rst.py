@@ -10,13 +10,11 @@
 
 import pathlib
 import sys
-import xml.etree.ElementTree as ET
+import defusedxml.ElementTree as ET
 
 docs_path = pathlib.Path(sys.argv[1])
 src_path = pathlib.Path(sys.argv[2])
 release_version = sys.argv[3]
-
-
 
 # Check whether anything should be appeneded to conf.py
 should_append = False
@@ -32,7 +30,6 @@ with open(src_path.joinpath("conf.py"), "r") as f:
             should_append = last_line != f"release = '{release_version}'"
             break
 
-
 if should_append:
     with open(src_path.joinpath("conf.py"), "a") as f:
         f.write("breathe_projects = {\n"
@@ -40,7 +37,6 @@ if should_append:
             "}\n"
             f"version = '{release_version}'\n"
             f"release = '{release_version}'\n\n")
-
 
 for section in ["user"]:
     section_path = docs_path.joinpath(f"{section}/xml/index.xml")
