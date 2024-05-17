@@ -56,13 +56,22 @@
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1module_1_1fs_1_1_file_system_exception.html">simgrid::module::fs::FileSystemException</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">simgrid::module::fs::JBODStorage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs11JBODStorageE"><code class="docutils literal notranslate"><span class="pre">JBODStorage</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs11JBODStorage14set_raid_levelE4RAID"><code class="docutils literal notranslate"><span class="pre">JBODStorage::set_raid_level()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEE4RAID"><code class="docutils literal notranslate"><span class="pre">JBODStorage::create()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs11JBODStorage4RAIDE"><code class="docutils literal notranslate"><span class="pre">JBODStorage::RAID</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID0E"><code class="docutils literal notranslate"><span class="pre">JBODStorage::RAID::RAID0</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID1E"><code class="docutils literal notranslate"><span class="pre">JBODStorage::RAID::RAID1</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID4E"><code class="docutils literal notranslate"><span class="pre">JBODStorage::RAID::RAID4</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID5E"><code class="docutils literal notranslate"><span class="pre">JBODStorage::RAID::RAID5</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID6E"><code class="docutils literal notranslate"><span class="pre">JBODStorage::RAID::RAID6</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid6module2fs11JBODStorage14get_raid_levelEv"><code class="docutils literal notranslate"><span class="pre">JBODStorage::get_raid_level()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid6module2fs11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEEN11JBODStorage4RAIDE"><code class="docutils literal notranslate"><span class="pre">JBODStorage::create()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1module_1_1fs_1_1_one_disk_storage.html">simgrid::module::fs::OneDiskStorage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1module_1_1fs_1_1_partition.html">simgrid::module::fs::Partition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1module_1_1fs_1_1_storage.html">simgrid::module::fs::Storage</a></li>
 </ul>
 
@@ -95,15 +104,56 @@
 <dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv4N7simgrid6module2fs11JBODStorageE">
 <span id="_CPPv3N7simgrid6module2fs11JBODStorageE"></span><span id="_CPPv2N7simgrid6module2fs11JBODStorageE"></span><span id="simgrid::module::fs::JBODStorage"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">JBODStorage</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">simgrid</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">module</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">fs</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classsimgrid_1_1module_1_1fs_1_1_storage.html#_CPPv4N7simgrid6module2fs7StorageE" title="simgrid::module::fs::Storage"><span class="n"><span class="pre">Storage</span></span></a><a class="headerlink" href="#_CPPv4N7simgrid6module2fs11JBODStorageE" title="Link to this definition"></a><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
+<dd><p>A class that implements an abstraction of a “Just a Bunch Of Disks” storage. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum-class">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid6module2fs11JBODStorage4RAIDE">
+<span id="_CPPv3N7simgrid6module2fs11JBODStorage4RAIDE"></span><span id="_CPPv2N7simgrid6module2fs11JBODStorage4RAIDE"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage_1a67dec26753aa25edbd0b2e72bd30c0e0"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RAID</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid6module2fs11JBODStorage4RAIDE" title="Link to this definition"></a><br /></dt>
+<dd><p>An enum that defines the possible RAID levels that can be used by a <a class="reference internal" href="#classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage"><span class="std std-ref">JBODStorage</span></a>. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID0E">
+<span id="_CPPv3N7simgrid6module2fs11JBODStorage4RAID5RAID0E"></span><span id="_CPPv2N7simgrid6module2fs11JBODStorage4RAID5RAID0E"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage_1a67dec26753aa25edbd0b2e72bd30c0e0af64edeba3236e43862427641fbc5876a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RAID0</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID0E" title="Link to this definition"></a><br /></dt>
+<dd><p>RAID level 0. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID1E">
+<span id="_CPPv3N7simgrid6module2fs11JBODStorage4RAID5RAID1E"></span><span id="_CPPv2N7simgrid6module2fs11JBODStorage4RAID5RAID1E"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage_1a67dec26753aa25edbd0b2e72bd30c0e0aafd0c6e27d41e812892b94f43171ae3d"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RAID1</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID1E" title="Link to this definition"></a><br /></dt>
+<dd><p>RAID level 1. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID4E">
+<span id="_CPPv3N7simgrid6module2fs11JBODStorage4RAID5RAID4E"></span><span id="_CPPv2N7simgrid6module2fs11JBODStorage4RAID5RAID4E"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage_1a67dec26753aa25edbd0b2e72bd30c0e0ac460c892cd810d59e6156fa9a75383e7"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RAID4</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID4E" title="Link to this definition"></a><br /></dt>
+<dd><p>RAID level 4. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID5E">
+<span id="_CPPv3N7simgrid6module2fs11JBODStorage4RAID5RAID5E"></span><span id="_CPPv2N7simgrid6module2fs11JBODStorage4RAID5RAID5E"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage_1a67dec26753aa25edbd0b2e72bd30c0e0a67dd612c2e96ae789ee22fffe6e751bd"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RAID5</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID5E" title="Link to this definition"></a><br /></dt>
+<dd><p>RAID level 5. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID6E">
+<span id="_CPPv3N7simgrid6module2fs11JBODStorage4RAID5RAID6E"></span><span id="_CPPv2N7simgrid6module2fs11JBODStorage4RAID5RAID6E"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage_1a67dec26753aa25edbd0b2e72bd30c0e0a8c68f6195fb0884b2462b9fa9b70d6b6"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RAID6</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID6E" title="Link to this definition"></a><br /></dt>
+<dd><p>RAID level 6. </p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N7simgrid6module2fs11JBODStorage14set_raid_levelE4RAID">
-<span id="_CPPv3N7simgrid6module2fs11JBODStorage14set_raid_levelE4RAID"></span><span id="_CPPv2N7simgrid6module2fs11JBODStorage14set_raid_levelE4RAID"></span><span id="simgrid::module::fs::JBODStorage::set_raid_level__RAID"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage_1a902d8968913a1893a2a84e13a9740c42"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set_raid_level</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">RAID</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">raid_level</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid6module2fs11JBODStorage14set_raid_levelE4RAID" title="Link to this definition"></a><br /></dt>
-<dd><p>Set the RAID level. </p>
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid6module2fs11JBODStorage14get_raid_levelEv">
+<span id="_CPPv3NK7simgrid6module2fs11JBODStorage14get_raid_levelEv"></span><span id="_CPPv2NK7simgrid6module2fs11JBODStorage14get_raid_levelEv"></span><span id="simgrid::module::fs::JBODStorage::get_raid_levelC"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage_1af787d82e53b09fc40557690767289da4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N7simgrid6module2fs11JBODStorage4RAIDE" title="simgrid::module::fs::JBODStorage::RAID"><span class="n"><span class="pre">RAID</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_raid_level</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid6module2fs11JBODStorage14get_raid_levelEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Retrieves the storage’s RAID level. </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>raid_level</strong> – the RAID level </p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A RAID level </p>
 </dd>
 </dl>
 </dd></dl>
@@ -112,8 +162,8 @@
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N7simgrid6module2fs11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEE4RAID">
-<span id="_CPPv3N7simgrid6module2fs11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEE4RAID"></span><span id="_CPPv2N7simgrid6module2fs11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEE4RAID"></span><span id="simgrid::module::fs::JBODStorage::create__ssCR.std::vector:simgrid::s4u::DiskP:CR.RAID"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage_1a23a6748214ab36da11520029c3da24aa"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N7simgrid6module2fs11JBODStorageE" title="simgrid::module::fs::JBODStorage"><span class="n"><span class="pre">JBODStorage</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">create</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">simgrid</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Disk</span></span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">disks</span></span>, <span class="n"><span class="pre">RAID</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">raid_level</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid6module2fs11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEE4RAID" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid6module2fs11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEEN11JBODStorage4RAIDE">
+<span id="_CPPv3N7simgrid6module2fs11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEEN11JBODStorage4RAIDE"></span><span id="_CPPv2N7simgrid6module2fs11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEEN11JBODStorage4RAIDE"></span><span id="simgrid::module::fs::JBODStorage::create__ssCR.std::vector:simgrid::s4u::DiskP:CR.JBODStorage::RAID"></span><span class="target" id="classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage_1a80920fa082ba6b8db7797c8b804af821"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N7simgrid6module2fs11JBODStorageE" title="simgrid::module::fs::JBODStorage"><span class="n"><span class="pre">JBODStorage</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">create</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">simgrid</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Disk</span></span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">disks</span></span>, <a class="reference internal" href="#_CPPv4N7simgrid6module2fs11JBODStorageE" title="simgrid::module::fs::JBODStorage"><span class="n"><span class="pre">JBODStorage</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N7simgrid6module2fs11JBODStorage4RAIDE" title="simgrid::module::fs::JBODStorage::RAID"><span class="n"><span class="pre">RAID</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">raid_level</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid6module2fs11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEEN11JBODStorage4RAIDE" title="Link to this definition"></a><br /></dt>
 <dd><p>Method to create an instance of a JBOD (Just a Bunch of Disks) storage. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

@@ -53,6 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="api_user/classsimgrid_1_1module_1_1fs_1_1_file_system_exception.html">simgrid::module::fs::FileSystemException</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_user/classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage.html">simgrid::module::fs::JBODStorage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_user/classsimgrid_1_1module_1_1fs_1_1_one_disk_storage.html">simgrid::module::fs::OneDiskStorage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_user/classsimgrid_1_1module_1_1fs_1_1_partition.html">simgrid::module::fs::Partition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_user/classsimgrid_1_1module_1_1fs_1_1_storage.html">simgrid::module::fs::Storage</a></li>
 </ul>
 
@@ -117,15 +118,13 @@
 </li>
       <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_file_system.html#_CPPv4N7simgrid6module2fs10FileSystem16directory_existsERKNSt6stringE">simgrid::module::fs::FileSystem::directory_exists (C++ function)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_file_system.html#_CPPv4N7simgrid6module2fs10FileSystem11file_existsERKNSt6stringE">simgrid::module::fs::FileSystem::file_exists (C++ function)</a>
 </li>
       <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_file_system.html#_CPPv4NK7simgrid6module2fs10FileSystem9file_sizeERKNSt6stringE">simgrid::module::fs::FileSystem::file_size (C++ function)</a>
 </li>
       <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_file_system.html#_CPPv4N7simgrid6module2fs10FileSystem23list_files_in_directoryERKNSt6stringE">simgrid::module::fs::FileSystem::list_files_in_directory (C++ function)</a>
 </li>
-      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_file_system.html#_CPPv4N7simgrid6module2fs10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEERKNSt6stringE">simgrid::module::fs::FileSystem::mount_partition (C++ function)</a>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_file_system.html#_CPPv4N7simgrid6module2fs10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEE9sg_size_tN9Partition13CachingSchemeE">simgrid::module::fs::FileSystem::mount_partition (C++ function)</a>, <a href="api_user/classsimgrid_1_1module_1_1fs_1_1_file_system.html#_CPPv4N7simgrid6module2fs10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEERKNSt6stringEN9Partition13CachingSchemeE">[1]</a>
 </li>
       <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_file_system.html#_CPPv4NK7simgrid6module2fs10FileSystem9move_fileERKNSt6stringERKNSt6stringE">simgrid::module::fs::FileSystem::move_file (C++ function)</a>
 </li>
@@ -135,17 +134,51 @@
 </li>
       <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_file_system.html#_CPPv4NK7simgrid6module2fs10FileSystem11unlink_fileERKNSt6stringE">simgrid::module::fs::FileSystem::unlink_file (C++ function)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_file_system_exception.html#_CPPv4N7simgrid6module2fs19FileSystemExceptionE">simgrid::module::fs::FileSystemException (C++ class)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_file_system_exception.html#_CPPv4NK7simgrid6module2fs19FileSystemException4whatEv">simgrid::module::fs::FileSystemException::what (C++ function)</a>
 </li>
       <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage.html#_CPPv4N7simgrid6module2fs11JBODStorageE">simgrid::module::fs::JBODStorage (C++ class)</a>
 </li>
-      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage.html#_CPPv4N7simgrid6module2fs11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEE4RAID">simgrid::module::fs::JBODStorage::create (C++ function)</a>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage.html#_CPPv4N7simgrid6module2fs11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEEN11JBODStorage4RAIDE">simgrid::module::fs::JBODStorage::create (C++ function)</a>
 </li>
-      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage.html#_CPPv4N7simgrid6module2fs11JBODStorage14set_raid_levelE4RAID">simgrid::module::fs::JBODStorage::set_raid_level (C++ function)</a>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage.html#_CPPv4NK7simgrid6module2fs11JBODStorage14get_raid_levelEv">simgrid::module::fs::JBODStorage::get_raid_level (C++ function)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage.html#_CPPv4N7simgrid6module2fs11JBODStorage4RAIDE">simgrid::module::fs::JBODStorage::RAID (C++ enum)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage.html#_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID0E">simgrid::module::fs::JBODStorage::RAID::RAID0 (C++ enumerator)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage.html#_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID1E">simgrid::module::fs::JBODStorage::RAID::RAID1 (C++ enumerator)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage.html#_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID4E">simgrid::module::fs::JBODStorage::RAID::RAID4 (C++ enumerator)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage.html#_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID5E">simgrid::module::fs::JBODStorage::RAID::RAID5 (C++ enumerator)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_j_b_o_d_storage.html#_CPPv4N7simgrid6module2fs11JBODStorage4RAID5RAID6E">simgrid::module::fs::JBODStorage::RAID::RAID6 (C++ enumerator)</a>
 </li>
       <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_one_disk_storage.html#_CPPv4N7simgrid6module2fs14OneDiskStorageE">simgrid::module::fs::OneDiskStorage (C++ class)</a>
 </li>
       <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_one_disk_storage.html#_CPPv4N7simgrid6module2fs14OneDiskStorage6createERKNSt6stringEPN7simgrid3s4u4DiskE">simgrid::module::fs::OneDiskStorage::create (C++ function)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_partition.html#_CPPv4N7simgrid6module2fs9PartitionE">simgrid::module::fs::Partition (C++ class)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_partition.html#_CPPv4N7simgrid6module2fs9Partition13CachingSchemeE">simgrid::module::fs::Partition::CachingScheme (C++ enum)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_partition.html#_CPPv4N7simgrid6module2fs9Partition13CachingScheme4FIFOE">simgrid::module::fs::Partition::CachingScheme::FIFO (C++ enumerator)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_partition.html#_CPPv4N7simgrid6module2fs9Partition13CachingScheme3LRUE">simgrid::module::fs::Partition::CachingScheme::LRU (C++ enumerator)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_partition.html#_CPPv4N7simgrid6module2fs9Partition13CachingScheme4NONEE">simgrid::module::fs::Partition::CachingScheme::NONE (C++ enumerator)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_partition.html#_CPPv4NK7simgrid6module2fs9Partition9get_cnameEv">simgrid::module::fs::Partition::get_cname (C++ function)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_partition.html#_CPPv4NK7simgrid6module2fs9Partition14get_free_spaceEv">simgrid::module::fs::Partition::get_free_space (C++ function)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_partition.html#_CPPv4NK7simgrid6module2fs9Partition8get_nameEv">simgrid::module::fs::Partition::get_name (C++ function)</a>
+</li>
+      <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_partition.html#_CPPv4NK7simgrid6module2fs9Partition8get_sizeEv">simgrid::module::fs::Partition::get_size (C++ function)</a>
 </li>
       <li><a href="api_user/classsimgrid_1_1module_1_1fs_1_1_storage.html#_CPPv4N7simgrid6module2fs7StorageE">simgrid::module::fs::Storage (C++ class)</a>
 </li>

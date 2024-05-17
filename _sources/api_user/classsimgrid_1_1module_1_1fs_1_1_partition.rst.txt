@@ -1,0 +1,9 @@
+.. _simgrid::module::fs::Partition:
+
+simgrid::module::fs::Partition
+******************************
+
+.. doxygenclass:: simgrid::module::fs::Partition
+   :project: user
+   :members:
+
