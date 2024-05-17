@@ -30,11 +30,6 @@ else ()
     set(FSMOD_RELEASE_VERSION "${FSMOD_VERSION_MAJOR}.${FSMOD_VERSION_MINOR}.${FSMOD_VERSION_PATCH}")
 endif ()
 
-
-set(CMAKEFILES_TXT
-  		examples/CMakeLists.txt
-)
-
 set(SOURCE_FILES
 		src/PathUtil.cpp
 		src/FileSystem.cpp
@@ -80,12 +75,6 @@ install(FILES include/fsmod.hpp DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 add_custom_target(examples    COMMENT "Recompiling the examples")
 
-### Define subdirectories
-foreach(cmakefile ${CMAKEFILES_TXT})
-  string(REPLACE "/CMakeLists.txt" "" repository ${cmakefile})
-  add_subdirectory("${CMAKE_HOME_DIRECTORY}/${repository}")
-endforeach()
-
 # Google test
 find_library(GTEST_LIBRARY NAMES gtest)
 if(GTEST_LIBRARY)
@@ -95,7 +84,7 @@ if(GTEST_LIBRARY)
 			test/path_util_test.cpp
 			test/file_system_test.cpp
 			test/seek_test.cpp
-			test/fifo_caching_test.cpp
+			test/caching_test.cpp
 			test/stat_test.cpp
 			test/main.cpp
 			test/test_util.hpp
@@ -114,3 +103,6 @@ endif()
 
 # Documentation
 include(${CMAKE_HOME_DIRECTORY}/conf/cmake/Documentation.cmake)
+
+# Examples
+include(${CMAKE_HOME_DIRECTORY}/examples/Examples.cmake)

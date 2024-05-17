@@ -14,7 +14,6 @@ namespace simgrid::module::fs {
 
     class Storage;
 
-
     class XBT_PUBLIC Partition {
         friend class FileSystem;
 
@@ -46,7 +45,6 @@ namespace simgrid::module::fs {
         virtual void new_file_deletion_event(FileMetadata *file_metadata);
 
     private:
-//        friend class FileSystem;
         friend class File;
         friend class FileMetadata;
 

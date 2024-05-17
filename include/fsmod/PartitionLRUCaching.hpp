@@ -8,7 +8,7 @@
 #include <string>
 #include <utility>
 
-#include "fsmod/Partition.hpp"
+#include "fsmod/PartitionFIFOCaching.hpp"
 #include "fsmod/FileMetadata.hpp"
 
 namespace simgrid::module::fs {
@@ -17,20 +17,15 @@ namespace simgrid::module::fs {
 
     class Storage;
 
-    class XBT_PUBLIC PartitionLRUCaching : public Partition {
+    class XBT_PUBLIC PartitionLRUCaching : public PartitionFIFOCaching {
 
     public:
         PartitionLRUCaching(std::string name, std::shared_ptr<Storage> storage, sg_size_t size) :
-        Partition(std::move(name), std::move(storage), size) {}
+                PartitionFIFOCaching(std::move(name), std::move(storage), size) {}
 
     protected:
         // Methods to perform caching
-        void create_space(sg_size_t num_bytes) override;
-        void new_file_creation_event(FileMetadata *file_metadata) override;
         void new_file_access_event(FileMetadata *file_metadata) override;
-        void new_file_deletion_event(FileMetadata *file_metadata) override;
-    private:
-
     };
 
     /** \endcode     */

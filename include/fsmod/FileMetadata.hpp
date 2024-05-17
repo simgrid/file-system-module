@@ -8,15 +8,17 @@
 namespace simgrid::module::fs {
 
     /** \cond EXCLUDE_FROM_DOCUMENTATION    */
+
     class Partition;
 
     class XBT_PUBLIC FileMetadata {
 
         friend class PartitionFIFOCaching;
+        friend class PartitionLRUCaching;
 
         Partition *partition_;
-        std::string dir_path;
-        std::string file_name;
+        std::string dir_path_;
+        std::string file_name_;
 
         sg_size_t current_size_;
         sg_size_t future_size_;

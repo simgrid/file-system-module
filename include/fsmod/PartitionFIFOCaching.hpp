@@ -25,16 +25,14 @@ namespace simgrid::module::fs {
                 Partition(std::move(name), std::move(storage), size) {}
 
     protected:
-
         // Methods to perform caching
         void create_space(sg_size_t num_bytes) override;
         void new_file_creation_event(FileMetadata *file_metadata) override;
         void new_file_access_event(FileMetadata *file_metadata) override;
         void new_file_deletion_event(FileMetadata *file_metadata) override;
 
-    private:
         unsigned long sequence_number_ = 0;
-        std::map<unsigned long, FileMetadata*> fifo_list_;
+        std::map<unsigned long, FileMetadata*> priority_list_;
 
     };
 
