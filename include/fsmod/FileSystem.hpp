@@ -47,9 +47,6 @@ namespace simgrid::module::fs {
         std::shared_ptr<File> open(const std::string& full_path);
 
 
-
-	/** \cond EXCLUDE_FROM_DOCUMENTATION    */
-
         [[nodiscard]] std::shared_ptr<Partition> partition_by_name(const std::string& name) const;
         [[nodiscard]] std::shared_ptr<Partition> partition_by_name_or_null(const std::string& name) const;
 
@@ -63,7 +60,6 @@ namespace simgrid::module::fs {
 
         int num_open_files_ = 0;
 
-	/** \endcond */
 
     };
 

@@ -15,29 +15,54 @@ namespace simgrid::module::fs {
     class Storage;
 
     class XBT_PUBLIC Partition {
-        friend class FileSystem;
-
-        std::string name_;
-        sg_size_t size_ = 0;
-        sg_size_t free_space_ = 0;
-        std::shared_ptr<Storage> storage_;
-        std::unordered_map<std::string, std::unordered_map<std::string, std::unique_ptr<FileMetadata>>> content_;
 
     public:
-        enum class CachingScheme {NONE = 0, FIFO = 1, LRU = 2};
+        /**
+         * @brief An enum that defines the possible caching schemes that can
+         *        be used by a partition
+         */
+        enum class CachingScheme {
+            /** @brief No caching behavior. When there is not sufficient space an exception is thrown */
+            NONE = 0,
+            /** @brief FIFO caching behavior. When there is not sufficient space, an attempt is made to evict
+             * non-opened files in First-In-First-Out fashion (based on file creation timestamps)
+             * to create space if possible, otherwise an exception is thrown
+             */
+            FIFO = 1,
+            /** @brief LRU caching behavior. When there is not sufficient space, an attempt is made to evict
+             * non-opened files in Least-Recently-Used fashion (based on latest file creation/read/write timestamp)
+             * to create space if possible, otherwise an exception is thrown
+             */
+            LRU = 2
+        };
+
+        ~Partition() = default;
+
+        /**
+         * @brief Retrieves the partition's name
+         * @return a name
+         */
+        [[nodiscard]] const std::string& get_name() const { return name_; }
+        /**
+         * @brief Retrieves the partition's name as a C-style string
+         * @return a name
+         */
+        [[nodiscard]] const char* get_cname() const { return name_.c_str(); }
+        /**
+         * @brief Retrieves the partition's size in bytes
+         * @return a number of bytes
+         */
+        [[nodiscard]] sg_size_t get_size() const { return size_; }
+
+        /**
+         * @brief Retrieves the partition's free space in bytes
+         * @return a number of bytes
+         */
+        [[nodiscard]] sg_size_t get_free_space() const { return free_space_; }
 
     protected:
         Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size);
 
-    public:
-        ~Partition() = default;
-        [[nodiscard]] const std::string& get_name() const { return name_; }
-        [[nodiscard]] const char* get_cname() const { return name_.c_str(); }
-        [[nodiscard]] sg_size_t get_size() const { return size_; }
-
-        [[nodiscard]] sg_size_t get_free_space() const { return free_space_; }
-
-    protected:
         // Methods to perform caching
         virtual void create_space(sg_size_t num_bytes);
         virtual void new_file_creation_event(FileMetadata *file_metadata);
@@ -47,6 +72,13 @@ namespace simgrid::module::fs {
     private:
         friend class File;
         friend class FileMetadata;
+        friend class FileSystem;
+
+        std::string name_;
+        sg_size_t size_ = 0;
+        sg_size_t free_space_ = 0;
+        std::shared_ptr<Storage> storage_;
+        std::unordered_map<std::string, std::unordered_map<std::string, std::unique_ptr<FileMetadata>>> content_;
 
         void decrease_free_space(sg_size_t num_bytes) { free_space_ -= num_bytes; }
         void increase_free_space(sg_size_t num_bytes) { free_space_ += num_bytes; }
@@ -65,6 +97,7 @@ namespace simgrid::module::fs {
                        const std::string& dst_dir_path, const std::string& dst_file_name);
     protected:
         void delete_file(const std::string& dir_path, const std::string& file_name);
+
     };
 
 

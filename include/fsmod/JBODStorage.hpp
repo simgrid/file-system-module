@@ -7,14 +7,33 @@
 
 namespace simgrid::module::fs {
 
+    /**
+     * @brief A class that implements an abstraction of a "Just a Bunch Of Disks" storage
+     */
     class XBT_PUBLIC JBODStorage : public Storage {
     public:
-        enum class RAID {RAID0 = 0, RAID1 = 1, RAID4 = 4 , RAID5 = 5, RAID6 = 6};
+        /**
+         * @brief An enum that defines the possible RAID levels that can be used by a JBODStorage
+         */
+        enum class RAID {
+                /** @brief RAID level 0 */
+                RAID0 = 0,
+                /** @brief RAID level 1 */
+                RAID1 = 1,
+                /** @brief RAID level 4 */
+                RAID4 = 4 ,
+                /** @brief RAID level 5 */
+                RAID5 = 5,
+                /** @brief RAID level 6 */
+                RAID6 = 6};
 
-        static std::shared_ptr<JBODStorage> create(const std::string& name, const std::vector<simgrid::s4u::Disk*>& disks, RAID raid_level);
-        void set_raid_level(RAID raid_level);
+        static std::shared_ptr<JBODStorage> create(const std::string& name, const std::vector<simgrid::s4u::Disk*>& disks, JBODStorage::RAID raid_level);
+
+        /**
+         * @brief Retrieves the storage's RAID level
+         * @return A RAID level
+         */
         [[nodiscard]] RAID get_raid_level() { return raid_level_; }
-        s4u::MessageQueue* mqueue() { return mq_; }
 
         s4u::IoPtr read_async(sg_size_t size) override;
         void read(sg_size_t size) override;
@@ -22,13 +41,16 @@ namespace simgrid::module::fs {
         void write(sg_size_t size) override;
 
     protected:
-        JBODStorage(const std::string& name, const std::vector<simgrid::s4u::Disk*>& disks);
+        s4u::MessageQueue* mqueue() { return mq_; }
 
+        JBODStorage(const std::string& name, const std::vector<simgrid::s4u::Disk*>& disks);
         void update_parity_disk_idx() { parity_disk_idx_ = (parity_disk_idx_- 1) % num_disks_; }
+
         int get_next_read_disk_idx() { return (++read_disk_idx_) % num_disks_; }
         [[nodiscard]] int get_parity_disk_idx() const { return parity_disk_idx_; }
-
         s4u::MessageQueue* mq_;
+
+        void set_raid_level(RAID raid_level);
 
     private:
         unsigned int num_disks_;

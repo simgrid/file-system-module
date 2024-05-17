@@ -19,19 +19,26 @@
 
 namespace simgrid::module::fs {
 
-class FileSystemException : public std::exception {
-    std::string msg_;
-public:
-    FileSystemException(simgrid::xbt::ThrowPoint&& throwpoint, const std::string &msg) {
-        msg_ = msg;
-    }
+    /**
+     * @brief The exception class for fsmod
+     */
+    class FileSystemException : public std::exception {
+        std::string msg_;
+    public:
+        FileSystemException(simgrid::xbt::ThrowPoint&& throwpoint, const std::string &msg) {
+            msg_ = msg;
+        }
 
-    [[nodiscard]] const char *what() const noexcept override {
-        // Without the strdup() below, we get some valgrind warnings...
-        return strdup(msg_.c_str());
-    }
-    ~FileSystemException() override = default;
-};
+        /**
+         * @brief Retrieves the exception's human-readable message
+         * @return a message as a string
+         */
+        [[nodiscard]] const char *what() const noexcept override {
+            // Without the strdup() below, we get some valgrind warnings...
+            return strdup(msg_.c_str());
+        }
+        ~FileSystemException() override = default;
+    };
 }
 
 #endif //FSMOD_FILESYSTEMEXCEPTION_HPP

@@ -34,10 +34,6 @@ namespace simgrid::module::fs {
         controller_->daemonize();
     }
 
-    /**
-     * @brief Set the RAID level
-     * @param raid_level: the RAID level
-     */
     void JBODStorage::set_raid_level(RAID raid_level) {
         if ((raid_level == RAID::RAID4 || raid_level == RAID::RAID5) && disks_.size() < 3) {
             throw std::invalid_argument("RAID" + std::to_string((int)raid_level) +"  requires at least 3 disks");

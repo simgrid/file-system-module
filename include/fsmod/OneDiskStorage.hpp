@@ -7,6 +7,9 @@
 
 namespace simgrid::module::fs {
 
+    /**
+     * @brief A class that implements a one-disk storage
+     */
     class XBT_PUBLIC OneDiskStorage : public Storage {
 
     public:

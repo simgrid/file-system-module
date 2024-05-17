@@ -28,7 +28,7 @@ namespace simgrid::module::fs {
         void new_file_access_event(FileMetadata *file_metadata) override;
     };
 
-    /** \endcode     */
+    /** \endcond     */
 
 } // namespace simgrid::module::fs
 
