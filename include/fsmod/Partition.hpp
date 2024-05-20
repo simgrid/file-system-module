@@ -35,7 +35,7 @@ namespace simgrid::module::fs {
             LRU = 2
         };
 
-        ~Partition() = default;
+        virtual ~Partition() = default;
 
         /**
          * @brief Retrieves the partition's name
