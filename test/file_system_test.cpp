@@ -49,6 +49,8 @@ TEST_F(FileSystemTest, MountPartition)  {
         sg4::Actor::create("TestActor", host_, [this]() {
             XBT_INFO("Creating a one-disk storage on the host's second disk...");
             auto ods = sgfs::OneDiskStorage::create("my_storage", disk_two_);
+            XBT_INFO("Mount a new partition with a name that's not a clean path, which shouldn't work");
+            ASSERT_THROW(fs_->mount_partition("/dev/../dev/a", ods, "100kB"), std::invalid_argument);
             XBT_INFO("Mount a new partition with a name conflict, which shouldn't work");
             ASSERT_THROW(fs_->mount_partition("/dev/a", ods, "100kB"), std::invalid_argument);
             XBT_INFO("Mount a new partition incorrectly");
