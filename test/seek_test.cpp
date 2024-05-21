@@ -47,6 +47,8 @@ TEST_F(SeekTest, SeekandTell)  {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 100kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(this->fs_->create_file("/dev/a/foo.txt", "100kB"));
+            XBT_INFO("Opening a bogus file, which should fail");
+            ASSERT_THROW(file = fs_->open("/dev/a/foo_bogus.txt"), sgfs::FileSystemException);
             XBT_INFO("Open File '/dev/a/foo.txt'");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
             XBT_INFO("Check current position, should be 0");

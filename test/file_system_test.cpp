@@ -74,6 +74,11 @@ TEST_F(FileSystemTest, FileCreate)  {
         sg4::Actor::create("TestActor", host_, [this]() {
             XBT_INFO("Create a 10MB file at /foo/foo.txt, which should fail");
             ASSERT_THROW(this->fs_->create_file("/foo/foo.txt", "10MB"), sgfs::FileSystemException);
+            try {
+                this->fs_->create_file("/foo/foo.txt", "10MB");
+            } catch (sgfs::FileSystemException &e) {
+                auto msg = e.what();  // coverage
+            }
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt, which should fail");
             ASSERT_THROW(this->fs_->create_file("/dev/a/foo.txt", "10MB"), sgfs::FileSystemException);
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt, which should work");
@@ -110,6 +115,7 @@ TEST_F(FileSystemTest, Directories)  {
             XBT_INFO("Create a 10kB file at /dev/a/b/c/faa.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/b/c/faa.txt", "10kB"));
             std::set<std::string> found_files;
+            ASSERT_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c_bogus"), sgfs::FileSystemException);
             ASSERT_NO_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c"));
             ASSERT_TRUE(found_files.find("foo.txt") != found_files.end());
             ASSERT_TRUE(found_files.find("faa.txt") != found_files.end());
