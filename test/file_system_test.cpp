@@ -107,18 +107,26 @@ TEST_F(FileSystemTest, Directories)  {
             ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a//////")->get_free_space(), 80*1000);
             XBT_INFO("Create a 10kB file at /dev/a/b/c/faa.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/b/c/faa.txt", "10kB"));
-                std::set<std::string> found_files;
-                ASSERT_NO_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c"));
-                ASSERT_TRUE(found_files.find("foo.txt") != found_files.end());
-                ASSERT_TRUE(found_files.find("faa.txt") != found_files.end());
-                ASSERT_NO_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c/"));
-                ASSERT_TRUE(found_files.find("foo.txt") != found_files.end());
-                ASSERT_TRUE(found_files.find("faa.txt") != found_files.end());
+            std::set<std::string> found_files;
+            ASSERT_NO_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c"));
+            ASSERT_TRUE(found_files.find("foo.txt") != found_files.end());
+            ASSERT_TRUE(found_files.find("faa.txt") != found_files.end());
+            ASSERT_NO_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c/"));
+            ASSERT_TRUE(found_files.find("foo.txt") != found_files.end());
+            ASSERT_TRUE(found_files.find("faa.txt") != found_files.end());
             XBT_INFO("Try to unlink non-existing directory. This shouldn't work");
             ASSERT_THROW(fs_->unlink_directory("/dev/a/b/d"), sgfs::FileSystemException);
+            ASSERT_FALSE(fs_->directory_exists("/dev/a/b/d"));
 
+
+            XBT_INFO("Try to unlink a directory in which one file is opened. This shouldn't work");
+            std::shared_ptr<sgfs::File> file;
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/b/c/foo.txt"));
+            ASSERT_THROW(fs_->unlink_directory("/dev/a/b/c"), sgfs::FileSystemException);
+            ASSERT_NO_THROW(file->close());
             ASSERT_NO_THROW(fs_->unlink_directory("/dev/a/b/c"));
             ASSERT_FALSE(fs_->directory_exists("/dev/a/b/c"));
+
         });
 
         // Run the simulation
@@ -159,7 +167,7 @@ TEST_F(FileSystemTest, FileMove)  {
             ASSERT_NO_THROW(fs_->mount_partition("/dev/b/", ods, "100kB"));
             XBT_INFO("Move file /dev/a/stuff.txt to /dev/b/stuff.txt which is forbidden");
             ASSERT_THROW(fs_->move_file("/dev/a/stuff.txt", "/dev/b/stuff.txt"), sgfs::FileSystemException);
-       });
+        });
 
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
