@@ -134,7 +134,6 @@ TEST_F(FileSystemTest, Directories)  {
             ASSERT_NO_THROW(file->close());
             ASSERT_NO_THROW(fs_->unlink_directory("/dev/a/b/c"));
             ASSERT_FALSE(fs_->directory_exists("/dev/a/b/c"));
-
         });
 
         // Run the simulation
