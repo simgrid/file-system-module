@@ -304,13 +304,19 @@ TEST_F(JBODStorageTest, ReadWriteRAID6)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
         sg4::Actor::create("TestActor", fs_client_, [this]() {
+            std::vector<std::string> expected_debug_outputs =
+                {"Parity disks are #1 and #2. Reading From: jds_disk0 jds_disk3 ",
+                 "Parity disks are #0 and #1. Reading From: jds_disk2 jds_disk3 ",
+                 "Parity disks are #3 and #0. Reading From: jds_disk1 jds_disk2 "};
+            std::string captured_debug_output;
             std::shared_ptr<sgfs::File> file;
+
             ASSERT_NO_THROW(jds_->set_raid_level(sgfs::JBODStorage::RAID::RAID6));
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
-            XBT_INFO("Write 4MB at /dev/a/foo.txt");
+            XBT_INFO("Write 6MB at /dev/a/foo.txt");
             ASSERT_DOUBLE_EQ(file->write("6MB"), 6000000);
             XBT_INFO("Write complete. Clock is at 3.08s (.05s to transfer, 0.02 to compute parity, 3s to write)");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 3.08);
@@ -319,6 +325,18 @@ TEST_F(JBODStorageTest, ReadWriteRAID6)  {
             ASSERT_DOUBLE_EQ(file->read("6MB"), 6000000);
             XBT_INFO("Read complete. Clock is at 4.63s (1.5s to read, .05s to transfer)");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 4.63);
+            XBT_INFO("Test the evolution of parity disks ");
+            xbt_log_control_set("fsmod_jbod.thresh:debug fsmod_jbod.fmt:'%m'");
+            for (int i = 0; i < 3; i++ ){
+                xbt_log_control_set("no_loc");
+                ASSERT_NO_THROW(file->write("6MB"));
+                ASSERT_NO_THROW(file->seek(SEEK_SET));
+                ASSERT_NO_THROW(testing::internal::CaptureStderr());
+                ASSERT_NO_THROW(file->read("6MB"));
+                ASSERT_NO_THROW(captured_debug_output = testing::internal::GetCapturedStderr());
+                XBT_INFO("%s", captured_debug_output.c_str());
+                ASSERT_EQ(captured_debug_output, expected_debug_outputs.at(i));
+            }
             XBT_INFO("Close the file");
             ASSERT_NO_THROW(file->close());
         });
