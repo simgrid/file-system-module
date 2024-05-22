@@ -52,7 +52,6 @@ public:
 
 TEST_F(JBODStorageTest, NotEnoughDisks)  {
     DO_TEST_WITH_FORK([this]() {
-        xbt_log_control_set("root.thresh:info");
         XBT_INFO("Creating a platform with two hosts and 3 disks");
         std::vector<sg4::Disk*> disks;
         std::shared_ptr<sgfs::JBODStorage> jds3;
@@ -84,6 +83,9 @@ TEST_F(JBODStorageTest, NotEnoughDisks)  {
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
+
+
+
 TEST_F(JBODStorageTest, SingleRead)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
@@ -187,6 +189,28 @@ TEST_F(JBODStorageTest, SingleAsyncWrite)  {
             ASSERT_NO_THROW(my_write->wait());
             XBT_INFO("Write complete. Clock is at 4.12s (.1s to transfer, 0.02 to compute parity, 4s to write)");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 4.12);
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(file->close());
+        });
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
+
+TEST_F(JBODStorageTest, ReadWriteUnsupportedRAID)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+        sg4::Actor::create("TestActor", fs_client_, [this]() {
+            std::shared_ptr<sgfs::File> file;
+            ASSERT_NO_THROW(jds_->set_raid_level(sgfs::JBODStorage::RAID::RAID2));
+            XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
+            XBT_INFO("Open File '/dev/a/foo.txt'");
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            XBT_INFO("Write 2MB at /dev/a/foo.txt, which should fail");
+            ASSERT_THROW(file->write("12MB"), std::runtime_error);
+            XBT_INFO("Read 12MB at /dev/a/foo.txt, which should fail too");
+            ASSERT_THROW(file->read("12MB"), std::runtime_error);
             XBT_INFO("Close the file");
             ASSERT_NO_THROW(file->close());
         });
