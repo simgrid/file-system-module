@@ -40,7 +40,7 @@ public:
         my_zone->seal();
 
         XBT_INFO("Creating a JBOD storage on fs_server...");
-        jds_ = sgfs::JBODStorage::create("my_storage", disks_, sgfs::JBODStorage::RAID::RAID0);
+        jds_ = sgfs::JBODStorage::create("my_storage", disks_);
         jds_->set_raid_level(sgfs::JBODStorage::RAID::RAID5);
         ASSERT_EQ(jds_->get_raid_level(), sgfs::JBODStorage::RAID::RAID5);
         XBT_INFO("Creating a file system...");
@@ -50,7 +50,40 @@ public:
     }
 };
 
+TEST_F(JBODStorageTest, NotEnoughDisks)  {
+    DO_TEST_WITH_FORK([this]() {
+        xbt_log_control_set("root.thresh:info");
+        XBT_INFO("Creating a platform with two hosts and 3 disks");
+        std::vector<sg4::Disk*> disks;
+        std::shared_ptr<sgfs::JBODStorage> jds3;
+        std::shared_ptr<sgfs::JBODStorage> jds2;
+        auto *my_zone = sg4::create_full_zone("zone");
+        auto host = my_zone->create_host("host", "100Mf");
+        disks.push_back(host->create_disk("jds_disk1", "2MBps", "1MBps"));
+        disks.push_back(host->create_disk("jds_disk2", "2MBps", "1MBps"));
+        disks.push_back(host->create_disk("jds_disk3", "2MBps", "1MBps"));
+        my_zone->seal();
+        XBT_INFO("Create a 3-Disk JBOD storage using RAID0 by default");
+        ASSERT_NO_THROW(jds3 = sgfs::JBODStorage::create("my_storage", disks));
+        XBT_INFO("Try to set RAID level to RAID6 which should fail");
+        ASSERT_THROW(jds3->set_raid_level(sgfs::JBODStorage::RAID::RAID6), std::invalid_argument);
+        XBT_INFO("Remove one disk");
+        ASSERT_NO_THROW(disks.pop_back());
+        XBT_INFO("Create a 2-Disk JBOD storage using RAID0 by default");
+        ASSERT_NO_THROW(jds2 = sgfs::JBODStorage::create("my_storage", disks));
+        XBT_INFO("Try to set RAID level to RAID4 which should fail");
+        ASSERT_THROW(jds2->set_raid_level(sgfs::JBODStorage::RAID::RAID4), std::invalid_argument);
+        XBT_INFO("Try to set RAID level to RAID5 which should also fail");
+        ASSERT_THROW(jds2->set_raid_level(sgfs::JBODStorage::RAID::RAID5), std::invalid_argument);
+        XBT_INFO("Try to set RAID level to RAID1 which should work");
+        ASSERT_NO_THROW(jds2->set_raid_level(sgfs::JBODStorage::RAID::RAID1));
+        XBT_INFO("Try to set RAID level to RAID3 which is not supported but should work");
+        ASSERT_NO_THROW(jds2->set_raid_level(sgfs::JBODStorage::RAID::RAID3));
 
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
 TEST_F(JBODStorageTest, SingleRead)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
