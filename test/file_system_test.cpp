@@ -216,3 +216,40 @@ TEST_F(FileSystemTest, FileOpenClose)  {
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
+
+TEST_F(FileSystemTest, TooManyFilesOpened)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+        // Create one actor (for this test we could likely do it all in the maestro but what the hell)
+        sg4::Actor::create("TestActor", host_, [this]() {
+            std::shared_ptr<sgfs::File> file;
+            std::shared_ptr<sgfs::File> file2;
+            std::shared_ptr<sgfs::File> file3;
+
+            XBT_INFO("Creating a one-disk storage on the host's second disk...");
+            auto ods = sgfs::OneDiskStorage::create("my_storage", disk_two_);
+            XBT_INFO("Creating another file system ...on which you can only open 2 files at a time");
+            auto limited_fs = sgfs::FileSystem::create("my_limited_fs", 2);
+            XBT_INFO("Mounting a 100kB partition...");
+            limited_fs->mount_partition("/dev/a/", ods, "100kB");
+            XBT_INFO("Create three 10kB files at /dev/a/stuff/{foo, bar, baz}.txt");
+            ASSERT_NO_THROW(limited_fs->create_file("/dev/a/stuff/foo.txt", "10kB"));
+            ASSERT_NO_THROW(limited_fs->create_file("/dev/a/stuff/bar.txt", "10kB"));
+            ASSERT_NO_THROW(limited_fs->create_file("/dev/a/stuff/baz.txt", "10kB"));
+
+            XBT_INFO("Opening a first file, should be fine");
+            ASSERT_NO_THROW(file = limited_fs->open("/dev/a/stuff/foo.txt"));
+            XBT_INFO("Opening a second file, should be fine");
+            ASSERT_NO_THROW(file2 = limited_fs->open("/dev/a/stuff/bar.txt"));
+            XBT_INFO("Opening a third file, should not work");
+            ASSERT_THROW(file3 = limited_fs->open("/dev/a/stuff/baz.txt"), sgfs::FileSystemException);
+            XBT_INFO("Close the first file");
+            ASSERT_NO_THROW(file->close());
+            XBT_INFO("Opening a third file should now work");
+            ASSERT_NO_THROW(file3 = limited_fs->open("/dev/a/stuff/baz.txt"));
+        });
+
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
