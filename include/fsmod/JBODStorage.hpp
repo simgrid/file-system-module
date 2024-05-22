@@ -20,6 +20,10 @@ namespace simgrid::module::fs {
                 RAID0 = 0,
                 /** @brief RAID level 1 */
                 RAID1 = 1,
+                /** @brief RAID level 2 (unsupported) */
+                RAID2 = 2,
+                /** @brief RAID level 3 (unsupported) */
+                RAID3 = 3,
                 /** @brief RAID level 4 */
                 RAID4 = 4 ,
                 /** @brief RAID level 5 */
@@ -27,7 +31,9 @@ namespace simgrid::module::fs {
                 /** @brief RAID level 6 */
                 RAID6 = 6};
 
-        static std::shared_ptr<JBODStorage> create(const std::string& name, const std::vector<simgrid::s4u::Disk*>& disks, JBODStorage::RAID raid_level);
+        static std::shared_ptr<JBODStorage> create(const std::string& name,
+                                                   const std::vector<simgrid::s4u::Disk*>& disks,
+                                                   JBODStorage::RAID raid_level = RAID::RAID0);
 
         /**
          * @brief Retrieves the storage's RAID level
