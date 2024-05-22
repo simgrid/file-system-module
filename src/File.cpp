@@ -194,14 +194,6 @@ namespace simgrid::module::fs {
     }
 
     /**
-     * @brief Closes the file. After closing, using the file has undefined
-     * behavior.
-     */
-    void File::close() {
-        metadata_->decrease_file_refcount();
-    }
-
-    /**
      * @brief Obtain information about the file as a
      * @return A (
      */

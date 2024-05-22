@@ -60,7 +60,7 @@ TEST_F(OneDiskStorageTest, SingleRead)  {
             ASSERT_NO_THROW(file->seek(SEEK_SET));
             ASSERT_DOUBLE_EQ(file->read("9kB"), 9000);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(file->close());
+            ASSERT_NO_THROW(fs_->close(file));
         });
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
@@ -90,7 +90,7 @@ TEST_F(OneDiskStorageTest, SingleAsyncRead)  {
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 2.0);
             ASSERT_DOUBLE_EQ(file->get_num_bytes_read(my_read), 4000000);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(file->close());
+            ASSERT_NO_THROW(fs_->close(file));
         });
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
@@ -117,7 +117,7 @@ TEST_F(OneDiskStorageTest, SingleWrite)  {
             XBT_INFO("Check remaining space");
             ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a")->get_free_space(), 98 * 1000 * 1000);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(file->close());
+            ASSERT_NO_THROW(fs_->close(file));
         });
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
@@ -147,7 +147,7 @@ TEST_F(OneDiskStorageTest, SingleAsyncWrite)  {
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 2.0);
             ASSERT_DOUBLE_EQ(file->get_num_bytes_written(my_write), 2000000);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(file->close());
+            ASSERT_NO_THROW(fs_->close(file));
         });
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());

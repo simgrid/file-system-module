@@ -58,8 +58,6 @@ namespace simgrid::module::fs {
         /** Retrieves the current file position */
         [[nodiscard]] sg_size_t tell() const { return current_position_; }
 
-        void close();
-
         std::unique_ptr<FileStat> stat() const;
     };
 

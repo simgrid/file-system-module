@@ -73,12 +73,12 @@ TEST_F(StatTest, Stat)  {
             ASSERT_DOUBLE_EQ(stat_struct->last_access_date, simgrid_get_clock());
             ASSERT_EQ(stat_struct->refcount, 2);
             XBT_INFO("Modifying file state");
-            ASSERT_NO_THROW(file2->close());
+            ASSERT_NO_THROW(fs_->close(file2));
             XBT_INFO("Calling stat() again");
             ASSERT_NO_THROW(stat_struct = file->stat());
             XBT_INFO("Checking sanity");
             ASSERT_EQ(stat_struct->refcount, 1);
-            ASSERT_NO_THROW(file->close());
+            ASSERT_NO_THROW(fs_->close(file));
         });
 
         // Run the simulation

@@ -131,7 +131,7 @@ TEST_F(FileSystemTest, Directories)  {
             std::shared_ptr<sgfs::File> file;
             ASSERT_NO_THROW(file = fs_->open("/dev/a/b/c/foo.txt"));
             ASSERT_THROW(fs_->unlink_directory("/dev/a/b/c"), sgfs::FileSystemException);
-            ASSERT_NO_THROW(file->close());
+            ASSERT_NO_THROW(fs_->close(file));
             ASSERT_NO_THROW(fs_->unlink_directory("/dev/a/b/c"));
             ASSERT_FALSE(fs_->directory_exists("/dev/a/b/c"));
         });
@@ -204,7 +204,7 @@ TEST_F(FileSystemTest, FileOpenClose)  {
             ASSERT_THROW(fs_->move_file("/dev/a/stuff/other.txt", "/dev/a/stuff/foo.txt"), sgfs::FileSystemException);
 
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(file->close());
+            ASSERT_NO_THROW(fs_->close(file));
             XBT_INFO("Trying to unlink the file");
             ASSERT_NO_THROW(fs_->unlink_file("/dev/a/stuff/foo.txt"));
             ASSERT_FALSE(fs_->file_exists("/dev/a/stuff/foo.txt"));
@@ -217,7 +217,7 @@ TEST_F(FileSystemTest, FileOpenClose)  {
     });
 }
 
-TEST_F(FileSystemTest, TooManyFilesOpened)  {
+TEST_F(FileSystemTest, TooManyFilesOpened) {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
@@ -244,7 +244,7 @@ TEST_F(FileSystemTest, TooManyFilesOpened)  {
             XBT_INFO("Opening a third file, should not work");
             ASSERT_THROW(file3 = limited_fs->open("/dev/a/stuff/baz.txt"), sgfs::FileSystemException);
             XBT_INFO("Close the first file");
-            ASSERT_NO_THROW(file->close());
+            ASSERT_NO_THROW(limited_fs->close(file));
             XBT_INFO("Opening a third file should now work");
             ASSERT_NO_THROW(file3 = limited_fs->open("/dev/a/stuff/baz.txt"));
         });
