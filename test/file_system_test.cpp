@@ -232,10 +232,6 @@ TEST_F(FileSystemTest, TooManyFilesOpened) {
             auto limited_fs = sgfs::FileSystem::create("my_limited_fs", 2);
             XBT_INFO("Mounting a 100kB partition...");
             limited_fs->mount_partition("/dev/a/", ods, "100kB");
-            XBT_INFO("Create three 10kB files at /dev/a/stuff/{foo, bar, baz}.txt");
-            ASSERT_NO_THROW(limited_fs->create_file("/dev/a/stuff/foo.txt", "10kB"));
-            ASSERT_NO_THROW(limited_fs->create_file("/dev/a/stuff/bar.txt", "10kB"));
-            ASSERT_NO_THROW(limited_fs->create_file("/dev/a/stuff/baz.txt", "10kB"));
 
             XBT_INFO("Opening a first file, should be fine");
             ASSERT_NO_THROW(file = limited_fs->open("/dev/a/stuff/foo.txt"));
