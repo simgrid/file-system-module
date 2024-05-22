@@ -1,7 +1,8 @@
-#include "../include/fsmod/JBODStorage.hpp"
+#include "fsmod/JBODStorage.hpp"
 #include <simgrid/s4u/Actor.hpp>
 #include <simgrid/s4u/Comm.hpp>
 #include <simgrid/s4u/Exec.hpp>
+#include <sstream>
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(fsmod_jbod, "File System module: JBOD Storage related logs");
 
@@ -48,6 +49,11 @@ namespace simgrid::module::fs {
         // Determine what to read from each disk
         sg_size_t read_size = 0;
         std::vector<s4u::Disk*> targets;
+        std::stringstream debug_msg;
+
+        // Get Parity disk index;
+        int parity_disk_idx = get_parity_disk_idx();
+
         switch(raid_level_) {
             case RAID::RAID0:
                 read_size = size / num_disks_;
@@ -65,21 +71,23 @@ namespace simgrid::module::fs {
             case RAID::RAID5:
                 read_size = size / (num_disks_ - 1);
                 targets = disks_;
-                targets.erase(targets.begin() + ((get_parity_disk_idx() + 1) % num_disks_));
+                targets.erase(targets.begin() + ((parity_disk_idx + 1) % num_disks_));
                 break;
             case RAID::RAID6:
                 read_size = size / (num_disks_ - 2);
                 targets = disks_;
-                if ( ((get_parity_disk_idx() + 2) % num_disks_) == 0 ) {
+                if (parity_disk_idx + 1 == static_cast<int>(num_disks_)) { // First and last disks in the JBOD
                     targets.pop_back();
                     targets.erase(targets.begin());
-                } else if (get_parity_disk_idx() + 1 == static_cast<int>(num_disks_)) {
-                    targets.pop_back();
-                    targets.pop_back();
                 } else {
-                    targets.erase(targets.begin() + (get_parity_disk_idx() + 1) % num_disks_,
-                                  targets.begin() + get_parity_disk_idx() + 3);
+                    targets.erase(targets.begin() + parity_disk_idx,
+                                  targets.begin() + parity_disk_idx + 2);
                 }
+                debug_msg << "Parity disks are #" << parity_disk_idx << " and #";
+                debug_msg << (parity_disk_idx + 1) % num_disks_ << ". Reading From: ";
+                for (auto t: targets)
+                    debug_msg << t->get_name() << " ";
+                XBT_DEBUG("%s", debug_msg.str().c_str());
                 break;
             default:
                 throw std::runtime_error("Unsupported RAID level. Supported level are: 0, 1, 4, 5, and 6");
@@ -143,7 +151,6 @@ namespace simgrid::module::fs {
                 write_size = size / (num_disks_ - 1);
                 break;
             case RAID::RAID6:
-                update_parity_disk_idx();
                 update_parity_disk_idx();
                 write_size = size / (num_disks_ - 2);
                 break;
