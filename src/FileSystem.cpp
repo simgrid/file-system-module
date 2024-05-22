@@ -133,7 +133,7 @@ namespace simgrid::module::fs {
     }
 
     /**
-      * @brief Open a file
+      * @brief Open a file. If no file corresponds to the given fullpath, a new file of size 0 is created.
       * @param full_path: an absolute file path
       * @return
       */
@@ -153,7 +153,8 @@ namespace simgrid::module::fs {
         // Get the file metadata
         auto metadata = partition->get_file_metadata(dir, file_name);
         if (not metadata) {
-            throw FileSystemException(XBT_THROW_POINT, "File not found");
+            create_file(full_path, 0);
+            metadata = partition->get_file_metadata(dir, file_name);
         }
 
         // Increase the refcount
