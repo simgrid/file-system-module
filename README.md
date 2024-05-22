@@ -39,9 +39,14 @@ cmake ..
 make -j4
 sudo make install
 ```
-
 after which the FSMod library and header files will be installed in `/usr/local/`.
 
+To compile and run the unit tests, just run the following command in the `build` directory:
+
+```bash
+make unit_tests
+./unit_tests
+```
 ## Examples
 
 Example SimGrid simulators that use FSMod are provided in the `examples` directory (see `README.md` file therein).
@@ -49,6 +54,5 @@ Example SimGrid simulators that use FSMod are provided in the `examples` directo
 ## API Reference
 
 The FSMod API is documented on [this page](https://simgrid.github.io/file-system-module/).
-
 
 ---
