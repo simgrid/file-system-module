@@ -59,10 +59,12 @@ TEST_F(StatTest, Stat)  {
             ASSERT_EQ(stat_struct->refcount, 1);
             XBT_INFO("Modifying file state");
             std::shared_ptr<sgfs::File> file2;
-            ASSERT_NO_THROW(file2 = fs_->open("/dev/a/foo.txt", "rw"));
+            ASSERT_NO_THROW(file2 = fs_->open("/dev/a/foo.txt", "w"));
             ASSERT_NO_THROW(file2->seek(100*1000));
             ASSERT_NO_THROW(file2->write(12*1000, false));
+            ASSERT_NO_THROW(fs_->close(file));
             ASSERT_NO_THROW(sg4::this_actor::sleep_for(10));
+            ASSERT_NO_THROW(file2 = fs_->open("/dev/a/foo.txt", "r"));
             ASSERT_NO_THROW(file->seek(0));
             ASSERT_NO_THROW(file->read(1000, false));
             XBT_INFO("Calling stat() again");

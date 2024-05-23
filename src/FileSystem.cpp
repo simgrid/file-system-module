@@ -11,6 +11,8 @@
 #include "fsmod/PartitionLRUCaching.hpp"
 #include "fsmod/FileSystemException.hpp"
 
+XBT_LOG_NEW_DEFAULT_CATEGORY(fsmod_filesystem, "File System module: File system management related logs");
+
 namespace simgrid::module::fs {
 
     /**
@@ -135,7 +137,7 @@ namespace simgrid::module::fs {
     /**
       * @brief Open a file. If no file corresponds to the given fullpath, a new file of size 0 is created.
       * @param full_path: an absolute file path
-      * @param access_mode: access mode ("r", "w", "a", or "rw")
+      * @param access_mode: access mode ("r", "w", or "a")
       * @return
       */
     std::shared_ptr<File> FileSystem::open(const std::string &full_path, const std::string& access_mode) {
@@ -143,8 +145,8 @@ namespace simgrid::module::fs {
         if (this->num_open_files_ >= this->max_num_open_files_) {
             throw FileSystemException(XBT_THROW_POINT, "Too many open file descriptors");
         }
-        if (access_mode != "r" && access_mode != "w" && access_mode != "a" && access_mode != "rw") {
-            throw std::invalid_argument("Invalid access mode. Authorized values are: 'r', 'w', 'a' or 'rw'");
+        if (access_mode != "r" && access_mode != "w" && access_mode != "a") {
+            throw std::invalid_argument("Invalid access mode. Authorized values are: 'r', 'w', or 'a'");
         }
 
         // Get the partition and path
@@ -161,6 +163,10 @@ namespace simgrid::module::fs {
                 throw FileSystemException(XBT_THROW_POINT, "File not found. Cannot be opened in 'r' mode");
             create_file(full_path, 0);
             metadata = partition->get_file_metadata(dir, file_name);
+        } else {
+            if (access_mode == "w") {
+                //TODO update metadata to reset size to 0
+            }
         }
 
         // Increase the refcount
@@ -169,8 +175,9 @@ namespace simgrid::module::fs {
         // Create the file object
         auto file = std::shared_ptr<File>(new File(simplified_path, access_mode, metadata, partition.get()));
 
+        XBT_INFO("%s %d", access_mode.c_str(), SEEK_END);
         if (access_mode == "a")
-            file->current_position_ = SEEK_END;
+            file->current_position_ = metadata->get_current_size();
 
         this->num_open_files_++;
         return file;
