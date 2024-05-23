@@ -157,7 +157,6 @@ TEST_F(OneDiskStorageTest, SingleAsyncWrite)  {
 TEST_F(OneDiskStorageTest, SingleAppendWrite)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        xbt_log_control_set("root.thresh:info");
         sg4::Actor::create("TestActor", host_, [this]() {
             std::shared_ptr<sgfs::File> file;
             sg4::IoPtr my_write;
@@ -170,6 +169,32 @@ TEST_F(OneDiskStorageTest, SingleAppendWrite)  {
             ASSERT_NO_THROW(file->write("2MB"));
             XBT_INFO("Check file size, it should still be 12MB");
             ASSERT_DOUBLE_EQ(fs_->file_size("/dev/a/foo.txt"), 12*1000*1000);
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(fs_->close(file));
+        });
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
+
+TEST_F(OneDiskStorageTest, DiskFailure)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+        sg4::Actor::create("TestActor", host_, [this]() {
+            std::shared_ptr<sgfs::File> file;
+            sg4::IoPtr my_write;
+            sg_size_t num_bytes_written = 0;
+            XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
+            XBT_INFO("Open File '/dev/a/foo.txt' in append mode ('a')");
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "a"));
+            XBT_INFO("Write 2MB at /dev/a/foo.txt");
+            ASSERT_NO_THROW(my_write = file->write_async("2MB"));
+            ASSERT_NO_THROW(sg4::this_actor::sleep_for(1));
+            //ASSERT_NO_THROW(disk_->turn_off());
+            ASSERT_NO_THROW(sg4::this_actor::sleep_for(1));
+            //ASSERT_NO_THROW(disk_->turn_on());
+            ASSERT_NO_THROW(my_write->wait());
             XBT_INFO("Close the file");
             ASSERT_NO_THROW(fs_->close(file));
         });

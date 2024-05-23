@@ -89,7 +89,6 @@ TEST_F(JBODStorageTest, NotEnoughDisks)  {
 TEST_F(JBODStorageTest, SingleRead)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        xbt_log_control_set("root.thresh:info");
         sg4::Actor::create("TestActor", fs_client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt");

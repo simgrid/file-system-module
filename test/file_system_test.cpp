@@ -255,25 +255,27 @@ TEST_F(FileSystemTest, BadAccessMode) {
         this->setup_platform();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
         sg4::Actor::create("TestActor", host_, [this]() {
-        std::shared_ptr<sgfs::File> file;
-        XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
-        ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
-        XBT_INFO("Open the file in read mode ('r')");
-        ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
-        XBT_INFO("Try to write in a file opened in read mode, which should fail");
-        ASSERT_THROW(file->write("5kB"), std::invalid_argument);
-        XBT_INFO("Close the file");
-        ASSERT_NO_THROW(fs_->close(file));
-        XBT_INFO("Open the file in write mode ('w')");
-        ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "w"));
-        XBT_INFO("Try to read from a file opened in write mode, which should fail");
-        ASSERT_THROW(file->read("5kB"), std::invalid_argument);
-        XBT_INFO("Asynchronous read from a file opened in write mode should also fail");
-        ASSERT_THROW(file->read_async("5kB"), std::invalid_argument);
-        XBT_INFO("Close the file");
-        ASSERT_NO_THROW(fs_->close(file));
-        XBT_INFO("Open the file in unsupported mode ('w+'), which should fail");
-        ASSERT_THROW(file = fs_->open("/dev/a/foo.txt", "w+"), std::invalid_argument);
+            std::shared_ptr<sgfs::File> file;
+            XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
+            XBT_INFO("Open the file in read mode ('r')");
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
+            XBT_INFO("Try to write in a file opened in read mode, which should fail");
+            ASSERT_THROW(file->write("5kB"), std::invalid_argument);
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(fs_->close(file));
+            XBT_INFO("Open the file in write mode ('w')");
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "w"));
+            XBT_INFO("Try to read from a file opened in write mode, which should fail");
+            ASSERT_THROW(file->read("5kB"), std::invalid_argument);
+            XBT_INFO("Asynchronous read from a file opened in write mode should also fail");
+            ASSERT_THROW(file->read_async("5kB"), std::invalid_argument);
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(fs_->close(file));
+            XBT_INFO("Open the file in unsupported mode ('w+'), which should fail");
+            ASSERT_THROW(file = fs_->open("/dev/a/foo.txt", "w+"), std::invalid_argument);
+            XBT_INFO("Open a non-existing file in read mode ('r'), which should fail");
+            ASSERT_THROW(file = fs_->open("/dev/a/bar.txt", "r"), sgfs::FileSystemException);
         });
 
         // Run the simulation
