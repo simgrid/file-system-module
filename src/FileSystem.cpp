@@ -135,6 +135,7 @@ namespace simgrid::module::fs {
     /**
       * @brief Open a file. If no file corresponds to the given fullpath, a new file of size 0 is created.
       * @param full_path: an absolute file path
+      * @param access_mode: access mode ("r", "w", "a", or "rw")
       * @return
       */
     std::shared_ptr<File> FileSystem::open(const std::string &full_path, const std::string& access_mode) {
