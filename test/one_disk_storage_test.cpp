@@ -49,7 +49,7 @@ TEST_F(OneDiskStorageTest, SingleRead)  {
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
             XBT_INFO("read 0B at /dev/a/foo.txt, which should return 0");
             ASSERT_DOUBLE_EQ(file->read(0), 0);
             XBT_INFO("read 100kB at /dev/a/foo.txt, which should return only 10kB");
@@ -77,7 +77,7 @@ TEST_F(OneDiskStorageTest, SingleAsyncRead)  {
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
             XBT_INFO("Asynchronously read 2MB at /dev/a/foo.txt");
             ASSERT_NO_THROW(my_read = file->read_async("4MB"));
             XBT_INFO("Sleep for 1 second");
@@ -107,7 +107,7 @@ TEST_F(OneDiskStorageTest, SingleWrite)  {
             XBT_INFO("Check remaining space");
             ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a")->get_free_space(), 99 * 1000 *1000);
             XBT_INFO("Open File '/dev/a/foo.txt'");
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "w"));
             XBT_INFO("Write 0B at /dev/a/foo.txt, which should return 0");
             ASSERT_DOUBLE_EQ(file->write(0), 0);
             XBT_INFO("Write 200MB at /dev/a/foo.txt, which should not work");
@@ -134,7 +134,7 @@ TEST_F(OneDiskStorageTest, SingleAsyncWrite)  {
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "w"));
             XBT_INFO("Asynchronously write 2MB at /dev/a/foo.txt");
             ASSERT_NO_THROW(my_write = file->write_async("2MB"));
             XBT_INFO("Sleep for 1 second");

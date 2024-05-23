@@ -89,14 +89,17 @@ TEST_F(JBODStorageTest, NotEnoughDisks)  {
 TEST_F(JBODStorageTest, SingleRead)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
+        xbt_log_control_set("root.thresh:info");
         sg4::Actor::create("TestActor", fs_client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
+            XBT_INFO("Check access mode");
+            ASSERT_EQ(file->get_access_mode(), "r");
             XBT_INFO("read 0B at /dev/a/foo.txt, which should return 0");
-            ASSERT_DOUBLE_EQ(file->read(0),0);
+            ASSERT_DOUBLE_EQ(file->read(0), 0);
             XBT_INFO("read 100kB at /dev/a/foo.txt, which should return only 10kB");
             ASSERT_DOUBLE_EQ(file->read("100kB"), 10000);
             XBT_INFO("read 10kB at /dev/a/foo.txt, which should return O as we are at the end of the file");
@@ -122,7 +125,7 @@ TEST_F(JBODStorageTest, SingleAsyncRead)  {
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "60MB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
             XBT_INFO("Asynchronously read 6MB at /dev/a/foo.txt");
             ASSERT_NO_THROW(my_read = file->read_async("12MB"));
             XBT_INFO("Sleep for 1 second");
@@ -151,7 +154,7 @@ TEST_F(JBODStorageTest, SingleWrite)  {
             XBT_INFO("Check remaining space");
             ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a")->get_free_space(), 99 * 1000 *1000);
             XBT_INFO("Open File '/dev/a/foo.txt'");
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "w"));
             XBT_INFO("Write 0B at /dev/a/foo.txt, which should return 0");
             ASSERT_DOUBLE_EQ(file->write(0), 0);
             XBT_INFO("Write 200MB at /dev/a/foo.txt, which should not work");
@@ -178,7 +181,7 @@ TEST_F(JBODStorageTest, SingleAsyncWrite)  {
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "w"));
             XBT_INFO("Asynchronously write 2MB at /dev/a/foo.txt");
             ASSERT_NO_THROW(my_write = file->write_async("12MB"));
             XBT_INFO("Sleep for 1 second");
@@ -206,7 +209,7 @@ TEST_F(JBODStorageTest, ReadWriteUnsupportedRAID)  {
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "rw"));
             XBT_INFO("Write 2MB at /dev/a/foo.txt, which should fail");
             ASSERT_THROW(file->write("12MB"), std::runtime_error);
             XBT_INFO("Read 12MB at /dev/a/foo.txt, which should fail too");
@@ -228,7 +231,7 @@ TEST_F(JBODStorageTest, ReadWriteRAID0)  {
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "rw"));
             XBT_INFO("Write 2MB at /dev/a/foo.txt");
             ASSERT_DOUBLE_EQ(file->write("12MB"), 12000000);
             XBT_INFO("Write complete. Clock is at 3.1s (.1s to transfer, 3s to write)");
@@ -255,7 +258,7 @@ TEST_F(JBODStorageTest, ReadWriteRAID1)  {
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "rw"));
             XBT_INFO("Write 6MB at /dev/a/foo.txt");
             ASSERT_DOUBLE_EQ(file->write("6MB"), 6000000);
             XBT_INFO("Write complete. Clock is at 6.05s (.05s to transfer, 6s to write)");
@@ -282,7 +285,7 @@ TEST_F(JBODStorageTest, ReadWriteRAID4)  {
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "rw"));
             XBT_INFO("Write 4MB at /dev/a/foo.txt");
             ASSERT_DOUBLE_EQ(file->write("6MB"), 6000000);
             XBT_INFO("Write complete. Clock is at 2.06s (.05s to transfer, 0.01 to compute parity, 2s to write)");
@@ -315,7 +318,7 @@ TEST_F(JBODStorageTest, ReadWriteRAID6)  {
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "rw"));
             XBT_INFO("Write 6MB at /dev/a/foo.txt");
             ASSERT_DOUBLE_EQ(file->write("6MB"), 6000000);
             XBT_INFO("Write complete. Clock is at 3.08s (.05s to transfer, 0.02 to compute parity, 3s to write)");

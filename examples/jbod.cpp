@@ -27,7 +27,7 @@ public:
 
     void operator()() {
         XBT_INFO("Opening the file...");
-        auto file = fs_->open(file_path_);
+        auto file = fs_->open(file_path_, "w");
         XBT_INFO("Writing %llu to it...", num_bytes_);
         file->write(num_bytes_);
         XBT_INFO("Closing file...");

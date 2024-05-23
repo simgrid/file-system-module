@@ -48,7 +48,7 @@ TEST_F(StatTest, Stat)  {
             XBT_INFO("Create a 100kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(this->fs_->create_file("/dev/a/foo.txt", "100kB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
             XBT_INFO("Calling stat()");
             std::unique_ptr<simgrid::module::fs::FileStat> stat_struct;
             ASSERT_NO_THROW(stat_struct = file->stat());
@@ -59,7 +59,7 @@ TEST_F(StatTest, Stat)  {
             ASSERT_EQ(stat_struct->refcount, 1);
             XBT_INFO("Modifying file state");
             std::shared_ptr<sgfs::File> file2;
-            ASSERT_NO_THROW(file2 = fs_->open("/dev/a/foo.txt"));
+            ASSERT_NO_THROW(file2 = fs_->open("/dev/a/foo.txt", "rw"));
             ASSERT_NO_THROW(file2->seek(100*1000));
             ASSERT_NO_THROW(file2->write(12*1000, false));
             ASSERT_NO_THROW(sg4::this_actor::sleep_for(10));

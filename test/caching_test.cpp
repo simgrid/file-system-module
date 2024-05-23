@@ -75,7 +75,7 @@ TEST_F(CachingTest, FIFODontEvictOpenFiles) {
             ASSERT_NO_THROW(this->fs_->create_file("/dev/fifo/60mb.txt", "60MB"));
             XBT_INFO("Opening the 20MB file");
             std::shared_ptr<sgfs::File> file;
-            ASSERT_NO_THROW(file = this->fs_->open("/dev/fifo/20mb.txt"));
+            ASSERT_NO_THROW(file = this->fs_->open("/dev/fifo/20mb.txt", "r"));
             XBT_INFO("Create a 30MB file at /dev/fifo/60mb.txt");
             ASSERT_NO_THROW(this->fs_->create_file("/dev/fifo/30mb.txt", "30MB"));
             XBT_INFO("Check that files are as they should be");
@@ -84,7 +84,7 @@ TEST_F(CachingTest, FIFODontEvictOpenFiles) {
             ASSERT_TRUE(this->fs_->file_exists("/dev/fifo/30mb.txt"));
             XBT_INFO("Opening the 30MB file");
             std::shared_ptr<sgfs::File> file2;
-            ASSERT_NO_THROW(file2 = this->fs_->open("/dev/fifo/30mb.txt"));
+            ASSERT_NO_THROW(file2 = this->fs_->open("/dev/fifo/30mb.txt", "r"));
             XBT_INFO("Create a 60MB file at /dev/fifo/60mb.txt");
             ASSERT_THROW(this->fs_->create_file("/dev/fifo/60mb.txt", "60MB"), sgfs::FileSystemException);
         });
@@ -151,7 +151,7 @@ TEST_F(CachingTest, LRUBasics)  {
             ASSERT_NO_THROW(this->fs_->create_file("/dev/lru/60mb.txt", "60MB"));
             XBT_INFO("Open file 20mb.txt and access it");
             std::shared_ptr<sgfs::File> file;
-            ASSERT_NO_THROW(file = fs_->open("/dev/lru/20mb.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/lru/20mb.txt", "r"));
             ASSERT_NO_THROW(file->read(10));
             ASSERT_NO_THROW(fs_->close(file));
             ASSERT_NO_THROW(this->fs_->create_file("/dev/lru/30mb.txt", "30MB"));
@@ -199,7 +199,7 @@ TEST_F(CachingTest, LRUExtensive)  {
                     this->fs_->unlink_file("/dev/lru/" + file_name);
                 } else if (action.at(0) == "access") {
                     auto file_name = action.at(1);
-                    auto file = this->fs_->open("/dev/lru/" + file_name);
+                    auto file = this->fs_->open("/dev/lru/" + file_name, "r");
                     file->read(1);
                     fs_->close(file);
                 }

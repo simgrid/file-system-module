@@ -27,6 +27,8 @@ namespace simgrid::module::fs {
      * @return A smart pointer on the corresponding I/O activity
      */
     s4u::IoPtr File::read_async(sg_size_t num_bytes) {
+        if (access_mode_ != "r" && access_mode_ != "rw")
+            throw std::invalid_argument("Invalid access mode '" + access_mode_ + "'. Cannot read in 'w' or 'a' mode'");
         // if the current position is close to the end of the file, we may not be able to read the requested size
         sg_size_t num_bytes_to_read = std::min(num_bytes, metadata_->get_current_size() - current_position_);
         // Update
@@ -52,6 +54,8 @@ namespace simgrid::module::fs {
      * @return the actual number of bytes read in the file
      */
     sg_size_t File::read(sg_size_t num_bytes, bool simulate_it) {
+        if (access_mode_ != "r" && access_mode_ != "rw")
+            throw std::invalid_argument("Invalid access mode '" + this->access_mode_ + "'. Cannot read in 'w' or 'a' mode'");
         if (num_bytes == 0) /* Nothing to read, return */
             return 0;
         // if the current position is close to the end of the file, we may not be able to read the requested size
@@ -74,6 +78,8 @@ namespace simgrid::module::fs {
     int File::write_init_checks(sg_size_t num_bytes) {
         static int sequence_number = -1;
         int my_sequence_number = ++sequence_number;
+        if (access_mode_ != "w" && access_mode_ != "rw" && access_mode_ != "a")
+            throw std::invalid_argument("Invalid access mode. Cannot write in 'r' mode'");
 
         //TODO: Would be good to move some of the code below to FileMetadata, but that requires
         //      that FileMetadata know the partition....

@@ -129,7 +129,7 @@ TEST_F(FileSystemTest, Directories)  {
 
             XBT_INFO("Try to unlink a directory in which one file is opened. This shouldn't work");
             std::shared_ptr<sgfs::File> file;
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/b/c/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/b/c/foo.txt", "r"));
             ASSERT_THROW(fs_->unlink_directory("/dev/a/b/c"), sgfs::FileSystemException);
             ASSERT_NO_THROW(fs_->close(file));
             ASSERT_NO_THROW(fs_->unlink_directory("/dev/a/b/c"));
@@ -194,7 +194,7 @@ TEST_F(FileSystemTest, FileOpenClose)  {
 
             XBT_INFO("Opening the file");
             std::shared_ptr<sgfs::File> file;
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/stuff/foo.txt"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/stuff/foo.txt", "r"));
 
             XBT_INFO("Trying to move the file");
             ASSERT_THROW(fs_->move_file("/dev/a/stuff/foo.txt", "/dev/a/bar.txt"), sgfs::FileSystemException);
@@ -234,15 +234,15 @@ TEST_F(FileSystemTest, TooManyFilesOpened) {
             limited_fs->mount_partition("/dev/a/", ods, "100kB");
 
             XBT_INFO("Opening a first file, should be fine");
-            ASSERT_NO_THROW(file = limited_fs->open("/dev/a/stuff/foo.txt"));
+            ASSERT_NO_THROW(file = limited_fs->open("/dev/a/stuff/foo.txt", "w"));
             XBT_INFO("Opening a second file, should be fine");
-            ASSERT_NO_THROW(file2 = limited_fs->open("/dev/a/stuff/bar.txt"));
+            ASSERT_NO_THROW(file2 = limited_fs->open("/dev/a/stuff/bar.txt", "w"));
             XBT_INFO("Opening a third file, should not work");
-            ASSERT_THROW(file3 = limited_fs->open("/dev/a/stuff/baz.txt"), sgfs::FileSystemException);
+            ASSERT_THROW(file3 = limited_fs->open("/dev/a/stuff/baz.txt", "a"), sgfs::FileSystemException);
             XBT_INFO("Close the first file");
             ASSERT_NO_THROW(limited_fs->close(file));
             XBT_INFO("Opening a third file should now work");
-            ASSERT_NO_THROW(file3 = limited_fs->open("/dev/a/stuff/baz.txt"));
+            ASSERT_NO_THROW(file3 = limited_fs->open("/dev/a/stuff/baz.txt", "rw"));
         });
 
         // Run the simulation

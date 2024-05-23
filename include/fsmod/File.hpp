@@ -19,6 +19,7 @@ namespace simgrid::module::fs {
         friend class FileSystem;
 
         std::string path_;
+        std::string access_mode_;
         sg_size_t current_position_ = SEEK_SET;
         int desc_id     = 0;
         FileMetadata* metadata_;
@@ -32,8 +33,13 @@ namespace simgrid::module::fs {
         File(const File&) = delete;
 
     protected:
-        File(std::string full_path, FileMetadata *metadata, Partition *partition) :
-                path_(std::move(full_path)), metadata_(metadata), partition_(partition) {};
+        File(std::string full_path, std::string access_mode, FileMetadata *metadata,
+             Partition *partition)
+            : path_(std::move(full_path)),
+              access_mode_(std::move(access_mode)),
+              metadata_(metadata),
+              partition_(partition) {};
+
         File& operator=(const File&) = delete;
 
     public:
@@ -41,6 +47,7 @@ namespace simgrid::module::fs {
         sg_size_t get_num_bytes_read(const s4u::IoPtr& read) const { return read->get_performed_ioops(); }
         /** Get the number of bytes actually written by a given I/O Write activity */
         sg_size_t get_num_bytes_written(const s4u::IoPtr& write) const { return write->get_performed_ioops(); }
+        const std::string& get_access_mode() const { return access_mode_; }
 
         s4u::IoPtr read_async(const std::string& num_bytes);
         s4u::IoPtr read_async(sg_size_t num_bytes);

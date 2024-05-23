@@ -36,7 +36,7 @@ public:
         XBT_INFO("New FileWriter for file %s: sleep_time: %.2lf, offset=%llu, num_bytes=%llu", file_path_.c_str(), sleep_time_, offset_, num_bytes_);
         sg4::this_actor::sleep_for(sleep_time_);
         XBT_INFO("Opening the file...");
-        auto file = fs_->open(file_path_);
+        auto file = fs_->open(file_path_, "w");
         XBT_INFO("Seek to offset %llu...", offset_);
         file->seek(offset_);
         XBT_INFO("Writing %llu to it at offset %llu...", num_bytes_, offset_);

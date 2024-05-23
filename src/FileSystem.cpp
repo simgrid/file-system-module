@@ -137,10 +137,13 @@ namespace simgrid::module::fs {
       * @param full_path: an absolute file path
       * @return
       */
-    std::shared_ptr<File> FileSystem::open(const std::string &full_path) {
+    std::shared_ptr<File> FileSystem::open(const std::string &full_path, const std::string& access_mode) {
         // "Get a file descriptor"
         if (this->num_open_files_ >= this->max_num_open_files_) {
             throw FileSystemException(XBT_THROW_POINT, "Too many open file descriptors");
+        }
+        if (access_mode != "r" && access_mode != "w" && access_mode != "a" && access_mode != "rw") {
+            throw std::invalid_argument("Invalid access mode. Authorized values are: 'r', 'w', 'a' or 'rw'");
         }
 
         // Get the partition and path
@@ -153,6 +156,8 @@ namespace simgrid::module::fs {
         // Get the file metadata
         auto metadata = partition->get_file_metadata(dir, file_name);
         if (not metadata) {
+            if (access_mode == "r")
+                throw FileSystemException(XBT_THROW_POINT, "File not found. Cannot be opened in 'r' mode");
             create_file(full_path, 0);
             metadata = partition->get_file_metadata(dir, file_name);
         }
@@ -161,7 +166,10 @@ namespace simgrid::module::fs {
         metadata->increase_file_refcount();
 
         // Create the file object
-        auto file = std::shared_ptr<File>(new File(simplified_path, metadata, partition.get()));
+        auto file = std::shared_ptr<File>(new File(simplified_path, access_mode, metadata, partition.get()));
+
+        if (access_mode == "a")
+            file->current_position_ = SEEK_END;
 
         this->num_open_files_++;
         return file;
