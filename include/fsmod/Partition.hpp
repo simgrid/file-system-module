@@ -61,7 +61,6 @@ namespace simgrid::fsmod {
         [[nodiscard]] sg_size_t get_free_space() const { return free_space_; }
 
     protected:
-
         // Methods to perform caching
         virtual void create_space(sg_size_t num_bytes);
         virtual void new_file_creation_event(FileMetadata *file_metadata);
