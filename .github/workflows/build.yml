@@ -95,7 +95,7 @@ jobs:
       - name: Collect coverage into one XML report
         run: |
           gcovr -e test -e examples -e include --sonarqube -u -o coverage.xml \
-                --gcov-ignore-parse-errors all --exclude-unreachable-branches
+                --gcov-ignore-parse-errors --exclude-unreachable-branches
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
