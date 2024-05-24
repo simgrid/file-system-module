@@ -10,7 +10,7 @@
 #include "FileStat.hpp"
 #include "Partition.hpp"
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
     /**
      * @brief A class that implemented a file abstraction
@@ -68,7 +68,7 @@ namespace simgrid::module::fs {
         std::unique_ptr<FileStat> stat() const;
     };
 
-} // namespace simgrid::module::fs
+} // namespace simgrid::fsmod
 
 
 #endif

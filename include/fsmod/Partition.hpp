@@ -10,7 +10,7 @@
 
 #include "fsmod/FileMetadata.hpp"
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
     class Storage;
 
@@ -98,6 +98,6 @@ namespace simgrid::module::fs {
     protected:
         void delete_file(const std::string& dir_path, const std::string& file_name);
     };
-} // namespace simgrid::module::fs
+} // namespace simgrid::fsmod
 
 #endif

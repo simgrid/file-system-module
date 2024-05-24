@@ -4,7 +4,7 @@
 #include <simgrid/s4u/MessageQueue.hpp>
 #include "Storage.hpp"
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
     /**
      * @brief A class that implements a one-disk storage
@@ -22,6 +22,6 @@ namespace simgrid::module::fs {
         OneDiskStorage(const std::string &name, simgrid::s4u::Disk *disk);
         s4u::MessageQueue *mq_;
     };
-} // namespace simgrid::module::fs
+} // namespace simgrid::fsmod
 
 #endif //FSMOD_ONEDISKSTORAGE_HPP

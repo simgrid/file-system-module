@@ -17,7 +17,7 @@
 //    }                                                                                                                  \
 //  }
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
     /**
      * @brief The exception class for fsmod

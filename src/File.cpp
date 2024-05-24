@@ -10,7 +10,7 @@
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(fsmod_file, "File System module: File management related logs");
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
     /**
      * @brief Asynchronously read data from the file

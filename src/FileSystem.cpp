@@ -13,7 +13,7 @@
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(fsmod_filesystem, "File System module: File system management related logs");
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
     /**
      * @brief Private method to find the partition and path at mount point for an absolute path

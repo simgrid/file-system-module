@@ -10,7 +10,7 @@
 
 #include "./test_util.hpp"
 
-namespace sgfs=simgrid::module::fs;
+namespace sgfs=simgrid::fsmod;
 namespace sg4=simgrid::s4u;
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(fs_test, "File System Test");

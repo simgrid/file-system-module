@@ -9,7 +9,7 @@
 XBT_LOG_NEW_DEFAULT_CATEGORY(fs_test, "File System Test");
 
 namespace sg4 = simgrid::s4u;
-namespace sgfs = simgrid::module::fs;
+namespace sgfs = simgrid::fsmod;
 
 class FileWriterActor {
     std::shared_ptr<sgfs::FileSystem> fs_;

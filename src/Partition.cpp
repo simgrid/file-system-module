@@ -4,7 +4,7 @@
 #include "fsmod/FileMetadata.hpp"
 #include "fsmod/FileSystemException.hpp"
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
 
     Partition::Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size)

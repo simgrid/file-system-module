@@ -13,7 +13,7 @@
 #include "Partition.hpp"
 #include "File.hpp"
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
 	/**
  	* @brief A class that implements a file system abstraction
@@ -59,6 +59,6 @@ namespace simgrid::module::fs {
 
         int num_open_files_ = 0;
     };
-} // namespace simgrid::module::fs
+} // namespace simgrid::fsmod
 
 #endif

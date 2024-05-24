@@ -5,7 +5,7 @@
 #include <simgrid/forward.h>
 #include <iostream>
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
     /** \cond EXCLUDE_FROM_DOCUMENTATION    */
 

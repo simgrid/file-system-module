@@ -8,7 +8,7 @@
 
 #include "Partition.hpp"
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
     /** \cond EXCLUDE_FROM_DOCUMENTATION */
 
@@ -23,6 +23,6 @@ namespace simgrid::module::fs {
 
     /** \endcond */
 
-} // namespace simgrid::module::fs
+} // namespace simgrid::fsmod
 
 #endif

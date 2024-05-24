@@ -10,7 +10,7 @@
 
 #include "./test_util.hpp"
 
-namespace sgfs=simgrid::module::fs;
+namespace sgfs=simgrid::fsmod;
 namespace sg4=simgrid::s4u;
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(stat_test, "Stat Test");
@@ -50,7 +50,7 @@ TEST_F(StatTest, Stat)  {
             XBT_INFO("Open File '/dev/a/foo.txt'");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
             XBT_INFO("Calling stat()");
-            std::unique_ptr<simgrid::module::fs::FileStat> stat_struct;
+            std::unique_ptr<sgfs::FileStat> stat_struct;
             ASSERT_NO_THROW(stat_struct = file->stat());
             XBT_INFO("Checking sanity");
             ASSERT_EQ(stat_struct->size_in_bytes, 100*1000);

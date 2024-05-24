@@ -4,7 +4,7 @@
 #include "fsmod/PartitionFIFOCaching.hpp"
 #include "fsmod/FileSystemException.hpp"
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
     void PartitionFIFOCaching::create_space(sg_size_t num_bytes) {
         sg_size_t space_that_can_be_created = 0.0;

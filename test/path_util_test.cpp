@@ -2,7 +2,7 @@
 #include <iostream>
 #include "fsmod/PathUtil.hpp"
 
-namespace sgfs=simgrid::module::fs;
+namespace sgfs=simgrid::fsmod;
 
 // Ugly macro, but useful for these specific tests for knowing what's happening
 #define MY_ASSERT_EQ(lhs, rhs, message) if ((lhs) != (rhs)) ASSERT_EQ((lhs), (rhs)) \
@@ -67,9 +67,9 @@ TEST_F(PathUtilTest, PathAtMountPoint) {
 
     for (const auto &test_item: input_output) {
         auto [path, mp, output] = test_item;
-        auto simplified_path = simgrid::module::fs::PathUtil::simplify_path_string(path);
+        auto simplified_path = sgfs::PathUtil::simplify_path_string(path);
         try {
-            auto path_at_mp = simgrid::module::fs::PathUtil::path_at_mount_point(simplified_path, "/dev/a");
+            auto path_at_mp = sgfs::PathUtil::path_at_mount_point(simplified_path, "/dev/a");
             MY_ASSERT_EQ(output, path_at_mp,  "{" + path + ", " + mp + "}");
         } catch (std::logic_error &e) {
             MY_ASSERT_EQ(output, "Exception", "{" + path + ", " + mp + "}");

@@ -9,7 +9,7 @@
 
 #include "Partition.hpp"
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
     /**
      * @brief A class that iplements a storage abstraction
@@ -36,6 +36,6 @@ namespace simgrid::module::fs {
         virtual void write(sg_size_t size) = 0;
     };
 
-} // namespace simgrid::module::fs
+} // namespace simgrid::fsmod
 
 #endif

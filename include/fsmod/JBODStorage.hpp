@@ -5,7 +5,7 @@
 #include "Storage.hpp"
 
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
     /**
      * @brief A class that implements an abstraction of a "Just a Bunch Of Disks" storage

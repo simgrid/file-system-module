@@ -4,7 +4,7 @@
 #include <filesystem>
 #include "fsmod/PathUtil.hpp"
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
     /**
      * @brief A method to simplify a path string (which is either absolute or relative to /)

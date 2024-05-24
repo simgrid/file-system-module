@@ -5,7 +5,7 @@
 #include <simgrid/forward.h>
 #include <iostream>
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
     /**
      * @brief A class that implemented a file stat data structure

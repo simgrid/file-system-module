@@ -1,7 +1,7 @@
 #include "fsmod/OneDiskStorage.hpp"
 #include <simgrid/s4u/Actor.hpp>
 
-namespace simgrid::module::fs {
+namespace simgrid::fsmod {
 
     /**
      * @brief Method to create an instance of a one-disk storage
