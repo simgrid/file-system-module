@@ -98,7 +98,7 @@ namespace simgrid::fsmod {
         if (src_metadata->get_file_refcount() > 0) {
             throw FileSystemException(XBT_THROW_POINT, "Cannot move a file that is open");
         }
-        if (dst_metadata and dst_metadata->get_file_refcount()) {
+        if (dst_metadata && dst_metadata->get_file_refcount()) {
             throw FileSystemException(XBT_THROW_POINT, "Cannot move to a destination file that is open");
         }
 

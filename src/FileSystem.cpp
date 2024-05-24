@@ -69,7 +69,7 @@ namespace simgrid::fsmod {
             throw std::invalid_argument("Invalid partition path");
         }
         for (auto const &mp: this->partitions_) {
-            if ((mp.first.rfind(cleanup_mount_point, 0) == 0) or (cleanup_mount_point.rfind(mp.first, 0) == 0)) {
+            if ((mp.first.rfind(cleanup_mount_point, 0) == 0) || (cleanup_mount_point.rfind(mp.first, 0) == 0)) {
                 throw std::invalid_argument("Mount point already exists or is prefix of existing mount point");
             }
         }
