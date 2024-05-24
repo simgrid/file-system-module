@@ -3,9 +3,9 @@
 namespace simgrid::fsmod {
 
     void PartitionLRUCaching::new_file_access_event(FileMetadata *file_metadata) {
-        priority_list_.erase(file_metadata->sequence_number_);
-        file_metadata->sequence_number_ = sequence_number_++;
-        priority_list_[file_metadata->sequence_number_] = file_metadata;
+        rm_from_priority_list(file_metadata);
+        file_metadata->sequence_number_ = get_next_sequence_number();
+        add_to_priority_list(file_metadata);
     }
 
 }

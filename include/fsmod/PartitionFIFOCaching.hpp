@@ -29,7 +29,10 @@ namespace simgrid::fsmod {
         void new_file_creation_event(FileMetadata *file_metadata) override;
         void new_file_access_event(FileMetadata *file_metadata) override;
         void new_file_deletion_event(FileMetadata *file_metadata) override;
-
+        unsigned long get_next_sequence_number() { return sequence_number_++; }
+        void add_to_priority_list(FileMetadata *file_metadata) { priority_list_[file_metadata->sequence_number_] = file_metadata; }
+        void rm_from_priority_list(FileMetadata *file_metadata) { priority_list_.erase(file_metadata->sequence_number_); }
+    private:
         unsigned long sequence_number_ = 0;
         std::map<unsigned long, FileMetadata*> priority_list_;
     };
