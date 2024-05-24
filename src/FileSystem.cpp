@@ -68,8 +68,8 @@ namespace simgrid::fsmod {
         if (PathUtil::simplify_path_string(mount_point) != cleanup_mount_point) {
             throw std::invalid_argument("Invalid partition path");
         }
-        for (auto const &mp: this->partitions_) {
-            if ((mp.first.rfind(cleanup_mount_point, 0) == 0) || (cleanup_mount_point.rfind(mp.first, 0) == 0)) {
+        for (auto const &[mp, p]: this->partitions_) {
+            if ((mp.rfind(cleanup_mount_point, 0) == 0) || (cleanup_mount_point.rfind(mp, 0) == 0)) {
                 throw std::invalid_argument("Mount point already exists or is prefix of existing mount point");
             }
         }
@@ -172,7 +172,7 @@ namespace simgrid::fsmod {
         metadata->increase_file_refcount();
 
         // Create the file object
-        auto file = std::shared_ptr<File>(new File(simplified_path, access_mode, metadata, partition.get()));
+        auto file = std::make_shared<File>(simplified_path, access_mode, metadata, partition.get());
 
         XBT_INFO("%s %d", access_mode.c_str(), SEEK_END);
         if (access_mode == "a")

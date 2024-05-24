@@ -77,7 +77,7 @@ TEST_F(FileSystemTest, FileCreate)  {
             try {
                 this->fs_->create_file("/foo/foo.txt", "10MB");
             } catch (sgfs::FileSystemException &e) {
-                auto msg = e.what();  // coverage
+                XBT_ERROR("%s", e.what());  // coverage
             }
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt, which should fail");
             ASSERT_THROW(this->fs_->create_file("/dev/a/foo.txt", "10MB"), sgfs::FileSystemException);

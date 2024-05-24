@@ -91,7 +91,6 @@ namespace simgrid::fsmod {
 
         if (added_bytes > partition_->get_free_space()) {
             partition_->create_space(added_bytes - partition_->get_free_space());
-//            throw FileSystemException(XBT_THROW_POINT, "Not enough space");
         }
 
         // Compute the new tentative file size

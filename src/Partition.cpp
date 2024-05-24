@@ -21,7 +21,7 @@ namespace simgrid::fsmod {
     FileMetadata *Partition::get_file_metadata(const std::string &dir_path, const std::string &file_name) const {
         try {
             return content_.at(dir_path).at(file_name).get();
-        } catch (std::out_of_range &e) {
+        } catch (std::out_of_range&) {
             return nullptr;
         }
     }
@@ -126,8 +126,8 @@ namespace simgrid::fsmod {
             throw FileSystemException(XBT_THROW_POINT, "Directory does not exist");
         }
         std::set<std::string, std::less<>> keys;
-        for (auto const &key: content_.at(dir_path)) {
-            keys.insert(key.first);
+        for (auto const &[filename, metadata]: content_.at(dir_path)) {
+            keys.insert(filename);
         }
         return keys;
     }
@@ -137,8 +137,8 @@ namespace simgrid::fsmod {
             throw FileSystemException(XBT_THROW_POINT, "Directory does not exist");
         }
         // Check that no file is open
-        for (const auto &item: content_.at(dir_path)) {
-            if (item.second->get_file_refcount() != 0) {
+        for (const auto &[filename, metadata]: content_.at(dir_path)) {
+            if (metadata->get_file_refcount() != 0) {
                 throw FileSystemException(XBT_THROW_POINT,
                                           "Cannot delete a file that is open - no content deleted in directory");
             }

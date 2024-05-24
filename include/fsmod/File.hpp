@@ -29,20 +29,16 @@ namespace simgrid::fsmod {
         int write_init_checks(sg_size_t num_bytes);
 
     public:
-        virtual ~File() = default;
-        File(const File&) = delete;
-
-    protected:
         File(std::string full_path, std::string access_mode, FileMetadata *metadata,
              Partition *partition)
             : path_(std::move(full_path)),
               access_mode_(std::move(access_mode)),
               metadata_(metadata),
               partition_(partition) {};
-
+        File(const File&) = delete;
         File& operator=(const File&) = delete;
+        virtual ~File() = default;
 
-    public:
         /** Get the number of bytes actually read by a given I/O Read activity */
         sg_size_t get_num_bytes_read(const s4u::IoPtr& read) const { return read->get_performed_ioops(); }
         /** Get the number of bytes actually written by a given I/O Write activity */
