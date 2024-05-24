@@ -38,8 +38,7 @@ set(SOURCE_FILES
 		src/Partition.cpp
 		src/PartitionFIFOCaching.cpp
 		src/PartitionLRUCaching.cpp
-        src/Storage.cpp
-		src/JBODStorage.cpp
+        src/JBODStorage.cpp
 		src/OneDiskStorage.cpp
 		)
 
