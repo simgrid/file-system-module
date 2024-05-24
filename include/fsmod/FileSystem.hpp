@@ -23,6 +23,7 @@ namespace simgrid::fsmod {
         int max_num_open_files_;
 
     public:
+        explicit FileSystem(std::string name, int max_num_open_files) : name_(std::move(name)), max_num_open_files_(max_num_open_files) {};
         static std::shared_ptr<FileSystem> create(const std::string &name, int max_num_open_files = 1024);
 
         void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, sg_size_t size,
@@ -49,8 +50,6 @@ namespace simgrid::fsmod {
         [[nodiscard]] std::shared_ptr<Partition> partition_by_name(const std::string& name) const;
         [[nodiscard]] std::shared_ptr<Partition> partition_by_name_or_null(const std::string& name) const;
 
-    protected:
-        explicit FileSystem(std::string name, int max_num_open_files) noexcept: name_(std::move(name)), max_num_open_files_(max_num_open_files) {};
 
     private:
         [[nodiscard]] std::pair<std::shared_ptr<Partition>, std::string> find_path_at_mount_point(const std::string &full_path) const;

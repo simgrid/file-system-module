@@ -39,7 +39,7 @@ namespace simgrid::fsmod {
     /*********************** PUBLIC INTERFACE *****************************/
 
     std::shared_ptr<FileSystem> FileSystem::create(const std::string &name, int max_num_open_files) {
-        return std::make_shared<FileSystem>(FileSystem(name, max_num_open_files));
+        return std::make_shared<FileSystem>(name, max_num_open_files);
     }
 
     /**
