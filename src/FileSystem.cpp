@@ -110,11 +110,11 @@ namespace simgrid::fsmod {
      * @param full_path: the absolute path to the file
      * @param size: the file size
      */
-    void FileSystem::create_file(const std::string &full_path, const std::string &size) {
+    void FileSystem::create_file(const std::string &full_path, const std::string &size) const {
         create_file(full_path, static_cast<sg_size_t>(xbt_parse_get_size("", 0, size, "")));
     }
 
-    void FileSystem::create_file(const std::string &full_path, sg_size_t size) {
+    void FileSystem::create_file(const std::string &full_path, sg_size_t size) const {
         // Get the partition and path
         std::string simplified_path = PathUtil::simplify_path_string(full_path);
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
@@ -255,7 +255,7 @@ namespace simgrid::fsmod {
      * @param full_path: the file path
      * @return true if the file exists, false otherwise
      */
-    bool FileSystem::file_exists(const std::string& full_path) {
+    bool FileSystem::file_exists(const std::string& full_path) const {
         std::string simplified_path = PathUtil::simplify_path_string(full_path);
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
         auto [dir, file_name] = PathUtil::split_path(path_at_mount_point);
@@ -267,7 +267,7 @@ namespace simgrid::fsmod {
      * @param full_path: the directory path
      * @return true if the directory exists, false otherwise
      */
-    bool FileSystem::directory_exists(const std::string& full_path) {
+    bool FileSystem::directory_exists(const std::string& full_path) const {
         std::string simplified_path = PathUtil::simplify_path_string(full_path);
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
         return partition->directory_exists(path_at_mount_point);
@@ -278,7 +278,7 @@ namespace simgrid::fsmod {
      * @param full_dir_path: the path to the directory
      * @return
      */
-    std::set<std::string, std::less<>> FileSystem::list_files_in_directory(const std::string &full_dir_path) {
+    std::set<std::string, std::less<>> FileSystem::list_files_in_directory(const std::string &full_dir_path) const {
         std::string simplified_path = PathUtil::simplify_path_string(full_dir_path);
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
         return partition->list_files_in_directory(path_at_mount_point);
@@ -289,7 +289,7 @@ namespace simgrid::fsmod {
      * @param full_dir_path: the path to the directory
      * @return
      */
-    void FileSystem::unlink_directory(const std::string &full_dir_path) {
+    void FileSystem::unlink_directory(const std::string &full_dir_path) const {
         std::string simplified_path = PathUtil::simplify_path_string(full_dir_path);
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
         partition->delete_directory(path_at_mount_point);

@@ -8,7 +8,7 @@ namespace simgrid::fsmod {
 
 
     Partition::Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size)
-            : name_(std::move(name)), storage_(std::move(storage)), size_(size), free_space_(size) {
+            : name_(std::move(name)), storage_(std::move(storage)), free_space_(size), size_(size) {
     }
 
 
@@ -54,7 +54,7 @@ namespace simgrid::fsmod {
      * @param file_name: the file name
      */
     void Partition::delete_file(const std::string &dir_path, const std::string &file_name) {
-        FileMetadata *metadata_ptr = this->get_file_metadata(dir_path, file_name);
+        const FileMetadata* metadata_ptr = this->get_file_metadata(dir_path, file_name);
         if (not metadata_ptr) {
             throw FileSystemException(XBT_THROW_POINT, "File not found);");
         }
@@ -81,7 +81,7 @@ namespace simgrid::fsmod {
     void Partition::move_file(const std::string &src_dir_path, const std::string &src_file_name,
                               const std::string &dst_dir_path, const std::string &dst_file_name) {
         // Get the src metadata, which must exist
-        FileMetadata *src_metadata = this->get_file_metadata(src_dir_path, src_file_name);
+        const FileMetadata* src_metadata = this->get_file_metadata(src_dir_path, src_file_name);
         if (not src_metadata) {
             throw FileSystemException(XBT_THROW_POINT, "File not found");
         }

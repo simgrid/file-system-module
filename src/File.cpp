@@ -68,7 +68,7 @@ namespace simgrid::fsmod {
         if (simulate_it) {
             try {
                 partition_->get_storage()->read(num_bytes_to_read);
-            } catch (StorageFailureException &e) {
+            } catch (StorageFailureException&) {
                 throw xbt::UnimplementedError("Handling of hardware resource failures not implemented");
             }
         }

@@ -21,6 +21,7 @@ namespace simgrid::fsmod {
         s4u::Host* controller_host_ = nullptr;
         s4u::ActorPtr controller_ = nullptr;
         explicit Storage(std::string name): name_(std::move(name)){}
+        virtual ~Storage() = default;
 
     public:
         [[nodiscard]] const std::string& get_name() const { return name_; }

@@ -30,9 +30,7 @@ namespace simgrid::fsmod {
         controller_host_ = disks_.front()->get_host();
         // Create a no-op controller
         mq_ = s4u::MessageQueue::by_name(name+"_controller_mq");
-        controller_ = s4u::Actor::create(name+"_controller", controller_host_, [this](){
-            // Do nothing
-        });
+        controller_ = s4u::Actor::create(name+"_controller", controller_host_, [](){ /* Do nothing*/ });
         controller_->daemonize();
     }
 
@@ -166,9 +164,9 @@ namespace simgrid::fsmod {
             // Assume 1 flop per byte to write per parity block and two for RAID6.
             // Do not assign the Exec yet, will be done after the completion of the CommPtr
             if (raid_level_ == RAID::RAID6)
-                parity_block_comp = s4u::Exec::init()->set_flops_amount(2 * write_size);
+                parity_block_comp = s4u::Exec::init()->set_flops_amount(static_cast<double>(2 * write_size));
             else
-                parity_block_comp = s4u::Exec::init()->set_flops_amount(write_size);
+                parity_block_comp = s4u::Exec::init()->set_flops_amount(static_cast<double>(write_size));
         } else // Create a no-op activity
             parity_block_comp = s4u::Exec::init()->set_flops_amount(0);
         parity_block_comp->set_name("Parity Block Computation");

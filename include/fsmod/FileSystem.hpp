@@ -31,16 +31,16 @@ namespace simgrid::fsmod {
         void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, const std::string& size,
                              Partition::CachingScheme caching_scheme  = Partition::CachingScheme::NONE);
 
-        void create_file(const std::string& full_path, sg_size_t size);
-        void create_file(const std::string& full_path, const std::string& size);
+        void create_file(const std::string& full_path, sg_size_t size) const;
+        void create_file(const std::string& full_path, const std::string& size) const;
 
-        [[nodiscard]] bool file_exists(const std::string& full_path);
-        [[nodiscard]] bool directory_exists(const std::string& full_dir_path);
-        std::set<std::string, std::less<>> list_files_in_directory(const std::string& full_dir_path);
+        [[nodiscard]] bool file_exists(const std::string& full_path) const;
+        [[nodiscard]] bool directory_exists(const std::string& full_dir_path) const;
+        std::set<std::string, std::less<>> list_files_in_directory(const std::string& full_dir_path) const;
 
         void move_file(const std::string& src_full_path, const std::string& dst_full_path) const;
         void unlink_file(const std::string& full_path) const;
-        void unlink_directory(const std::string& full_dir_path);
+        void unlink_directory(const std::string& full_dir_path) const;
 
         [[nodiscard]] sg_size_t file_size(const std::string& full_path) const;
 
