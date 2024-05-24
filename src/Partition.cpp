@@ -8,7 +8,7 @@ namespace simgrid::fsmod {
 
 
     Partition::Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size)
-            : name_(std::move(name)), storage_(std::move(storage)), free_space_(size), size_(size) {
+            : name_(std::move(name)), storage_(std::move(storage)), size_(size), free_space_(size) {
     }
 
 
