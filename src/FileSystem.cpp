@@ -188,7 +188,7 @@ namespace simgrid::fsmod {
      * behavior.
      * @param file a shared pointer on a File
      */
-    void FileSystem::close(std::shared_ptr<File> file) {
+    void FileSystem::close(const std::shared_ptr<File> &file) {
         this->num_open_files_--;
         file->metadata_->decrease_file_refcount();
     }

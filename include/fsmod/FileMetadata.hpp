@@ -27,7 +27,7 @@ namespace simgrid::fsmod {
         std::unordered_map<int, sg_size_t> ongoing_writes_;
         unsigned file_refcount_ = 0;
 
-        unsigned long sequence_number_; // Used for caching algorithms
+        unsigned long sequence_number_= 0; // Used for caching algorithms
 
     public:
         FileMetadata(sg_size_t initial_size, Partition *partition, std::string dir_path, std::string file_name);
