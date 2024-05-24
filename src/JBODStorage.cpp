@@ -51,7 +51,7 @@ namespace simgrid::fsmod {
         std::stringstream debug_msg;
 
         // Get Parity disk index;
-        int parity_disk_idx = get_parity_disk_idx();
+        unsigned long parity_disk_idx = get_parity_disk_idx();
 
         switch(raid_level_) {
             case RAID::RAID0:
