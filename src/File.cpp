@@ -77,7 +77,7 @@ namespace simgrid::fsmod {
 
     int File::write_init_checks(sg_size_t num_bytes) {
         static int sequence_number = -1;
-        int my_sequence_number = ++sequence_number;
+        int my_sequence_number;
         if (access_mode_ != "w" && access_mode_ != "a")
             throw std::invalid_argument("Invalid access mode. Cannot write in 'r' mode'");
 
@@ -97,7 +97,9 @@ namespace simgrid::fsmod {
         sg_size_t new_file_size_if_i_succeed = metadata_->get_future_size() + added_bytes;
         // Decrease the available space on partition of what is going to be added by that write
         partition_->decrease_free_space(added_bytes);
+
         // Update metadata
+        my_sequence_number = ++sequence_number;
         metadata_->notify_write_start(my_sequence_number, new_file_size_if_i_succeed);
 
         return my_sequence_number;
