@@ -12,7 +12,7 @@ namespace simgrid::fsmod {
      * @return A new path string that has been sanitized
      * (i.e., remove redundant slashes, resolved ".."'s and "."'s)
      */
-    std::string PathUtil::simplify_path_string(const std::string &path_string) {
+    std::string PathUtil::simplify_path_string(const std::string& path_string) {
         // Prepend with "/" as that's always the working directory
         auto lexically_normal =  std::string(std::filesystem::path("/"+path_string).lexically_normal());
         PathUtil::remove_trailing_slashes(lexically_normal);
@@ -36,7 +36,7 @@ namespace simgrid::fsmod {
      * @param path_string: a simplified path string
      * @return a <prefix , suffix> pair, where either one of them could be empty
      */
-    std::pair<std::string, std::string> PathUtil::split_path(const std::string &path) {
+    std::pair<std::string, std::string> PathUtil::split_path(std::string_view path) {
         std::string dir;
         std::string file;
 
@@ -57,7 +57,7 @@ namespace simgrid::fsmod {
      * @param mount_point: a mount point
      * @return True if mount_point is a prefix of  simplified_absolute_path, false otherwise
      */
-    bool PathUtil::is_at_mount_point(const std::string &simplified_absolute_path, const std::string &mount_point) {
+    bool PathUtil::is_at_mount_point(std::string_view simplified_absolute_path, std::string_view mount_point) {
         return simplified_absolute_path.rfind(mount_point, 0) == 0;
     }
 
@@ -68,7 +68,7 @@ namespace simgrid::fsmod {
      * @return The path at the mount point
      * @throws std::logic_error If the path is not at that mount point
      */
-    std::string PathUtil::path_at_mount_point(const std::string &simplified_absolute_path, const std::string &mount_point) {
+    std::string PathUtil::path_at_mount_point(const std::string& simplified_absolute_path, std::string_view mount_point) {
         if (simplified_absolute_path.rfind(mount_point, 0) != 0) {
             throw std::logic_error("Path not found at mount point");
         } else {

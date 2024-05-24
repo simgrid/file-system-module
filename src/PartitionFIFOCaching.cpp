@@ -9,14 +9,14 @@ namespace simgrid::fsmod {
         sg_size_t space_that_can_be_created = 0.0;
         std::vector<unsigned long> files_to_remove_to_create_space;
 
-        for (auto const &victim: priority_list_) {
+        for (auto const& [victim, victim_metadata]: priority_list_) {
             // Never evict an open file
-            if (victim.second->file_refcount_ > 0) {
+            if (victim_metadata->file_refcount_ > 0) {
                 continue;
             }
             // Found a victim
-            files_to_remove_to_create_space.push_back(victim.first);
-            space_that_can_be_created += victim.second->current_size_;
+            files_to_remove_to_create_space.push_back(victim);
+            space_that_can_be_created += victim_metadata->current_size_;
             if (space_that_can_be_created >= num_bytes) {
                 break;
             }
