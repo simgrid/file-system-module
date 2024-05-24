@@ -1,6 +1,7 @@
-[![Build-Linux](https://github.com/simgrid/file-system-module/actions/workflows/build.yml/badge.svg)](https://github.com/simgrid/file-system-module/actions/workflows/build.yml)
 [![License: LGPL v2.1](https://img.shields.io/badge/License-LGPL_v2.1-blue.svg)](https://www.gnu.org/licenses/lgpl-2.1)
+[![Build-Linux](https://github.com/simgrid/file-system-module/actions/workflows/build.yml/badge.svg)](https://github.com/simgrid/file-system-module/actions/workflows/build.yml)
 [![Doc](https://readthedocs.org/projects/pip/badge/?version=stable)](https://simgrid.github.io/file-system-module/)
+[![SonarCloud Status](https://sonarcloud.io/api/project_badges/measure?project=simgrid_file-system-module&metric=alert_status)](https://sonarcloud.io/dashboard/?id=simgrid_file-system-module)
 [![codecov](https://codecov.io/gh/simgrid/file-system-module/graph/badge.svg?token=6x9KmpEvpS)](https://codecov.io/gh/simgrid/file-system-module)
 [![CodeFactor](https://www.codefactor.io/repository/github/simgrid/file-system-module/badge)](https://www.codefactor.io/repository/github/simgrid/file-system-module)
 
