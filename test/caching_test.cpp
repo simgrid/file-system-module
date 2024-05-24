@@ -38,8 +38,22 @@ public:
         fs_->mount_partition("/dev/fifo/", ods, "100MB", sgfs::Partition::CachingScheme::FIFO);
         XBT_INFO("Mounting a 100MB LRU partition...");
         fs_->mount_partition("/dev/lru/", ods, "100MB", sgfs::Partition::CachingScheme::LRU);
-    }
+   }
 };
+
+TEST_F(CachingTest, LogicTest){
+      DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+        auto ods = sgfs::OneDiskStorage::create("my_storage", disk_);
+        XBT_INFO("Try to mount partition with no name");
+        ASSERT_THROW(fs_->mount_partition(nullptr, ods, "100MB"),
+                     std::logic_error);
+        ASSERT_THROW(fs_->mount_partition(nullptr, ods, "100MB", sgfs::Partition::CachingScheme::FIFO),
+                     std::logic_error);
+        ASSERT_THROW(fs_->mount_partition(nullptr, ods, "100MB", sgfs::Partition::CachingScheme::LRU),
+                     std::logic_error);
+      });
+}
 
 TEST_F(CachingTest, FIFOBasics)  {
     DO_TEST_WITH_FORK([this]() {
