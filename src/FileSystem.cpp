@@ -74,21 +74,20 @@ namespace simgrid::fsmod {
             }
         }
 
-        Partition *new_partition;
-
         switch (caching_scheme) {
             case Partition::CachingScheme::NONE:
-                new_partition = new Partition(cleanup_mount_point, std::move(storage), size);
+                this->partitions_[cleanup_mount_point] =
+                   std::make_shared<Partition>(cleanup_mount_point, std::move(storage), size);
                 break;
             case Partition::CachingScheme::FIFO:
-                new_partition = new PartitionFIFOCaching(cleanup_mount_point, std::move(storage), size);
+                this->partitions_[cleanup_mount_point] =
+                   std::make_shared<PartitionFIFOCaching>(cleanup_mount_point, std::move(storage), size);
                 break;
             case Partition::CachingScheme::LRU:
-                new_partition = new PartitionLRUCaching(cleanup_mount_point, std::move(storage), size);
+                this->partitions_[cleanup_mount_point] =
+                   std::make_shared<PartitionLRUCaching>(cleanup_mount_point, std::move(storage), size);
                 break;
         }
-
-        this->partitions_[cleanup_mount_point] = std::shared_ptr<Partition>(new_partition);
     }
 
     std::shared_ptr<Partition> FileSystem::partition_by_name(const std::string &name) const {

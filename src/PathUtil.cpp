@@ -36,11 +36,11 @@ namespace simgrid::fsmod {
      * @param path_string: a simplified path string
      * @return a <prefix , suffix> pair, where either one of them could be empty
      */
-    std::pair<std::string, std::string> PathUtil::split_path(std::string &path) {
+    std::pair<std::string, std::string> PathUtil::split_path(const std::string &path) {
         std::string dir;
         std::string file;
-        auto last_slash = path.find_last_of('/');
-        if (last_slash == std::string::npos) {
+
+        if (auto last_slash = path.find_last_of('/'); last_slash == std::string::npos) {
             dir = "";
             file = path;
         } else {
