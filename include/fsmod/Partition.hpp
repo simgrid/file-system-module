@@ -35,6 +35,7 @@ namespace simgrid::fsmod {
             LRU = 2
         };
 
+        Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size);
         virtual ~Partition() = default;
 
         /**
@@ -60,7 +61,6 @@ namespace simgrid::fsmod {
         [[nodiscard]] sg_size_t get_free_space() const { return free_space_; }
 
     protected:
-        Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size);
 
         // Methods to perform caching
         virtual void create_space(sg_size_t num_bytes);

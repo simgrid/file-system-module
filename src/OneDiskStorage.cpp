@@ -10,7 +10,7 @@ namespace simgrid::fsmod {
      * @return
      */
     std::shared_ptr<OneDiskStorage> OneDiskStorage::create(const std::string& name, s4u::Disk* disk) {
-        return  std::shared_ptr<OneDiskStorage>(new OneDiskStorage(name, disk));
+        return std::make_shared<OneDiskStorage>(name, disk);
     }
 
     OneDiskStorage::OneDiskStorage(const std::string& name, s4u::Disk* disk) : Storage(name) {
