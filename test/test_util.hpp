@@ -10,7 +10,7 @@ static void DO_TEST_WITH_FORK(const std::function<void()> &lambda) {
         ASSERT_EQ(exit_code, 0);
     } else {
         lambda();
-        exit((::testing::Test::HasFailure() ? 255 : 0));
+        exit(::testing::Test::HasFailure() ? 255 : 0);
     }
 }
 

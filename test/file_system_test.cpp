@@ -114,7 +114,7 @@ TEST_F(FileSystemTest, Directories)  {
             ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a//////")->get_free_space(), 80*1000);
             XBT_INFO("Create a 10kB file at /dev/a/b/c/faa.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/b/c/faa.txt", "10kB"));
-            std::set<std::string> found_files;
+            std::set<std::string, std::less<>> found_files;
             ASSERT_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c_bogus"), sgfs::FileSystemException);
             ASSERT_NO_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c"));
             ASSERT_TRUE(found_files.find("foo.txt") != found_files.end());

@@ -20,6 +20,8 @@ namespace simgrid::fsmod {
 
     protected:
         OneDiskStorage(const std::string &name, simgrid::s4u::Disk *disk);
+
+    private:
         s4u::MessageQueue *mq_;
     };
 } // namespace simgrid::fsmod

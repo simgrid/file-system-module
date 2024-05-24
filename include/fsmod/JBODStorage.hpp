@@ -57,14 +57,13 @@ namespace simgrid::fsmod {
 
         int get_next_read_disk_idx() { return (++read_disk_idx_) % num_disks_; }
         [[nodiscard]] int get_parity_disk_idx() const { return parity_disk_idx_; }
-        s4u::MessageQueue* mq_;
-
 
     private:
         unsigned int num_disks_;
         RAID raid_level_;
         unsigned int parity_disk_idx_;
         int read_disk_idx_ = -1;
+        s4u::MessageQueue* mq_;
     };
 }
 

@@ -22,15 +22,16 @@ namespace simgrid::fsmod {
         return storage;
     }
 
-    JBODStorage::JBODStorage(const std::string& name, const std::vector<s4u::Disk*>& disks) : Storage(name) {
+    JBODStorage::JBODStorage(const std::string& name, const std::vector<s4u::Disk*>& disks)
+        : Storage(name),
+          num_disks_(disks.size()) {
         disks_ = disks;
-        num_disks_ = disks.size();
         parity_disk_idx_ = num_disks_ - 1;
         controller_host_ = disks_.front()->get_host();
         // Create a no-op controller
         mq_ = s4u::MessageQueue::by_name(name+"_controller_mq");
         controller_ = s4u::Actor::create(name+"_controller", controller_host_, [this](){
-            //mq_->get<void*>();
+            // Do nothing
         });
         controller_->daemonize();
     }
@@ -90,7 +91,7 @@ namespace simgrid::fsmod {
                 XBT_DEBUG("%s", debug_msg.str().c_str());
                 break;
             default:
-                throw std::runtime_error("Unsupported RAID level. Supported level are: 0, 1, 4, 5, and 6");
+                throw std::invalid_argument("Unsupported RAID level. Supported level are: 0, 1, 4, 5, and 6");
         }
 
         // Create a Comm to transfer data to the host that requested a read to the controller host of the JBOD
@@ -155,7 +156,7 @@ namespace simgrid::fsmod {
                 write_size = size / (num_disks_ - 2);
                 break;
             default:
-                throw std::runtime_error("Unsupported RAID level. Supported level are: 0, 1, 4, 5, and 6");
+                throw std::invalid_argument("Unsupported RAID level. Supported level are: 0, 1, 4, 5, and 6");
         }
 
         // Compute the parity block (if any)

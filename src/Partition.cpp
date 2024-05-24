@@ -121,11 +121,11 @@ namespace simgrid::fsmod {
         content_[dst_dir_path][dst_file_name] = std::move(uniq_ptr);
     }
 
-    std::set<std::string> Partition::list_files_in_directory(const std::string &dir_path) const {
+    std::set<std::string, std::less<>> Partition::list_files_in_directory(const std::string &dir_path) const {
         if (content_.find(dir_path) == content_.end()) {
             throw FileSystemException(XBT_THROW_POINT, "Directory does not exist");
         }
-        std::set < std::string > keys;
+        std::set<std::string, std::less<>> keys;
         for (auto const &key: content_.at(dir_path)) {
             keys.insert(key.first);
         }

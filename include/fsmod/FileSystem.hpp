@@ -35,7 +35,7 @@ namespace simgrid::fsmod {
 
         [[nodiscard]] bool file_exists(const std::string& full_path);
         [[nodiscard]] bool directory_exists(const std::string& full_dir_path);
-        std::set<std::string> list_files_in_directory(const std::string& full_dir_path);
+        std::set<std::string, std::less<>> list_files_in_directory(const std::string& full_dir_path);
 
         void move_file(const std::string& src_full_path, const std::string& dst_full_path) const;
         void unlink_file(const std::string& full_path) const;
@@ -55,7 +55,7 @@ namespace simgrid::fsmod {
     private:
         [[nodiscard]] std::pair<std::shared_ptr<Partition>, std::string> find_path_at_mount_point(const std::string &full_path) const;
 
-        std::map<std::string, std::shared_ptr<Partition>> partitions_;
+        std::map<std::string, std::shared_ptr<Partition>, std::less<>> partitions_;
 
         int num_open_files_ = 0;
     };

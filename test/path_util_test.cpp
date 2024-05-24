@@ -39,11 +39,11 @@ TEST_F(PathUtilTest, SplitPath) {
             {"/",                            {"/", ""}},
             {"a",                            {"/", "a"}},
     };
-    for (const auto &test_item: input_output) {
-        auto simplified_path = sgfs::PathUtil::simplify_path_string(test_item.first);
+    for (const auto& [input, output]: input_output) {
+        auto simplified_path = sgfs::PathUtil::simplify_path_string(input);
         auto [dir, file] = sgfs::PathUtil::split_path(simplified_path);
-        MY_ASSERT_EQ(dir, test_item.second.first, test_item.first + " (wrong directory)");
-        MY_ASSERT_EQ(file, test_item.second.second, test_item.first + " (wrong file)");
+        MY_ASSERT_EQ(dir, output.first, input + " (wrong directory)");
+        MY_ASSERT_EQ(file, output.second, input + " (wrong file)");
     }
     // test this case without simplifuing the path first
     std::string path = "a";
@@ -66,7 +66,7 @@ TEST_F(PathUtilTest, PathAtMountPoint) {
     };
 
     for (const auto &test_item: input_output) {
-        auto [path, mp, output] = test_item;
+        const auto [path, mp, output] = test_item;
         auto simplified_path = sgfs::PathUtil::simplify_path_string(path);
         try {
             auto path_at_mp = sgfs::PathUtil::path_at_mount_point(simplified_path, "/dev/a");

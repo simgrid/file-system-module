@@ -210,13 +210,13 @@ TEST_F(JBODStorageTest, ReadWriteUnsupportedRAID)  {
             XBT_INFO("Open File '/dev/a/foo.txt' in write mode");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "w"));
             XBT_INFO("Write 2MB at /dev/a/foo.txt, which should fail");
-            ASSERT_THROW(file->write("12MB"), std::runtime_error);
+            ASSERT_THROW(file->write("12MB"), std::invalid_argument);
             XBT_INFO("Close the file");
             ASSERT_NO_THROW(fs_->close(file));
             XBT_INFO("Open File '/dev/a/foo.txt' in read mode");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
             XBT_INFO("Read 12MB at /dev/a/foo.txt, which should fail too");
-            ASSERT_THROW(file->read("12MB"), std::runtime_error);
+            ASSERT_THROW(file->read("12MB"), std::invalid_argument);
             XBT_INFO("Close the file");
             ASSERT_NO_THROW(fs_->close(file));
         });

@@ -25,7 +25,7 @@ namespace simgrid::fsmod {
         // Identify the mount point and path at mount point partition
         auto it = std::find_if(this->partitions_.begin(),
                                this->partitions_.end(),
-                               [simplified_path](const std::pair<std::string, std::shared_ptr<Partition>> &element) {
+                               [&simplified_path](const std::pair<std::string, std::shared_ptr<Partition>> &element) {
                                    return PathUtil::is_at_mount_point(simplified_path, element.first);
                                });
         if (it == this->partitions_.end()) {
@@ -39,7 +39,7 @@ namespace simgrid::fsmod {
     /*********************** PUBLIC INTERFACE *****************************/
 
     std::shared_ptr<FileSystem> FileSystem::create(const std::string &name, int max_num_open_files) {
-        return std::shared_ptr<FileSystem>(new FileSystem(name, max_num_open_files));
+        return std::make_shared<FileSystem>(FileSystem(name, max_num_open_files));
     }
 
     /**
@@ -161,7 +161,7 @@ namespace simgrid::fsmod {
         if (not metadata) {
             if (access_mode == "r")
                 throw FileSystemException(XBT_THROW_POINT, "File not found. Cannot be opened in 'r' mode");
-            create_file(full_path, 0);
+            create_file(full_path, "0B");
             metadata = partition->get_file_metadata(dir, file_name);
         } else {
             if (access_mode == "w") {
@@ -279,7 +279,7 @@ namespace simgrid::fsmod {
      * @param full_dir_path: the path to the directory
      * @return
      */
-    std::set<std::string> FileSystem::list_files_in_directory(const std::string &full_dir_path) {
+    std::set<std::string, std::less<>> FileSystem::list_files_in_directory(const std::string &full_dir_path) {
         std::string simplified_path = PathUtil::simplify_path_string(full_dir_path);
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
         return partition->list_files_in_directory(path_at_mount_point);
