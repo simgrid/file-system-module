@@ -94,7 +94,7 @@ jobs:
           ./examples/jbod
       - name: Collect coverage into one XML report
         run: |
-          gcovr -e test -e examples --sonarqube -u -o coverage.xml \
+          gcovr -e test -e examples --sonarqube -u -o coverage.xml --exclude-throw-branches \
                 --gcov-ignore-parse-errors --exclude-unreachable-branches
       - name: Run sonar-scanner
         env:
