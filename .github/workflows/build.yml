@@ -94,7 +94,8 @@ jobs:
           ./examples/jbod
       - name: Collect coverage into one XML report
         run: |
-          gcovr -e test -e examples -e include --sonarqube > coverage.xml
+          gcovr -e test/* -e examples/* -e include/* --sonarqube -u -o coverage.xml \
+                --gcov-ignore-parse-errors all --gcov-ignore-errors all
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
