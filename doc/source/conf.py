@@ -6,7 +6,7 @@ import sys
 # -- Project information -----------------------------------------------------
 
 project = 'FSMOD'
-#copyright = '2017-2022, WRENCH'
+copyright = '2024, FSMOD'
 author = 'FSMOD Team'
 
 # -- General configuration ---------------------------------------------------
@@ -75,4 +75,3 @@ breathe_projects = {
 }
 version = '0.1'
 release = '0.1'
-

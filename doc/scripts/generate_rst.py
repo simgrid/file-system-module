@@ -25,7 +25,6 @@ with open(src_path.joinpath("conf.py"), "r") as f:
         last_line = lines[line_index].strip()
         if last_line == "" or last_line[0] == "#":
             line_index -= 1
-            continue
         else:
             should_append = last_line != f"release = '{release_version}'"
             break
@@ -54,7 +53,7 @@ for section in ["user"]:
             # create an .rst file for each class
             with open(rst_folder.joinpath(f"{child.attrib['refid']}.rst"), "w") as c:
                 c.write(f".. _{ref}:\n\n{title}\n")
-                line = ["*" for i in range(0, len(title))]
+                line = ["*" for _ in range(0, len(title))]
                 c.write(f"{''.join(line)}\n\n")
                 c.write(f".. doxygenclass:: {child.find('name').text}\n"
                         f"   :project: {section}\n"
