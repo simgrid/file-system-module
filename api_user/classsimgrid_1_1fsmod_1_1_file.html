@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>simgrid::fsmod::File &mdash; FSMOD 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="simgrid::fsmod::FileSystem" href="classsimgrid_1_1fsmod_1_1_file_system.html" />
+    <link rel="prev" title="The SimGrid File System Module: API Reference" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/simgrid_logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">simgrid::fsmod::File</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4FileE"><code class="docutils literal notranslate"><span class="pre">File</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE"><code class="docutils literal notranslate"><span class="pre">File::get_num_bytes_read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE"><code class="docutils literal notranslate"><span class="pre">File::get_num_bytes_written()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File4readERKNSt6stringEb"><code class="docutils literal notranslate"><span class="pre">File::read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File4readE9sg_size_tb"><code class="docutils literal notranslate"><span class="pre">File::read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File10read_asyncERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">File::read_async()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File10read_asyncE9sg_size_t"><code class="docutils literal notranslate"><span class="pre">File::read_async()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File4seekE11sg_offset_ti"><code class="docutils literal notranslate"><span class="pre">File::seek()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File4statEv"><code class="docutils literal notranslate"><span class="pre">File::stat()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File4tellEv"><code class="docutils literal notranslate"><span class="pre">File::tell()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File5writeERKNSt6stringEb"><code class="docutils literal notranslate"><span class="pre">File::write()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File5writeE9sg_size_tb"><code class="docutils literal notranslate"><span class="pre">File::write()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File11write_asyncERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">File::write_async()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File11write_asyncE9sg_size_t"><code class="docutils literal notranslate"><span class="pre">File::write_async()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system.html">simgrid::fsmod::FileSystem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system_exception.html">simgrid::fsmod::FileSystemException</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage.html">simgrid::fsmod::JBODStorage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html">simgrid::fsmod::OneDiskStorage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html">simgrid::fsmod::Partition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_storage.html">simgrid::fsmod::Storage</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">FSMOD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">simgrid::fsmod::File</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api_user/classsimgrid_1_1fsmod_1_1_file.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="simgrid-fsmod-file">
+<span id="simgrid-file"></span><h1>simgrid::fsmod::File<a class="headerlink" href="#simgrid-fsmod-file" title="Link to this heading"></a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod4FileE">
+<span id="_CPPv3N7simgrid5fsmod4FileE"></span><span id="_CPPv2N7simgrid5fsmod4FileE"></span><span id="simgrid::fsmod::File"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">File</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod4FileE" title="Link to this definition"></a><br /></dt>
+<dd><p>A class that implemented a file abstraction. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE">
+<span id="_CPPv3NK7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE"></span><span id="_CPPv2NK7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE"></span><span id="simgrid::fsmod::File::get_num_bytes_read__s4u::IoPtrCRC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a7efaf34ce2cf1baa7ecee2ae9c79538a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_num_bytes_read</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">IoPtr</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">read</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the number of bytes actually read by a given I/O Read activity </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE">
+<span id="_CPPv3NK7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE"></span><span id="_CPPv2NK7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE"></span><span id="simgrid::fsmod::File::get_num_bytes_written__s4u::IoPtrCRC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a8f522626f3d0c60cb2d00d5eec951cab"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_num_bytes_written</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">IoPtr</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">write</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the number of bytes actually written by a given I/O Write activity </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod4File4readERKNSt6stringEb">
+<span id="_CPPv3N7simgrid5fsmod4File4readERKNSt6stringEb"></span><span id="_CPPv2N7simgrid5fsmod4File4readERKNSt6stringEb"></span><span id="simgrid::fsmod::File::read__ssCR.b"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a55d9d2c32fd699be39b12bc160671990"></span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">read</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">num_bytes</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">simulate_it</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod4File4readERKNSt6stringEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Read data from the file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_bytes</strong> – the number of bytes to read as a string with units </p></li>
+<li><p><strong>simulate_it</strong> – if true simulate the I/O, if false the I/O takes zero time </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the actual number of bytes read in the file </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod4File4readE9sg_size_tb">
+<span id="_CPPv3N7simgrid5fsmod4File4readE9sg_size_tb"></span><span id="_CPPv2N7simgrid5fsmod4File4readE9sg_size_tb"></span><span id="simgrid::fsmod::File::read__sg_size_t.b"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a71618558f106ca0e18a603aa1487da56"></span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">read</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">num_bytes</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">simulate_it</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod4File4readE9sg_size_tb" title="Link to this definition"></a><br /></dt>
+<dd><p>Read data from the file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_bytes</strong> – the number of bytes to read </p></li>
+<li><p><strong>simulate_it</strong> – if true simulate the I/O, if false the I/O takes zero time </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the actual number of bytes read in the file </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod4File10read_asyncERKNSt6stringE">
+<span id="_CPPv3N7simgrid5fsmod4File10read_asyncERKNSt6stringE"></span><span id="_CPPv2N7simgrid5fsmod4File10read_asyncERKNSt6stringE"></span><span id="simgrid::fsmod::File::read_async__ssCR"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a61fa0aa9172b495d22647493bb29b8e9"></span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">IoPtr</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">read_async</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">num_bytes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod4File10read_asyncERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Asynchronously read data from the file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>num_bytes</strong> – the number of bytes to read as a string with units </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A smart pointer on the corresponding I/O activity </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod4File10read_asyncE9sg_size_t">
+<span id="_CPPv3N7simgrid5fsmod4File10read_asyncE9sg_size_t"></span><span id="_CPPv2N7simgrid5fsmod4File10read_asyncE9sg_size_t"></span><span id="simgrid::fsmod::File::read_async__sg_size_t"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a3fd4cd46272d6a12a387e7e4df39040c"></span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">IoPtr</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">read_async</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">num_bytes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod4File10read_asyncE9sg_size_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Asynchronously read data from the file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>num_bytes</strong> – the number of bytes to read </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A smart pointer on the corresponding I/O activity </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod4File4seekE11sg_offset_ti">
+<span id="_CPPv3N7simgrid5fsmod4File4seekE11sg_offset_ti"></span><span id="_CPPv2N7simgrid5fsmod4File4seekE11sg_offset_ti"></span><span id="simgrid::fsmod::File::seek__sg_offset_t.i"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a159fa5fe73c510cfbb28c8d197d8497d"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">seek</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">sg_offset_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">pos</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">origin</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">SEEK_SET</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod4File4seekE11sg_offset_ti" title="Link to this definition"></a><br /></dt>
+<dd><p>Seek to a position in the file from a given origin. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pos</strong> – the position as an offset from the given origin in the file </p></li>
+<li><p><strong>origin</strong> – where to start adding the offset in the file </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod4File4statEv">
+<span id="_CPPv3NK7simgrid5fsmod4File4statEv"></span><span id="_CPPv2NK7simgrid5fsmod4File4statEv"></span><span id="simgrid::fsmod::File::statC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a65b03cdffadb9455bde67c3134e57fe1"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unique_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">FileStat</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">stat</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod4File4statEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Obtain information about the file as a. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A ( </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod4File4tellEv">
+<span id="_CPPv3NK7simgrid5fsmod4File4tellEv"></span><span id="_CPPv2NK7simgrid5fsmod4File4tellEv"></span><span id="simgrid::fsmod::File::tellC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1afd71631ddce15d476325fe7369835a15"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">tell</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod4File4tellEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Sets the file head to the given position from a given origin. Retrieves the current file position </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod4File5writeERKNSt6stringEb">
+<span id="_CPPv3N7simgrid5fsmod4File5writeERKNSt6stringEb"></span><span id="_CPPv2N7simgrid5fsmod4File5writeERKNSt6stringEb"></span><span id="simgrid::fsmod::File::write__ssCR.b"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a4945c72e125af9991a7c23ae6ee75172"></span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">write</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">num_bytes</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">simulate_it</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod4File5writeERKNSt6stringEb" title="Link to this definition"></a><br /></dt>
+<dd><p>Write data to the file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_bytes</strong> – the number of bytes to write as a string with units </p></li>
+<li><p><strong>simulate_it</strong> – if true simulate the I/O, if false the I/O takes zero time </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod4File5writeE9sg_size_tb">
+<span id="_CPPv3N7simgrid5fsmod4File5writeE9sg_size_tb"></span><span id="_CPPv2N7simgrid5fsmod4File5writeE9sg_size_tb"></span><span id="simgrid::fsmod::File::write__sg_size_t.b"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1ab9ce056a2bb6691ca5ca6a966e892b51"></span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">write</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">num_bytes</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">simulate_it</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod4File5writeE9sg_size_tb" title="Link to this definition"></a><br /></dt>
+<dd><p>Write data to the file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_bytes</strong> – the number of bytes to write </p></li>
+<li><p><strong>simulate_it</strong> – if true simulate the I/O, if false the I/O takes zero time </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod4File11write_asyncERKNSt6stringE">
+<span id="_CPPv3N7simgrid5fsmod4File11write_asyncERKNSt6stringE"></span><span id="_CPPv2N7simgrid5fsmod4File11write_asyncERKNSt6stringE"></span><span id="simgrid::fsmod::File::write_async__ssCR"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a3086f44feae508007c140c49e38146ee"></span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">IoPtr</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">write_async</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">num_bytes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod4File11write_asyncERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Asynchronously write data from the file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>num_bytes</strong> – the number of bytes to read as a string with units </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A smart pointer on the corresponding I/O activity </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod4File11write_asyncE9sg_size_t">
+<span id="_CPPv3N7simgrid5fsmod4File11write_asyncE9sg_size_t"></span><span id="_CPPv2N7simgrid5fsmod4File11write_asyncE9sg_size_t"></span><span id="simgrid::fsmod::File::write_async__sg_size_t"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1ab47861bf013b1a027d78c54893a43a7e"></span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">IoPtr</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">write_async</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">num_bytes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod4File11write_asyncE9sg_size_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Asynchronously write data from the file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>num_bytes</strong> – the number of bytes to read </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A smart pointer on the corresponding I/O activity </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="The SimGrid File System Module: API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="classsimgrid_1_1fsmod_1_1_file_system.html" class="btn btn-neutral float-right" title="simgrid::fsmod::FileSystem" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, FSMOD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

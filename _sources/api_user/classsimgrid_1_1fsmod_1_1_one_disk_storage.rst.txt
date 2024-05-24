@@ -1,0 +1,9 @@
+.. _simgrid::OneDiskStorage:
+
+simgrid::fsmod::OneDiskStorage
+******************************
+
+.. doxygenclass:: simgrid::fsmod::OneDiskStorage
+   :project: user
+   :members:
+

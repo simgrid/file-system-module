@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>simgrid::fsmod::FileSystem &mdash; FSMOD 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="simgrid::fsmod::FileSystemException" href="classsimgrid_1_1fsmod_1_1_file_system_exception.html" />
+    <link rel="prev" title="simgrid::fsmod::File" href="classsimgrid_1_1fsmod_1_1_file.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/simgrid_logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file.html">simgrid::fsmod::File</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">simgrid::fsmod::FileSystem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystemE"><code class="docutils literal notranslate"><span class="pre">FileSystem</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem5closeENSt10shared_ptrI4FileEE"><code class="docutils literal notranslate"><span class="pre">FileSystem::close()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem11create_fileERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::create_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem16directory_existsERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::directory_exists()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem11file_existsERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::file_exists()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem9file_sizeERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::file_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem23list_files_in_directoryERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::list_files_in_directory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEERKNSt6stringEN9Partition13CachingSchemeE"><code class="docutils literal notranslate"><span class="pre">FileSystem::mount_partition()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEE9sg_size_tN9Partition13CachingSchemeE"><code class="docutils literal notranslate"><span class="pre">FileSystem::mount_partition()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem9move_fileERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::move_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem4openERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem16unlink_directoryERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::unlink_directory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem11unlink_fileERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::unlink_file()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system_exception.html">simgrid::fsmod::FileSystemException</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage.html">simgrid::fsmod::JBODStorage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html">simgrid::fsmod::OneDiskStorage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html">simgrid::fsmod::Partition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_storage.html">simgrid::fsmod::Storage</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">FSMOD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">simgrid::fsmod::FileSystem</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api_user/classsimgrid_1_1fsmod_1_1_file_system.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="simgrid-fsmod-filesystem">
+<span id="simgrid-filesystem"></span><h1>simgrid::fsmod::FileSystem<a class="headerlink" href="#simgrid-fsmod-filesystem" title="Link to this heading"></a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod10FileSystemE">
+<span id="_CPPv3N7simgrid5fsmod10FileSystemE"></span><span id="_CPPv2N7simgrid5fsmod10FileSystemE"></span><span id="simgrid::fsmod::FileSystem"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FileSystem</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod10FileSystemE" title="Link to this definition"></a><br /></dt>
+<dd><p>A class that implements a file system abstraction. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod10FileSystem5closeENSt10shared_ptrI4FileEE">
+<span id="_CPPv3N7simgrid5fsmod10FileSystem5closeENSt10shared_ptrI4FileEE"></span><span id="_CPPv2N7simgrid5fsmod10FileSystem5closeENSt10shared_ptrI4FileEE"></span><span id="simgrid::fsmod::FileSystem::close__std::shared_ptr:File:"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system_1afb96935897ed4cbf45fb8492f4e3e558"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">close</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file.html#_CPPv4N7simgrid5fsmod4FileE" title="simgrid::fsmod::File"><span class="n"><span class="pre">File</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">f</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod10FileSystem5closeENSt10shared_ptrI4FileEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Closes the file. After closing, using the file has undefined behavior. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> – a shared pointer on a <a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file.html#classsimgrid_1_1fsmod_1_1_file"><span class="std std-ref">File</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod10FileSystem11create_fileERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N7simgrid5fsmod10FileSystem11create_fileERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N7simgrid5fsmod10FileSystem11create_fileERKNSt6stringERKNSt6stringE"></span><span id="simgrid::fsmod::FileSystem::create_file__ssCR.ssCR"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system_1a366c6ee63d3f72c0be7415a48f095804"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">create_file</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">full_path</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod10FileSystem11create_fileERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Create a new file on the file system in zero time. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>full_path</strong> – the absolute path to the file </p></li>
+<li><p><strong>size</strong> – the file size </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod10FileSystem16directory_existsERKNSt6stringE">
+<span id="_CPPv3N7simgrid5fsmod10FileSystem16directory_existsERKNSt6stringE"></span><span id="_CPPv2N7simgrid5fsmod10FileSystem16directory_existsERKNSt6stringE"></span><span id="simgrid::fsmod::FileSystem::directory_exists__ssCR"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system_1a4f6dde9d33cc7fcff600ba142bc99345"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">directory_exists</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">full_dir_path</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod10FileSystem16directory_existsERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Method to check that a directory exists at a given path. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>full_path</strong> – the directory path </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if the directory exists, false otherwise </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod10FileSystem11file_existsERKNSt6stringE">
+<span id="_CPPv3N7simgrid5fsmod10FileSystem11file_existsERKNSt6stringE"></span><span id="_CPPv2N7simgrid5fsmod10FileSystem11file_existsERKNSt6stringE"></span><span id="simgrid::fsmod::FileSystem::file_exists__ssCR"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system_1a199459987929826ccaeafedc0de307cb"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">file_exists</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">full_path</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod10FileSystem11file_existsERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Method to check that a file exists at a given path. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>full_path</strong> – the file path </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if the file exists, false otherwise </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod10FileSystem9file_sizeERKNSt6stringE">
+<span id="_CPPv3NK7simgrid5fsmod10FileSystem9file_sizeERKNSt6stringE"></span><span id="_CPPv2NK7simgrid5fsmod10FileSystem9file_sizeERKNSt6stringE"></span><span id="simgrid::fsmod::FileSystem::file_size__ssCRC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system_1a57b20b6d0d6e8b2b45e4a1a4f5813ebb"></span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">file_size</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">full_path</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod10FileSystem9file_sizeERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>full_path</strong> – an absolute file path </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the file size in bytes </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod10FileSystem23list_files_in_directoryERKNSt6stringE">
+<span id="_CPPv3N7simgrid5fsmod10FileSystem23list_files_in_directoryERKNSt6stringE"></span><span id="_CPPv2N7simgrid5fsmod10FileSystem23list_files_in_directoryERKNSt6stringE"></span><span id="simgrid::fsmod::FileSystem::list_files_in_directory__ssCR"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system_1aa1d026525f9a882349968402dc2fa3be"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">set</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">list_files_in_directory</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">full_dir_path</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod10FileSystem23list_files_in_directoryERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Method to get the list of names of files in a directory. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>full_dir_path</strong> – the path to the directory </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEERKNSt6stringEN9Partition13CachingSchemeE">
+<span id="_CPPv3N7simgrid5fsmod10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEERKNSt6stringEN9Partition13CachingSchemeE"></span><span id="_CPPv2N7simgrid5fsmod10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEERKNSt6stringEN9Partition13CachingSchemeE"></span><span id="simgrid::fsmod::FileSystem::mount_partition__ssCR.std::shared_ptr:Storage:.ssCR.Partition::CachingScheme"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system_1af79514b5aa582eae2b21b19937cb7983"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mount_partition</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">mount_point</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_storage.html#_CPPv4N7simgrid5fsmod7StorageE" title="simgrid::fsmod::Storage"><span class="n"><span class="pre">Storage</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">storage</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">size</span></span>, <a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html#_CPPv4N7simgrid5fsmod9PartitionE" title="simgrid::fsmod::Partition"><span class="n"><span class="pre">Partition</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html#_CPPv4N7simgrid5fsmod9Partition13CachingSchemeE" title="simgrid::fsmod::Partition::CachingScheme"><span class="n"><span class="pre">CachingScheme</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">caching_scheme</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html#_CPPv4N7simgrid5fsmod9PartitionE" title="simgrid::fsmod::Partition"><span class="n"><span class="pre">Partition</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html#_CPPv4N7simgrid5fsmod9Partition13CachingSchemeE" title="simgrid::fsmod::Partition::CachingScheme"><span class="n"><span class="pre">CachingScheme</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html#_CPPv4N7simgrid5fsmod9Partition13CachingScheme4NONEE" title="simgrid::fsmod::Partition::CachingScheme::NONE"><span class="n"><span class="pre">NONE</span></span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEERKNSt6stringEN9Partition13CachingSchemeE" title="Link to this definition"></a><br /></dt>
+<dd><p>A method to add a partition to the file system. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mount_point</strong> – the partition’s mount point </p></li>
+<li><p><strong>storage</strong> – the storage </p></li>
+<li><p><strong>size</strong> – the partition size as a unit string (e.g., “100MB”) </p></li>
+<li><p><strong>caching_scheme</strong> – the caching scheme (default: <a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html#classsimgrid_1_1fsmod_1_1_partition_1a45f088cfef63f7e1576e8eb67e6fa286ab50339a10e1de285ac99d4c3990b8693"><span class="std std-ref">Partition::CachingScheme::NONE</span></a>) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEE9sg_size_tN9Partition13CachingSchemeE">
+<span id="_CPPv3N7simgrid5fsmod10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEE9sg_size_tN9Partition13CachingSchemeE"></span><span id="_CPPv2N7simgrid5fsmod10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEE9sg_size_tN9Partition13CachingSchemeE"></span><span id="simgrid::fsmod::FileSystem::mount_partition__ssCR.std::shared_ptr:Storage:.sg_size_t.Partition::CachingScheme"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system_1a0ed1fb30b4c175d8ab17d1e155141ab9"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mount_partition</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">mount_point</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_storage.html#_CPPv4N7simgrid5fsmod7StorageE" title="simgrid::fsmod::Storage"><span class="n"><span class="pre">Storage</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">storage</span></span>, <span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">size</span></span>, <a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html#_CPPv4N7simgrid5fsmod9PartitionE" title="simgrid::fsmod::Partition"><span class="n"><span class="pre">Partition</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html#_CPPv4N7simgrid5fsmod9Partition13CachingSchemeE" title="simgrid::fsmod::Partition::CachingScheme"><span class="n"><span class="pre">CachingScheme</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">caching_scheme</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html#_CPPv4N7simgrid5fsmod9PartitionE" title="simgrid::fsmod::Partition"><span class="n"><span class="pre">Partition</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html#_CPPv4N7simgrid5fsmod9Partition13CachingSchemeE" title="simgrid::fsmod::Partition::CachingScheme"><span class="n"><span class="pre">CachingScheme</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html#_CPPv4N7simgrid5fsmod9Partition13CachingScheme4NONEE" title="simgrid::fsmod::Partition::CachingScheme::NONE"><span class="n"><span class="pre">NONE</span></span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEE9sg_size_tN9Partition13CachingSchemeE" title="Link to this definition"></a><br /></dt>
+<dd><p>A method to add a partition to the file system. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mount_point</strong> – the partition’s mount point </p></li>
+<li><p><strong>storage</strong> – the storage </p></li>
+<li><p><strong>size</strong> – the partition size in bytes </p></li>
+<li><p><strong>caching_scheme</strong> – the caching scheme (default: <a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html#classsimgrid_1_1fsmod_1_1_partition_1a45f088cfef63f7e1576e8eb67e6fa286ab50339a10e1de285ac99d4c3990b8693"><span class="std std-ref">Partition::CachingScheme::NONE</span></a>) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod10FileSystem9move_fileERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3NK7simgrid5fsmod10FileSystem9move_fileERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2NK7simgrid5fsmod10FileSystem9move_fileERKNSt6stringERKNSt6stringE"></span><span id="simgrid::fsmod::FileSystem::move_file__ssCR.ssCRC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system_1abcf0004eaa197ec1b61bd1b03e342ce6"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">move_file</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">src_full_path</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">dst_full_path</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod10FileSystem9move_fileERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Move a file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src_full_path</strong> – the source path </p></li>
+<li><p><strong>dst_full_path</strong> – the destination path </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod10FileSystem4openERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N7simgrid5fsmod10FileSystem4openERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N7simgrid5fsmod10FileSystem4openERKNSt6stringERKNSt6stringE"></span><span id="simgrid::fsmod::FileSystem::open__ssCR.ssCR"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system_1a0c251b0e30d5a40492d2f1b656f7d77a"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file.html#_CPPv4N7simgrid5fsmod4FileE" title="simgrid::fsmod::File"><span class="n"><span class="pre">File</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">open</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">full_path</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">access_mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod10FileSystem4openERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Open a file. If no file corresponds to the given fullpath, a new file of size 0 is created. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>full_path</strong> – an absolute file path </p></li>
+<li><p><strong>access_mode</strong> – access mode (“r”, “w”, or “a”) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod10FileSystem16unlink_directoryERKNSt6stringE">
+<span id="_CPPv3N7simgrid5fsmod10FileSystem16unlink_directoryERKNSt6stringE"></span><span id="_CPPv2N7simgrid5fsmod10FileSystem16unlink_directoryERKNSt6stringE"></span><span id="simgrid::fsmod::FileSystem::unlink_directory__ssCR"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system_1a05dfda8a77835ecd0b460ae749559517"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">unlink_directory</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">full_dir_path</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod10FileSystem16unlink_directoryERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Method to remove a directory and the files it contains. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>full_dir_path</strong> – the path to the directory </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod10FileSystem11unlink_fileERKNSt6stringE">
+<span id="_CPPv3NK7simgrid5fsmod10FileSystem11unlink_fileERKNSt6stringE"></span><span id="_CPPv2NK7simgrid5fsmod10FileSystem11unlink_fileERKNSt6stringE"></span><span id="simgrid::fsmod::FileSystem::unlink_file__ssCRC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system_1aa4060b3fa496a0c7796b581497261385"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">unlink_file</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">full_path</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod10FileSystem11unlink_fileERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Unlike a file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>full_path</strong> – the file path </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="classsimgrid_1_1fsmod_1_1_file.html" class="btn btn-neutral float-left" title="simgrid::fsmod::File" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="classsimgrid_1_1fsmod_1_1_file_system_exception.html" class="btn btn-neutral float-right" title="simgrid::fsmod::FileSystemException" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, FSMOD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

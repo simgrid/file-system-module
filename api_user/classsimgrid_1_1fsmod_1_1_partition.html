@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>simgrid::fsmod::Partition &mdash; FSMOD 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="simgrid::fsmod::Storage" href="classsimgrid_1_1fsmod_1_1_storage.html" />
+    <link rel="prev" title="simgrid::fsmod::OneDiskStorage" href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/simgrid_logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file.html">simgrid::fsmod::File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system.html">simgrid::fsmod::FileSystem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system_exception.html">simgrid::fsmod::FileSystemException</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage.html">simgrid::fsmod::JBODStorage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html">simgrid::fsmod::OneDiskStorage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">simgrid::fsmod::Partition</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod9PartitionE"><code class="docutils literal notranslate"><span class="pre">Partition</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod9Partition13CachingSchemeE"><code class="docutils literal notranslate"><span class="pre">Partition::CachingScheme</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod9Partition13CachingScheme4NONEE"><code class="docutils literal notranslate"><span class="pre">Partition::CachingScheme::NONE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod9Partition13CachingScheme4FIFOE"><code class="docutils literal notranslate"><span class="pre">Partition::CachingScheme::FIFO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod9Partition13CachingScheme3LRUE"><code class="docutils literal notranslate"><span class="pre">Partition::CachingScheme::LRU</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod9Partition9get_cnameEv"><code class="docutils literal notranslate"><span class="pre">Partition::get_cname()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod9Partition14get_free_spaceEv"><code class="docutils literal notranslate"><span class="pre">Partition::get_free_space()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod9Partition8get_nameEv"><code class="docutils literal notranslate"><span class="pre">Partition::get_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod9Partition8get_sizeEv"><code class="docutils literal notranslate"><span class="pre">Partition::get_size()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_storage.html">simgrid::fsmod::Storage</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">FSMOD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">simgrid::fsmod::Partition</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api_user/classsimgrid_1_1fsmod_1_1_partition.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="simgrid-fsmod-partition">
+<span id="simgrid-partition"></span><h1>simgrid::fsmod::Partition<a class="headerlink" href="#simgrid-fsmod-partition" title="Link to this heading"></a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod9PartitionE">
+<span id="_CPPv3N7simgrid5fsmod9PartitionE"></span><span id="_CPPv2N7simgrid5fsmod9PartitionE"></span><span id="simgrid::fsmod::Partition"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_partition"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Partition</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod9PartitionE" title="Link to this definition"></a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum-class">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod9Partition13CachingSchemeE">
+<span id="_CPPv3N7simgrid5fsmod9Partition13CachingSchemeE"></span><span id="_CPPv2N7simgrid5fsmod9Partition13CachingSchemeE"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_partition_1a45f088cfef63f7e1576e8eb67e6fa286"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CachingScheme</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod9Partition13CachingSchemeE" title="Link to this definition"></a><br /></dt>
+<dd><p>An enum that defines the possible caching schemes that can be used by a partition. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod9Partition13CachingScheme4NONEE">
+<span id="_CPPv3N7simgrid5fsmod9Partition13CachingScheme4NONEE"></span><span id="_CPPv2N7simgrid5fsmod9Partition13CachingScheme4NONEE"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_partition_1a45f088cfef63f7e1576e8eb67e6fa286ab50339a10e1de285ac99d4c3990b8693"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NONE</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod9Partition13CachingScheme4NONEE" title="Link to this definition"></a><br /></dt>
+<dd><p>No caching behavior. When there is not sufficient space an exception is thrown. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod9Partition13CachingScheme4FIFOE">
+<span id="_CPPv3N7simgrid5fsmod9Partition13CachingScheme4FIFOE"></span><span id="_CPPv2N7simgrid5fsmod9Partition13CachingScheme4FIFOE"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_partition_1a45f088cfef63f7e1576e8eb67e6fa286ac589858dbe1d06c46544266ae4cd2c6f"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FIFO</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod9Partition13CachingScheme4FIFOE" title="Link to this definition"></a><br /></dt>
+<dd><p>FIFO caching behavior. When there is not sufficient space, an attempt is made to evict non-opened files in First-In-First-Out fashion (based on file creation timestamps) to create space if possible, otherwise an exception is thrown. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod9Partition13CachingScheme3LRUE">
+<span id="_CPPv3N7simgrid5fsmod9Partition13CachingScheme3LRUE"></span><span id="_CPPv2N7simgrid5fsmod9Partition13CachingScheme3LRUE"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_partition_1a45f088cfef63f7e1576e8eb67e6fa286a875ecb34f6d21d13d4b9fd4980a8b5af"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LRU</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod9Partition13CachingScheme3LRUE" title="Link to this definition"></a><br /></dt>
+<dd><p>LRU caching behavior. When there is not sufficient space, an attempt is made to evict non-opened files in Least-Recently-Used fashion (based on latest file creation/read/write timestamp) to create space if possible, otherwise an exception is thrown. </p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod9Partition9get_cnameEv">
+<span id="_CPPv3NK7simgrid5fsmod9Partition9get_cnameEv"></span><span id="_CPPv2NK7simgrid5fsmod9Partition9get_cnameEv"></span><span id="simgrid::fsmod::Partition::get_cnameC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_partition_1a23ff4e066d530e99e97d433d6655a66e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_cname</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod9Partition9get_cnameEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Retrieves the partition’s name as a C-style string. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a name </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod9Partition14get_free_spaceEv">
+<span id="_CPPv3NK7simgrid5fsmod9Partition14get_free_spaceEv"></span><span id="_CPPv2NK7simgrid5fsmod9Partition14get_free_spaceEv"></span><span id="simgrid::fsmod::Partition::get_free_spaceC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_partition_1a35e9d46a1d14fdf1094a348a821bc44c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_free_space</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod9Partition14get_free_spaceEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Retrieves the partition’s free space in bytes. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a number of bytes </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod9Partition8get_nameEv">
+<span id="_CPPv3NK7simgrid5fsmod9Partition8get_nameEv"></span><span id="_CPPv2NK7simgrid5fsmod9Partition8get_nameEv"></span><span id="simgrid::fsmod::Partition::get_nameC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_partition_1ac6e82fbd43a918df4f0a09db3e8fccc8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod9Partition8get_nameEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Retrieves the partition’s name. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a name </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod9Partition8get_sizeEv">
+<span id="_CPPv3NK7simgrid5fsmod9Partition8get_sizeEv"></span><span id="_CPPv2NK7simgrid5fsmod9Partition8get_sizeEv"></span><span id="simgrid::fsmod::Partition::get_sizeC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_partition_1a0cc10ab066d2a45063984b501b54a54a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_size</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod9Partition8get_sizeEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Retrieves the partition’s size in bytes. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a number of bytes </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html" class="btn btn-neutral float-left" title="simgrid::fsmod::OneDiskStorage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="classsimgrid_1_1fsmod_1_1_storage.html" class="btn btn-neutral float-right" title="simgrid::fsmod::Storage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, FSMOD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

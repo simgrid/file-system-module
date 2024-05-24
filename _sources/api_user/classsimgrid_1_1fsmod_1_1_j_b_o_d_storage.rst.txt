@@ -1,0 +1,9 @@
+.. _simgrid::JBODStorage:
+
+simgrid::fsmod::JBODStorage
+***************************
+
+.. doxygenclass:: simgrid::fsmod::JBODStorage
+   :project: user
+   :members:
+

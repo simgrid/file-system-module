@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>simgrid::fsmod::JBODStorage &mdash; FSMOD 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="simgrid::fsmod::OneDiskStorage" href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html" />
+    <link rel="prev" title="simgrid::fsmod::FileSystemException" href="classsimgrid_1_1fsmod_1_1_file_system_exception.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/simgrid_logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file.html">simgrid::fsmod::File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system.html">simgrid::fsmod::FileSystem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system_exception.html">simgrid::fsmod::FileSystemException</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">simgrid::fsmod::JBODStorage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorageE"><code class="docutils literal notranslate"><span class="pre">JBODStorage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAIDE"><code class="docutils literal notranslate"><span class="pre">JBODStorage::RAID</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID0E"><code class="docutils literal notranslate"><span class="pre">JBODStorage::RAID::RAID0</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID1E"><code class="docutils literal notranslate"><span class="pre">JBODStorage::RAID::RAID1</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID2E"><code class="docutils literal notranslate"><span class="pre">JBODStorage::RAID::RAID2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID3E"><code class="docutils literal notranslate"><span class="pre">JBODStorage::RAID::RAID3</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID4E"><code class="docutils literal notranslate"><span class="pre">JBODStorage::RAID::RAID4</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID5E"><code class="docutils literal notranslate"><span class="pre">JBODStorage::RAID::RAID5</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID6E"><code class="docutils literal notranslate"><span class="pre">JBODStorage::RAID::RAID6</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod11JBODStorage14get_raid_levelEv"><code class="docutils literal notranslate"><span class="pre">JBODStorage::get_raid_level()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEEN11JBODStorage4RAIDE"><code class="docutils literal notranslate"><span class="pre">JBODStorage::create()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html">simgrid::fsmod::OneDiskStorage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html">simgrid::fsmod::Partition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_storage.html">simgrid::fsmod::Storage</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">FSMOD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">simgrid::fsmod::JBODStorage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api_user/classsimgrid_1_1fsmod_1_1_j_b_o_d_storage.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="simgrid-fsmod-jbodstorage">
+<span id="simgrid-jbodstorage"></span><h1>simgrid::fsmod::JBODStorage<a class="headerlink" href="#simgrid-fsmod-jbodstorage" title="Link to this heading"></a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod11JBODStorageE">
+<span id="_CPPv3N7simgrid5fsmod11JBODStorageE"></span><span id="_CPPv2N7simgrid5fsmod11JBODStorageE"></span><span id="simgrid::fsmod::JBODStorage"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">JBODStorage</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">simgrid</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">fsmod</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_storage.html#_CPPv4N7simgrid5fsmod7StorageE" title="simgrid::fsmod::Storage"><span class="n"><span class="pre">Storage</span></span></a><a class="headerlink" href="#_CPPv4N7simgrid5fsmod11JBODStorageE" title="Link to this definition"></a><br /></dt>
+<dd><p>A class that implements an abstraction of a “Just a Bunch Of Disks” storage. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum-class">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod11JBODStorage4RAIDE">
+<span id="_CPPv3N7simgrid5fsmod11JBODStorage4RAIDE"></span><span id="_CPPv2N7simgrid5fsmod11JBODStorage4RAIDE"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage_1adb13328f4f86cd3d5a9ccf9d0fbb48cc"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RAID</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAIDE" title="Link to this definition"></a><br /></dt>
+<dd><p>An enum that defines the possible RAID levels that can be used by a <a class="reference internal" href="#classsimgrid_1_1fsmod_1_1_j_b_o_d_storage"><span class="std std-ref">JBODStorage</span></a>. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID0E">
+<span id="_CPPv3N7simgrid5fsmod11JBODStorage4RAID5RAID0E"></span><span id="_CPPv2N7simgrid5fsmod11JBODStorage4RAID5RAID0E"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage_1adb13328f4f86cd3d5a9ccf9d0fbb48ccaf64edeba3236e43862427641fbc5876a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RAID0</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID0E" title="Link to this definition"></a><br /></dt>
+<dd><p>RAID level 0. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID1E">
+<span id="_CPPv3N7simgrid5fsmod11JBODStorage4RAID5RAID1E"></span><span id="_CPPv2N7simgrid5fsmod11JBODStorage4RAID5RAID1E"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage_1adb13328f4f86cd3d5a9ccf9d0fbb48ccaafd0c6e27d41e812892b94f43171ae3d"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RAID1</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID1E" title="Link to this definition"></a><br /></dt>
+<dd><p>RAID level 1. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID2E">
+<span id="_CPPv3N7simgrid5fsmod11JBODStorage4RAID5RAID2E"></span><span id="_CPPv2N7simgrid5fsmod11JBODStorage4RAID5RAID2E"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage_1adb13328f4f86cd3d5a9ccf9d0fbb48ccabce8299127a690bf3abcccf464879d8a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RAID2</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID2E" title="Link to this definition"></a><br /></dt>
+<dd><p>RAID level 2 (unsupported) </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID3E">
+<span id="_CPPv3N7simgrid5fsmod11JBODStorage4RAID5RAID3E"></span><span id="_CPPv2N7simgrid5fsmod11JBODStorage4RAID5RAID3E"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage_1adb13328f4f86cd3d5a9ccf9d0fbb48cca83f62a8d49bb0aff6910c76f1d8d5979"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RAID3</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID3E" title="Link to this definition"></a><br /></dt>
+<dd><p>RAID level 3 (unsupported) </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID4E">
+<span id="_CPPv3N7simgrid5fsmod11JBODStorage4RAID5RAID4E"></span><span id="_CPPv2N7simgrid5fsmod11JBODStorage4RAID5RAID4E"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage_1adb13328f4f86cd3d5a9ccf9d0fbb48ccac460c892cd810d59e6156fa9a75383e7"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RAID4</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID4E" title="Link to this definition"></a><br /></dt>
+<dd><p>RAID level 4. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID5E">
+<span id="_CPPv3N7simgrid5fsmod11JBODStorage4RAID5RAID5E"></span><span id="_CPPv2N7simgrid5fsmod11JBODStorage4RAID5RAID5E"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage_1adb13328f4f86cd3d5a9ccf9d0fbb48cca67dd612c2e96ae789ee22fffe6e751bd"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RAID5</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID5E" title="Link to this definition"></a><br /></dt>
+<dd><p>RAID level 5. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID6E">
+<span id="_CPPv3N7simgrid5fsmod11JBODStorage4RAID5RAID6E"></span><span id="_CPPv2N7simgrid5fsmod11JBODStorage4RAID5RAID6E"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage_1adb13328f4f86cd3d5a9ccf9d0fbb48cca8c68f6195fb0884b2462b9fa9b70d6b6"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RAID6</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID6E" title="Link to this definition"></a><br /></dt>
+<dd><p>RAID level 6. </p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod11JBODStorage14get_raid_levelEv">
+<span id="_CPPv3NK7simgrid5fsmod11JBODStorage14get_raid_levelEv"></span><span id="_CPPv2NK7simgrid5fsmod11JBODStorage14get_raid_levelEv"></span><span id="simgrid::fsmod::JBODStorage::get_raid_levelC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage_1a294697003971edde360acc39d5d182e7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAIDE" title="simgrid::fsmod::JBODStorage::RAID"><span class="n"><span class="pre">RAID</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_raid_level</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod11JBODStorage14get_raid_levelEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Retrieves the storage’s RAID level. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A RAID level </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEEN11JBODStorage4RAIDE">
+<span id="_CPPv3N7simgrid5fsmod11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEEN11JBODStorage4RAIDE"></span><span id="_CPPv2N7simgrid5fsmod11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEEN11JBODStorage4RAIDE"></span><span id="simgrid::fsmod::JBODStorage::create__ssCR.std::vector:simgrid::s4u::DiskP:CR.JBODStorage::RAID"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage_1a6271f6fc677682dffb8938685da14109"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorageE" title="simgrid::fsmod::JBODStorage"><span class="n"><span class="pre">JBODStorage</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">create</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">simgrid</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Disk</span></span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">disks</span></span>, <a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorageE" title="simgrid::fsmod::JBODStorage"><span class="n"><span class="pre">JBODStorage</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAIDE" title="simgrid::fsmod::JBODStorage::RAID"><span class="n"><span class="pre">RAID</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">raid_level</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAIDE" title="simgrid::fsmod::JBODStorage::RAID"><span class="n"><span class="pre">RAID</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N7simgrid5fsmod11JBODStorage4RAID5RAID0E" title="simgrid::fsmod::JBODStorage::RAID::RAID0"><span class="n"><span class="pre">RAID0</span></span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod11JBODStorage6createERKNSt6stringERKNSt6vectorIPN7simgrid3s4u4DiskEEEN11JBODStorage4RAIDE" title="Link to this definition"></a><br /></dt>
+<dd><p>Method to create an instance of a JBOD (Just a Bunch of Disks) storage. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – the storage’s name </p></li>
+<li><p><strong>disks</strong> – the storage’s disks </p></li>
+<li><p><strong>raid_level</strong> – the RAID level </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="classsimgrid_1_1fsmod_1_1_file_system_exception.html" class="btn btn-neutral float-left" title="simgrid::fsmod::FileSystemException" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html" class="btn btn-neutral float-right" title="simgrid::fsmod::OneDiskStorage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, FSMOD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
