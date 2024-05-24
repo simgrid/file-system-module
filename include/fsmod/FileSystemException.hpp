@@ -11,7 +11,7 @@ namespace simgrid::fsmod {
     class FileSystemException : public std::exception {
         std::string msg_;
     public:
-        FileSystemException(simgrid::xbt::ThrowPoint&& throwpoint, std::string msg) : msg_(std::move(msg)){}
+        FileSystemException(simgrid::xbt::ThrowPoint&& /*throwpoint*/, std::string msg) : msg_(std::move(msg)){}
 
         /**
          * @brief Retrieves the exception's human-readable message

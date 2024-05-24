@@ -73,9 +73,9 @@ namespace simgrid::fsmod {
         friend class FileSystem;
 
         std::string name_;
+        std::shared_ptr<Storage> storage_;
         sg_size_t size_ = 0;
         sg_size_t free_space_ = 0;
-        std::shared_ptr<Storage> storage_;
         std::unordered_map<std::string, std::unordered_map<std::string, std::unique_ptr<FileMetadata>>> content_;
 
         void decrease_free_space(sg_size_t num_bytes) { free_space_ -= num_bytes; }

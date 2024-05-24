@@ -35,7 +35,7 @@ namespace simgrid::fsmod {
         static std::shared_ptr<JBODStorage> create(const std::string& name,
                                                    const std::vector<simgrid::s4u::Disk*>& disks,
                                                    JBODStorage::RAID raid_level = RAID::RAID0);
-        virtual ~JBODStorage() = default;
+        ~JBODStorage() override = default;
         /**
          * @brief Retrieves the storage's RAID level
          * @return A RAID level
@@ -55,8 +55,8 @@ namespace simgrid::fsmod {
 
         void update_parity_disk_idx() { parity_disk_idx_ = (parity_disk_idx_- 1) % num_disks_; }
 
-        int get_next_read_disk_idx() { return (++read_disk_idx_) % num_disks_; }
-        [[nodiscard]] int get_parity_disk_idx() const { return parity_disk_idx_; }
+        long get_next_read_disk_idx() { return (++read_disk_idx_) % num_disks_; }
+        [[nodiscard]] unsigned long get_parity_disk_idx() const { return parity_disk_idx_; }
 
     private:
         unsigned long num_disks_;
