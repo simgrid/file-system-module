@@ -14,13 +14,17 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      BUILD_WRAPPER_OUT_DIR: bw-outputs
     steps:
       - uses: actions/checkout@master
-
+        with:
+          fetch-depth: 0
       - name: Install prereqs
         run: |
           sudo apt-get update
           sudo apt-get install -y libgraphviz-dev libboost-all-dev
+
       - name: Install SimGrid
         run: |
           git clone https://framagit.org/simgrid/simgrid.git
@@ -43,6 +47,18 @@ jobs:
       - name: Install lcov
         run: |
           sudo apt-get -y install lcov
+
+      - name: Install sonar-scanner and build-wrapper
+        uses: SonarSource/sonarcloud-github-c-cpp@v2
+      - name: Run build-wrapper
+        run: |
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} make
+      - name: Run sonar-scanner
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
 
       - name: Run tests, compute coverage
         env:
