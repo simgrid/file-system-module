@@ -210,7 +210,7 @@ namespace simgrid::fsmod {
         stat_struct->last_access_date = metadata_->get_access_date();
         stat_struct->last_modification_date = metadata_->get_modification_date();
         stat_struct->refcount = metadata_->get_file_refcount();
-        return std::move(stat_struct);
+        return stat_struct;
     }
 
 }
