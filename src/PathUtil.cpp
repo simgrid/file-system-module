@@ -66,11 +66,11 @@ namespace simgrid::fsmod {
      * @param simplified_absolute_path: a SIMPLIFIED absolute path that DOES NOT GO UP
      * @param mount_point: a mount point
      * @return The path at the mount point
-     * @throws std::logic_error If the path is not at that mount point
+     * @throws std::invalid_argument If the path is not at that mount point
      */
     std::string PathUtil::path_at_mount_point(const std::string& simplified_absolute_path, std::string_view mount_point) {
         if (simplified_absolute_path.rfind(mount_point, 0) != 0) {
-            throw std::logic_error("Path not found at mount point");
+            throw std::invalid_argument("Path not found at mount point");
         } else {
             return simplified_absolute_path.substr(mount_point.length());
         }
