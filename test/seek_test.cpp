@@ -48,7 +48,11 @@ TEST_F(SeekTest, SeekandTell)  {
             XBT_INFO("Create a 100kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(this->fs_->create_file("/dev/a/foo.txt", "100kB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "w"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "a"));
+            XBT_INFO("Check current position, should be 100k ('append' mode)");
+            ASSERT_DOUBLE_EQ(file->tell(), 100*1000);
+            XBT_INFO("Seek back to beginning of file");
+            ASSERT_NO_THROW(file->seek(SEEK_SET));
             XBT_INFO("Check current position, should be 0");
             ASSERT_DOUBLE_EQ(file->tell(), 0);
             XBT_INFO("Seek 1kB forward");

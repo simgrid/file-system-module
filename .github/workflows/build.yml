@@ -14,13 +14,17 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      BUILD_WRAPPER_OUT_DIR: bw-outputs
     steps:
       - uses: actions/checkout@master
-
+        with:
+          fetch-depth: 0
       - name: Install prereqs
         run: |
           sudo apt-get update
           sudo apt-get install -y libgraphviz-dev libboost-all-dev
+
       - name: Install SimGrid
         run: |
           git clone https://framagit.org/simgrid/simgrid.git
@@ -40,9 +44,9 @@ jobs:
           make -j4
           sudo make install
 
-      - name: Install lcov
+      - name: Install lcov and gcovr
         run: |
-          sudo apt-get -y install lcov
+          sudo apt-get -y install lcov gcovr
 
       - name: Run tests, compute coverage
         env:
@@ -55,11 +59,10 @@ jobs:
           cmake ..
           make -j4
           sudo make install
-          make -j4 examples
+          make -j4 unit_tests examples
+          ./unit_tests
           ./examples/open_seek_write
           ./examples/jbod
-          make -j4 unit_tests
-          ./unit_tests
           lcov --directory . --directory examples/ --capture --output-file coverage.info
           lcov --remove coverage.info '*/test/*' '*/examples/*' '*/include/*'
           bash <(curl -s https://codecov.io/bash) -f coverage.info -t ${CODECOV_TOKEN}
@@ -74,6 +77,32 @@ jobs:
 #         files: ./coverage1.xml,./coverage2.xml,!./cache
 #         flags: unit_tests
 #         name: codecov-umbrella
+
+      - name: Install sonar-scanner and build-wrapper
+        uses: SonarSource/sonarcloud-github-c-cpp@v2
+      - name: Run build-wrapper
+        run: |
+          mkdir build
+          cmake -S . -B build
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
+      - name: Run tests to generate coverage statistics
+        run: |
+          cd build
+          make -j4 unit_tests examples
+          ./unit_tests
+          ./examples/open_seek_write
+          ./examples/jbod
+      - name: Collect coverage into one XML report
+        run: |
+          gcovr -e test -e examples --sonarqube -u -o coverage.xml --exclude-throw-branches \
+                --gcov-ignore-parse-errors --exclude-unreachable-branches
+      - name: Run sonar-scanner
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json" \
+                        --define sonar.coverageReportPaths=coverage.xml
 
       - name: Install Doxygen and Sphinx
         run: |

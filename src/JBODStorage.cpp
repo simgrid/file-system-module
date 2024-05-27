@@ -25,22 +25,19 @@ namespace simgrid::fsmod {
     JBODStorage::JBODStorage(const std::string& name, const std::vector<s4u::Disk*>& disks)
         : Storage(name),
           num_disks_(disks.size()) {
-        disks_ = disks;
+        set_disks(disks);
         parity_disk_idx_ = num_disks_ - 1;
-        controller_host_ = disks_.front()->get_host();
+        set_controller_host(get_first_disk()->get_host());
         // Create a no-op controller
         mq_ = s4u::MessageQueue::by_name(name+"_controller_mq");
-        controller_ = s4u::Actor::create(name+"_controller", controller_host_, [this](){
-            // Do nothing
-        });
-        controller_->daemonize();
+        set_controller(s4u::Actor::create(name+"_controller", get_controller_host(), [this](){ mq_->get<void*>(); })->daemonize());
     }
 
     void JBODStorage::set_raid_level(RAID raid_level) {
-        if ((raid_level == RAID::RAID4 || raid_level == RAID::RAID5) && disks_.size() < 3) {
+        if ((raid_level == RAID::RAID4 || raid_level == RAID::RAID5) && get_num_disks() < 3) {
             throw std::invalid_argument("RAID" + std::to_string((int)raid_level) +"  requires at least 3 disks");
         }
-        if (raid_level == RAID::RAID6 && disks_.size() < 4) {
+        if (raid_level == RAID::RAID6 && get_num_disks() < 4) {
             throw std::invalid_argument("RAID" + std::to_string((int)raid_level) +"  requires at least 4 disks");
         }
         raid_level_ = raid_level;
@@ -53,30 +50,30 @@ namespace simgrid::fsmod {
         std::stringstream debug_msg;
 
         // Get Parity disk index;
-        int parity_disk_idx = get_parity_disk_idx();
+        unsigned long parity_disk_idx = get_parity_disk_idx();
 
         switch(raid_level_) {
             case RAID::RAID0:
                 read_size = size / num_disks_;
-                targets = disks_;
+                targets = get_disks();
                 break;
             case RAID::RAID1:
                 read_size = size;
-                targets.push_back(disks_.at(get_next_read_disk_idx()));
+                targets.push_back(get_disk_at(get_next_read_disk_idx()));
                 break;
             case RAID::RAID4:
                 read_size = size / (num_disks_ - 1);
-                targets = disks_;
+                targets = get_disks();
                 targets.pop_back();
                 break;
             case RAID::RAID5:
                 read_size = size / (num_disks_ - 1);
-                targets = disks_;
+                targets = get_disks();
                 targets.erase(targets.begin() + ((parity_disk_idx + 1) % num_disks_));
                 break;
             case RAID::RAID6:
                 read_size = size / (num_disks_ - 2);
-                targets = disks_;
+                targets = get_disks();
                 if (parity_disk_idx + 1 == static_cast<int>(num_disks_)) { // First and last disks in the JBOD
                     targets.pop_back();
                     targets.erase(targets.begin());
@@ -96,7 +93,7 @@ namespace simgrid::fsmod {
 
         // Create a Comm to transfer data to the host that requested a read to the controller host of the JBOD
         // Do not assign the destination of the Comm yet, will be done after the completion of the IOs
-        auto comm = s4u::Comm::sendto_init()->set_source(controller_host_)->set_payload_size(size);
+        auto comm = s4u::Comm::sendto_init()->set_source(get_controller_host())->set_payload_size(size);
         comm->set_name("Transfer from JBod");
 
         // Create the I/O activities on individual disks
@@ -120,7 +117,7 @@ namespace simgrid::fsmod {
         comm->set_destination(s4u::Host::current());
 
         // Completion activity is now blocked by tje Comm, start it by assigning it to the controller host first disk
-        completion_activity->set_disk(disks_.front());
+        completion_activity->set_disk(get_first_disk());
 
         return completion_activity;
     }
@@ -166,9 +163,9 @@ namespace simgrid::fsmod {
             // Assume 1 flop per byte to write per parity block and two for RAID6.
             // Do not assign the Exec yet, will be done after the completion of the CommPtr
             if (raid_level_ == RAID::RAID6)
-                parity_block_comp = s4u::Exec::init()->set_flops_amount(2 * write_size);
+                parity_block_comp = s4u::Exec::init()->set_flops_amount(static_cast<double>(2 * write_size));
             else
-                parity_block_comp = s4u::Exec::init()->set_flops_amount(write_size);
+                parity_block_comp = s4u::Exec::init()->set_flops_amount(static_cast<double>(write_size));
         } else // Create a no-op activity
             parity_block_comp = s4u::Exec::init()->set_flops_amount(0);
         parity_block_comp->set_name("Parity Block Computation");
@@ -176,11 +173,11 @@ namespace simgrid::fsmod {
         // Do not start computing the parity block before the completion of the comm to the controller
         comm->add_successor(parity_block_comp);
         // Start the comm by setting its destination
-        comm->set_destination(controller_host_);
+        comm->set_destination(get_controller_host());
 
         // Parity Block Computation is now blocked by Comm, start it by assigning it to the controller host
         parity_block_comp->detach();
-        parity_block_comp->set_host(controller_host_);
+        parity_block_comp->set_host(get_controller_host());
 
         // Create a no-op Activity that depends on the completion of all I/Os. This is the one ActivityPtr returned
         // to the caller
@@ -189,7 +186,7 @@ namespace simgrid::fsmod {
 
         // Create the I/O activities on individual disks
         std::vector<s4u::IoPtr> ios;
-        for (const auto* disk : disks_) {
+        for (const auto* disk : get_disks()) {
             auto io = s4u::IoPtr(disk->io_init(write_size, s4u::Io::OpType::WRITE));
             io->set_name(disk->get_name());
             ios.push_back(io);
@@ -201,7 +198,7 @@ namespace simgrid::fsmod {
         }
 
         // Completion activity is now blocked by I/Os, start it by assigning it to the controller host first disk
-        completion_activity->set_disk(disks_.front());
+        completion_activity->set_disk(get_first_disk());
 
         return completion_activity;
     }

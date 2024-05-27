@@ -68,7 +68,7 @@ namespace simgrid::fsmod {
         if (simulate_it) {
             try {
                 partition_->get_storage()->read(num_bytes_to_read);
-            } catch (StorageFailureException &e) {
+            } catch (StorageFailureException&) {
                 throw xbt::UnimplementedError("Handling of hardware resource failures not implemented");
             }
         }
@@ -77,7 +77,7 @@ namespace simgrid::fsmod {
 
     int File::write_init_checks(sg_size_t num_bytes) {
         static int sequence_number = -1;
-        int my_sequence_number = ++sequence_number;
+        int my_sequence_number;
         if (access_mode_ != "w" && access_mode_ != "a")
             throw std::invalid_argument("Invalid access mode. Cannot write in 'r' mode'");
 
@@ -91,14 +91,15 @@ namespace simgrid::fsmod {
 
         if (added_bytes > partition_->get_free_space()) {
             partition_->create_space(added_bytes - partition_->get_free_space());
-//            throw FileSystemException(XBT_THROW_POINT, "Not enough space");
         }
 
         // Compute the new tentative file size
         sg_size_t new_file_size_if_i_succeed = metadata_->get_future_size() + added_bytes;
         // Decrease the available space on partition of what is going to be added by that write
         partition_->decrease_free_space(added_bytes);
+
         // Update metadata
+        my_sequence_number = ++sequence_number;
         metadata_->notify_write_start(my_sequence_number, new_file_size_if_i_succeed);
 
         return my_sequence_number;
@@ -153,7 +154,7 @@ namespace simgrid::fsmod {
         if (simulate_it) {
             try {
                 partition_->get_storage()->write(num_bytes);
-            } catch (StorageFailureException &e) {
+            } catch (StorageFailureException&) {
                 throw xbt::UnimplementedError("Handling of hardware resource failures not implemented");
             }
         }
@@ -209,7 +210,7 @@ namespace simgrid::fsmod {
         stat_struct->last_access_date = metadata_->get_access_date();
         stat_struct->last_modification_date = metadata_->get_modification_date();
         stat_struct->refcount = metadata_->get_file_refcount();
-        return std::move(stat_struct);
+        return stat_struct;
     }
 
 }

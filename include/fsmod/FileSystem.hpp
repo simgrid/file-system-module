@@ -23,6 +23,7 @@ namespace simgrid::fsmod {
         int max_num_open_files_;
 
     public:
+        explicit FileSystem(std::string name, int max_num_open_files) : name_(std::move(name)), max_num_open_files_(max_num_open_files) {};
         static std::shared_ptr<FileSystem> create(const std::string &name, int max_num_open_files = 1024);
 
         void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, sg_size_t size,
@@ -30,16 +31,16 @@ namespace simgrid::fsmod {
         void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, const std::string& size,
                              Partition::CachingScheme caching_scheme  = Partition::CachingScheme::NONE);
 
-        void create_file(const std::string& full_path, sg_size_t size);
-        void create_file(const std::string& full_path, const std::string& size);
+        void create_file(const std::string& full_path, sg_size_t size) const;
+        void create_file(const std::string& full_path, const std::string& size) const;
 
-        [[nodiscard]] bool file_exists(const std::string& full_path);
-        [[nodiscard]] bool directory_exists(const std::string& full_dir_path);
-        std::set<std::string, std::less<>> list_files_in_directory(const std::string& full_dir_path);
+        [[nodiscard]] bool file_exists(const std::string& full_path) const;
+        [[nodiscard]] bool directory_exists(const std::string& full_dir_path) const;
+        std::set<std::string, std::less<>> list_files_in_directory(const std::string& full_dir_path) const;
 
         void move_file(const std::string& src_full_path, const std::string& dst_full_path) const;
         void unlink_file(const std::string& full_path) const;
-        void unlink_directory(const std::string& full_dir_path);
+        void unlink_directory(const std::string& full_dir_path) const;
 
         [[nodiscard]] sg_size_t file_size(const std::string& full_path) const;
 
@@ -49,8 +50,6 @@ namespace simgrid::fsmod {
         [[nodiscard]] std::shared_ptr<Partition> partition_by_name(const std::string& name) const;
         [[nodiscard]] std::shared_ptr<Partition> partition_by_name_or_null(const std::string& name) const;
 
-    protected:
-        explicit FileSystem(std::string name, int max_num_open_files) noexcept: name_(std::move(name)), max_num_open_files_(max_num_open_files) {};
 
     private:
         [[nodiscard]] std::pair<std::shared_ptr<Partition>, std::string> find_path_at_mount_point(const std::string &full_path) const;

@@ -26,8 +26,8 @@ TEST_F(PathUtilTest, PathSimplification)  {
             {"./foo", "/foo"}
     };
 
-    for (const auto &test_item : input_output) {
-        MY_ASSERT_EQ(sgfs::PathUtil::simplify_path_string(test_item.first), test_item.second, test_item.first);
+    for (const auto &[input, output] : input_output) {
+        MY_ASSERT_EQ(sgfs::PathUtil::simplify_path_string(input), output, input);
     }
 }
 
@@ -66,12 +66,12 @@ TEST_F(PathUtilTest, PathAtMountPoint) {
     };
 
     for (const auto &test_item: input_output) {
-        const auto [path, mp, output] = test_item;
+        const auto& [path, mp, output] = test_item;
         auto simplified_path = sgfs::PathUtil::simplify_path_string(path);
         try {
             auto path_at_mp = sgfs::PathUtil::path_at_mount_point(simplified_path, "/dev/a");
             MY_ASSERT_EQ(output, path_at_mp,  "{" + path + ", " + mp + "}");
-        } catch (std::logic_error &e) {
+        } catch (std::logic_error&) {
             MY_ASSERT_EQ(output, "Exception", "{" + path + ", " + mp + "}");
         }
     }

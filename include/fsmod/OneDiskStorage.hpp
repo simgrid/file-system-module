@@ -12,6 +12,7 @@ namespace simgrid::fsmod {
     class XBT_PUBLIC OneDiskStorage : public Storage {
     public:
         OneDiskStorage(const std::string &name, simgrid::s4u::Disk *disk);
+        ~OneDiskStorage() override = default;
         static std::shared_ptr<OneDiskStorage> create(const std::string &name, simgrid::s4u::Disk *disk);
 
         s4u::IoPtr read_async(sg_size_t size) override;
