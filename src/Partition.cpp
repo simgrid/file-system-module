@@ -54,7 +54,7 @@ namespace simgrid::fsmod {
      * @param file_name: the file name
      */
     void Partition::delete_file(const std::string &dir_path, const std::string &file_name) {
-        const FileMetadata* metadata_ptr = this->get_file_metadata(dir_path, file_name);
+        auto* metadata_ptr = this->get_file_metadata(dir_path, file_name);
         if (not metadata_ptr) {
             throw FileSystemException(XBT_THROW_POINT, "File not found);");
         }
@@ -63,12 +63,9 @@ namespace simgrid::fsmod {
             throw FileSystemException(XBT_THROW_POINT, "Cannot unlink a file that is opened");
         }
 
-        auto meta_data = this->get_file_metadata(dir_path, file_name);
-        if (meta_data) {
-            this->new_file_deletion_event(meta_data);
-            free_space_ += meta_data->get_current_size();
-            content_.at(dir_path).erase(file_name);
-        }
+        this->new_file_deletion_event(metadata_ptr);
+        free_space_ += metadata_ptr->get_current_size();
+        content_.at(dir_path).erase(file_name);
     }
 
     /**
