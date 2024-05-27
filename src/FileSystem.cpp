@@ -134,7 +134,7 @@ namespace simgrid::fsmod {
     }
 
     /**
-      * @brief Open a file. If no file corresponds to the given fullpath, a new file of size 0 is created.
+      * @brief Open a file. If no file corresponds to the given full path, a new file of size 0 is created.
       * @param full_path: an absolute file path
       * @param access_mode: access mode ("r", "w", or "a")
       * @return
