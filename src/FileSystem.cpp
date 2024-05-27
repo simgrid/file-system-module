@@ -164,7 +164,10 @@ namespace simgrid::fsmod {
             metadata = partition->get_file_metadata(dir, file_name);
         } else {
             if (access_mode == "w") {
-                //TODO update metadata to reset size to 0
+                // Opening a file in "w" mode resets its size to 0. Update metadata and partition free space accordingly
+                partition->increase_free_space(metadata->get_current_size());
+                metadata->set_current_size(0);
+                metadata->set_future_size(0);
             }
         }
 

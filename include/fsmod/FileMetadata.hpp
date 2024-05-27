@@ -35,6 +35,7 @@ namespace simgrid::fsmod {
         [[nodiscard]] sg_size_t get_current_size() const { return current_size_; }
         void set_current_size(sg_size_t num_bytes) { current_size_ = num_bytes; }
         [[nodiscard]] sg_size_t get_future_size() const { return future_size_; }
+        void set_future_size(sg_size_t num_bytes) { future_size_ = num_bytes; }
 
         [[nodiscard]] double get_modification_date() const { return modification_date_; }
         void set_modification_date(double date) { modification_date_ = date; }

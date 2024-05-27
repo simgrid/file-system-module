@@ -148,12 +148,14 @@ TEST_F(JBODStorageTest, SingleWrite)  {
         this->setup_platform();
         sg4::Actor::create("TestActor", fs_client_, [this]() {
             std::shared_ptr<sgfs::File> file;
-            XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
+            XBT_INFO("Create a 1MB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "1MB"));
             XBT_INFO("Check remaining space");
             ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a")->get_free_space(), 99 * 1000 *1000);
             XBT_INFO("Open File '/dev/a/foo.txt'");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "w"));
+            XBT_INFO("Opening file in 'w' mode reset size to 0. Check remaining space");
+            ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a")->get_free_space(), 100 * 1000 *1000);
             XBT_INFO("Write 0B at /dev/a/foo.txt, which should return 0");
             ASSERT_DOUBLE_EQ(file->write(0), 0);
             XBT_INFO("Write 200MB at /dev/a/foo.txt, which should not work");
