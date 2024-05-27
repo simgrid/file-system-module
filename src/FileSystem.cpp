@@ -174,7 +174,6 @@ namespace simgrid::fsmod {
         // Create the file object
         auto file = std::make_shared<File>(simplified_path, access_mode, metadata, partition.get());
 
-        XBT_INFO("%s %d", access_mode.c_str(), SEEK_END);
         if (access_mode == "a")
             file->current_position_ = metadata->get_current_size();
 
