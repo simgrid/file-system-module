@@ -75,10 +75,6 @@ namespace simgrid::fsmod {
         }
 
         switch (caching_scheme) {
-            case Partition::CachingScheme::NONE:
-                this->partitions_[cleanup_mount_point] =
-                   std::make_shared<Partition>(cleanup_mount_point, std::move(storage), size);
-                break;
             case Partition::CachingScheme::FIFO:
                 this->partitions_[cleanup_mount_point] =
                    std::make_shared<PartitionFIFOCaching>(cleanup_mount_point, std::move(storage), size);
@@ -86,6 +82,10 @@ namespace simgrid::fsmod {
             case Partition::CachingScheme::LRU:
                 this->partitions_[cleanup_mount_point] =
                    std::make_shared<PartitionLRUCaching>(cleanup_mount_point, std::move(storage), size);
+                break;
+            default: // actually Partition::CachingScheme::NONE
+                this->partitions_[cleanup_mount_point] =
+                   std::make_shared<Partition>(cleanup_mount_point, std::move(storage), size);
                 break;
         }
     }
