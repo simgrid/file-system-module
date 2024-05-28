@@ -1,9 +1,13 @@
+/* Copyright (c) 2024. The FSMOD Team. All rights reserved.          */
+
+/* This program is free software; you can redistribute it and/or modify it
+ * under the terms of the license (GNU LGPL) which comes with this package. */
+
 #ifndef FSMOD_JBODSTORAGE_HPP
 #define FSMOD_JBODSTORAGE_HPP
 
 #include <simgrid/s4u/MessageQueue.hpp>
 #include "Storage.hpp"
-
 
 namespace simgrid::fsmod {
 

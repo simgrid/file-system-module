@@ -1,5 +1,7 @@
-#ifndef FILE_SYSTEM_MODULE_PATH_H
-#define FILE_SYSTEM_MODULE_PATH_H
+/* Copyright (c) 2024. The FSMOD Team. All rights reserved.          */
+
+/* This program is free software; you can redistribute it and/or modify it
+ * under the terms of the license (GNU LGPL) which comes with this package. */
 
 #include <filesystem>
 #include "fsmod/PathUtil.hpp"
@@ -77,5 +79,3 @@ namespace simgrid::fsmod {
     }
 
 }
-
-#endif //FILE_SYSTEM_MODULE_PATH_H

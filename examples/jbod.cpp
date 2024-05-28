@@ -1,10 +1,15 @@
+/* Copyright (c) 2024. The FSMOD Team. All rights reserved.          */
+
+/* This program is free software; you can redistribute it and/or modify it
+ * under the terms of the license (GNU LGPL) which comes with this package. */
+
 #include <simgrid/s4u/NetZone.hpp>
 #include <simgrid/s4u/Engine.hpp>
 #include <simgrid/s4u/Actor.hpp>
 #include <iostream>
 #include <utility>
 
-#include "../include/fsmod.hpp"
+#include "fsmod.hpp"
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(fs_test, "File System Test");
 
