@@ -39,7 +39,6 @@ namespace simgrid::fsmod {
         void create_file(const std::string& full_path, sg_size_t size) const;
         void create_file(const std::string& full_path, const std::string& size) const;
 
-        [[nodiscard]] bool path_is_valid(const std::string& full_path) const;
         [[nodiscard]] bool file_exists(const std::string& full_path) const;
         [[nodiscard]] bool directory_exists(const std::string& full_dir_path) const;
         [[nodiscard]] std::set<std::string, std::less<>> list_files_in_directory(const std::string& full_dir_path) const;

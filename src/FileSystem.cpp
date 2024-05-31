@@ -258,22 +258,6 @@ namespace simgrid::fsmod {
     }
 
     /**
-     * @brief Method to check that a path is valid, i.e., it corresponds to an existing partition
-     * @param full_path: the file path
-     * @return true if the path is valid, false otherwise
-     */
-    bool FileSystem::path_is_valid(const std::string& full_path) const {
-        std::string simplified_path = PathUtil::simplify_path_string(full_path);
-        // Identify the mount point and path at mount point partition
-        auto it = std::find_if(this->partitions_.begin(),
-                               this->partitions_.end(),
-                               [&simplified_path](const std::pair<std::string, std::shared_ptr<Partition>> &element) {
-                                   return PathUtil::is_at_mount_point(simplified_path, element.first);
-                               });
-        return (it != this->partitions_.end());
-    }
-
-    /**
      * @brief Method to check that a file exists at a given path
      * @param full_path: the file path
      * @return true if the file exists, false otherwise
