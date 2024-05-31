@@ -110,6 +110,16 @@ namespace simgrid::fsmod {
             return nullptr;
     }
 
+    std::vector<std::shared_ptr<Partition>> FileSystem::get_partitions() const {
+        std::vector<std::shared_ptr<Partition>> to_return;
+        to_return.reserve(this->partitions_.size());
+        for (auto const &p : this->partitions_) {
+            to_return.push_back(p.second);
+        }
+        return to_return;
+    }
+
+
     /**
      * @brief Create a new file on the file system in zero time
      * @param full_path: the absolute path to the file
