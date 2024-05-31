@@ -71,6 +71,31 @@ TEST_F(FileSystemTest, MountPartition)  {
     });
 }
 
+TEST_F(FileSystemTest, PathValidity)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+
+        // Create one actor (for this test we could likely do it all in the maestro but what the hell)
+        sg4::Actor::create("TestActor", host_, [this]() {
+            XBT_INFO("Creating a one-disk storage on the host's second disk...");
+            auto ods = sgfs::OneDiskStorage::create("my_storage", disk_two_);
+            XBT_INFO("Try all kinds of invalid paths...");
+            ASSERT_FALSE(fs_->path_is_valid("/dev/foo/"));
+            ASSERT_FALSE(fs_->path_is_valid("/dev/foo"));
+            ASSERT_FALSE(fs_->path_is_valid("/dev/b/foo"));
+            ASSERT_FALSE(fs_->path_is_valid("/dev/../a/foo/"));
+            XBT_INFO("Try a few valid paths...");
+            ASSERT_TRUE(fs_->path_is_valid("/dev/a/"));
+            ASSERT_TRUE(fs_->path_is_valid("/dev/a/foo"));
+            ASSERT_TRUE(fs_->path_is_valid("/dev/a/b/b/b/b"));
+        });
+
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
+
+
 TEST_F(FileSystemTest, FileCreate)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
