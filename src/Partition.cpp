@@ -16,7 +16,6 @@ namespace simgrid::fsmod {
             : name_(std::move(name)), storage_(std::move(storage)), size_(size), free_space_(size) {
     }
 
-
     /**
      * @brief Retrieve the metadata for a file
      * @param dir_path: the path to the directory in which the file is located
@@ -165,6 +164,8 @@ namespace simgrid::fsmod {
     void Partition::new_file_deletion_event(FileMetadata *file_metadata) {
         // No-op
     }
+
+
 
 
 }

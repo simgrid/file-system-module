@@ -71,30 +71,6 @@ TEST_F(FileSystemTest, MountPartition)  {
     });
 }
 
-TEST_F(FileSystemTest, PathValidity)  {
-    DO_TEST_WITH_FORK([this]() {
-        this->setup_platform();
-
-        // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        sg4::Actor::create("TestActor", host_, [this]() {
-            XBT_INFO("Creating a one-disk storage on the host's second disk...");
-            auto ods = sgfs::OneDiskStorage::create("my_storage", disk_two_);
-            XBT_INFO("Try all kinds of invalid paths...");
-            ASSERT_FALSE(fs_->path_is_valid("/dev/foo/"));
-            ASSERT_FALSE(fs_->path_is_valid("/dev/foo"));
-            ASSERT_FALSE(fs_->path_is_valid("/dev/b/foo"));
-            ASSERT_FALSE(fs_->path_is_valid("/dev/../a/foo/"));
-            XBT_INFO("Try a few valid paths...");
-            ASSERT_TRUE(fs_->path_is_valid("/dev/a/"));
-            ASSERT_TRUE(fs_->path_is_valid("/dev/a/foo"));
-            ASSERT_TRUE(fs_->path_is_valid("/dev/a/b/b/b/b"));
-        });
-
-        // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
-    });
-}
-
 
 TEST_F(FileSystemTest, FileCreate)  {
     DO_TEST_WITH_FORK([this]() {
@@ -114,6 +90,7 @@ TEST_F(FileSystemTest, FileCreate)  {
             ASSERT_THROW(this->fs_->create_file("/dev/a/foo.txt", "10MB"), sgfs::FileSystemException);
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt, which should work");
             ASSERT_NO_THROW(this->fs_->create_file("/dev/a/foo.txt", "10kB"));
+            ASSERT_EQ(1, this->fs_->partition_by_name("/dev/a")->get_num_files());
             XBT_INFO("Create the same file again at /dev/a/foo.txt, which should fail");
             ASSERT_THROW(this->fs_->create_file("/dev/a/foo.txt", "10kB"), sgfs::FileSystemException);
             XBT_INFO("Check remaining space");

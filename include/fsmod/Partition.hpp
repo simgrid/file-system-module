@@ -65,6 +65,18 @@ namespace simgrid::fsmod {
          */
         [[nodiscard]] sg_size_t get_free_space() const { return free_space_; }
 
+        /**
+         * @brief Retrieves the number of files stored in the partition
+         * @return a number of files
+         */
+        [[nodiscard]] sg_size_t get_num_files() const {
+            sg_size_t to_return = 0;
+            for (auto const &d : content_) {
+                to_return += d.second.size();
+            }
+            return to_return;
+        }
+
     protected:
         // Methods to perform caching
         virtual void create_space(sg_size_t num_bytes);
