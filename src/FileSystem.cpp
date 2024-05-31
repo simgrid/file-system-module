@@ -82,15 +82,15 @@ namespace simgrid::fsmod {
         switch (caching_scheme) {
             case Partition::CachingScheme::FIFO:
                 this->partitions_[cleanup_mount_point] =
-                   std::make_shared<PartitionFIFOCaching>(cleanup_mount_point, std::move(storage), size);
+                        std::make_shared<PartitionFIFOCaching>(cleanup_mount_point, std::move(storage), size);
                 break;
             case Partition::CachingScheme::LRU:
                 this->partitions_[cleanup_mount_point] =
-                   std::make_shared<PartitionLRUCaching>(cleanup_mount_point, std::move(storage), size);
+                        std::make_shared<PartitionLRUCaching>(cleanup_mount_point, std::move(storage), size);
                 break;
             default: // actually Partition::CachingScheme::NONE
                 this->partitions_[cleanup_mount_point] =
-                   std::make_shared<Partition>(cleanup_mount_point, std::move(storage), size);
+                        std::make_shared<Partition>(cleanup_mount_point, std::move(storage), size);
                 break;
         }
     }
@@ -189,11 +189,11 @@ namespace simgrid::fsmod {
         return file;
     }
 
-   /**
-     * @brief Closes the file. After closing, using the file has undefined
-     * behavior.
-     * @param file a shared pointer on a File
-     */
+    /**
+      * @brief Closes the file. After closing, using the file has undefined
+      * behavior.
+      * @param file a shared pointer on a File
+      */
     void FileSystem::close(const std::shared_ptr<File> &file) {
         this->num_open_files_--;
         file->metadata_->decrease_file_refcount();
@@ -280,9 +280,13 @@ namespace simgrid::fsmod {
      */
     bool FileSystem::file_exists(const std::string& full_path) const {
         std::string simplified_path = PathUtil::simplify_path_string(full_path);
-        auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
-        auto [dir, file_name] = PathUtil::split_path(path_at_mount_point);
-        return (partition->get_file_metadata(dir, file_name) != nullptr);
+        try {
+            auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
+            auto [dir, file_name] = PathUtil::split_path(path_at_mount_point);
+            return (partition->get_file_metadata(dir, file_name) != nullptr);
+        } catch (FileSystemException &e) {
+            return false;
+        }
     }
 
     /**
