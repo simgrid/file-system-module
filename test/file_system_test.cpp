@@ -64,6 +64,10 @@ TEST_F(FileSystemTest, MountPartition)  {
             ASSERT_NO_THROW(fs_->mount_partition("/dev/b", ods, "100kB"));
             XBT_INFO("Try to access a non-existing partition by name, which shouldn't work");
             ASSERT_THROW(auto part = fs_->partition_by_name("/dev/"), std::invalid_argument);
+            XBT_INFO("Retrieving the file system's partitions");
+            std::vector<std::shared_ptr<sgfs::Partition>> partitions;
+            ASSERT_NO_THROW(partitions = fs_->get_partitions());
+            ASSERT_EQ(partitions.size(), 2);
         });
 
         // Run the simulation
