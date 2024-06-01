@@ -27,7 +27,7 @@ namespace simgrid::fsmod {
             }
         }
         if (space_that_can_be_created < num_bytes) {
-            throw simgrid::fsmod::Exception(XBT_THROW_POINT, "Unable to evict files to create enough space");
+            throw simgrid::fsmod::NotEnoughSpaceException(XBT_THROW_POINT, "Unable to evict files to create enough space");
         }
         for (auto const &victim: files_to_remove_to_create_space) {
             this->delete_file(this->priority_list_[victim]->dir_path_, this->priority_list_[victim]->file_name_);

@@ -14,7 +14,9 @@
     using simgrid::Exception::Exception;                                                                               \
     __VA_ARGS__                                                                                                        \
     AnyException(simgrid::xbt::ThrowPoint&& throwpoint, const std::string& message) :                                  \
-        simgrid::Exception(std::move(throwpoint), std::string(msg_prefix) + message) {}                                \
+        simgrid::Exception(std::move(throwpoint),                                                                      \
+            std::string(msg_prefix) + (message.empty() ? "" : std::string(": " + message))) {}                                \
+    explicit AnyException(simgrid::xbt::ThrowPoint&& throwpoint) :  AnyException(std::move(throwpoint), "") {}                  \
     ~AnyException() override = default;                                                                                \
     XBT_ATTRIB_NORETURN void rethrow_nested(simgrid::xbt::ThrowPoint&& throwpoint,                                     \
                                             const std::string& message) const override                                 \
@@ -27,8 +29,9 @@
 
 namespace simgrid::fsmod {
 
-    DECLARE_FSMOD_EXCEPTION(Exception, "FSMod Exception: "); // TODO: REMOVE EVENTUALLY
-    DECLARE_FSMOD_EXCEPTION(FileNotFoundException, "File not found: ");
+    DECLARE_FSMOD_EXCEPTION(Exception, "FSMod Exception"); // TODO: REMOVE EVENTUALLY
+    DECLARE_FSMOD_EXCEPTION(FileNotFoundException, "File not found");
+    DECLARE_FSMOD_EXCEPTION(NotEnoughSpaceException, "Not enough space");
 }
 
 #endif //FSMOD_FILESYSTEMEXCEPTION_HPP

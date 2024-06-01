@@ -91,7 +91,7 @@ TEST_F(FileSystemTest, FileCreate)  {
                 XBT_ERROR("%s", msg);
             }
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt, which should fail");
-            ASSERT_THROW(this->fs_->create_file("/dev/a/foo.txt", "10MB"), sgfs::Exception);
+            ASSERT_THROW(this->fs_->create_file("/dev/a/foo.txt", "10MB"), sgfs::NotEnoughSpaceException);
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt, which should work");
             ASSERT_NO_THROW(this->fs_->create_file("/dev/a/foo.txt", "10kB"));
             ASSERT_EQ(1, this->fs_->partition_by_name("/dev/a")->get_num_files());

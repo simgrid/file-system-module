@@ -150,7 +150,7 @@ namespace simgrid::fsmod {
 
 
     void Partition::create_space(sg_size_t num_bytes) {
-        throw simgrid::fsmod::Exception(XBT_THROW_POINT, "Not enough space");
+        throw simgrid::fsmod::NotEnoughSpaceException(XBT_THROW_POINT);
     }
 
     void Partition::new_file_creation_event(FileMetadata *file_metadata) {
