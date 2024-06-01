@@ -140,8 +140,7 @@ namespace simgrid::fsmod {
         // Check that no file is open
         for (const auto &[filename, metadata]: content_.at(dir_path)) {
             if (metadata->get_file_refcount() != 0) {
-                throw simgrid::fsmod::Exception(XBT_THROW_POINT,
-                                          "Cannot delete a file that is open - no content deleted in directory");
+                throw simgrid::fsmod::Exception(XBT_THROW_POINT, "Cannot delete a file that is open - no content deleted in directory");
             }
         }
         // Wipe everything out
