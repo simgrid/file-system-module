@@ -51,7 +51,7 @@ TEST_F(SeekTest, SeekandTell)  {
         sg4::Actor::create("TestActor", host_, [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 100kB file at /dev/a/foo.txt");
-            ASSERT_NO_THROW(this->fs_->create_file("/dev/a/foo.txt", "100kB"));
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "100kB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "a"));
             XBT_INFO("Check current position, should be 100k ('append' mode)");

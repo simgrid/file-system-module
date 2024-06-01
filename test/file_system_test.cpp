@@ -83,27 +83,31 @@ TEST_F(FileSystemTest, FileCreate)  {
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
         sg4::Actor::create("TestActor", host_, [this]() {
             XBT_INFO("Create a 10MB file at /foo/foo.txt, which should fail");
-            ASSERT_THROW(this->fs_->create_file("/foo/foo.txt", "10MB"), sgfs::InvalidPathException);
+            ASSERT_THROW(fs_->create_file("/foo/foo.txt", "10MB"), sgfs::InvalidPathException);
             try {
-                this->fs_->create_file("/foo/foo.txt", "10MB");
+                fs_->create_file("/foo/foo.txt", "10MB");
             } catch (sgfs::InvalidPathException &e) {
                 auto msg = e.what(); // coverage
                 XBT_ERROR("%s", msg);
             }
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt, which should fail");
-            ASSERT_THROW(this->fs_->create_file("/dev/a/foo.txt", "10MB"), sgfs::NotEnoughSpaceException);
+            ASSERT_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"), sgfs::NotEnoughSpaceException);
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt, which should work");
-            ASSERT_NO_THROW(this->fs_->create_file("/dev/a/foo.txt", "10kB"));
-            ASSERT_EQ(1, this->fs_->partition_by_name("/dev/a")->get_num_files());
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
+            std::shared_ptr<sgfs::Partition> partition;
+            ASSERT_NO_THROW(partition = fs_->partition_by_name("/dev/a"););
+            ASSERT_EQ(fs_->get_partition_for_path_or_null("/dev/a/foo.txt"), partition);
+            ASSERT_EQ(fs_->get_partition_for_path_or_null("/dev/bogus/foo.txt"), nullptr);
+            ASSERT_EQ(1, fs_->partition_by_name("/dev/a")->get_num_files());
             XBT_INFO("Create the same file again at /dev/a/foo.txt, which should fail");
-            ASSERT_THROW(this->fs_->create_file("/dev/a/foo.txt", "10kB"), sgfs::FileAlreadyExistsException);
+            ASSERT_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"), sgfs::FileAlreadyExistsException);
             XBT_INFO("Check remaining space");
-            ASSERT_DOUBLE_EQ(this->fs_->partition_by_name("/dev/a")->get_free_space(), 90 * 1000);
+            ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a")->get_free_space(), 90 * 1000);
         });
 
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
-        ASSERT_DOUBLE_EQ(this->fs_->partition_by_name("/dev/a")->get_free_space(), 90 * 1000);
+        ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a")->get_free_space(), 90 * 1000);
     });
 }
 

@@ -72,15 +72,15 @@ TEST_F(CachingTest, FIFOBasics)  {
         sg4::Actor::create("TestActor", host_, [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 20MB file at /dev/fifo/20mb.txt");
-            ASSERT_NO_THROW(this->fs_->create_file("/dev/fifo/20mb.txt", "20MB"));
+            ASSERT_NO_THROW(fs_->create_file("/dev/fifo/20mb.txt", "20MB"));
             XBT_INFO("Create a 60MB file at /dev/a/60mb.txt");
-            ASSERT_NO_THROW(this->fs_->create_file("/dev/fifo/60mb.txt", "60MB"));
+            ASSERT_NO_THROW(fs_->create_file("/dev/fifo/60mb.txt", "60MB"));
             XBT_INFO("Create a 30MB file at /dev/fifo/60mb.txt");
-            ASSERT_NO_THROW(this->fs_->create_file("/dev/fifo/30mb.txt", "30MB"));
+            ASSERT_NO_THROW(fs_->create_file("/dev/fifo/30mb.txt", "30MB"));
             XBT_INFO("Check that files are as they should be");
-            ASSERT_FALSE(this->fs_->file_exists("/dev/fifo/20mb.txt"));
-            ASSERT_TRUE(this->fs_->file_exists("/dev/fifo/60mb.txt"));
-            ASSERT_TRUE(this->fs_->file_exists("/dev/fifo/30mb.txt"));
+            ASSERT_FALSE(fs_->file_exists("/dev/fifo/20mb.txt"));
+            ASSERT_TRUE(fs_->file_exists("/dev/fifo/60mb.txt"));
+            ASSERT_TRUE(fs_->file_exists("/dev/fifo/30mb.txt"));
         });
 
         // Run the simulation
@@ -94,23 +94,23 @@ TEST_F(CachingTest, FIFODontEvictOpenFiles) {
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
         sg4::Actor::create("TestActor", host_, [this]() {
             XBT_INFO("Create a 20MB file at /dev/fifo/20mb.txt");
-            ASSERT_NO_THROW(this->fs_->create_file("/dev/fifo/20mb.txt", "20MB"));
+            ASSERT_NO_THROW(fs_->create_file("/dev/fifo/20mb.txt", "20MB"));
             XBT_INFO("Create a 60MB file at /dev/fifo/60mb.txt");
-            ASSERT_NO_THROW(this->fs_->create_file("/dev/fifo/60mb.txt", "60MB"));
+            ASSERT_NO_THROW(fs_->create_file("/dev/fifo/60mb.txt", "60MB"));
             XBT_INFO("Opening the 20MB file");
             std::shared_ptr<sgfs::File> file;
-            ASSERT_NO_THROW(file = this->fs_->open("/dev/fifo/20mb.txt", "r"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/fifo/20mb.txt", "r"));
             XBT_INFO("Create a 30MB file at /dev/fifo/60mb.txt");
-            ASSERT_NO_THROW(this->fs_->create_file("/dev/fifo/30mb.txt", "30MB"));
+            ASSERT_NO_THROW(fs_->create_file("/dev/fifo/30mb.txt", "30MB"));
             XBT_INFO("Check that files are as they should be");
-            ASSERT_TRUE(this->fs_->file_exists("/dev/fifo/20mb.txt"));
-            ASSERT_FALSE(this->fs_->file_exists("/dev/fifo/60mb.txt"));
-            ASSERT_TRUE(this->fs_->file_exists("/dev/fifo/30mb.txt"));
+            ASSERT_TRUE(fs_->file_exists("/dev/fifo/20mb.txt"));
+            ASSERT_FALSE(fs_->file_exists("/dev/fifo/60mb.txt"));
+            ASSERT_TRUE(fs_->file_exists("/dev/fifo/30mb.txt"));
             XBT_INFO("Opening the 30MB file");
             std::shared_ptr<sgfs::File> file2;
-            ASSERT_NO_THROW(file2 = this->fs_->open("/dev/fifo/30mb.txt", "r"));
+            ASSERT_NO_THROW(file2 = fs_->open("/dev/fifo/30mb.txt", "r"));
             XBT_INFO("Create a 60MB file at /dev/fifo/60mb.txt");
-            ASSERT_THROW(this->fs_->create_file("/dev/fifo/60mb.txt", "60MB"), sgfs::NotEnoughSpaceException);
+            ASSERT_THROW(fs_->create_file("/dev/fifo/60mb.txt", "60MB"), sgfs::NotEnoughSpaceException);
         });
 
         // Run the simulation
@@ -144,17 +144,17 @@ TEST_F(CachingTest, FIFOExtensive)  {
                 if (action.at(0) == "create") {
                     auto file_name = action.at(1);
                     auto file_size = action.at(2);
-                    this->fs_->create_file("/dev/fifo/" + file_name, file_size);
+                    fs_->create_file("/dev/fifo/" + file_name, file_size);
                 } else if (action.at(0) == "delete") {
                     auto file_name = action.at(1);
-                    this->fs_->unlink_file("/dev/fifo/" + file_name);
+                    fs_->unlink_file("/dev/fifo/" + file_name);
                 }
                 // Check state
                 for (auto const &f : expected_files_there) {
-                    ASSERT_TRUE(this->fs_->file_exists("/dev/fifo/" + f));
+                    ASSERT_TRUE(fs_->file_exists("/dev/fifo/" + f));
                 }
                 for (auto const &f : expected_files_not_there) {
-                    ASSERT_FALSE(this->fs_->file_exists("/dev/fifo/" + f));
+                    ASSERT_FALSE(fs_->file_exists("/dev/fifo/" + f));
                 }
             }
         });
@@ -170,19 +170,19 @@ TEST_F(CachingTest, LRUBasics)  {
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
         sg4::Actor::create("TestActor", host_, [this]() {
             XBT_INFO("Create a 20MB file at /dev/lru/20mb.txt");
-            ASSERT_NO_THROW(this->fs_->create_file("/dev/lru/20mb.txt", "20MB"));
+            ASSERT_NO_THROW(fs_->create_file("/dev/lru/20mb.txt", "20MB"));
             XBT_INFO("Create a 60MB file at /dev/lru/60mb.txt");
-            ASSERT_NO_THROW(this->fs_->create_file("/dev/lru/60mb.txt", "60MB"));
+            ASSERT_NO_THROW(fs_->create_file("/dev/lru/60mb.txt", "60MB"));
             XBT_INFO("Open file 20mb.txt and access it");
             std::shared_ptr<sgfs::File> file;
             ASSERT_NO_THROW(file = fs_->open("/dev/lru/20mb.txt", "r"));
             ASSERT_NO_THROW(file->read(10));
             ASSERT_NO_THROW(fs_->close(file));
-            ASSERT_NO_THROW(this->fs_->create_file("/dev/lru/30mb.txt", "30MB"));
+            ASSERT_NO_THROW(fs_->create_file("/dev/lru/30mb.txt", "30MB"));
             XBT_INFO("Check that files are as they should be");
-            ASSERT_TRUE(this->fs_->file_exists("/dev/lru/20mb.txt"));
-            ASSERT_FALSE(this->fs_->file_exists("/dev/lru/60mb.txt"));
-            ASSERT_TRUE(this->fs_->file_exists("/dev/lru/30mb.txt"));
+            ASSERT_TRUE(fs_->file_exists("/dev/lru/20mb.txt"));
+            ASSERT_FALSE(fs_->file_exists("/dev/lru/60mb.txt"));
+            ASSERT_TRUE(fs_->file_exists("/dev/lru/30mb.txt"));
         });
 
         // Run the simulation
@@ -217,22 +217,22 @@ TEST_F(CachingTest, LRUExtensive)  {
                 if (action.at(0) == "create") {
                     auto file_name = action.at(1);
                     auto file_size = action.at(2);
-                    this->fs_->create_file("/dev/lru/" + file_name, file_size);
+                    fs_->create_file("/dev/lru/" + file_name, file_size);
                 } else if (action.at(0) == "delete") {
                     auto file_name = action.at(1);
-                    this->fs_->unlink_file("/dev/lru/" + file_name);
+                    fs_->unlink_file("/dev/lru/" + file_name);
                 } else if (action.at(0) == "access") {
                     auto file_name = action.at(1);
-                    auto file = this->fs_->open("/dev/lru/" + file_name, "r");
+                    auto file = fs_->open("/dev/lru/" + file_name, "r");
                     file->read(1);
                     fs_->close(file);
                 }
                 // Check state
                 for (auto const &f : expected_files_there) {
-                    ASSERT_TRUE(this->fs_->file_exists("/dev/lru/" + f));
+                    ASSERT_TRUE(fs_->file_exists("/dev/lru/" + f));
                 }
                 for (auto const &f : expected_files_not_there) {
-                    ASSERT_FALSE(this->fs_->file_exists("/dev/lru/" + f));
+                    ASSERT_FALSE(fs_->file_exists("/dev/lru/" + f));
                 }
             }
         });
