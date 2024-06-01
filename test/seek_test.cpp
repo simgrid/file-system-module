@@ -65,7 +65,7 @@ TEST_F(SeekTest, SeekandTell)  {
             XBT_INFO("Check current position, should be 1k");
             ASSERT_DOUBLE_EQ(file->tell(), 1000);
             XBT_INFO("Try to seek before the beginning of the file, should not work.");
-            ASSERT_THROW(file->seek(-1000, SEEK_SET), sgfs::FileSystemException);
+            ASSERT_THROW(file->seek(-1000, SEEK_SET), sgfs::Exception);
             XBT_INFO("Try to seek backwards from the end of the file, should work");
             ASSERT_NO_THROW(file->seek(-1000, SEEK_END));
             XBT_INFO("Check current position, should be 99k");
@@ -89,7 +89,7 @@ TEST_F(SeekTest, SeekandTell)  {
             XBT_INFO("Close the file");
             ASSERT_NO_THROW(fs_->close(file));
             XBT_INFO("Checking file size of a non-existing file, which should fail");
-            ASSERT_THROW(auto size = fs_->file_size("/dev/a/foo_bogus.txt"), sgfs::FileSystemException);
+            ASSERT_THROW(auto size = fs_->file_size("/dev/a/foo_bogus.txt"), sgfs::FileNotFoundException);
         });
 
         // Run the simulation

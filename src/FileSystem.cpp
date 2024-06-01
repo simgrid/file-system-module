@@ -34,7 +34,7 @@ namespace simgrid::fsmod {
                                    return PathUtil::is_at_mount_point(simplified_path, element.first);
                                });
         if (it == this->partitions_.end()) {
-            throw FileSystemException(XBT_THROW_POINT, "No partition found");
+            throw simgrid::fsmod::Exception(XBT_THROW_POINT, "No partition found");
         }
         auto path_at_mount_point = PathUtil::path_at_mount_point(simplified_path, it->first);
         auto partition = it->second;
@@ -138,7 +138,7 @@ namespace simgrid::fsmod {
         // TODO: This is weak, since if directory "a/b/c/d" exists, director "a/b" does not!
         // TODO: (we don't _really_ have directories, just prefixes before the file name)
         if (partition->directory_exists(path_at_mount_point)) {
-            throw FileSystemException(XBT_THROW_POINT, "Provided file path is that of an existing directory");
+            throw simgrid::fsmod::Exception(XBT_THROW_POINT, "Provided file path is that of an existing directory");
         }
 
         // Split the path
@@ -157,7 +157,7 @@ namespace simgrid::fsmod {
     std::shared_ptr<File> FileSystem::open(const std::string &full_path, const std::string& access_mode) {
         // "Get a file descriptor"
         if (this->num_open_files_ >= this->max_num_open_files_) {
-            throw FileSystemException(XBT_THROW_POINT, "Too many open file descriptors");
+            throw simgrid::fsmod::Exception(XBT_THROW_POINT, "Too many open file descriptors");
         }
         if (access_mode != "r" && access_mode != "w" && access_mode != "a") {
             throw std::invalid_argument("Invalid access mode. Authorized values are: 'r', 'w', or 'a'");
@@ -174,7 +174,7 @@ namespace simgrid::fsmod {
         auto metadata = partition->get_file_metadata(dir, file_name);
         if (not metadata) {
             if (access_mode == "r")
-                throw FileSystemException(XBT_THROW_POINT, "File not found. Cannot be opened in 'r' mode");
+                throw simgrid::fsmod::FileNotFoundException(XBT_THROW_POINT, full_path);
             create_file(full_path, "0B");
             metadata = partition->get_file_metadata(dir, file_name);
         } else {
@@ -224,7 +224,7 @@ namespace simgrid::fsmod {
         // Check that the file exist
         auto file_metadata = partition->get_file_metadata(dir, file_name);
         if (not file_metadata) {
-            throw FileSystemException(XBT_THROW_POINT, "File not found");
+            throw simgrid::fsmod::FileNotFoundException(XBT_THROW_POINT, full_path);
         }
 
         return file_metadata->get_current_size();
@@ -257,7 +257,7 @@ namespace simgrid::fsmod {
 
         // No mv across partitions (just like in the real world)
         if (src_partition != dst_partition) {
-            throw FileSystemException(XBT_THROW_POINT, "Cannot move file across partitions");
+            throw simgrid::fsmod::Exception(XBT_THROW_POINT, "Cannot move file across partitions");
         }
 
         auto [src_dir, src_file_name] = PathUtil::split_path(src_path_at_mount_point);
@@ -278,7 +278,7 @@ namespace simgrid::fsmod {
             auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
             auto [dir, file_name] = PathUtil::split_path(path_at_mount_point);
             return (partition->get_file_metadata(dir, file_name) != nullptr);
-        } catch (FileSystemException &e) {
+        } catch (simgrid::fsmod::Exception &e) {
             return false;
         }
     }

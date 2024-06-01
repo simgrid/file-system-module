@@ -110,7 +110,7 @@ TEST_F(CachingTest, FIFODontEvictOpenFiles) {
             std::shared_ptr<sgfs::File> file2;
             ASSERT_NO_THROW(file2 = this->fs_->open("/dev/fifo/30mb.txt", "r"));
             XBT_INFO("Create a 60MB file at /dev/fifo/60mb.txt");
-            ASSERT_THROW(this->fs_->create_file("/dev/fifo/60mb.txt", "60MB"), sgfs::FileSystemException);
+            ASSERT_THROW(this->fs_->create_file("/dev/fifo/60mb.txt", "60MB"), sgfs::Exception);
         });
 
         // Run the simulation

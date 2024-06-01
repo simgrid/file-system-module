@@ -8,26 +8,27 @@
 
 #include <simgrid/Exception.hpp>
 
+#define DECLARE_FSMOD_EXCEPTION(AnyException, msg_prefix, ...)                                                         \
+  class AnyException : public simgrid::Exception {                                                                     \
+  public:                                                                                                              \
+    using simgrid::Exception::Exception;                                                                               \
+    __VA_ARGS__                                                                                                        \
+    AnyException(simgrid::xbt::ThrowPoint&& throwpoint, const std::string& message) :                                  \
+        simgrid::Exception(std::move(throwpoint), std::string(msg_prefix) + message) {}                                \
+    ~AnyException() override = default;                                                                                \
+    XBT_ATTRIB_NORETURN void rethrow_nested(simgrid::xbt::ThrowPoint&& throwpoint,                                     \
+                                            const std::string& message) const override                                 \
+    {                                                                                                                  \
+      std::string augmented_message = std::string("CRAP: ") + message;                                                 \
+      std::throw_with_nested(AnyException(std::move(throwpoint), augmented_message));                                  \
+    }                                                                                                                  \
+  }
+
+
 namespace simgrid::fsmod {
 
-    /**
-     * @brief The exception class for fsmod
-     */
-    class FileSystemException : public std::exception {
-        std::string msg_;
-    public:
-        FileSystemException(simgrid::xbt::ThrowPoint&& /*throwpoint*/, std::string msg) : msg_(std::move(msg)){}
-
-        /**
-         * @brief Retrieves the exception's human-readable message
-         * @return a message as a string
-         */
-        [[nodiscard]] const char *what() const noexcept override {
-            // Without the strdup() below, we get some valgrind warnings...
-            return strdup(msg_.c_str());
-        }
-        ~FileSystemException() override = default;
-    };
+    DECLARE_FSMOD_EXCEPTION(Exception, "FSMod Exception: "); // TODO: REMOVE EVENTUALLY
+    DECLARE_FSMOD_EXCEPTION(FileNotFoundException, "File not found: ");
 }
 
 #endif //FSMOD_FILESYSTEMEXCEPTION_HPP
