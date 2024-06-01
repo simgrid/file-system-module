@@ -56,7 +56,7 @@ namespace simgrid::fsmod {
         [[nodiscard]] std::shared_ptr<Partition> partition_by_name_or_null(const std::string& name) const;
 
         [[nodiscard]] std::vector<std::shared_ptr<Partition>> get_partitions() const;
-
+        [[nodiscard]] std::shared_ptr<Partition> get_partition_for_path_or_null(const std::string& full_path) const;
 
 
             private:

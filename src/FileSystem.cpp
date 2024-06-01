@@ -23,7 +23,7 @@ namespace simgrid::fsmod {
     /**
      * @brief Private method to find the partition and path at mount point for an absolute path
      * @param simplified_path: an absolute simplified file path
-     * @return
+     * @return A pair that consists of a Partition and the path at the partition's mount point
      */
     std::pair<std::shared_ptr<Partition>, std::string>
     FileSystem::find_path_at_mount_point(const std::string &simplified_path) const {
@@ -43,6 +43,12 @@ namespace simgrid::fsmod {
 
     /*********************** PUBLIC INTERFACE *****************************/
 
+    /**
+     * @brief Method to create a FileSystem instance
+     * @param name: the file system's name (can be any string)
+     * @param max_num_open_files: the file system's bound on the number of simultaneous opened files
+     * @return A shared pointer to a FileSystem instance
+     */
     std::shared_ptr<FileSystem> FileSystem::create(const std::string &name, int max_num_open_files) {
         return std::make_shared<FileSystem>(name, max_num_open_files);
     }
@@ -95,6 +101,11 @@ namespace simgrid::fsmod {
         }
     }
 
+    /**
+     * @brief Retrieve a partition by name (i.e., mount point), and throw an exception if no such partition exists
+     * @param name: A name (i.e., mount point)
+     * @return A Partition instance
+     */
     std::shared_ptr<Partition> FileSystem::partition_by_name(const std::string &name) const {
         auto partition = partition_by_name_or_null(name);
         if (not partition)
@@ -102,6 +113,11 @@ namespace simgrid::fsmod {
         return partition;
     }
 
+    /**
+     * @brief Retrieve a partition by name (i.e., mou t point)
+     * @param name: A name (i.e., mount point)
+     * @return A Partition instance or nullptr if no such partition exists
+     */
     std::shared_ptr<Partition> FileSystem::partition_by_name_or_null(const std::string &name) const {
         auto partition = partitions_.find(PathUtil::simplify_path_string(name));
         if (partition != partitions_.end())
@@ -110,6 +126,10 @@ namespace simgrid::fsmod {
             return nullptr;
     }
 
+    /**
+     * @brief Retrieve all partitions in the file systems
+     * @return A list of Partition instances
+     */
     std::vector<std::shared_ptr<Partition>> FileSystem::get_partitions() const {
         std::vector<std::shared_ptr<Partition>> to_return;
         to_return.reserve(this->partitions_.size());
@@ -117,6 +137,21 @@ namespace simgrid::fsmod {
             to_return.push_back(p.second);
         }
         return to_return;
+    }
+
+    /**
+     * @brief Retrieve the Partition that corresponds to an absolute full path
+     * @param full_path: a full absolute path
+     * @return A Partition instance or nullptr if the (invalid) path matches no known partition
+     */
+    std::shared_ptr<Partition> FileSystem::get_partition_for_path_or_null(const std::string& full_path) const {
+        std::string simplified_path = PathUtil::simplify_path_string(full_path);
+        try {
+            std::pair<std::shared_ptr<Partition>, std::string> info = this->find_path_at_mount_point(simplified_path);
+            return info.first;
+        } catch (InvalidPathException &e) {
+            return nullptr;
+        }
     }
 
 
