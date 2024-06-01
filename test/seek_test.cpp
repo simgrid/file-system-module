@@ -65,7 +65,7 @@ TEST_F(SeekTest, SeekandTell)  {
             XBT_INFO("Check current position, should be 1k");
             ASSERT_DOUBLE_EQ(file->tell(), 1000);
             XBT_INFO("Try to seek before the beginning of the file, should not work.");
-            ASSERT_THROW(file->seek(-1000, SEEK_SET), sgfs::Exception);
+            ASSERT_THROW(file->seek(-1000, SEEK_SET), sgfs::InvalidSeekException);
             XBT_INFO("Try to seek backwards from the end of the file, should work");
             ASSERT_NO_THROW(file->seek(-1000, SEEK_END));
             XBT_INFO("Check current position, should be 99k");

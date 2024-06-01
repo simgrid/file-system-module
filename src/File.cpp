@@ -178,7 +178,7 @@ namespace simgrid::fsmod {
      */
     void File::update_current_position(sg_offset_t pos) {
         if (pos < 0) {
-            throw simgrid::fsmod::Exception(XBT_THROW_POINT, "Cannot seek before the first byte");
+            throw simgrid::fsmod::InvalidSeekException(XBT_THROW_POINT, "Cannot seek before the first byte");
         }
         current_position_ = pos;
     }

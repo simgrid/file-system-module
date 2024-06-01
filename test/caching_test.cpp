@@ -51,13 +51,13 @@ TEST_F(CachingTest, LogicTest){
         this->setup_platform();
         sg4::Actor::create("TestActor", host_, [this]() {
             auto ods = sgfs::OneDiskStorage::create("my_storage", disk_);
-            XBT_INFO("Try to mount partition with no name");
-            ASSERT_THROW(fs_->mount_partition(nullptr, ods, "100MB"),
-                         std::logic_error);
-            ASSERT_THROW(fs_->mount_partition(nullptr, ods, "100MB", sgfs::Partition::CachingScheme::FIFO),
-                         std::logic_error);
-            ASSERT_THROW(fs_->mount_partition(nullptr, ods, "100MB", sgfs::Partition::CachingScheme::LRU),
-                         std::logic_error);
+            XBT_INFO("Try to mount partition with empty name");
+            ASSERT_THROW(fs_->mount_partition("", ods, "100MB"),
+                         std::invalid_argument);
+            ASSERT_THROW(fs_->mount_partition("", ods, "100MB", sgfs::Partition::CachingScheme::FIFO),
+                         std::invalid_argument);
+            ASSERT_THROW(fs_->mount_partition("", ods, "100MB", sgfs::Partition::CachingScheme::LRU),
+                         std::invalid_argument);
             sg4::this_actor::sleep_for(1);
         });
         // Run the simulation

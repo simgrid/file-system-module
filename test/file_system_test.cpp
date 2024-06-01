@@ -83,10 +83,10 @@ TEST_F(FileSystemTest, FileCreate)  {
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
         sg4::Actor::create("TestActor", host_, [this]() {
             XBT_INFO("Create a 10MB file at /foo/foo.txt, which should fail");
-            ASSERT_THROW(this->fs_->create_file("/foo/foo.txt", "10MB"), sgfs::Exception);
+            ASSERT_THROW(this->fs_->create_file("/foo/foo.txt", "10MB"), sgfs::InvalidPathException);
             try {
                 this->fs_->create_file("/foo/foo.txt", "10MB");
-            } catch (sgfs::Exception &e) {
+            } catch (sgfs::InvalidPathException &e) {
                 auto msg = e.what(); // coverage
                 XBT_ERROR("%s", msg);
             }
@@ -96,7 +96,7 @@ TEST_F(FileSystemTest, FileCreate)  {
             ASSERT_NO_THROW(this->fs_->create_file("/dev/a/foo.txt", "10kB"));
             ASSERT_EQ(1, this->fs_->partition_by_name("/dev/a")->get_num_files());
             XBT_INFO("Create the same file again at /dev/a/foo.txt, which should fail");
-            ASSERT_THROW(this->fs_->create_file("/dev/a/foo.txt", "10kB"), sgfs::Exception);
+            ASSERT_THROW(this->fs_->create_file("/dev/a/foo.txt", "10kB"), sgfs::FileAlreadyExistsException);
             XBT_INFO("Check remaining space");
             ASSERT_DOUBLE_EQ(this->fs_->partition_by_name("/dev/a")->get_free_space(), 90 * 1000);
         });
@@ -119,7 +119,7 @@ TEST_F(FileSystemTest, Directories)  {
             ASSERT_NO_THROW(fs_->create_file("/dev/a/b/c/foo.txt", "10kB"));
             ASSERT_TRUE(fs_->file_exists("/dev/a/b/c/foo.txt"));
             XBT_INFO("Create a 10kB file at /dev/a/b/c, which should fail");
-            ASSERT_THROW(fs_->create_file("/dev/a/b/c/", "10kB"), sgfs::Exception);
+            ASSERT_THROW(fs_->create_file("/dev/a/b/c/", "10kB"), sgfs::InvalidPathException);
             XBT_INFO("Check that what should exist does");
             ASSERT_FALSE(fs_->file_exists("/dev/a/b/c"));
             XBT_INFO("Check free space");
@@ -127,7 +127,7 @@ TEST_F(FileSystemTest, Directories)  {
             XBT_INFO("Create a 10kB file at /dev/a/b/c/faa.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/b/c/faa.txt", "10kB"));
             std::set<std::string, std::less<>> found_files;
-            ASSERT_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c_bogus"), sgfs::Exception);
+            ASSERT_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c_bogus"), sgfs::DirectoryDoesNotExistException);
             ASSERT_NO_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c"));
             ASSERT_TRUE(found_files.find("foo.txt") != found_files.end());
             ASSERT_TRUE(found_files.find("faa.txt") != found_files.end());
@@ -135,14 +135,14 @@ TEST_F(FileSystemTest, Directories)  {
             ASSERT_TRUE(found_files.find("foo.txt") != found_files.end());
             ASSERT_TRUE(found_files.find("faa.txt") != found_files.end());
             XBT_INFO("Try to unlink non-existing directory. This shouldn't work");
-            ASSERT_THROW(fs_->unlink_directory("/dev/a/b/d"), sgfs::Exception);
+            ASSERT_THROW(fs_->unlink_directory("/dev/a/b/d"), sgfs::DirectoryDoesNotExistException);
             ASSERT_FALSE(fs_->directory_exists("/dev/a/b/d"));
 
 
             XBT_INFO("Try to unlink a directory in which one file is opened. This shouldn't work");
             std::shared_ptr<sgfs::File> file;
             ASSERT_NO_THROW(file = fs_->open("/dev/a/b/c/foo.txt", "r"));
-            ASSERT_THROW(fs_->unlink_directory("/dev/a/b/c"), sgfs::Exception);
+            ASSERT_THROW(fs_->unlink_directory("/dev/a/b/c"), sgfs::FileIsOpenException);
             ASSERT_NO_THROW(fs_->close(file));
             ASSERT_NO_THROW(fs_->unlink_directory("/dev/a/b/c"));
             ASSERT_FALSE(fs_->directory_exists("/dev/a/b/c"));
@@ -185,7 +185,7 @@ TEST_F(FileSystemTest, FileMove)  {
             XBT_INFO("Mount a new partition");
             ASSERT_NO_THROW(fs_->mount_partition("/dev/b/", ods, "100kB"));
             XBT_INFO("Move file /dev/a/stuff.txt to /dev/b/stuff.txt which is forbidden");
-            ASSERT_THROW(fs_->move_file("/dev/a/stuff.txt", "/dev/b/stuff.txt"), sgfs::Exception);
+            ASSERT_THROW(fs_->move_file("/dev/a/stuff.txt", "/dev/b/stuff.txt"), sgfs::InvalidMoveException);
         });
 
         // Run the simulation
@@ -209,11 +209,11 @@ TEST_F(FileSystemTest, FileOpenClose)  {
             ASSERT_NO_THROW(file = fs_->open("/dev/a/stuff/foo.txt", "r"));
 
             XBT_INFO("Trying to move the file");
-            ASSERT_THROW(fs_->move_file("/dev/a/stuff/foo.txt", "/dev/a/bar.txt"), sgfs::Exception);
+            ASSERT_THROW(fs_->move_file("/dev/a/stuff/foo.txt", "/dev/a/bar.txt"), sgfs::FileIsOpenException);
             XBT_INFO("Trying to unlink the file");
-            ASSERT_THROW(fs_->unlink_file("/dev/a/stuff/foo.txt"), sgfs::Exception);
+            ASSERT_THROW(fs_->unlink_file("/dev/a/stuff/foo.txt"), sgfs::FileIsOpenException);
             XBT_INFO("Trying to overwrite the file");
-            ASSERT_THROW(fs_->move_file("/dev/a/stuff/other.txt", "/dev/a/stuff/foo.txt"), sgfs::Exception);
+            ASSERT_THROW(fs_->move_file("/dev/a/stuff/other.txt", "/dev/a/stuff/foo.txt"), sgfs::FileIsOpenException);
 
             XBT_INFO("Close the file");
             ASSERT_NO_THROW(fs_->close(file));
@@ -250,7 +250,7 @@ TEST_F(FileSystemTest, TooManyFilesOpened) {
             XBT_INFO("Opening a second file, should be fine");
             ASSERT_NO_THROW(file2 = limited_fs->open("/dev/a/stuff/bar.txt", "w"));
             XBT_INFO("Opening a third file, should not work");
-            ASSERT_THROW(file3 = limited_fs->open("/dev/a/stuff/baz.txt", "a"), sgfs::Exception);
+            ASSERT_THROW(file3 = limited_fs->open("/dev/a/stuff/baz.txt", "a"), sgfs::TooManyOpenFilesException);
             XBT_INFO("Close the first file");
             ASSERT_NO_THROW(limited_fs->close(file));
             XBT_INFO("Opening a third file should now work");

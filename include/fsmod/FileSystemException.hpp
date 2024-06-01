@@ -29,9 +29,16 @@
 
 namespace simgrid::fsmod {
 
-    DECLARE_FSMOD_EXCEPTION(Exception, "FSMod Exception"); // TODO: REMOVE EVENTUALLY
+    // All these exceptions derive from simgrid::Exception (but are in the name space simgrid::fsmod namespace)
     DECLARE_FSMOD_EXCEPTION(FileNotFoundException, "File not found");
     DECLARE_FSMOD_EXCEPTION(NotEnoughSpaceException, "Not enough space");
+    DECLARE_FSMOD_EXCEPTION(FileIsOpenException, "Operation not permitted on an opened file");
+    DECLARE_FSMOD_EXCEPTION(DirectoryDoesNotExistException, "Directory does not exist");
+    DECLARE_FSMOD_EXCEPTION(TooManyOpenFilesException, "Too many open files");
+    DECLARE_FSMOD_EXCEPTION(FileAlreadyExistsException, "File already exists");
+    DECLARE_FSMOD_EXCEPTION(InvalidSeekException, "Invalid seek");
+    DECLARE_FSMOD_EXCEPTION(InvalidMoveException, "Invalid move");
+    DECLARE_FSMOD_EXCEPTION(InvalidPathException, "Invalid path");
 }
 
 #endif //FSMOD_FILESYSTEMEXCEPTION_HPP
