@@ -66,7 +66,7 @@ namespace simgrid::fsmod {
         /** Retrieves the current file position */
         [[nodiscard]] sg_size_t tell() const { return current_position_; }
 
-        std::unique_ptr<FileStat> stat() const;
+        [[nodiscard]] std::unique_ptr<FileStat> stat() const;
     };
 
 } // namespace simgrid::fsmod
