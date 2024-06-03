@@ -21,7 +21,7 @@
     XBT_ATTRIB_NORETURN void rethrow_nested(simgrid::xbt::ThrowPoint&& throwpoint,                                     \
                                             const std::string& message) const override                                 \
     {                                                                                                                  \
-      std::string augmented_message = std::string("CRAP: ") + message;                                                 \
+      std::string augmented_message = std::string(msg_prefix) + message;                                                 \
       std::throw_with_nested(AnyException(std::move(throwpoint), augmented_message));                                  \
     }                                                                                                                  \
   }
@@ -33,6 +33,7 @@ namespace simgrid::fsmod {
     DECLARE_FSMOD_EXCEPTION(FileNotFoundException, "File not found");
     DECLARE_FSMOD_EXCEPTION(NotEnoughSpaceException, "Not enough space");
     DECLARE_FSMOD_EXCEPTION(FileIsOpenException, "Operation not permitted on an opened file");
+    DECLARE_FSMOD_EXCEPTION(DirectoryAlreadyExistsException, "Directory already exists");
     DECLARE_FSMOD_EXCEPTION(DirectoryDoesNotExistException, "Directory does not exist");
     DECLARE_FSMOD_EXCEPTION(TooManyOpenFilesException, "Too many open files");
     DECLARE_FSMOD_EXCEPTION(FileAlreadyExistsException, "File already exists");

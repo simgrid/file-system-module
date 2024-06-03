@@ -44,7 +44,7 @@ namespace simgrid::fsmod {
 
         // Check that the file doesn't already exit
         if (this->get_file_metadata(dir_path, file_name)) {
-            throw simgrid::fsmod::FileAlreadyExistsException(XBT_THROW_POINT, dir_path + "/" + file_name);
+            throw FileAlreadyExistsException(XBT_THROW_POINT, dir_path + "/" + file_name);
         }
 
         content_[dir_path][file_name] = std::make_unique<FileMetadata>(size, this, dir_path, file_name);
@@ -60,11 +60,11 @@ namespace simgrid::fsmod {
     void Partition::delete_file(const std::string &dir_path, const std::string &file_name) {
         auto* metadata_ptr = this->get_file_metadata(dir_path, file_name);
         if (not metadata_ptr) {
-            throw simgrid::fsmod::FileNotFoundException(XBT_THROW_POINT, dir_path + "/" + file_name);
+            throw FileNotFoundException(XBT_THROW_POINT, dir_path + "/" + file_name);
         }
 
         if (metadata_ptr->get_file_refcount() > 0) {
-            throw simgrid::fsmod::FileIsOpenException(XBT_THROW_POINT, dir_path + "/" + file_name);
+            throw FileIsOpenException(XBT_THROW_POINT, dir_path + "/" + file_name);
         }
 
         this->new_file_deletion_event(metadata_ptr);
@@ -84,7 +84,7 @@ namespace simgrid::fsmod {
         // Get the src metadata, which must exist
         const FileMetadata* src_metadata = this->get_file_metadata(src_dir_path, src_file_name);
         if (not src_metadata) {
-            throw simgrid::fsmod::FileNotFoundException(XBT_THROW_POINT, src_dir_path + "/" + src_file_name);
+            throw FileNotFoundException(XBT_THROW_POINT, src_dir_path + "/" + src_file_name);
         }
 
         // Get the dst metadata, if any
@@ -97,10 +97,10 @@ namespace simgrid::fsmod {
 
         // Sanity checks
         if (src_metadata->get_file_refcount() > 0) {
-            throw simgrid::fsmod::FileIsOpenException(XBT_THROW_POINT, src_dir_path + "/" + src_file_name);
+            throw FileIsOpenException(XBT_THROW_POINT, src_dir_path + "/" + src_file_name);
         }
         if (dst_metadata && dst_metadata->get_file_refcount()) {
-            throw simgrid::fsmod::FileIsOpenException(XBT_THROW_POINT, dst_dir_path + "/" + dst_file_name);
+            throw FileIsOpenException(XBT_THROW_POINT, dst_dir_path + "/" + dst_file_name);
         }
 
         // Update free space if needed
@@ -124,7 +124,7 @@ namespace simgrid::fsmod {
 
     std::set<std::string, std::less<>> Partition::list_files_in_directory(const std::string &dir_path) const {
         if (content_.find(dir_path) == content_.end()) {
-            throw simgrid::fsmod::DirectoryDoesNotExistException(XBT_THROW_POINT, dir_path);
+            throw DirectoryDoesNotExistException(XBT_THROW_POINT, dir_path);
         }
         std::set<std::string, std::less<>> keys;
         for (auto const &[filename, metadata]: content_.at(dir_path)) {
@@ -133,14 +133,22 @@ namespace simgrid::fsmod {
         return keys;
     }
 
+
+    void Partition::create_new_directory(const std::string &dir_path) {
+        if (content_.find(dir_path) != content_.end()) {
+            throw DirectoryAlreadyExistsException(XBT_THROW_POINT, dir_path);
+        }
+        this->content_[dir_path] = (std::unordered_map<std::string, std::unique_ptr<FileMetadata>>){};
+    }
+
     void Partition::delete_directory(const std::string &dir_path) {
         if (content_.find(dir_path) == content_.end()) {
-            throw simgrid::fsmod::DirectoryDoesNotExistException(XBT_THROW_POINT, dir_path);
+            throw DirectoryDoesNotExistException(XBT_THROW_POINT, dir_path);
         }
         // Check that no file is open
         for (const auto &[filename, metadata]: content_.at(dir_path)) {
             if (metadata->get_file_refcount() != 0) {
-                throw simgrid::fsmod::FileIsOpenException(XBT_THROW_POINT, "No content deleted in directory before file " + filename + " is open");
+                throw FileIsOpenException(XBT_THROW_POINT, "No content deleted in directory before file " + filename + " is open");
             }
         }
         // Wipe everything out
@@ -149,7 +157,7 @@ namespace simgrid::fsmod {
 
 
     void Partition::create_space(sg_size_t num_bytes) {
-        throw simgrid::fsmod::NotEnoughSpaceException(XBT_THROW_POINT);
+        throw NotEnoughSpaceException(XBT_THROW_POINT);
     }
 
     void Partition::new_file_creation_event(FileMetadata *file_metadata) {

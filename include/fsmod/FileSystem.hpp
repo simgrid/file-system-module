@@ -20,9 +20,9 @@
 
 namespace simgrid::fsmod {
 
-	/**
- 	* @brief A class that implements a file system abstraction
- 	*/
+    /**
+     * @brief A class that implements a file system abstraction
+     */
     class XBT_PUBLIC FileSystem {
         const std::string name_;
         int max_num_open_files_;
@@ -40,12 +40,15 @@ namespace simgrid::fsmod {
         void create_file(const std::string& full_path, const std::string& size) const;
 
         [[nodiscard]] bool file_exists(const std::string& full_path) const;
-        [[nodiscard]] bool directory_exists(const std::string& full_dir_path) const;
-        [[nodiscard]] std::set<std::string, std::less<>> list_files_in_directory(const std::string& full_dir_path) const;
 
         void move_file(const std::string& src_full_path, const std::string& dst_full_path) const;
         void unlink_file(const std::string& full_path) const;
+
+
+        void create_directory(const std::string& full_dir_path) const;
+        [[nodiscard]] bool directory_exists(const std::string& full_dir_path) const;
         void unlink_directory(const std::string& full_dir_path) const;
+        [[nodiscard]] std::set<std::string, std::less<>> list_files_in_directory(const std::string& full_dir_path) const;
 
         [[nodiscard]] sg_size_t file_size(const std::string& full_path) const;
 
@@ -59,7 +62,7 @@ namespace simgrid::fsmod {
         [[nodiscard]] std::shared_ptr<Partition> get_partition_for_path_or_null(const std::string& full_path) const;
 
 
-            private:
+    private:
         [[nodiscard]] std::pair<std::shared_ptr<Partition>, std::string> find_path_at_mount_point(const std::string &full_path) const;
 
         std::map<std::string, std::shared_ptr<Partition>, std::less<>> partitions_;

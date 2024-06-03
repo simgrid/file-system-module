@@ -142,6 +142,12 @@ TEST_F(FileSystemTest, Directories)  {
             ASSERT_THROW(fs_->unlink_directory("/dev/a/b/d"), sgfs::DirectoryDoesNotExistException);
             ASSERT_FALSE(fs_->directory_exists("/dev/a/b/d"));
 
+            ASSERT_THROW(fs_->create_directory("/whatever/bogus"), sgfs::InvalidPathException);
+            ASSERT_THROW(fs_->create_directory("/dev/a/foo.txt"), sgfs::InvalidPathException);
+            ASSERT_NO_THROW(fs_->create_directory("/dev/a/new_dir"));
+            ASSERT_THROW(fs_->create_directory("/dev/a/new_dir"), sgfs::DirectoryAlreadyExistsException);
+            ASSERT_NO_THROW(fs_->unlink_directory("/dev/a/new_dir"));
+
 
             XBT_INFO("Try to unlink a directory in which one file is opened. This shouldn't work");
             std::shared_ptr<sgfs::File> file;
