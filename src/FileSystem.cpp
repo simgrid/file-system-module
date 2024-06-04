@@ -133,8 +133,8 @@ namespace simgrid::fsmod {
     std::vector<std::shared_ptr<Partition>> FileSystem::get_partitions() const {
         std::vector<std::shared_ptr<Partition>> to_return;
         to_return.reserve(this->partitions_.size());
-        for (auto const &p : this->partitions_) {
-            to_return.push_back(p.second);
+        for (auto const & [mount_point, partition] : this->partitions_) {
+            to_return.push_back(partition);
         }
         return to_return;
     }
@@ -147,9 +147,9 @@ namespace simgrid::fsmod {
     std::shared_ptr<Partition> FileSystem::get_partition_for_path_or_null(const std::string& full_path) const {
         std::string simplified_path = PathUtil::simplify_path_string(full_path);
         try {
-            std::pair<std::shared_ptr<Partition>, std::string> info = this->find_path_at_mount_point(simplified_path);
-            return info.first;
-        } catch (InvalidPathException &e) {
+            auto [partition, mount_point] = this->find_path_at_mount_point(simplified_path);
+            return partition;
+        } catch (InvalidPathException&) {
             return nullptr;
         }
     }
@@ -313,7 +313,7 @@ namespace simgrid::fsmod {
             auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
             auto [dir, file_name] = PathUtil::split_path(path_at_mount_point);
             return (partition->get_file_metadata(dir, file_name) != nullptr);
-        } catch (simgrid::Exception &e) {
+        } catch (simgrid::Exception&) {
             return false;
         }
     }

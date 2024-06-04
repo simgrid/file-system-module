@@ -71,8 +71,8 @@ namespace simgrid::fsmod {
          */
         [[nodiscard]] sg_size_t get_num_files() const {
             sg_size_t to_return = 0;
-            for (auto const &d : content_) {
-                to_return += d.second.size();
+            for (auto const &[dir_path, files] : content_) {
+                to_return += files.size();
             }
             return to_return;
         }
