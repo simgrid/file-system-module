@@ -84,6 +84,7 @@ if(GTEST_LIBRARY)
 			test/file_system_test.cpp
 			test/seek_test.cpp
 			test/caching_test.cpp
+			test/register_test.cpp
 			test/stat_test.cpp
 			test/main.cpp
 			test/test_util.hpp

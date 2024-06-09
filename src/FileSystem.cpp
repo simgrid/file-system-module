@@ -3,9 +3,11 @@
 /* This program is free software; you can redistribute it and/or modify it
  * under the terms of the license (GNU LGPL) which comes with this package. */
 
+#include <simgrid/kernel/routing/NetZoneImpl.hpp>
+#include <simgrid/s4u/Actor.hpp>
+
 #include <algorithm>
 #include <memory>
-
 #include <utility>
 
 #include "fsmod/FileSystem.hpp"
@@ -19,6 +21,13 @@
 XBT_LOG_NEW_DEFAULT_CATEGORY(fsmod_filesystem, "File System module: File system management related logs");
 
 namespace simgrid::fsmod {
+    // Create the static field that the extension mechanism needs
+    xbt::Extension<kernel::routing::NetZoneImpl, FileSystemNetZoneImplExtension>
+        FileSystemNetZoneImplExtension::EXTENSION_ID;
+
+    void FileSystemNetZoneImplExtension::register_file_system(const std::shared_ptr<FileSystem>& fs) {
+        file_systems_[fs->get_name()] = std::move(fs);
+    }
 
     /**
      * @brief Private method to find the partition and path at mount point for an absolute path
@@ -99,6 +108,40 @@ namespace simgrid::fsmod {
                         std::make_shared<Partition>(cleanup_mount_point, std::move(storage), size);
                 break;
         }
+    }
+
+   /**
+    * @brief Register a file system in the NetZone it belongs (static function)
+    *
+    * @param netzone The SimGrid NetZone
+    * @param fs The FSMOD file system
+    */
+    void FileSystem::register_file_system(s4u::NetZone* netzone, std::shared_ptr<FileSystem> fs) {
+        if (not FileSystemNetZoneImplExtension::EXTENSION_ID.valid()) {
+            // This is the first time we register a FileSystem, register the NetZoneImpls extension properly
+            FileSystemNetZoneImplExtension::EXTENSION_ID =
+                kernel::routing::NetZoneImpl::extension_create<FileSystemNetZoneImplExtension>();
+        }
+        auto pimpl = netzone->get_impl();
+        // If this NetZoneImpl doesn't have an extension yet, create one
+        if (not pimpl->extension<FileSystemNetZoneImplExtension>())
+           pimpl->extension_set(new FileSystemNetZoneImplExtension(pimpl));
+
+        pimpl->extension<FileSystemNetZoneImplExtension>()->register_file_system(fs);
+    }
+
+    /**
+     * @brief Get all the file systems an actor has access to (static function)
+     *
+     * This corresponds to the file systems in the NetZone wherein the Host on which the Actor runs is.
+     *
+     * @param actor The actor asking for all the file systems it can access
+     * @return A file system map, using names as keys
+     */
+    std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>
+    FileSystem::get_file_systems_by_actor(s4u::ActorPtr actor) {
+        auto* netzone_impl = actor->get_host()->get_englobing_zone()->get_impl();
+        return netzone_impl->extension<FileSystemNetZoneImplExtension>()->get_all_file_systems();
     }
 
     /**

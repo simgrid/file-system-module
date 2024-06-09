@@ -1,0 +1,91 @@
+/* Copyright (c) 2024. The FSMOD Team. All rights reserved.          */
+
+/* This program is free software; you can redistribute it and/or modify it
+ * under the terms of the license (GNU LGPL) which comes with this package. */
+
+#include <gtest/gtest.h>
+#include <iostream>
+
+#include <simgrid/s4u/Engine.hpp>
+#include <simgrid/s4u/Actor.hpp>
+
+#include "fsmod/FileSystem.hpp"
+#include "fsmod/OneDiskStorage.hpp"
+#include "fsmod/FileSystemException.hpp"
+
+#include "./test_util.hpp"
+
+namespace sgfs=simgrid::fsmod;
+namespace sg4=simgrid::s4u;
+
+XBT_LOG_NEW_DEFAULT_CATEGORY(register_test, "Stat Test");
+
+class RegisterTest : public ::testing::Test {
+public:
+
+    RegisterTest() = default;
+
+    void setup_platform() {
+        XBT_INFO("Creating a platform with 3 netzones with one host and one disk in each...");
+        auto *root_zone = sg4::create_full_zone("root_zone");
+        for (int i = 0; i < 3; i++) {
+            std::string index = std::to_string(i);
+            XBT_INFO("Creating Zone: my_zone_%d", i);
+            auto* my_zone = sg4::create_full_zone("my_zone_" + index)->set_parent(root_zone);
+            auto host = my_zone->create_host("my_host_" + index, "100Gf");
+            auto disk = host->create_disk("disk_" + index, "1kBps", "2kBps");
+            my_zone->seal();
+            XBT_INFO("Creating a one-disk storage on the host's disk...");
+            auto ods = sgfs::OneDiskStorage::create("my_storage_" + index, disk);
+            XBT_INFO("Creating a file system...");
+            auto fs = sgfs::FileSystem::create("my_fs_" + index);
+            XBT_INFO("Mounting a 1MB partition...");
+            fs->mount_partition("/dev/a/", ods, "1MB");
+            XBT_INFO("Register the file system in the NetZone...");
+            sgfs::FileSystem::register_file_system(my_zone, fs);
+            if (i == 0) {
+                XBT_INFO("Creating a second file system in that zone...");
+                auto extra_fs = sgfs::FileSystem::create("my_extra_fs");
+                XBT_INFO("Register the file system in the NetZone...");
+                sgfs::FileSystem::register_file_system(my_zone, extra_fs);
+                XBT_INFO("Mounting a 10MB partition...");
+                extra_fs->mount_partition("/tmp/", ods, "10MB");
+            }
+        }
+        root_zone->seal();
+    }
+};
+
+TEST_F(RegisterTest, Retrieve)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+        auto hosts = sg4::Engine::get_instance()->get_all_hosts();
+        int index = 0;
+        for (const auto& h : hosts) {
+            sg4::Actor::create("TestActor", h, [this, index]() {
+                std::map<std::string, std::shared_ptr<sgfs::FileSystem>, std::less<>> accessible_file_systems;
+                std::shared_ptr<sgfs::FileSystem> fs;
+                std::shared_ptr<sgfs::File> file;
+                XBT_INFO("Retrieve the file systems this Actor can access");
+                ASSERT_NO_THROW(accessible_file_systems = sgfs::FileSystem::get_file_systems_by_actor(sg4::Actor::self()));
+                if (index == 0) {
+                    XBT_INFO("There should be only two (%lu)", accessible_file_systems.size());
+                    ASSERT_EQ(accessible_file_systems.size(), 2);
+                    ASSERT_NO_THROW(fs = accessible_file_systems["my_fs_0"]);
+                    ASSERT_EQ(fs->get_name(), "my_fs_0");
+                    ASSERT_NO_THROW(fs = accessible_file_systems["my_extra_fs"]);
+                    ASSERT_EQ(fs->get_name(), "my_extra_fs");
+                } else {
+                    XBT_INFO("There should be only one,");
+                    ASSERT_EQ(accessible_file_systems.size(), 1);
+                    ASSERT_NO_THROW(fs = accessible_file_systems["my_fs_" + std::to_string(index)]);
+                    ASSERT_EQ(fs->get_name(), "my_fs_" + std::to_string(index));
+                }
+            });
+            index++;
+        }
+
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}

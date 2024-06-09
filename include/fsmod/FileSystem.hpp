@@ -20,6 +20,22 @@
 
 namespace simgrid::fsmod {
 
+    class FileSystem;
+
+    class FileSystemNetZoneImplExtension {
+        kernel::routing::NetZoneImpl* netzone_ = nullptr;
+        std::map<std::string, std::shared_ptr<FileSystem>, std::less<>> file_systems_;
+    public:
+        static xbt::Extension<kernel::routing::NetZoneImpl, FileSystemNetZoneImplExtension> EXTENSION_ID;
+
+        explicit FileSystemNetZoneImplExtension(kernel::routing::NetZoneImpl* ptr): netzone_(ptr){}
+        FileSystemNetZoneImplExtension(kernel::routing::NetZoneImpl& ptr) = delete;
+        FileSystemNetZoneImplExtension& operator=(const FileSystemNetZoneImplExtension&) = delete;
+
+        void register_file_system(const std::shared_ptr<FileSystem>& fs);
+        std::map<std::string, std::shared_ptr<FileSystem>, std::less<>> get_all_file_systems() { return file_systems_;}
+    };
+
     /**
      * @brief A class that implements a file system abstraction
      */
@@ -71,6 +87,9 @@ namespace simgrid::fsmod {
 
         [[nodiscard]] std::vector<std::shared_ptr<Partition>> get_partitions() const;
         [[nodiscard]] std::shared_ptr<Partition> get_partition_for_path_or_null(const std::string& full_path) const;
+
+        static std::map<std::string, std::shared_ptr<FileSystem>, std::less<>> get_file_systems_by_actor(s4u::ActorPtr actor);
+        static void register_file_system(s4u::NetZone* netzone, std::shared_ptr<FileSystem> fs);
 
     private:
         [[nodiscard]] std::pair<std::shared_ptr<Partition>, std::string> find_path_at_mount_point(const std::string &full_path) const;
