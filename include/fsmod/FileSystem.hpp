@@ -29,6 +29,18 @@ namespace simgrid::fsmod {
 
     public:
         explicit FileSystem(std::string name, int max_num_open_files) : name_(std::move(name)), max_num_open_files_(max_num_open_files) {};
+
+        /**
+         * @brief Retrieves the file system's name
+         * @return a name
+         */
+        [[nodiscard]] const std::string& get_name() const { return name_; }
+        /**
+         * @brief Retrieves the file system's name as a C-style string
+         * @return a name
+         */
+        [[nodiscard]] const char* get_cname() const { return name_.c_str(); }
+
         static std::shared_ptr<FileSystem> create(const std::string &name, int max_num_open_files = 1024);
 
         void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, sg_size_t size,
