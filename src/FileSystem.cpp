@@ -157,6 +157,17 @@ namespace simgrid::fsmod {
         }
     }
 
+    const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>&
+    FileSystem::get_file_systems_by_netzone(s4u::NetZone* netzone) {
+        auto* extension = netzone->get_impl()->extension<FileSystemNetZoneImplExtension>();
+        if (extension) {
+             return extension->get_all_file_systems();
+        } else {
+            static const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>& empty = {};
+            return empty;
+        }
+    }
+
     /**
      * @brief Retrieve a partition by name (i.e., mount point), and throw an exception if no such partition exists
      * @param name: A name (i.e., mount point)

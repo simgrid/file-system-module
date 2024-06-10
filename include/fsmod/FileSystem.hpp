@@ -48,7 +48,10 @@ namespace simgrid::fsmod {
 
 
         static std::shared_ptr<FileSystem> create(const std::string &name, int max_num_open_files = 1024);
-        static const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>& get_file_systems_by_actor(s4u::ActorPtr actor);
+        static const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>&
+            get_file_systems_by_actor(s4u::ActorPtr actor);
+        static const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>&
+            get_file_systems_by_netzone(s4u::NetZone* netzone);
         static void register_file_system(s4u::NetZone* netzone, std::shared_ptr<FileSystem> fs);
 
         /**

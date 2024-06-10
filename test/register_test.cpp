@@ -57,7 +57,7 @@ public:
     }
 };
 
-TEST_F(RegisterTest, Retrieve)  {
+TEST_F(RegisterTest, RetrieveByActor)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
         auto hosts = sg4::Engine::get_instance()->get_all_hosts();
@@ -83,6 +83,34 @@ TEST_F(RegisterTest, Retrieve)  {
                     ASSERT_EQ(fs->get_name(), "my_fs_" + std::to_string(index));
                 }
             });
+            index++;
+        }
+
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
+
+TEST_F(RegisterTest, RetrieveByZone)  {
+    DO_TEST_WITH_FORK([this]() {
+        xbt_log_control_set("root.thresh:info");
+        this->setup_platform();
+        auto netzones = sg4::Engine::get_instance()->get_all_netzones();
+        int index = -1;
+        for (const auto& nz : netzones) {
+            XBT_INFO("Looking for file systems in NetZone '%s'", nz->get_cname());
+            std::map<std::string, std::shared_ptr<sgfs::FileSystem>, std::less<>> accessible_file_systems;
+            ASSERT_NO_THROW(accessible_file_systems = sgfs::FileSystem::get_file_systems_by_netzone(nz));
+            if (nz->get_name() == "root_zone") {
+                ASSERT_EQ(accessible_file_systems.size(), 0);
+            } else if (index == 0) {
+                ASSERT_EQ(accessible_file_systems.size(), 2);
+            } else {
+                ASSERT_EQ(accessible_file_systems.size(), 1);
+                auto [name, fs] = *accessible_file_systems.begin();
+                ASSERT_EQ(name, "my_fs_" + std::to_string(index));
+                ASSERT_EQ(fs->get_name(), "my_fs_" + std::to_string(index));
+            }
             index++;
         }
 
