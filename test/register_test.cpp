@@ -6,8 +6,9 @@
 #include <gtest/gtest.h>
 #include <iostream>
 
-#include <simgrid/s4u/Engine.hpp>
 #include <simgrid/s4u/Actor.hpp>
+#include <simgrid/s4u/Engine.hpp>
+#include <simgrid/s4u/Exec.hpp>
 
 #include "fsmod/FileSystem.hpp"
 #include "fsmod/OneDiskStorage.hpp"
@@ -90,27 +91,42 @@ TEST_F(RegisterTest, Retrieve)  {
     });
 }
 
-TEST_F(RegisterTest, Maestro)  {
+TEST_F(RegisterTest, NoActor)  {
     DO_TEST_WITH_FORK([this]() {
         XBT_INFO("Creating a very small platform");
         auto *root_zone = sg4::create_full_zone("root_zone");
         auto host = root_zone->create_host("my_host", "100Gf");
-        auto disk = host->create_disk("disk", "1kBps", "2kBps");
+        auto disk = host->create_disk("disk", "1MBps", "2MBps");
         auto ods = sgfs::OneDiskStorage::create("my_storage", disk);
         root_zone->seal();
 
-        auto maestro = sg4::Actor::self();
-        XBT_INFO("Test if maestro has access to some file systems (it doesn't)");
-        ASSERT_EQ(sgfs::FileSystem::get_file_systems_by_actor(maestro).empty(), true);
+        XBT_INFO("Test we can has access to some file systems with no actor (we can't)");
+        ASSERT_EQ(sgfs::FileSystem::get_file_systems_by_actor(nullptr).empty(), true);
 
         XBT_INFO("Create and register a file system in the Root NetZone...");
-        std::shared_ptr<sgfs::FileSystem> root_fs;
-        ASSERT_NO_THROW(root_fs = sgfs::FileSystem::create("root_fs"));
-        ASSERT_NO_THROW(sgfs::FileSystem::register_file_system(sg4::Engine::get_instance()->get_netzone_root(), root_fs));
-        root_fs->mount_partition("/root/", ods, "10MB");
+        ASSERT_NO_THROW(sgfs::FileSystem::register_file_system(sg4::Engine::get_instance()->get_netzone_root(),
+                                                               sgfs::FileSystem::create("root_fs")));
 
-        XBT_INFO("Test if maestro has access to some file systems (it now should)");
-        maestro = sg4::Actor::self();
-        ASSERT_EQ(sgfs::FileSystem::get_file_systems_by_actor(maestro).size(), 1);
+        XBT_INFO("Test if we can access to some file systems (we now should)");
+        std::map<std::string, std::shared_ptr<sgfs::FileSystem>, std::less<>> accessible_file_systems;
+        ASSERT_NO_THROW(accessible_file_systems = sgfs::FileSystem::get_file_systems_by_actor(nullptr));
+
+        std::shared_ptr<sgfs::FileSystem> root_fs;
+        std::shared_ptr<sgfs::File> file;
+        sg4::IoPtr my_write;
+
+        XBT_INFO("Retrieve the 'root_fs' file system");
+        ASSERT_NO_THROW(root_fs = accessible_file_systems["root_fs"]);
+        XBT_INFO("Mounting a 10MB partition...");
+        ASSERT_NO_THROW(root_fs->mount_partition("/root/", ods, "10MB"));
+        XBT_INFO("Open File '/root/foo.txt'");
+        ASSERT_NO_THROW(file = root_fs->open("/root/foo.txt", "w"));
+        XBT_INFO("Write 1MB at /root/foo.txt");
+        ASSERT_NO_THROW(my_write = file->write_async("1MB"));
+
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        XBT_INFO("Simulation time %g", sg4::Engine::get_clock());
+        ASSERT_NO_THROW(root_fs->close(file));
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 };
