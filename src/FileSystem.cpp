@@ -5,6 +5,7 @@
 
 #include <simgrid/kernel/routing/NetZoneImpl.hpp>
 #include <simgrid/s4u/Actor.hpp>
+#include <simgrid/s4u/Engine.hpp>
 
 #include <algorithm>
 #include <memory>
@@ -111,7 +112,7 @@ namespace simgrid::fsmod {
     }
 
    /**
-    * @brief Register a file system in the NetZone it belongs (static function)
+    * @brief Register a file system in the NetZone it belongs.
     *
     * @param netzone The SimGrid NetZone
     * @param fs The FSMOD file system
@@ -131,17 +132,29 @@ namespace simgrid::fsmod {
     }
 
     /**
-     * @brief Get all the file systems an actor has access to (static function)
+     * @brief Get all the file systems an actor has access to.
      *
      * This corresponds to the file systems in the NetZone wherein the Host on which the Actor runs is.
      *
      * @param actor The actor asking for all the file systems it can access
      * @return A file system map, using names as keys
      */
-    std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>
+    const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>&
     FileSystem::get_file_systems_by_actor(s4u::ActorPtr actor) {
-        auto* netzone_impl = actor->get_host()->get_englobing_zone()->get_impl();
-        return netzone_impl->extension<FileSystemNetZoneImplExtension>()->get_all_file_systems();
+        kernel::routing::NetZoneImpl* netzone_impl;
+        if (not actor || actor->is_maestro()) {
+            netzone_impl = s4u::Engine::get_instance()->get_netzone_root()->get_impl();
+        } else {
+            netzone_impl = actor->get_host()->get_englobing_zone()->get_impl();
+        }
+
+        auto* extension = netzone_impl->extension<FileSystemNetZoneImplExtension>();
+        if (extension) {
+             return extension->get_all_file_systems();
+        } else {
+            static const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>& empty = {};
+            return empty;
+        }
     }
 
     /**

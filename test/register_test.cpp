@@ -89,3 +89,28 @@ TEST_F(RegisterTest, Retrieve)  {
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
+
+TEST_F(RegisterTest, Maestro)  {
+    DO_TEST_WITH_FORK([this]() {
+        XBT_INFO("Creating a very small platform");
+        auto *root_zone = sg4::create_full_zone("root_zone");
+        auto host = root_zone->create_host("my_host", "100Gf");
+        auto disk = host->create_disk("disk", "1kBps", "2kBps");
+        auto ods = sgfs::OneDiskStorage::create("my_storage", disk);
+        root_zone->seal();
+
+        auto maestro = sg4::Actor::self();
+        XBT_INFO("Test if maestro has access to some file systems (it doesn't)");
+        ASSERT_EQ(sgfs::FileSystem::get_file_systems_by_actor(maestro).empty(), true);
+
+        XBT_INFO("Create and register a file system in the Root NetZone...");
+        std::shared_ptr<sgfs::FileSystem> root_fs;
+        ASSERT_NO_THROW(root_fs = sgfs::FileSystem::create("root_fs"));
+        ASSERT_NO_THROW(sgfs::FileSystem::register_file_system(sg4::Engine::get_instance()->get_netzone_root(), root_fs));
+        root_fs->mount_partition("/root/", ods, "10MB");
+
+        XBT_INFO("Test if maestro has access to some file systems (it now should)");
+        maestro = sg4::Actor::self();
+        ASSERT_EQ(sgfs::FileSystem::get_file_systems_by_actor(maestro).size(), 1);
+    });
+};
