@@ -23,9 +23,6 @@ namespace simgrid::fsmod {
         void read(sg_size_t size) override;
         s4u::IoPtr write_async(sg_size_t size) override;
         void write(sg_size_t size) override;
-
-    private:
-
     };
 } // namespace simgrid::fsmod
 
