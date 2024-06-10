@@ -22,8 +22,9 @@ namespace simgrid::fsmod {
         set_disk(disk);
         set_controller_host(disk->get_host());
         // Create a no-op controller
-        mq_ = s4u::MessageQueue::by_name(name+"_controller_mq");
-        set_controller(s4u::Actor::create(name+"_controller", get_controller_host(), [this](){ mq_->get<void*>(); })->daemonize());
+        set_controller(s4u::Actor::create(name+"_controller", get_controller_host(), [this]() {
+            get_message_queue()->get<void*>();
+        })->daemonize());
     }
 
     s4u::IoPtr OneDiskStorage::read_async(sg_size_t size) {

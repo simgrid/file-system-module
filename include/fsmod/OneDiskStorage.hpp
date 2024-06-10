@@ -6,7 +6,6 @@
 /* This program is free software; you can redistribute it and/or modify it
  * under the terms of the license (GNU LGPL) which comes with this package. */
 
-#include <simgrid/s4u/MessageQueue.hpp>
 #include "Storage.hpp"
 
 namespace simgrid::fsmod {
@@ -26,7 +25,7 @@ namespace simgrid::fsmod {
         void write(sg_size_t size) override;
 
     private:
-        s4u::MessageQueue *mq_;
+
     };
 } // namespace simgrid::fsmod
 

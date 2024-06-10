@@ -34,8 +34,9 @@ namespace simgrid::fsmod {
         parity_disk_idx_ = num_disks_ - 1;
         set_controller_host(get_first_disk()->get_host());
         // Create a no-op controller
-        mq_ = s4u::MessageQueue::by_name(name+"_controller_mq");
-        set_controller(s4u::Actor::create(name+"_controller", get_controller_host(), [this](){ mq_->get<void*>(); })->daemonize());
+        set_controller(s4u::Actor::create(name+"_controller", get_controller_host(), [this]() {
+            get_message_queue()->get<void*>();
+        })->daemonize());
     }
 
     void JBODStorage::set_raid_level(RAID raid_level) {

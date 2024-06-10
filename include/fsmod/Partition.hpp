@@ -106,9 +106,7 @@ namespace simgrid::fsmod {
         void delete_directory(const std::string &dir_path);
 
         [[nodiscard]] FileMetadata* get_file_metadata(const std::string& dir_path, const std::string& file_name) const;
-        void create_new_file(const std::string& dir_path,
-                             const std::string& file_name,
-                             sg_size_t size);
+        void create_new_file(const std::string& dir_path, const std::string& file_name, sg_size_t size);
         void move_file(const std::string& src_dir_path, const std::string& src_file_name,
                        const std::string& dst_dir_path, const std::string& dst_file_name);
 

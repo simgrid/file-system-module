@@ -9,10 +9,10 @@
 #include <simgrid/forward.h> // sg_size_t
 #include <xbt.h>
 #include <xbt/config.h>
-#include <utility>
 #include <xbt/parse_units.hpp>
 
 #include <memory>
+#include <utility>
 #include <vector>
 
 #include "Partition.hpp"
@@ -56,7 +56,6 @@ namespace simgrid::fsmod {
         void move_file(const std::string& src_full_path, const std::string& dst_full_path) const;
         void unlink_file(const std::string& full_path) const;
 
-
         void create_directory(const std::string& full_dir_path) const;
         [[nodiscard]] bool directory_exists(const std::string& full_dir_path) const;
         void unlink_directory(const std::string& full_dir_path) const;
@@ -72,7 +71,6 @@ namespace simgrid::fsmod {
 
         [[nodiscard]] std::vector<std::shared_ptr<Partition>> get_partitions() const;
         [[nodiscard]] std::shared_ptr<Partition> get_partition_for_path_or_null(const std::string& full_path) const;
-
 
     private:
         [[nodiscard]] std::pair<std::shared_ptr<Partition>, std::string> find_path_at_mount_point(const std::string &full_path) const;
