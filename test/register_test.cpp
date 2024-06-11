@@ -93,7 +93,6 @@ TEST_F(RegisterTest, RetrieveByActor)  {
 
 TEST_F(RegisterTest, RetrieveByZone)  {
     DO_TEST_WITH_FORK([this]() {
-        xbt_log_control_set("root.thresh:info");
         this->setup_platform();
         auto netzones = sg4::Engine::get_instance()->get_all_netzones();
         int index = -1;
