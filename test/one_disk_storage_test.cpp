@@ -6,8 +6,9 @@
 #include <gtest/gtest.h>
 #include <iostream>
 
-#include <simgrid/s4u/Engine.hpp>
+#include <simgrid/s4u/ActivitySet.hpp>
 #include <simgrid/s4u/Actor.hpp>
+#include <simgrid/s4u/Engine.hpp>
 
 #include "fsmod/PathUtil.hpp"
 #include "fsmod/FileSystem.hpp"
@@ -155,6 +156,35 @@ TEST_F(OneDiskStorageTest, SingleAsyncWrite)  {
             ASSERT_DOUBLE_EQ(file->get_num_bytes_written(my_write), 2000000);
             XBT_INFO("Close the file");
             ASSERT_NO_THROW(fs_->close(file));
+        });
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
+
+TEST_F(OneDiskStorageTest, DoubleAsyncAppend)  {
+    DO_TEST_WITH_FORK([this]() {
+        xbt_log_control_set("root.thresh:info");
+        this->setup_platform();
+        sg4::Actor::create("TestActor", host_, [this]() {
+            std::shared_ptr<sgfs::File> file;
+            sg4::ActivitySet pending_writes;
+            XBT_INFO("Create an empty file at /dev/a/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "0B"));
+            XBT_INFO("Open File '/dev/a/foo.txt' in append mode");
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "a"));
+            XBT_INFO("Asynchronously write 2MB at /dev/a/foo.txt");
+            ASSERT_NO_THROW(pending_writes.push(file->write_async("2MB")));
+            XBT_INFO("Sleep for .1 second");
+            ASSERT_NO_THROW(sg4::this_actor::sleep_for(0.1));
+            XBT_INFO("Asynchronously write another 2MB at /dev/a/foo.txt");
+            ASSERT_NO_THROW(pending_writes.push(file->write_async("2MB")));
+            XBT_INFO("Wait for completion of both write operations");
+            ASSERT_NO_THROW(pending_writes.wait_all());
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(fs_->close(file));
+            XBT_INFO("Check the file size, should be 4MB");
+            ASSERT_EQ(fs_->file_size("/dev/a/foo.txt"), 4*1000*1000);
         });
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());

@@ -83,8 +83,12 @@ namespace simgrid::fsmod {
     int File::write_init_checks(sg_size_t num_bytes) {
         static int sequence_number = -1;
         int my_sequence_number;
+
         if (access_mode_ != "w" && access_mode_ != "a")
             throw std::invalid_argument("Invalid access mode. Cannot write in 'r' mode'");
+
+        if (access_mode_ == "a" && current_position_ < metadata_->get_future_size())
+            current_position_ = metadata_->get_future_size();
 
         //TODO: Would be good to move some of the code below to FileMetadata, but that requires
         //      that FileMetadata know the partition....
