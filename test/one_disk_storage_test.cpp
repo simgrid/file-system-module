@@ -164,7 +164,6 @@ TEST_F(OneDiskStorageTest, SingleAsyncWrite)  {
 
 TEST_F(OneDiskStorageTest, DoubleAsyncAppend)  {
     DO_TEST_WITH_FORK([this]() {
-        xbt_log_control_set("root.thresh:info");
         this->setup_platform();
         sg4::Actor::create("TestActor", host_, [this]() {
             std::shared_ptr<sgfs::File> file;
