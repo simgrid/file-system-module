@@ -27,7 +27,7 @@ namespace simgrid::fsmod {
         FileSystemNetZoneImplExtension::EXTENSION_ID;
 
     void FileSystemNetZoneImplExtension::register_file_system(const std::shared_ptr<FileSystem>& fs) {
-        file_systems_[fs->get_name()] = std::move(fs);
+        file_systems_[fs->get_name()] = fs;
     }
 
     /**
@@ -117,7 +117,7 @@ namespace simgrid::fsmod {
     * @param netzone The SimGrid NetZone
     * @param fs The FSMOD file system
     */
-    void FileSystem::register_file_system(s4u::NetZone* netzone, std::shared_ptr<FileSystem> fs) {
+    void FileSystem::register_file_system(const s4u::NetZone* netzone, std::shared_ptr<FileSystem> fs) {
         if (not FileSystemNetZoneImplExtension::EXTENSION_ID.valid()) {
             // This is the first time we register a FileSystem, register the NetZoneImpls extension properly
             FileSystemNetZoneImplExtension::EXTENSION_ID =
@@ -126,7 +126,7 @@ namespace simgrid::fsmod {
         auto pimpl = netzone->get_impl();
         // If this NetZoneImpl doesn't have an extension yet, create one
         if (not pimpl->extension<FileSystemNetZoneImplExtension>())
-           pimpl->extension_set(new FileSystemNetZoneImplExtension(pimpl));
+           pimpl->extension_set(new FileSystemNetZoneImplExtension());
 
         pimpl->extension<FileSystemNetZoneImplExtension>()->register_file_system(fs);
     }
@@ -141,14 +141,14 @@ namespace simgrid::fsmod {
      */
     const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>&
     FileSystem::get_file_systems_by_actor(s4u::ActorPtr actor) {
-        kernel::routing::NetZoneImpl* netzone_impl;
-        if (not actor || actor->is_maestro()) {
+        const kernel::routing::NetZoneImpl* netzone_impl;
+        if (not actor || simgrid::s4u::Actor::is_maestro()) {
             netzone_impl = s4u::Engine::get_instance()->get_netzone_root()->get_impl();
         } else {
             netzone_impl = actor->get_host()->get_englobing_zone()->get_impl();
         }
 
-        auto* extension = netzone_impl->extension<FileSystemNetZoneImplExtension>();
+        const auto* extension = netzone_impl->extension<FileSystemNetZoneImplExtension>();
         if (extension) {
              return extension->get_all_file_systems();
         } else {
@@ -158,8 +158,8 @@ namespace simgrid::fsmod {
     }
 
     const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>&
-    FileSystem::get_file_systems_by_netzone(s4u::NetZone* netzone) {
-        auto* extension = netzone->get_impl()->extension<FileSystemNetZoneImplExtension>();
+    FileSystem::get_file_systems_by_netzone(const s4u::NetZone* netzone) {
+        const auto* extension = netzone->get_impl()->extension<FileSystemNetZoneImplExtension>();
         if (extension) {
              return extension->get_all_file_systems();
         } else {

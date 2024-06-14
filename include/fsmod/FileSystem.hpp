@@ -23,14 +23,9 @@ namespace simgrid::fsmod {
     class FileSystem;
 
     class FileSystemNetZoneImplExtension {
-        kernel::routing::NetZoneImpl* netzone_ = nullptr;
         std::map<std::string, std::shared_ptr<FileSystem>, std::less<>> file_systems_;
     public:
         static xbt::Extension<kernel::routing::NetZoneImpl, FileSystemNetZoneImplExtension> EXTENSION_ID;
-
-        explicit FileSystemNetZoneImplExtension(kernel::routing::NetZoneImpl* ptr): netzone_(ptr){}
-        FileSystemNetZoneImplExtension(kernel::routing::NetZoneImpl& ptr) = delete;
-        FileSystemNetZoneImplExtension& operator=(const FileSystemNetZoneImplExtension&) = delete;
 
         void register_file_system(const std::shared_ptr<FileSystem>& fs);
         const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>& get_all_file_systems() const { return file_systems_;}
@@ -51,8 +46,8 @@ namespace simgrid::fsmod {
         static const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>&
             get_file_systems_by_actor(s4u::ActorPtr actor);
         static const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>&
-            get_file_systems_by_netzone(s4u::NetZone* netzone);
-        static void register_file_system(s4u::NetZone* netzone, std::shared_ptr<FileSystem> fs);
+            get_file_systems_by_netzone(const s4u::NetZone* netzone);
+        static void register_file_system(const s4u::NetZone* netzone, std::shared_ptr<FileSystem> fs);
 
         /**
          * @brief Retrieves the file system's name
