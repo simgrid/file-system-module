@@ -65,8 +65,6 @@ namespace simgrid::fsmod {
          */
         [[nodiscard]] const char* get_cname() const { return name_.c_str(); }
 
-        static std::shared_ptr<FileSystem> create(const std::string &name, int max_num_open_files = 1024);
-
         void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, sg_size_t size,
                              Partition::CachingScheme caching_scheme  = Partition::CachingScheme::NONE);
         void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, const std::string& size,
@@ -95,9 +93,6 @@ namespace simgrid::fsmod {
 
         [[nodiscard]] std::vector<std::shared_ptr<Partition>> get_partitions() const;
         [[nodiscard]] std::shared_ptr<Partition> get_partition_for_path_or_null(const std::string& full_path) const;
-
-        static std::map<std::string, std::shared_ptr<FileSystem>, std::less<>> get_file_systems_by_actor(s4u::ActorPtr actor);
-        static void register_file_system(s4u::NetZone* netzone, std::shared_ptr<FileSystem> fs);
 
     private:
         [[nodiscard]] std::pair<std::shared_ptr<Partition>, std::string> find_path_at_mount_point(const std::string &full_path) const;
