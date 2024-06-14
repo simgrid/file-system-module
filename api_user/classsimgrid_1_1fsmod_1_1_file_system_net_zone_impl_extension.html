@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>simgrid::fsmod::Storage &mdash; FSMOD 0.1 documentation</title>
+  <title>simgrid::fsmod::FileSystemNetZoneImplExtension &mdash; FSMOD 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
@@ -23,7 +23,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="simgrid::fsmod::Partition" href="classsimgrid_1_1fsmod_1_1_partition.html" /> 
+    <link rel="next" title="simgrid::fsmod::JBODStorage" href="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage.html" />
+    <link rel="prev" title="simgrid::fsmod::FileSystem" href="classsimgrid_1_1fsmod_1_1_file_system.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,14 +53,14 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file.html">simgrid::fsmod::File</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system.html">simgrid::fsmod::FileSystem</a></li>
-<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system_net_zone_impl_extension.html">simgrid::fsmod::FileSystemNetZoneImplExtension</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">simgrid::fsmod::FileSystemNetZoneImplExtension</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod30FileSystemNetZoneImplExtensionE"><code class="docutils literal notranslate"><span class="pre">FileSystemNetZoneImplExtension</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage.html">simgrid::fsmod::JBODStorage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html">simgrid::fsmod::OneDiskStorage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html">simgrid::fsmod::Partition</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">simgrid::fsmod::Storage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod7StorageE"><code class="docutils literal notranslate"><span class="pre">Storage</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_storage.html">simgrid::fsmod::Storage</a></li>
 </ul>
 
         </div>
@@ -76,9 +77,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">simgrid::fsmod::Storage</li>
+      <li class="breadcrumb-item active">simgrid::fsmod::FileSystemNetZoneImplExtension</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/api_user/classsimgrid_1_1fsmod_1_1_storage.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/api_user/classsimgrid_1_1fsmod_1_1_file_system_net_zone_impl_extension.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -86,14 +87,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="simgrid-fsmod-storage">
-<span id="simgrid-storage"></span><h1>simgrid::fsmod::Storage<a class="headerlink" href="#simgrid-fsmod-storage" title="Link to this heading"></a></h1>
+  <section id="simgrid-fsmod-filesystemnetzoneimplextension">
+<span id="simgrid-filesystemnetzoneimplextension"></span><h1>simgrid::fsmod::FileSystemNetZoneImplExtension<a class="headerlink" href="#simgrid-fsmod-filesystemnetzoneimplextension" title="Link to this heading"></a></h1>
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod7StorageE">
-<span id="_CPPv3N7simgrid5fsmod7StorageE"></span><span id="_CPPv2N7simgrid5fsmod7StorageE"></span><span id="simgrid::fsmod::Storage"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_storage"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Storage</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod7StorageE" title="Link to this definition"></a><br /></dt>
-<dd><p>A class that iplements a storage abstraction. </p>
-<p>Subclassed by <a class="reference internal" href="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage.html#classsimgrid_1_1fsmod_1_1_j_b_o_d_storage"><span class="std std-ref">simgrid::fsmod::JBODStorage</span></a>, <a class="reference internal" href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html#classsimgrid_1_1fsmod_1_1_one_disk_storage"><span class="std std-ref">simgrid::fsmod::OneDiskStorage</span></a></p>
-</dd></dl>
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod30FileSystemNetZoneImplExtensionE">
+<span id="_CPPv3N7simgrid5fsmod30FileSystemNetZoneImplExtensionE"></span><span id="_CPPv2N7simgrid5fsmod30FileSystemNetZoneImplExtensionE"></span><span id="simgrid::fsmod::FileSystemNetZoneImplExtension"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system_net_zone_impl_extension"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FileSystemNetZoneImplExtension</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod30FileSystemNetZoneImplExtensionE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
 
 </section>
 
@@ -101,7 +100,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="classsimgrid_1_1fsmod_1_1_partition.html" class="btn btn-neutral float-left" title="simgrid::fsmod::Partition" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="classsimgrid_1_1fsmod_1_1_file_system.html" class="btn btn-neutral float-left" title="simgrid::fsmod::FileSystem" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage.html" class="btn btn-neutral float-right" title="simgrid::fsmod::JBODStorage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

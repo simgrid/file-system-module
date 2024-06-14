@@ -1,0 +1,9 @@
+.. _simgrid::FileSystemNetZoneImplExtension:
+
+simgrid::fsmod::FileSystemNetZoneImplExtension
+**********************************************
+
+.. doxygenclass:: simgrid::fsmod::FileSystemNetZoneImplExtension
+   :project: user
+   :members:
+
