@@ -23,7 +23,6 @@ XBT_LOG_NEW_DEFAULT_CATEGORY(register_test, "Stat Test");
 
 class RegisterTest : public ::testing::Test {
 public:
-
     RegisterTest() = default;
 
     void setup_platform() {
