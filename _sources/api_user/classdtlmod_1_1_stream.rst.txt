@@ -1,0 +1,9 @@
+.. _dtlmod::Stream:
+
+dtlmod::Stream
+**************
+
+.. doxygenclass:: dtlmod::Stream
+   :project: user
+   :members:
+

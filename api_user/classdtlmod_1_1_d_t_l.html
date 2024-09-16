@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dtlmod::DTL &mdash; DTLMOD 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="dtlmod::Engine" href="classdtlmod_1_1_engine.html" />
+    <link rel="prev" title="The Data Transport Layer Module: API Reference" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">dtlmod::DTL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod3DTLE"><code class="docutils literal notranslate"><span class="pre">DTL</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod3DTL10add_streamERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">DTL::add_stream()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod3DTL22has_active_connectionsEv"><code class="docutils literal notranslate"><span class="pre">DTL::has_active_connections()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod3DTL7connectEv"><code class="docutils literal notranslate"><span class="pre">DTL::connect()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod3DTL6createEv"><code class="docutils literal notranslate"><span class="pre">DTL::create()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod3DTL6createERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">DTL::create()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod3DTL10disconnectEv"><code class="docutils literal notranslate"><span class="pre">DTL::disconnect()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_engine.html">dtlmod::Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_stream.html">dtlmod::Stream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_variable.html">dtlmod::Variable</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DTLMOD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">dtlmod::DTL</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api_user/classdtlmod_1_1_d_t_l.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dtlmod-dtl">
+<span id="id1"></span><h1>dtlmod::DTL<a class="headerlink" href="#dtlmod-dtl" title="Link to this heading"></a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod3DTLE">
+<span id="_CPPv3N6dtlmod3DTLE"></span><span id="_CPPv2N6dtlmod3DTLE"></span><span id="dtlmod::DTL"></span><span class="target" id="classdtlmod_1_1_d_t_l"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DTL</span></span></span><a class="headerlink" href="#_CPPv4N6dtlmod3DTLE" title="Link to this definition"></a><br /></dt>
+<dd><p>A class that implements a Data Transport Layer abstraction. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod3DTL10add_streamERKNSt6stringE">
+<span id="_CPPv3N6dtlmod3DTL10add_streamERKNSt6stringE"></span><span id="_CPPv2N6dtlmod3DTL10add_streamERKNSt6stringE"></span><span id="dtlmod::DTL::add_stream__ssCR"></span><span class="target" id="classdtlmod_1_1_d_t_l_1a542388ff495a999688310b08a6ac1c3a"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classdtlmod_1_1_stream.html#_CPPv4N6dtlmod6StreamE" title="dtlmod::Stream"><span class="n"><span class="pre">Stream</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">add_stream</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod3DTL10add_streamERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Add a data stream to the Data Transport Layer. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – The name of the <a class="reference internal" href="classdtlmod_1_1_stream.html#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> to add to the <a class="reference internal" href="#classdtlmod_1_1_d_t_l"><span class="std std-ref">DTL</span></a>. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A handler on the newly created <a class="reference internal" href="classdtlmod_1_1_stream.html#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> object. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod3DTL22has_active_connectionsEv">
+<span id="_CPPv3NK6dtlmod3DTL22has_active_connectionsEv"></span><span id="_CPPv2NK6dtlmod3DTL22has_active_connectionsEv"></span><span id="dtlmod::DTL::has_active_connectionsC"></span><span class="target" id="classdtlmod_1_1_d_t_l_1a1c8d3a57270a333e50d51c7daa25b3b6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">has_active_connections</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod3DTL22has_active_connectionsEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Helper function to check whether some simulated actors are currently connected to the <a class="reference internal" href="#classdtlmod_1_1_d_t_l"><span class="std std-ref">DTL</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A boolean value. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod3DTL7connectEv">
+<span id="_CPPv3N6dtlmod3DTL7connectEv"></span><span id="_CPPv2N6dtlmod3DTL7connectEv"></span><span id="dtlmod::DTL::connect"></span><span class="target" id="classdtlmod_1_1_d_t_l_1a70560413dfed4fd2979ad8a132eebd43"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N6dtlmod3DTLE" title="dtlmod::DTL"><span class="n"><span class="pre">DTL</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">connect</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod3DTL7connectEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Connect an Actor to the Data Transport Layer. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A handler on the <a class="reference internal" href="#classdtlmod_1_1_d_t_l"><span class="std std-ref">DTL</span></a> object. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod3DTL6createEv">
+<span id="_CPPv3N6dtlmod3DTL6createEv"></span><span id="_CPPv2N6dtlmod3DTL6createEv"></span><span id="dtlmod::DTL::create"></span><span class="target" id="classdtlmod_1_1_d_t_l_1aba309f8a8899bd2617d7b4b00711b8d5"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">create</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod3DTL6createEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Create the Data Transport Layer. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod3DTL6createERKNSt6stringE">
+<span id="_CPPv3N6dtlmod3DTL6createERKNSt6stringE"></span><span id="_CPPv2N6dtlmod3DTL6createERKNSt6stringE"></span><span id="dtlmod::DTL::create__ssCR"></span><span class="target" id="classdtlmod_1_1_d_t_l_1a5d5b2ea7751fc37fa179dc474f5c5426"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">create</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">filename</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod3DTL6createERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Create the Data Transport Layer. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> – a JSON configuration file that provide stream parameters. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod3DTL10disconnectEv">
+<span id="_CPPv3N6dtlmod3DTL10disconnectEv"></span><span id="_CPPv2N6dtlmod3DTL10disconnectEv"></span><span id="dtlmod::DTL::disconnect"></span><span class="target" id="classdtlmod_1_1_d_t_l_1a4a12ce8211f857b32e93a4ade6af5843"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">disconnect</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod3DTL10disconnectEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Disconnect an Actor to the Data Transport Layer. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="The Data Transport Layer Module: API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="classdtlmod_1_1_engine.html" class="btn btn-neutral float-right" title="dtlmod::Engine" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, SWAT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

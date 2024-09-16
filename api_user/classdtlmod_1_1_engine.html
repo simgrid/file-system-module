@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dtlmod::Engine &mdash; DTLMOD 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="dtlmod::Stream" href="classdtlmod_1_1_stream.html" />
+    <link rel="prev" title="dtlmod::DTL" href="classdtlmod_1_1_d_t_l.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_d_t_l.html">dtlmod::DTL</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">dtlmod::Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6EngineE"><code class="docutils literal notranslate"><span class="pre">Engine</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Engine4TypeE"><code class="docutils literal notranslate"><span class="pre">Engine::Type</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6dtlmod6Engine4Type9UndefinedE"><code class="docutils literal notranslate"><span class="pre">Engine::Type::Undefined</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6dtlmod6Engine4Type4FileE"><code class="docutils literal notranslate"><span class="pre">Engine::Type::File</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6dtlmod6Engine4Type7StagingE"><code class="docutils literal notranslate"><span class="pre">Engine::Type::Staging</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Engine17begin_transactionEv"><code class="docutils literal notranslate"><span class="pre">Engine::begin_transaction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Engine5closeEv"><code class="docutils literal notranslate"><span class="pre">Engine::close()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Engine15end_transactionEv"><code class="docutils literal notranslate"><span class="pre">Engine::end_transaction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Engine3getENSt10shared_ptrI8VariableEE"><code class="docutils literal notranslate"><span class="pre">Engine::get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Engine9get_cnameEv"><code class="docutils literal notranslate"><span class="pre">Engine::get_cname()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Engine23get_current_transactionEv"><code class="docutils literal notranslate"><span class="pre">Engine::get_current_transaction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Engine8get_nameEv"><code class="docutils literal notranslate"><span class="pre">Engine::get_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Engine3putENSt10shared_ptrI8VariableEE6size_t"><code class="docutils literal notranslate"><span class="pre">Engine::put()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_stream.html">dtlmod::Stream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_variable.html">dtlmod::Variable</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DTLMOD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">dtlmod::Engine</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api_user/classdtlmod_1_1_engine.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dtlmod-engine">
+<span id="id1"></span><h1>dtlmod::Engine<a class="headerlink" href="#dtlmod-engine" title="Link to this heading"></a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6EngineE">
+<span id="_CPPv3N6dtlmod6EngineE"></span><span id="_CPPv2N6dtlmod6EngineE"></span><span id="dtlmod::Engine"></span><span class="target" id="classdtlmod_1_1_engine"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Engine</span></span></span><a class="headerlink" href="#_CPPv4N6dtlmod6EngineE" title="Link to this definition"></a><br /></dt>
+<dd><p>A class that interface the <a class="reference internal" href="classdtlmod_1_1_stream.html#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> defined by users and the Transport methods that actually handle data movement and storage. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum-class">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Engine4TypeE">
+<span id="_CPPv3N6dtlmod6Engine4TypeE"></span><span id="_CPPv2N6dtlmod6Engine4TypeE"></span><span class="target" id="classdtlmod_1_1_engine_1afdcf07a079702ca2e330221125a10285"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Type</span></span></span><a class="headerlink" href="#_CPPv4N6dtlmod6Engine4TypeE" title="Link to this definition"></a><br /></dt>
+<dd><p>An enum that defines the type of <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a> supported by the <a class="reference internal" href="classdtlmod_1_1_d_t_l.html#classdtlmod_1_1_d_t_l"><span class="std std-ref">DTL</span></a>. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Engine4Type9UndefinedE">
+<span id="_CPPv3N6dtlmod6Engine4Type9UndefinedE"></span><span id="_CPPv2N6dtlmod6Engine4Type9UndefinedE"></span><span class="target" id="classdtlmod_1_1_engine_1afdcf07a079702ca2e330221125a10285aec0fc0100c4fc1ce4eea230c3dc10360"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Undefined</span></span></span><a class="headerlink" href="#_CPPv4N6dtlmod6Engine4Type9UndefinedE" title="Link to this definition"></a><br /></dt>
+<dd><p>The <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a> Type has not nee specified yet. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Engine4Type4FileE">
+<span id="_CPPv3N6dtlmod6Engine4Type4FileE"></span><span id="_CPPv2N6dtlmod6Engine4Type4FileE"></span><span class="target" id="classdtlmod_1_1_engine_1afdcf07a079702ca2e330221125a10285a0b27918290ff5323bea1e3b78a9cf04e"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">File</span></span></span><a class="headerlink" href="#_CPPv4N6dtlmod6Engine4Type4FileE" title="Link to this definition"></a><br /></dt>
+<dd><p>File <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>. Relies on files written to and read from a file system to transport data from publisher(s) to subscriber(s). </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Engine4Type7StagingE">
+<span id="_CPPv3N6dtlmod6Engine4Type7StagingE"></span><span id="_CPPv2N6dtlmod6Engine4Type7StagingE"></span><span class="target" id="classdtlmod_1_1_engine_1afdcf07a079702ca2e330221125a10285a1bee0d8aaede29ac319901e96850adee"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Staging</span></span></span><a class="headerlink" href="#_CPPv4N6dtlmod6Engine4Type7StagingE" title="Link to this definition"></a><br /></dt>
+<dd><p>Staging <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>. Relies on communications to to transport data from publisher(s) to subscriber(s). </p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Engine17begin_transactionEv">
+<span id="_CPPv3N6dtlmod6Engine17begin_transactionEv"></span><span id="_CPPv2N6dtlmod6Engine17begin_transactionEv"></span><span id="dtlmod::Engine::begin_transaction"></span><span class="target" id="classdtlmod_1_1_engine_1aa1a277ccd8e262dd9f77ba400df6c5ec"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">begin_transaction</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod6Engine17begin_transactionEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Start a transaction on an <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>. </p>
+<p>All put and get operations must take place within a transaction (in a sense close to that used for databases). When multiple actors have opened the same <a class="reference internal" href="classdtlmod_1_1_stream.html#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> and thus subscribed to the same <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>, only one of them has to do the following when a transaction begins, this function is a no-op for the other subscribers:<ol class="lowerroman simple">
+<li><p>if no transaction is currently in progress, start one, exit otherwise</p></li>
+<li><p>if this is the first transaction for that <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>, create a synchronization barrier among all the subscribers.</p></li>
+<li><p>Otherwise, wait for the completion of the simulated activities started by the previous transaction. </p></li>
+</ol>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Engine5closeEv">
+<span id="_CPPv3N6dtlmod6Engine5closeEv"></span><span id="_CPPv2N6dtlmod6Engine5closeEv"></span><span id="dtlmod::Engine::close"></span><span class="target" id="classdtlmod_1_1_engine_1a6397d82f52676da0dcb9ba29bca094f3"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">close</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod6Engine5closeEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Close the <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a> associated to a <a class="reference internal" href="classdtlmod_1_1_stream.html#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+<p>This function is called by all the actors that have opened that <a class="reference internal" href="classdtlmod_1_1_stream.html#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. The first subscriber to enter that function waits for the completion of the activities of last transaction on that <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>. Then all the subscribers are synchronized before the <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a> is properly closed (and destroyed). </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Engine15end_transactionEv">
+<span id="_CPPv3N6dtlmod6Engine15end_transactionEv"></span><span id="_CPPv2N6dtlmod6Engine15end_transactionEv"></span><span id="dtlmod::Engine::end_transaction"></span><span class="target" id="classdtlmod_1_1_engine_1a13d464cd7c821ad6684fbe6a5e6e5f29"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">end_transaction</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod6Engine15end_transactionEv" title="Link to this definition"></a><br /></dt>
+<dd><p>End a transaction on an <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>. </p>
+<p>This function first synchronizes all the subscribers thanks to the internal barrier. When the last subscriber enters the barrier, all the simulated activities registered for the current transaction are started.</p>
+<p>Then it marks the transaction as done. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Engine3getENSt10shared_ptrI8VariableEE">
+<span id="_CPPv3N6dtlmod6Engine3getENSt10shared_ptrI8VariableEE"></span><span id="_CPPv2N6dtlmod6Engine3getENSt10shared_ptrI8VariableEE"></span><span id="dtlmod::Engine::get__std::shared_ptr:Variable:"></span><span class="target" id="classdtlmod_1_1_engine_1a18b26fab11d9681b5ec45e8a1aa03d4f"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classdtlmod_1_1_variable.html#_CPPv4N6dtlmod8VariableE" title="dtlmod::Variable"><span class="n"><span class="pre">Variable</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">var</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod6Engine3getENSt10shared_ptrI8VariableEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Get a <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> from the <a class="reference internal" href="classdtlmod_1_1_d_t_l.html#classdtlmod_1_1_d_t_l"><span class="std std-ref">DTL</span></a>. </p>
+<p>The actual data transport is delegated to the Transport method associated to the <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>var</strong> – The <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> to get in the <a class="reference internal" href="classdtlmod_1_1_d_t_l.html#classdtlmod_1_1_d_t_l"><span class="std std-ref">DTL</span></a> (Have to do an Inquire first). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Engine9get_cnameEv">
+<span id="_CPPv3NK6dtlmod6Engine9get_cnameEv"></span><span id="_CPPv2NK6dtlmod6Engine9get_cnameEv"></span><span id="dtlmod::Engine::get_cnameC"></span><span class="target" id="classdtlmod_1_1_engine_1a04dc8e22cd376ecfe58df8fde09cb0ab"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_cname</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Engine9get_cnameEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Helper function to print out the name of the <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the corresponding C-string </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Engine23get_current_transactionEv">
+<span id="_CPPv3NK6dtlmod6Engine23get_current_transactionEv"></span><span id="_CPPv2NK6dtlmod6Engine23get_current_transactionEv"></span><span id="dtlmod::Engine::get_current_transactionC"></span><span class="target" id="classdtlmod_1_1_engine_1a6b2b693a3e37b19a40a32625020b8b95"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_current_transaction</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Engine23get_current_transactionEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the id of the current transaction (on the Publish side). </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The id of the ongoing transaction. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Engine8get_nameEv">
+<span id="_CPPv3NK6dtlmod6Engine8get_nameEv"></span><span id="_CPPv2NK6dtlmod6Engine8get_nameEv"></span><span id="dtlmod::Engine::get_nameC"></span><span class="target" id="classdtlmod_1_1_engine_1ad744c17a0efcc0a9c7f0889d930c0725"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Engine8get_nameEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Helper function to print out the name of the <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the corresponding string </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Engine3putENSt10shared_ptrI8VariableEE6size_t">
+<span id="_CPPv3N6dtlmod6Engine3putENSt10shared_ptrI8VariableEE6size_t"></span><span id="_CPPv2N6dtlmod6Engine3putENSt10shared_ptrI8VariableEE6size_t"></span><span id="dtlmod::Engine::put__std::shared_ptr:Variable:.s"></span><span class="target" id="classdtlmod_1_1_engine_1a2cdca7913a0605c95536be2815d82b1f"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">put</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classdtlmod_1_1_variable.html#_CPPv4N6dtlmod8VariableE" title="dtlmod::Variable"><span class="n"><span class="pre">Variable</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">var</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">simulated_size_in_bytes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod6Engine3putENSt10shared_ptrI8VariableEE6size_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Put a <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> in the <a class="reference internal" href="classdtlmod_1_1_d_t_l.html#classdtlmod_1_1_d_t_l"><span class="std std-ref">DTL</span></a> using a specific <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>. </p>
+<p>The actual data transport is delegated to the Transport method associated to the <a class="reference internal" href="#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>var</strong> – The variable to put in the <a class="reference internal" href="classdtlmod_1_1_d_t_l.html#classdtlmod_1_1_d_t_l"><span class="std std-ref">DTL</span></a></p></li>
+<li><p><strong>simulated_size_in_bytes</strong> – The size of the (subset of) the <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="classdtlmod_1_1_d_t_l.html" class="btn btn-neutral float-left" title="dtlmod::DTL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="classdtlmod_1_1_stream.html" class="btn btn-neutral float-right" title="dtlmod::Stream" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, SWAT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dtlmod::Stream &mdash; DTLMOD 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="dtlmod::Variable" href="classdtlmod_1_1_variable.html" />
+    <link rel="prev" title="dtlmod::Engine" href="classdtlmod_1_1_engine.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_d_t_l.html">dtlmod::DTL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_engine.html">dtlmod::Engine</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">dtlmod::Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6StreamE"><code class="docutils literal notranslate"><span class="pre">Stream</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream4ModeE"><code class="docutils literal notranslate"><span class="pre">Stream::Mode</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream4Mode7PublishE"><code class="docutils literal notranslate"><span class="pre">Stream::Mode::Publish</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream4Mode9SubscribeE"><code class="docutils literal notranslate"><span class="pre">Stream::Mode::Subscribe</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15define_variableERKNSt6stringERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE6size_t"><code class="docutils literal notranslate"><span class="pre">Stream::define_variable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15define_variableERKNSt6stringE6size_t"><code class="docutils literal notranslate"><span class="pre">Stream::define_variable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream9get_cnameEv"><code class="docutils literal notranslate"><span class="pre">Stream::get_cname()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream19get_engine_type_strEv"><code class="docutils literal notranslate"><span class="pre">Stream::get_engine_type_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream8get_nameEv"><code class="docutils literal notranslate"><span class="pre">Stream::get_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream18get_num_publishersEv"><code class="docutils literal notranslate"><span class="pre">Stream::get_num_publishers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream19get_num_subscribersEv"><code class="docutils literal notranslate"><span class="pre">Stream::get_num_subscribers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream24get_transport_method_strEv"><code class="docutils literal notranslate"><span class="pre">Stream::get_transport_method_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream16inquire_variableERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">Stream::inquire_variable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream4openERKNSt6stringE4Mode"><code class="docutils literal notranslate"><span class="pre">Stream::open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15remove_variableERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">Stream::remove_variable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15set_engine_typeERKN6Engine4TypeE"><code class="docutils literal notranslate"><span class="pre">Stream::set_engine_type()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15set_rendez_vousEv"><code class="docutils literal notranslate"><span class="pre">Stream::set_rendez_vous()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream20set_transport_methodERKN9Transport6MethodE"><code class="docutils literal notranslate"><span class="pre">Stream::set_transport_method()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_variable.html">dtlmod::Variable</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DTLMOD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">dtlmod::Stream</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api_user/classdtlmod_1_1_stream.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dtlmod-stream">
+<span id="id1"></span><h1>dtlmod::Stream<a class="headerlink" href="#dtlmod-stream" title="Link to this heading"></a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6StreamE">
+<span id="_CPPv3N6dtlmod6StreamE"></span><span id="_CPPv2N6dtlmod6StreamE"></span><span id="dtlmod::Stream"></span><span class="target" id="classdtlmod_1_1_stream"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Stream</span></span></span><a class="headerlink" href="#_CPPv4N6dtlmod6StreamE" title="Link to this definition"></a><br /></dt>
+<dd><p>A class that implements the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> abstraction in the <a class="reference internal" href="classdtlmod_1_1_d_t_l.html#classdtlmod_1_1_d_t_l"><span class="std std-ref">DTL</span></a>. A <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> defines the connection between the applications that produce or consume data and the <a class="reference internal" href="classdtlmod_1_1_d_t_l.html#classdtlmod_1_1_d_t_l"><span class="std std-ref">DTL</span></a>. </p>
+<p>A <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> acts as a factory of <a class="reference internal" href="classdtlmod_1_1_engine.html#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a> objects which are in charge of moving or storing data according to a specified Transport method. Opening a <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> creates and returns a handler on an <a class="reference internal" href="classdtlmod_1_1_engine.html#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>.</p>
+<p>A <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> also acts as a factory of <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> objects. It keep records of the definition of the <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> objects to be injected into or retrieve from this <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum-class">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Stream4ModeE">
+<span id="_CPPv3N6dtlmod6Stream4ModeE"></span><span id="_CPPv2N6dtlmod6Stream4ModeE"></span><span class="target" id="classdtlmod_1_1_stream_1a616232144c1efc7d2a6b591081707fd2"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Mode</span></span></span><a class="headerlink" href="#_CPPv4N6dtlmod6Stream4ModeE" title="Link to this definition"></a><br /></dt>
+<dd><p>An enum that defines the access mode for a <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Stream4Mode7PublishE">
+<span id="_CPPv3N6dtlmod6Stream4Mode7PublishE"></span><span id="_CPPv2N6dtlmod6Stream4Mode7PublishE"></span><span class="target" id="classdtlmod_1_1_stream_1a616232144c1efc7d2a6b591081707fd2a110a4b01beabd53b661a47d4b44bd7a8"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Publish</span></span></span><a class="headerlink" href="#_CPPv4N6dtlmod6Stream4Mode7PublishE" title="Link to this definition"></a><br /></dt>
+<dd><p>Publish. To inject data into the <a class="reference internal" href="classdtlmod_1_1_d_t_l.html#classdtlmod_1_1_d_t_l"><span class="std std-ref">DTL</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Stream4Mode9SubscribeE">
+<span id="_CPPv3N6dtlmod6Stream4Mode9SubscribeE"></span><span id="_CPPv2N6dtlmod6Stream4Mode9SubscribeE"></span><span class="target" id="classdtlmod_1_1_stream_1a616232144c1efc7d2a6b591081707fd2ab26917587d98330d93f87808fc9d7267"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Subscribe</span></span></span><a class="headerlink" href="#_CPPv4N6dtlmod6Stream4Mode9SubscribeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Subscribe. To retrieve data from the <a class="reference internal" href="classdtlmod_1_1_d_t_l.html#classdtlmod_1_1_d_t_l"><span class="std std-ref">DTL</span></a>. </p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Stream15define_variableERKNSt6stringERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE6size_t">
+<span id="_CPPv3N6dtlmod6Stream15define_variableERKNSt6stringERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE6size_t"></span><span id="_CPPv2N6dtlmod6Stream15define_variableERKNSt6stringERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE6size_t"></span><span id="dtlmod::Stream::define_variable__ssCR.std::vector:s:CR.std::vector:s:CR.std::vector:s:CR.s"></span><span class="target" id="classdtlmod_1_1_stream_1afa4ed87c8073fb413fe9854c764a03ee"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classdtlmod_1_1_variable.html#_CPPv4N6dtlmod8VariableE" title="dtlmod::Variable"><span class="n"><span class="pre">Variable</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">define_variable</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">size_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">shape</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">size_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">start</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">size_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">count</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">element_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod6Stream15define_variableERKNSt6stringERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE6size_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Define a <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> for this <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+<p>
+This function creates a new <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> and the corresponding entry in the internal directory of the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> that stores all the known variables. This definition does not refer to the data carried by the <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> but provides information about its shape (here a multi-dimensional array) and element type. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – The name of the new variable. </p></li>
+<li><p><strong>shape</strong> – A vector that specifies the total number of element in each dimension. </p></li>
+<li><p><strong>start</strong> – A vector that specifies the offset at which the calling Actor start to own data in each dimension. </p></li>
+<li><p><strong>count</strong> – A vector that specifies how many elements the calling Actor owns in each dimension. </p></li>
+<li><p><strong>element_size</strong> – The size of the elements in the <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A shared pointer on the newly created <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Stream15define_variableERKNSt6stringE6size_t">
+<span id="_CPPv3N6dtlmod6Stream15define_variableERKNSt6stringE6size_t"></span><span id="_CPPv2N6dtlmod6Stream15define_variableERKNSt6stringE6size_t"></span><span id="dtlmod::Stream::define_variable__ssCR.s"></span><span class="target" id="classdtlmod_1_1_stream_1ac20c71f4a2a0a23285a74b0b65fbff66"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classdtlmod_1_1_variable.html#_CPPv4N6dtlmod8VariableE" title="dtlmod::Variable"><span class="n"><span class="pre">Variable</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">define_variable</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">element_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod6Stream15define_variableERKNSt6stringE6size_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Define a scalar <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> for this <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+<p>
+This function creates a new scalar <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> and the corresponding entry in the internal directory of the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> that stores all the known variables. This definition does not refer to the data carried by the <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> but provides information about its shape (here a scalar) and element type. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – The name of the new <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>. </p></li>
+<li><p><strong>element_size</strong> – The size of the elements in the <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A shared pointer on the newly created <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Stream9get_cnameEv">
+<span id="_CPPv3NK6dtlmod6Stream9get_cnameEv"></span><span id="_CPPv2NK6dtlmod6Stream9get_cnameEv"></span><span id="dtlmod::Stream::get_cnameC"></span><span class="target" id="classdtlmod_1_1_stream_1a105e086950f588fff1bc3290bb5be243"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_cname</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream9get_cnameEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Helper function to print out the name of the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The corresponding C-string </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Stream19get_engine_type_strEv">
+<span id="_CPPv3NK6dtlmod6Stream19get_engine_type_strEv"></span><span id="_CPPv2NK6dtlmod6Stream19get_engine_type_strEv"></span><span id="dtlmod::Stream::get_engine_type_strC"></span><span class="target" id="classdtlmod_1_1_stream_1a4f7925646e7f9a210206e43258cf121e"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_engine_type_str</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream19get_engine_type_strEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Helper function to print out the <a class="reference internal" href="classdtlmod_1_1_engine.html#classdtlmod_1_1_engine_1afdcf07a079702ca2e330221125a10285"><span class="std std-ref">Engine::Type</span></a> of the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The corresponding C-string </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Stream8get_nameEv">
+<span id="_CPPv3NK6dtlmod6Stream8get_nameEv"></span><span id="_CPPv2NK6dtlmod6Stream8get_nameEv"></span><span id="dtlmod::Stream::get_nameC"></span><span class="target" id="classdtlmod_1_1_stream_1a179cad4d720d965394bd34cf55c05e4d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream8get_nameEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Helper function to print out the name of the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The corresponding string </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Stream18get_num_publishersEv">
+<span id="_CPPv3NK6dtlmod6Stream18get_num_publishersEv"></span><span id="_CPPv2NK6dtlmod6Stream18get_num_publishersEv"></span><span id="dtlmod::Stream::get_num_publishersC"></span><span class="target" id="classdtlmod_1_1_stream_1a4b1b1608649eaac009484a89370f3ccf"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_num_publishers</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream18get_num_publishersEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Helper function to obtain the number of actors connected to <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> in <a class="reference internal" href="#classdtlmod_1_1_stream_1a616232144c1efc7d2a6b591081707fd2a110a4b01beabd53b661a47d4b44bd7a8"><span class="std std-ref">Mode::Publish</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The number of publishers for that <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Stream19get_num_subscribersEv">
+<span id="_CPPv3NK6dtlmod6Stream19get_num_subscribersEv"></span><span id="_CPPv2NK6dtlmod6Stream19get_num_subscribersEv"></span><span id="dtlmod::Stream::get_num_subscribersC"></span><span class="target" id="classdtlmod_1_1_stream_1acd5d6d86090fc60e0aa6eaf3ee050421"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_num_subscribers</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream19get_num_subscribersEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Helper function to obtain the number of actors connected to <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> in <a class="reference internal" href="#classdtlmod_1_1_stream_1a616232144c1efc7d2a6b591081707fd2ab26917587d98330d93f87808fc9d7267"><span class="std std-ref">Mode::Subscribe</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The number of subscribers for that <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Stream24get_transport_method_strEv">
+<span id="_CPPv3NK6dtlmod6Stream24get_transport_method_strEv"></span><span id="_CPPv2NK6dtlmod6Stream24get_transport_method_strEv"></span><span id="dtlmod::Stream::get_transport_method_strC"></span><span class="target" id="classdtlmod_1_1_stream_1afc17b9a03be68251ceadb2b8c0647c7e"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_transport_method_str</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream24get_transport_method_strEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Helper function to print out the Transport::Method of the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The corresponding C-string </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Stream16inquire_variableERKNSt6stringE">
+<span id="_CPPv3NK6dtlmod6Stream16inquire_variableERKNSt6stringE"></span><span id="_CPPv2NK6dtlmod6Stream16inquire_variableERKNSt6stringE"></span><span id="dtlmod::Stream::inquire_variable__ssCRC"></span><span class="target" id="classdtlmod_1_1_stream_1a2e2f36ba38198b0f06fbc88a6d080a2b"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classdtlmod_1_1_variable.html#_CPPv4N6dtlmod8VariableE" title="dtlmod::Variable"><span class="n"><span class="pre">Variable</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">inquire_variable</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream16inquire_variableERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Retrieve a <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> information by name. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – The name of desired <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Either a shared pointer on the <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> object if known, nullptr otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Stream4openERKNSt6stringE4Mode">
+<span id="_CPPv3N6dtlmod6Stream4openERKNSt6stringE4Mode"></span><span id="_CPPv2N6dtlmod6Stream4openERKNSt6stringE4Mode"></span><span id="dtlmod::Stream::open__ssCR.Mode"></span><span class="target" id="classdtlmod_1_1_stream_1a1acdc23c23e2cf92dc2552247828f39a"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classdtlmod_1_1_engine.html#_CPPv4N6dtlmod6EngineE" title="dtlmod::Engine"><span class="n"><span class="pre">Engine</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">open</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span>, <a class="reference internal" href="#_CPPv4N6dtlmod6Stream4ModeE" title="dtlmod::Stream::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod6Stream4openERKNSt6stringE4Mode" title="Link to this definition"></a><br /></dt>
+<dd><p>Open a <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> and create an <a class="reference internal" href="classdtlmod_1_1_engine.html#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>. </p>
+<p>
+When multiple actors open the same <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>, only the first one to call this function is in charge of creating an <a class="reference internal" href="classdtlmod_1_1_engine.html#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a> object for that <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. The <a class="reference internal" href="classdtlmod_1_1_engine.html#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a> creation is thus in a critical section. Each actor calling the <a class="reference internal" href="#classdtlmod_1_1_stream_1a1acdc23c23e2cf92dc2552247828f39a"><span class="std std-ref">open()</span></a> function is considered as a subscriber to the created <a class="reference internal" href="classdtlmod_1_1_engine.html#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>.</p>
+<p>Both <a class="reference internal" href="classdtlmod_1_1_engine.html#classdtlmod_1_1_engine_1afdcf07a079702ca2e330221125a10285"><span class="std std-ref">Engine::Type</span></a> and Transport::Method have to be specified before opening a <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>.</p>
+<p>For the FileEngine engine type, name corresponds to a fullpath to where to write data. This fullpath is structured as follows: netzone_name:file_system_name:/path/to/file_name. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of the <a class="reference internal" href="classdtlmod_1_1_engine.html#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a> created when opening the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p></li>
+<li><p><strong>mode</strong> – either <a class="reference internal" href="#classdtlmod_1_1_stream_1a616232144c1efc7d2a6b591081707fd2a110a4b01beabd53b661a47d4b44bd7a8"><span class="std std-ref">Stream::Mode::Publish</span></a> or <a class="reference internal" href="#classdtlmod_1_1_stream_1a616232144c1efc7d2a6b591081707fd2ab26917587d98330d93f87808fc9d7267"><span class="std std-ref">Stream::Mode::Subscribe</span></a>. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A shared pointer on the corresponding <a class="reference internal" href="classdtlmod_1_1_engine.html#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Stream15remove_variableERKNSt6stringE">
+<span id="_CPPv3N6dtlmod6Stream15remove_variableERKNSt6stringE"></span><span id="_CPPv2N6dtlmod6Stream15remove_variableERKNSt6stringE"></span><span id="dtlmod::Stream::remove_variable__ssCR"></span><span class="target" id="classdtlmod_1_1_stream_1af65b7da9036dd5e057abb96bbc2f97fb"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">remove_variable</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod6Stream15remove_variableERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Remove a <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> of the list of variables known by the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – The name of the variable to remove. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A boolean indicating if the <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> has been successfully removed or not. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Stream15set_engine_typeERKN6Engine4TypeE">
+<span id="_CPPv3N6dtlmod6Stream15set_engine_typeERKN6Engine4TypeE"></span><span id="_CPPv2N6dtlmod6Stream15set_engine_typeERKN6Engine4TypeE"></span><span id="dtlmod::Stream::set_engine_type__Engine::TypeCR"></span><span class="target" id="classdtlmod_1_1_stream_1af913c813e1cc4671bec7548907743ef2"></span><a class="reference internal" href="#_CPPv4N6dtlmod6StreamE" title="dtlmod::Stream"><span class="n"><span class="pre">Stream</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">set_engine_type</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classdtlmod_1_1_engine.html#_CPPv4N6dtlmod6EngineE" title="dtlmod::Engine"><span class="n"><span class="pre">Engine</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classdtlmod_1_1_engine.html#_CPPv4N6dtlmod6Engine4TypeE" title="dtlmod::Engine::Type"><span class="n"><span class="pre">Type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">engine_type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod6Stream15set_engine_typeERKN6Engine4TypeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Helper function to print out the access Mode of the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+<p><a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> configuration function: set the <a class="reference internal" href="classdtlmod_1_1_engine.html#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a> type to create. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>engine_type</strong> – The type of <a class="reference internal" href="classdtlmod_1_1_engine.html#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a> to create when opening the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding C-string</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calling <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> (enable method chaining). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Stream15set_rendez_vousEv">
+<span id="_CPPv3N6dtlmod6Stream15set_rendez_vousEv"></span><span id="_CPPv2N6dtlmod6Stream15set_rendez_vousEv"></span><span id="dtlmod::Stream::set_rendez_vous"></span><span class="target" id="classdtlmod_1_1_stream_1a2c98fed050e4a1ae232a84ff38ae66a0"></span><a class="reference internal" href="#_CPPv4N6dtlmod6StreamE" title="dtlmod::Stream"><span class="n"><span class="pre">Stream</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">set_rendez_vous</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod6Stream15set_rendez_vousEv" title="Link to this definition"></a><br /></dt>
+<dd><p><a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> configuration function: use a rendez-vous mode. </p>
+<p>
+Setting the rendez-vous mode for a <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> imposes that publishers must wait for at least one Subscriber to open that <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> to completer their own open. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calling <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> (enable method chaining).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Stream20set_transport_methodERKN9Transport6MethodE">
+<span id="_CPPv3N6dtlmod6Stream20set_transport_methodERKN9Transport6MethodE"></span><span id="_CPPv2N6dtlmod6Stream20set_transport_methodERKN9Transport6MethodE"></span><span id="dtlmod::Stream::set_transport_method__Transport::MethodCR"></span><span class="target" id="classdtlmod_1_1_stream_1a224691f02ee72f70f68d0808a278f0e6"></span><a class="reference internal" href="#_CPPv4N6dtlmod6StreamE" title="dtlmod::Stream"><span class="n"><span class="pre">Stream</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">set_transport_method</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Transport</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Method</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">transport_method</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod6Stream20set_transport_methodERKN9Transport6MethodE" title="Link to this definition"></a><br /></dt>
+<dd><p><a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> configuration function: set the Transport Method to use. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>transport_method</strong> – the Transport methode to use when opening the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The calling <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> (enable method chaining). </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="classdtlmod_1_1_engine.html" class="btn btn-neutral float-left" title="dtlmod::Engine" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="classdtlmod_1_1_variable.html" class="btn btn-neutral float-right" title="dtlmod::Variable" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, SWAT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dtlmod::Variable &mdash; DTLMOD 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="dtlmod::Stream" href="classdtlmod_1_1_stream.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+          </a>
+              <div class="version">
+                0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_d_t_l.html">dtlmod::DTL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_engine.html">dtlmod::Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_stream.html">dtlmod::Stream</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">dtlmod::Variable</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod8VariableE"><code class="docutils literal notranslate"><span class="pre">Variable</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable9get_cnameEv"><code class="docutils literal notranslate"><span class="pre">Variable::get_cname()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable16get_element_sizeEv"><code class="docutils literal notranslate"><span class="pre">Variable::get_element_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable15get_global_sizeEv"><code class="docutils literal notranslate"><span class="pre">Variable::get_global_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable14get_local_sizeEv"><code class="docutils literal notranslate"><span class="pre">Variable::get_local_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable8get_nameEv"><code class="docutils literal notranslate"><span class="pre">Variable::get_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable9get_shapeEv"><code class="docutils literal notranslate"><span class="pre">Variable::get_shape()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod8Variable13set_selectionERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE"><code class="docutils literal notranslate"><span class="pre">Variable::set_selection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod8Variable25set_transaction_selectionEjj"><code class="docutils literal notranslate"><span class="pre">Variable::set_transaction_selection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod8Variable25set_transaction_selectionEj"><code class="docutils literal notranslate"><span class="pre">Variable::set_transaction_selection()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DTLMOD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">dtlmod::Variable</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api_user/classdtlmod_1_1_variable.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dtlmod-variable">
+<span id="id1"></span><h1>dtlmod::Variable<a class="headerlink" href="#dtlmod-variable" title="Link to this heading"></a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod8VariableE">
+<span id="_CPPv3N6dtlmod8VariableE"></span><span id="_CPPv2N6dtlmod8VariableE"></span><span id="dtlmod::Variable"></span><span class="target" id="classdtlmod_1_1_variable"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Variable</span></span></span><a class="headerlink" href="#_CPPv4N6dtlmod8VariableE" title="Link to this definition"></a><br /></dt>
+<dd><p>A class to translate a piece of data from an application into an object handled by the <a class="reference internal" href="classdtlmod_1_1_d_t_l.html#classdtlmod_1_1_d_t_l"><span class="std std-ref">DTL</span></a> and its metadata. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod8Variable9get_cnameEv">
+<span id="_CPPv3NK6dtlmod8Variable9get_cnameEv"></span><span id="_CPPv2NK6dtlmod8Variable9get_cnameEv"></span><span id="dtlmod::Variable::get_cnameC"></span><span class="target" id="classdtlmod_1_1_variable_1a1d757a3fa122d7573ff4f67e8ce4ac07"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_cname</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod8Variable9get_cnameEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Helper function to print out the name of the <a class="reference internal" href="#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The corresponding C-string. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod8Variable16get_element_sizeEv">
+<span id="_CPPv3NK6dtlmod8Variable16get_element_sizeEv"></span><span id="_CPPv2NK6dtlmod8Variable16get_element_sizeEv"></span><span id="dtlmod::Variable::get_element_sizeC"></span><span class="target" id="classdtlmod_1_1_variable_1a5f6dda886679f8ace6722b8145100bc9"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_element_size</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod8Variable16get_element_sizeEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the size of the elements stored in the <a class="reference internal" href="#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The elements’ size. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod8Variable15get_global_sizeEv">
+<span id="_CPPv3NK6dtlmod8Variable15get_global_sizeEv"></span><span id="_CPPv2NK6dtlmod8Variable15get_global_sizeEv"></span><span id="dtlmod::Variable::get_global_sizeC"></span><span class="target" id="classdtlmod_1_1_variable_1ac17311b8f663ed290e9dc5bf44a32c43"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_global_size</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod8Variable15get_global_sizeEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the global size of the <a class="reference internal" href="#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>. </p>
+<p>
+The global size of a <a class="reference internal" href="#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> corresponds to the product of the number of elements in each dimension of the shape vector by the element size. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The computed size.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod8Variable14get_local_sizeEv">
+<span id="_CPPv3NK6dtlmod8Variable14get_local_sizeEv"></span><span id="_CPPv2NK6dtlmod8Variable14get_local_sizeEv"></span><span id="dtlmod::Variable::get_local_sizeC"></span><span class="target" id="classdtlmod_1_1_variable_1a0af82169d336123b80d81e2505f08124"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_local_size</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod8Variable14get_local_sizeEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the local size object. </p>
+<p>
+The local size of a <a class="reference internal" href="#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> corresponds to the product of the number of elements in each dimension of the count vector by the element size. If variable was published to the <a class="reference internal" href="classdtlmod_1_1_d_t_l.html#classdtlmod_1_1_d_t_l"><span class="std std-ref">DTL</span></a> over multiple transactions, multiply the size by the number of transactions. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The computed size.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod8Variable8get_nameEv">
+<span id="_CPPv3NK6dtlmod8Variable8get_nameEv"></span><span id="_CPPv2NK6dtlmod8Variable8get_nameEv"></span><span id="dtlmod::Variable::get_nameC"></span><span class="target" id="classdtlmod_1_1_variable_1a2c98c53ded45443296d333f4f58b0d12"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod8Variable8get_nameEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Helper function to print out the name of the <a class="reference internal" href="#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The corresponding string. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod8Variable9get_shapeEv">
+<span id="_CPPv3NK6dtlmod8Variable9get_shapeEv"></span><span id="_CPPv2NK6dtlmod8Variable9get_shapeEv"></span><span id="dtlmod::Variable::get_shapeC"></span><span class="target" id="classdtlmod_1_1_variable_1a868f6081b9c3911e3063ea1f7b377224"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">size_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_shape</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod8Variable9get_shapeEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the shape of the <a class="reference internal" href="#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A vector of the respective size in each dimension of the <a class="reference internal" href="#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod8Variable13set_selectionERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE">
+<span id="_CPPv3N6dtlmod8Variable13set_selectionERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE"></span><span id="_CPPv2N6dtlmod8Variable13set_selectionERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE"></span><span id="dtlmod::Variable::set_selection__std::vector:s:CR.std::vector:s:CR"></span><span class="target" id="classdtlmod_1_1_variable_1afc0565abfc9b3f0a7a757b2ab2f8f2f2"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set_selection</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">size_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">start</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">size_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">count</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod8Variable13set_selectionERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Allow a subscriber to select what subset of a variable it would like to get. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> – a vector of starting positions in each dimension of the <a class="reference internal" href="#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>. </p></li>
+<li><p><strong>count</strong> – a vector of number of elements to get in each dimension. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod8Variable25set_transaction_selectionEjj">
+<span id="_CPPv3N6dtlmod8Variable25set_transaction_selectionEjj"></span><span id="_CPPv2N6dtlmod8Variable25set_transaction_selectionEjj"></span><span id="dtlmod::Variable::set_transaction_selection__unsigned-i.unsigned-i"></span><span class="target" id="classdtlmod_1_1_variable_1a4c5c9bb6bfbff9b96ede77e396730b40"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set_transaction_selection</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">begin</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">count</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod8Variable25set_transaction_selectionEjj" title="Link to this definition"></a><br /></dt>
+<dd><p>Allow a subscriber to select what transactions it would like to get. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>begin</strong> – the id at which the range of transactions to get begins. </p></li>
+<li><p><strong>count</strong> – the number of transactions in the range. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod8Variable25set_transaction_selectionEj">
+<span id="_CPPv3N6dtlmod8Variable25set_transaction_selectionEj"></span><span id="_CPPv2N6dtlmod8Variable25set_transaction_selectionEj"></span><span id="dtlmod::Variable::set_transaction_selection__unsigned-i"></span><span class="target" id="classdtlmod_1_1_variable_1a4e8f1758fe51dbb6f0b4becedafdd6c0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set_transaction_selection</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">transaction_id</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod8Variable25set_transaction_selectionEj" title="Link to this definition"></a><br /></dt>
+<dd><p>Allow a subscriber to select what transaction it would like to get. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>transaction_id</strong> – the id of the transaction to get. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="classdtlmod_1_1_stream.html" class="btn btn-neutral float-left" title="dtlmod::Stream" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, SWAT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
