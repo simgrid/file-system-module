@@ -52,7 +52,7 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: |
-          git clone https://github.com/frs69wq/file-system-module.git
+          git clone https://github.com/simgrid/file-system-module.git
           cd file-system-module
           mkdir build
           cd build
@@ -117,7 +117,7 @@ jobs:
         env:
           TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
         run: |
-          #git clone https://github.com/frs69wq/file-system-module.git
+          #git clone https://github.com/simgrid/file-system-module.git
           echo "Building documentation..."
           cd file-system-module/build
           pwd
