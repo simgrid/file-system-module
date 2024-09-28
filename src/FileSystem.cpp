@@ -250,6 +250,20 @@ namespace simgrid::fsmod {
         partition->create_new_file(dir, file_name, size);
     }
 
+    /**
+     * @brief Truncate a file
+     * @param full_path: the absolute path to the file
+     * @param size: the number of bytes to truncate (if >= than the file size, the file will have size zero)
+     */
+    void FileSystem::truncate_file(const std::string& full_path, sg_size_t size) const {
+        // Get the partition and path
+        std::string simplified_path = PathUtil::simplify_path_string(full_path);
+        auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
+        // Split the path
+        auto [dir, file_name] = PathUtil::split_path(path_at_mount_point);
+        partition->truncate_file(dir, file_name, size);
+    }
+
 
     /**
      * @brief Set the evictability of a file so that it can or cannot be evicted

@@ -56,16 +56,20 @@ TEST_F(TruncateTest, TruncateAndTell)  {
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "a"));
             XBT_INFO("Check current position, should be 100k ('append' mode)");
             ASSERT_DOUBLE_EQ(file->tell(), 100*1000);
-            XBT_INFO("Truncate the file by half");
-            ASSERT_NO_THROW(file->truncate(50*1000));
-            XBT_INFO("Check current position, should be 50k");
-            ASSERT_DOUBLE_EQ(file->tell(), 50000);
             XBT_INFO("Close the file");
             ASSERT_NO_THROW(file->close());
-            XBT_INFO("Check file size, should be 5001");
-            ASSERT_DOUBLE_EQ(fs_->file_size("/dev/a/foo.txt"), 50000);
-            XBT_INFO("Check total space size, should be 151k");
+            XBT_INFO("Truncate the file to half its size");
+            ASSERT_NO_THROW(fs_->truncate_file("/dev/a/foo.txt", 50*1000));
+            XBT_INFO("Check file size");
+            ASSERT_DOUBLE_EQ(fs_->file_size("/dev/a/foo.txt"), 50*1000);
+            XBT_INFO("Check free space");
             ASSERT_DOUBLE_EQ(fs_->get_partitions().at(0)->get_free_space(), 1000*1000 - 50000);
+            XBT_INFO("Open File '/dev/a/foo.txt'");
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "a"));
+            XBT_INFO("Check current position, should be 50k ('append' mode)");
+            ASSERT_DOUBLE_EQ(file->tell(), 50*1000);
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(file->close());
         });
 
         // Run the simulation

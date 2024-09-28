@@ -161,6 +161,20 @@ namespace simgrid::fsmod {
         content_.erase(dir_path);
     }
 
+    void Partition::truncate_file(const std::string &dir_path, const std::string &file_name, sg_size_t num_bytes) {
+        auto metadata = this->get_file_metadata(dir_path, file_name);
+
+        if (metadata->get_file_refcount() > 0) {
+            throw InvalidTruncateException(XBT_THROW_POINT, "Cannot truncate a file that is opened");
+        }
+
+        // Update the real num_bytes to truncate in case it's too large
+        num_bytes = std::min<sg_size_t>(num_bytes, metadata->get_current_size());
+        auto new_size = metadata->get_current_size() - num_bytes;
+        metadata->set_current_size(new_size);
+        this->increase_free_space(num_bytes);
+    }
+
     void Partition::make_file_evictable(const std::string &dir_path, const std::string &file_name, bool evictable) {
         auto metadata = this->get_file_metadata(dir_path, file_name);
         if (not metadata) {
@@ -186,6 +200,7 @@ namespace simgrid::fsmod {
     void Partition::new_file_deletion_event(FileMetadata *file_metadata) {
         // No-op
     }
+
 
 
 

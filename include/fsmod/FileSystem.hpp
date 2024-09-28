@@ -68,6 +68,8 @@ namespace simgrid::fsmod {
         void create_file(const std::string& full_path, sg_size_t size) const;
         void create_file(const std::string& full_path, const std::string& size) const;
 
+        void truncate_file(const std::string& full_path, sg_size_t size) const;
+
         void make_file_evictable(const std::string& full_path, bool evictable) const;
 
         [[nodiscard]] bool file_exists(const std::string& full_path) const;
