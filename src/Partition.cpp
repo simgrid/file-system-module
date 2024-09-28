@@ -172,6 +172,7 @@ namespace simgrid::fsmod {
         num_bytes = std::min<sg_size_t>(num_bytes, metadata->get_current_size());
         auto new_size = metadata->get_current_size() - num_bytes;
         metadata->set_current_size(new_size);
+        metadata->set_future_size(new_size);
         this->increase_free_space(num_bytes);
     }
 
