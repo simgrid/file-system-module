@@ -189,6 +189,31 @@ namespace simgrid::fsmod {
     }
 
     /**
+     * @brief Truncate the file (remove bytes at the end of the file and setting the file pointer to
+     *        the last (remaining) byte in the file
+     * @param num_bytes: the number of bytes to truncate
+     */
+    void File::truncate(sg_size_t num_bytes) {
+        if (access_mode_ != "w" && access_mode_ != "a") {
+            throw std::invalid_argument("Invalid access mode. Cannot truncate in 'r' mode'");
+        }
+
+        if (metadata_->get_file_refcount() > 1) {
+            throw InvalidTruncateException(XBT_THROW_POINT, "Cannot truncate a file that is opened more than once");
+        }
+
+        // Update the real num_bytes to truncate in case it's too large
+        num_bytes = std::min<sg_size_t>(num_bytes, metadata_->get_current_size());
+
+        auto new_size = metadata_->get_current_size() - num_bytes;
+        current_position_ = new_size;
+        metadata_->set_current_size(new_size);
+
+        partition_->increase_free_space(num_bytes);
+    }
+
+
+    /**
      * @brief Seek to a position in the file from a given origin
      * @param pos: the position as an offset from the given origin in the file
      * @param origin: where to start adding the offset in the file

@@ -68,7 +68,7 @@ namespace simgrid::fsmod {
          */
         [[nodiscard]] FileSystem *get_file_system() { return partition_->file_system_; }
 
-        void append(sg_size_t num_bytes);
+//        void append(sg_size_t num_bytes);
         void truncate(sg_size_t num_bytes);
 
         void seek(sg_offset_t pos, int origin = SEEK_SET); /** Sets the file head to the given position from a given origin. */

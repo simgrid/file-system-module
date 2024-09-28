@@ -83,6 +83,7 @@ if(GTEST_LIBRARY)
 			test/path_util_test.cpp
 			test/file_system_test.cpp
 			test/seek_test.cpp
+			test/truncate_test.cpp
 			test/caching_test.cpp
 			test/register_test.cpp
 			test/stat_test.cpp

@@ -39,6 +39,7 @@ namespace simgrid::fsmod {
     DECLARE_FSMOD_EXCEPTION(FileAlreadyExistsException, "File already exists");
     DECLARE_FSMOD_EXCEPTION(InvalidSeekException, "Invalid seek");
     DECLARE_FSMOD_EXCEPTION(InvalidMoveException, "Invalid move");
+    DECLARE_FSMOD_EXCEPTION(InvalidTruncateException, "Invalid truncate");
     DECLARE_FSMOD_EXCEPTION(InvalidPathException, "Invalid path");
 }
 
