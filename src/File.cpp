@@ -10,6 +10,7 @@
 
 #include "fsmod/File.hpp"
 #include "fsmod/Storage.hpp"
+#include "fsmod/FileSystem.hpp"
 #include "fsmod/FileSystemException.hpp"
 #include "fsmod/FileStat.hpp"
 
@@ -220,6 +221,11 @@ namespace simgrid::fsmod {
         stat_struct->last_modification_date = metadata_->get_modification_date();
         stat_struct->refcount = metadata_->get_file_refcount();
         return stat_struct;
+    }
+
+    void File::close() const {
+        metadata_->decrease_file_refcount();
+        partition_->file_system_->num_open_files_--;
     }
 
 }

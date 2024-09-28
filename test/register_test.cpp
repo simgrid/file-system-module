@@ -152,7 +152,7 @@ TEST_F(RegisterTest, NoActor)  {
 
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
         XBT_INFO("Simulation time %g", sg4::Engine::get_clock());
-        ASSERT_NO_THROW(root_fs->close(file));
+        ASSERT_NO_THROW(file->close());
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 };

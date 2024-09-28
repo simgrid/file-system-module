@@ -68,6 +68,8 @@ namespace simgrid::fsmod {
         void create_file(const std::string& full_path, sg_size_t size) const;
         void create_file(const std::string& full_path, const std::string& size) const;
 
+        void make_file_evictable(const std::string& full_path, bool evictable) const;
+
         [[nodiscard]] bool file_exists(const std::string& full_path) const;
 
         void move_file(const std::string& src_full_path, const std::string& dst_full_path) const;
@@ -81,7 +83,6 @@ namespace simgrid::fsmod {
         [[nodiscard]] sg_size_t file_size(const std::string& full_path) const;
 
         std::shared_ptr<File> open(const std::string& full_path, const std::string& access_mode);
-        void close(const std::shared_ptr<File> &f);
 
         [[nodiscard]] std::shared_ptr<Partition> partition_by_name(const std::string& name) const;
         [[nodiscard]] std::shared_ptr<Partition> partition_by_name_or_null(const std::string& name) const;
@@ -90,6 +91,8 @@ namespace simgrid::fsmod {
         [[nodiscard]] std::shared_ptr<Partition> get_partition_for_path_or_null(const std::string& full_path) const;
 
     private:
+        friend class File;
+
         [[nodiscard]] std::pair<std::shared_ptr<Partition>, std::string> find_path_at_mount_point(const std::string &full_path) const;
 
         std::map<std::string, std::shared_ptr<Partition>, std::less<>> partitions_;

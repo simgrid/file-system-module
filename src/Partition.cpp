@@ -11,9 +11,15 @@
 
 namespace simgrid::fsmod {
 
-
-    Partition::Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size)
-            : name_(std::move(name)), storage_(std::move(storage)), size_(size), free_space_(size) {
+    /**
+     * @brief Constructor
+     * @param name: partition name
+     * @param file_system: file system that hosts this partition
+     * @param storage: storage
+     * @param size: size in bytes
+     */
+    Partition::Partition(std::string name, FileSystem *file_system, std::shared_ptr<Storage> storage, sg_size_t size)
+            : name_(std::move(name)), file_system_(file_system), storage_(std::move(storage)), size_(size), free_space_(size) {
     }
 
     /**
@@ -154,6 +160,15 @@ namespace simgrid::fsmod {
         // Wipe everything out
         content_.erase(dir_path);
     }
+
+    void Partition::make_file_evictable(const std::string &dir_path, const std::string &file_name, bool evictable) {
+        auto metadata = this->get_file_metadata(dir_path, file_name);
+        if (not metadata) {
+            throw FileNotFoundException(XBT_THROW_POINT, dir_path + "/" + file_name);
+        }
+        metadata->evictable_ = evictable;
+    }
+
 
 
     void Partition::create_space(sg_size_t num_bytes) {

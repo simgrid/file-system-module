@@ -177,7 +177,7 @@ TEST_F(CachingTest, LRUBasics)  {
             std::shared_ptr<sgfs::File> file;
             ASSERT_NO_THROW(file = fs_->open("/dev/lru/20mb.txt", "r"));
             ASSERT_NO_THROW(file->read(10));
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
             ASSERT_NO_THROW(fs_->create_file("/dev/lru/30mb.txt", "30MB"));
             XBT_INFO("Check that files are as they should be");
             ASSERT_TRUE(fs_->file_exists("/dev/lru/20mb.txt"));
@@ -225,7 +225,7 @@ TEST_F(CachingTest, LRUExtensive)  {
                     auto file_name = action.at(1);
                     auto file = fs_->open("/dev/lru/" + file_name, "r");
                     file->read(1);
-                    fs_->close(file);
+                    file->close();
                 }
                 // Check state
                 for (auto const &f : expected_files_there) {

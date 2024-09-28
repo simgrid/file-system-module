@@ -98,15 +98,15 @@ namespace simgrid::fsmod {
         switch (caching_scheme) {
             case Partition::CachingScheme::FIFO:
                 this->partitions_[cleanup_mount_point] =
-                        std::make_shared<PartitionFIFOCaching>(cleanup_mount_point, std::move(storage), size);
+                        std::make_shared<PartitionFIFOCaching>(cleanup_mount_point, this, std::move(storage), size);
                 break;
             case Partition::CachingScheme::LRU:
                 this->partitions_[cleanup_mount_point] =
-                        std::make_shared<PartitionLRUCaching>(cleanup_mount_point, std::move(storage), size);
+                        std::make_shared<PartitionLRUCaching>(cleanup_mount_point, this, std::move(storage), size);
                 break;
             default: // actually Partition::CachingScheme::NONE
                 this->partitions_[cleanup_mount_point] =
-                        std::make_shared<Partition>(cleanup_mount_point, std::move(storage), size);
+                        std::make_shared<Partition>(cleanup_mount_point, this, std::move(storage), size);
                 break;
         }
     }
@@ -250,6 +250,25 @@ namespace simgrid::fsmod {
         partition->create_new_file(dir, file_name, size);
     }
 
+
+    /**
+     * @brief Set the evictability of a file so that it can or cannot be evicted
+     *        if stored on a partition that implements caching
+     * @param full_path: an absolute file path
+     * @param evictable: true if the file should be evictable, false if not
+     */
+    void FileSystem::make_file_evictable(const std::string& full_path, bool evictable) const {
+        // Get the partition and path
+        std::string simplified_path = PathUtil::simplify_path_string(full_path);
+        auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
+
+        // Split the path
+        auto [dir, file_name] = PathUtil::split_path(path_at_mount_point);
+
+        partition->make_file_evictable(dir, file_name, evictable);
+    }
+
+
     /**
       * @brief Open a file. If no file corresponds to the given full path, a new file of size 0 is created.
       * @param full_path: an absolute file path
@@ -299,16 +318,6 @@ namespace simgrid::fsmod {
 
         this->num_open_files_++;
         return file;
-    }
-
-    /**
-      * @brief Closes the file. After closing, using the file has undefined
-      * behavior.
-      * @param file a shared pointer on a File
-      */
-    void FileSystem::close(const std::shared_ptr<File> &file) {
-        this->num_open_files_--;
-        file->metadata_->decrease_file_refcount();
     }
 
     /**

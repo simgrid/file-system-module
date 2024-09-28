@@ -24,8 +24,8 @@ namespace simgrid::fsmod {
 
     class XBT_PUBLIC PartitionLRUCaching : public PartitionFIFOCaching {
     public:
-        PartitionLRUCaching(std::string name, std::shared_ptr<Storage> storage, sg_size_t size) :
-                PartitionFIFOCaching(std::move(name), std::move(storage), size) {}
+        PartitionLRUCaching(std::string name, FileSystem *file_system, std::shared_ptr<Storage> storage, sg_size_t size) :
+                PartitionFIFOCaching(std::move(name), file_system, std::move(storage), size) {}
 
     protected:
         // Methods to perform caching

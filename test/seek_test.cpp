@@ -87,7 +87,7 @@ TEST_F(SeekTest, SeekandTell)  {
             XBT_INFO("Seek from an arbitrary position in file, should work");
             ASSERT_NO_THROW(file->seek(1000, 2000));
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
             XBT_INFO("Checking file size of a non-existing file, which should fail");
             ASSERT_THROW(auto size = fs_->file_size("/dev/a/foo_bogus.txt"), sgfs::FileNotFoundException);
         });

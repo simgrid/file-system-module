@@ -112,7 +112,7 @@ TEST_F(JBODStorageTest, SingleRead)  {
             ASSERT_NO_THROW(file->seek(SEEK_SET));
             ASSERT_DOUBLE_EQ(file->read("9kB"), 9000);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
@@ -141,7 +141,7 @@ TEST_F(JBODStorageTest, SingleAsyncRead)  {
             XBT_INFO("Read complete. Clock should be at 2.1s (2s to read, 0.1 to transfer)");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 2.1);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
@@ -170,7 +170,7 @@ TEST_F(JBODStorageTest, SingleWrite)  {
             XBT_INFO("Check remaining space");
             ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a")->get_free_space(), 98 * 1000 * 1000);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
@@ -199,7 +199,7 @@ TEST_F(JBODStorageTest, SingleAsyncWrite)  {
             XBT_INFO("Write complete. Clock is at 4.12s (.1s to transfer, 0.02 to compute parity, 4s to write)");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 4.12);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
@@ -219,13 +219,13 @@ TEST_F(JBODStorageTest, ReadWriteUnsupportedRAID)  {
             XBT_INFO("Write 2MB at /dev/a/foo.txt, which should fail");
             ASSERT_THROW(file->write("12MB"), std::invalid_argument);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
             XBT_INFO("Open File '/dev/a/foo.txt' in read mode");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
             XBT_INFO("Read 12MB at /dev/a/foo.txt, which should fail too");
             ASSERT_THROW(file->read("12MB"), std::invalid_argument);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
@@ -247,14 +247,14 @@ TEST_F(JBODStorageTest, ReadWriteRAID0)  {
             XBT_INFO("Write complete. Clock is at 3.1s (.1s to transfer, 3s to write)");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 3.1);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
             XBT_INFO("Open File '/dev/a/foo.txt' in read mode");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
             ASSERT_DOUBLE_EQ(file->read("12MB"), 12000000);
             XBT_INFO("Read complete. Clock is at 4.7s (1.5s to read, .1s to transfer)");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 4.7);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
@@ -276,14 +276,14 @@ TEST_F(JBODStorageTest, ReadWriteRAID1)  {
             XBT_INFO("Write complete. Clock is at 6.05s (.05s to transfer, 6s to write)");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 6.05);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
             XBT_INFO("Open File '/dev/a/foo.txt' in read mode");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
             ASSERT_DOUBLE_EQ(file->read("6MB"), 6000000);
             XBT_INFO("Read complete. Clock is at 9.1s (3s to read, .05s to transfer)");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 9.1);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
@@ -305,14 +305,14 @@ TEST_F(JBODStorageTest, ReadWriteRAID4)  {
             XBT_INFO("Write complete. Clock is at 2.06s (.05s to transfer, 0.01 to compute parity, 2s to write)");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 2.06);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
             XBT_INFO("Open File '/dev/a/foo.txt' in read mode");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
             ASSERT_DOUBLE_EQ(file->read("6MB"), 6000000);
             XBT_INFO("Read complete. Clock is at 3.11s (1s to read, .05s to transfer)");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 3.11);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
@@ -340,21 +340,21 @@ TEST_F(JBODStorageTest, ReadWriteRAID6)  {
             XBT_INFO("Write complete. Clock is at 3.08s (.05s to transfer, 0.02 to compute parity, 3s to write)");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 3.08);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
             XBT_INFO("Open File '/dev/a/foo.txt' in read mode");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
             ASSERT_DOUBLE_EQ(file->read("6MB"), 6000000);
             XBT_INFO("Read complete. Clock is at 4.63s (1.5s to read, .05s to transfer)");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 4.63);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
             XBT_INFO("Test the evolution of parity disks ");
             xbt_log_control_set("fsmod_jbod.thresh:debug fsmod_jbod.fmt:'%m'");
             for (int i = 0; i < 3; i++ ){
                 xbt_log_control_set("no_loc");
                 ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "w"));
                 ASSERT_NO_THROW(file->write("6MB"));
-                ASSERT_NO_THROW(fs_->close(file));
+                ASSERT_NO_THROW(file->close());
                 ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
                 ASSERT_NO_THROW(testing::internal::CaptureStderr());
                 ASSERT_NO_THROW(file->read("6MB"));
@@ -363,7 +363,7 @@ TEST_F(JBODStorageTest, ReadWriteRAID6)  {
                 ASSERT_EQ(captured_debug_output, expected_debug_outputs.at(i));
             }
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());

@@ -67,7 +67,7 @@ TEST_F(StatTest, Stat)  {
             ASSERT_NO_THROW(file2 = fs_->open("/dev/a/foo.txt", "w"));
             ASSERT_NO_THROW(file2->seek(100*1000));
             ASSERT_NO_THROW(file2->write(12*1000, false));
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
             ASSERT_NO_THROW(sg4::this_actor::sleep_for(10));
             ASSERT_NO_THROW(file2 = fs_->open("/dev/a/foo.txt", "r"));
             ASSERT_NO_THROW(file->seek(0));
@@ -80,12 +80,12 @@ TEST_F(StatTest, Stat)  {
             ASSERT_DOUBLE_EQ(stat_struct->last_access_date, simgrid_get_clock());
             ASSERT_EQ(stat_struct->refcount, 2);
             XBT_INFO("Modifying file state");
-            ASSERT_NO_THROW(fs_->close(file2));
+            ASSERT_NO_THROW(file2->close());
             XBT_INFO("Calling stat() again");
             ASSERT_NO_THROW(stat_struct = file->stat());
             XBT_INFO("Checking sanity");
             ASSERT_EQ(stat_struct->refcount, 1);
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
         });
 
         // Run the simulation

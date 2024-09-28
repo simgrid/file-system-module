@@ -17,6 +17,7 @@ namespace simgrid::fsmod {
     class Partition;
 
     class XBT_PUBLIC FileMetadata {
+        friend class Partition;
         friend class PartitionFIFOCaching;
         friend class PartitionLRUCaching;
 
@@ -33,6 +34,7 @@ namespace simgrid::fsmod {
         unsigned file_refcount_ = 0;
 
         unsigned long sequence_number_= 0; // Used for caching algorithms
+        bool evictable_ = true; // Used for caching algorithms
 
     public:
         FileMetadata(sg_size_t initial_size, Partition *partition, std::string dir_path, std::string file_name);

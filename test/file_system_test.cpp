@@ -153,7 +153,7 @@ TEST_F(FileSystemTest, Directories)  {
             std::shared_ptr<sgfs::File> file;
             ASSERT_NO_THROW(file = fs_->open("/dev/a/b/c/foo.txt", "r"));
             ASSERT_THROW(fs_->unlink_directory("/dev/a/b/c"), sgfs::FileIsOpenException);
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
             ASSERT_NO_THROW(fs_->unlink_directory("/dev/a/b/c"));
             ASSERT_FALSE(fs_->directory_exists("/dev/a/b/c"));
         });
@@ -226,7 +226,7 @@ TEST_F(FileSystemTest, FileOpenClose)  {
             ASSERT_THROW(fs_->move_file("/dev/a/stuff/other.txt", "/dev/a/stuff/foo.txt"), sgfs::FileIsOpenException);
 
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
             XBT_INFO("Trying to unlink the file");
             ASSERT_NO_THROW(fs_->unlink_file("/dev/a/stuff/foo.txt"));
             ASSERT_FALSE(fs_->file_exists("/dev/a/stuff/foo.txt"));
@@ -262,7 +262,7 @@ TEST_F(FileSystemTest, TooManyFilesOpened) {
             XBT_INFO("Opening a third file, should not work");
             ASSERT_THROW(file3 = limited_fs->open("/dev/a/stuff/baz.txt", "a"), sgfs::TooManyOpenFilesException);
             XBT_INFO("Close the first file");
-            ASSERT_NO_THROW(limited_fs->close(file));
+            ASSERT_NO_THROW(file->close());
             XBT_INFO("Opening a third file should now work");
             ASSERT_NO_THROW(file3 = limited_fs->open("/dev/a/stuff/baz.txt", "w"));
         });
@@ -285,7 +285,7 @@ TEST_F(FileSystemTest, BadAccessMode) {
             XBT_INFO("Try to write in a file opened in read mode, which should fail");
             ASSERT_THROW(file->write("5kB"), std::invalid_argument);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
             XBT_INFO("Open the file in write mode ('w')");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "w"));
             XBT_INFO("Try to read from a file opened in write mode, which should fail");
@@ -293,7 +293,7 @@ TEST_F(FileSystemTest, BadAccessMode) {
             XBT_INFO("Asynchronous read from a file opened in write mode should also fail");
             ASSERT_THROW(file->read_async("5kB"), std::invalid_argument);
             XBT_INFO("Close the file");
-            ASSERT_NO_THROW(fs_->close(file));
+            ASSERT_NO_THROW(file->close());
             XBT_INFO("Open the file in unsupported mode ('w+'), which should fail");
             ASSERT_THROW(file = fs_->open("/dev/a/foo.txt", "w+"), std::invalid_argument);
             XBT_INFO("Open a non-existing file in read mode ('r'), which should fail");

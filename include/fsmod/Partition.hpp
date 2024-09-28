@@ -18,6 +18,7 @@
 namespace simgrid::fsmod {
 
     class Storage;
+    class FileSystem;
 
     class XBT_PUBLIC Partition {
     public:
@@ -40,8 +41,11 @@ namespace simgrid::fsmod {
             LRU = 2
         };
 
-        Partition(std::string name, std::shared_ptr<Storage> storage, sg_size_t size);
+        /** \cond EXCLUDE_FROM_DOCUMENTATION */
+        Partition(std::string name, FileSystem *file_system, std::shared_ptr<Storage> storage, sg_size_t size);
         virtual ~Partition() = default;
+        /** \endcond */
+
 
         /**
          * @brief Retrieves the partition's name
@@ -78,7 +82,9 @@ namespace simgrid::fsmod {
         }
 
     protected:
+        friend class FileSystem;
         // Methods to perform caching
+        void make_file_evictable(const std::string &dir_path, const std::string &file_name, bool evictable);
         virtual void create_space(sg_size_t num_bytes);
         virtual void new_file_creation_event(FileMetadata *file_metadata);
         virtual void new_file_access_event(FileMetadata *file_metadata);
@@ -89,7 +95,9 @@ namespace simgrid::fsmod {
         friend class FileMetadata;
         friend class FileSystem;
 
+
         std::string name_;
+        FileSystem *file_system_;FileSystem *file_system;
         std::shared_ptr<Storage> storage_;
         sg_size_t size_ = 0;
         sg_size_t free_space_ = 0;

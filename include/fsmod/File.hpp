@@ -60,6 +60,14 @@ namespace simgrid::fsmod {
         sg_size_t write(const std::string& num_bytes, bool simulate_it=true);
         sg_size_t write(sg_size_t num_bytes, bool simulate_it=true);
 
+        void close() const;
+
+        /**
+         * @brief Retrieve the file system that holds this file
+         * @return A pointer to a FileSystem
+         */
+        [[nodiscard]] FileSystem *get_file_system() { return partition_->file_system_; }
+
         void append(sg_size_t num_bytes);
         void truncate(sg_size_t num_bytes);
 

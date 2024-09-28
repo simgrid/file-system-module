@@ -19,6 +19,10 @@ namespace simgrid::fsmod {
             if (victim_metadata->file_refcount_ > 0) {
                 continue;
             }
+            // Never evict a non-evictable file
+            if (not victim_metadata->evictable_) {
+                continue;
+            }
             // Found a victim
             files_to_remove_to_create_space.push_back(victim);
             space_that_can_be_created += victim_metadata->current_size_;
