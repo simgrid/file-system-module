@@ -431,7 +431,11 @@ namespace simgrid::fsmod {
     bool FileSystem::directory_exists(const std::string& full_path) const {
         std::string simplified_path = PathUtil::simplify_path_string(full_path);
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
-        return partition->directory_exists(path_at_mount_point);
+        if (path_at_mount_point.empty()) {
+            return true;
+        } else {
+            return partition->directory_exists(path_at_mount_point);
+        }
     }
 
     /**
