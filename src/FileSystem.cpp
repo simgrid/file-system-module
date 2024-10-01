@@ -86,10 +86,14 @@ namespace simgrid::fsmod {
                                      Partition::CachingScheme caching_scheme) {
         auto cleanup_mount_point = mount_point;
         PathUtil::remove_trailing_slashes(cleanup_mount_point);
-        if (PathUtil::simplify_path_string(mount_point) != cleanup_mount_point) {
+        if (PathUtil::simplify_path_string(mount_point)  != cleanup_mount_point) {
             throw std::invalid_argument("Invalid partition path");
         }
+        // Adding a terminal "/" to not trigger spurious prefix errors
+        cleanup_mount_point += "/";
+        std::cerr << "TRYING TO ADD MOUNT POINT " << cleanup_mount_point << "\n";
         for (auto const &[mp, p]: this->partitions_) {
+            std::cerr << "COMPARING TO " << mp << "\n";
             if ((mp.rfind(cleanup_mount_point, 0) == 0) || (cleanup_mount_point.rfind(mp, 0) == 0)) {
                 throw std::invalid_argument("Mount point already exists or is prefix of existing mount point");
             }
@@ -290,6 +294,7 @@ namespace simgrid::fsmod {
       * @return
       */
     std::shared_ptr<File> FileSystem::open(const std::string &full_path, const std::string& access_mode) {
+        std::cerr << "FSMON: OPENING FILE\n";
         // "Get a file descriptor"
         if (this->num_open_files_ >= this->max_num_open_files_) {
             throw TooManyOpenFilesException(XBT_THROW_POINT);
@@ -331,6 +336,7 @@ namespace simgrid::fsmod {
             file->current_position_ = metadata->get_current_size();
 
         this->num_open_files_++;
+        std::cerr << "FSMON: DONE OPENING FILE\n";
         return file;
     }
 
