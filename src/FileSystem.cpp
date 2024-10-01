@@ -294,8 +294,8 @@ namespace simgrid::fsmod {
         if (this->num_open_files_ >= this->max_num_open_files_) {
             throw TooManyOpenFilesException(XBT_THROW_POINT);
         }
-        if (access_mode != "r" && access_mode != "w" && access_mode != "a") {
-            throw std::invalid_argument("Invalid access mode. Authorized values are: 'r', 'w', or 'a'");
+        if (access_mode != "r" && access_mode != "w" && access_mode != "a" && access_mode != "r+") {
+            throw std::invalid_argument("Invalid access mode. Authorized values are: 'r', 'w', 'a', or 'r+'");
         }
 
         // Get the partition and path
@@ -308,7 +308,7 @@ namespace simgrid::fsmod {
         // Get the file metadata
         auto metadata = partition->get_file_metadata(dir, file_name);
         if (not metadata) {
-            if (access_mode == "r")
+            if (access_mode == "r" or access_mode == "r+")
                 throw FileNotFoundException(XBT_THROW_POINT, full_path);
             create_file(full_path, "0B");
             metadata = partition->get_file_metadata(dir, file_name);

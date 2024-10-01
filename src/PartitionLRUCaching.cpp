@@ -8,6 +8,7 @@
 namespace simgrid::fsmod {
 
     void PartitionLRUCaching::new_file_access_event(FileMetadata *file_metadata) {
+        std::cerr << "NEW FILE ACCESS ENVENT FOR " << file_metadata->file_name_ << "!\n";
         rm_from_priority_list(file_metadata);
         file_metadata->sequence_number_ = get_next_sequence_number();
         add_to_priority_list(file_metadata);

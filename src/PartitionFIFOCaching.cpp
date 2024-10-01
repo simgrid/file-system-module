@@ -14,7 +14,10 @@ namespace simgrid::fsmod {
         sg_size_t space_that_can_be_created = 0.0;
         std::vector<unsigned long> files_to_remove_to_create_space;
 
+        std::cerr << "IN CREATE SPACE!\n";
+
         for (auto const& [victim, victim_metadata]: priority_list_) {
+            std::cerr << "LOOKING AT VICTIM " << victim_metadata->file_name_ << "\n";
             // Never evict an open file
             if (victim_metadata->file_refcount_ > 0) {
                 continue;
@@ -38,9 +41,18 @@ namespace simgrid::fsmod {
         }
     }
 
+    void PartitionFIFOCaching::print_priority_list() {
+        std::cerr << "PLIST = ";
+        for (auto const &i : priority_list_) {
+            std::cerr << " " << i.second->file_name_ << " ";
+        }
+        std::cerr << "\n";
+    }
+
     void PartitionFIFOCaching::new_file_creation_event(FileMetadata *file_metadata) {
         file_metadata->sequence_number_ = sequence_number_++;
         priority_list_[file_metadata->sequence_number_] = file_metadata;
+        print_priority_list();
     }
 
     void PartitionFIFOCaching::new_file_access_event(FileMetadata *file_metadata) {
@@ -49,6 +61,7 @@ namespace simgrid::fsmod {
 
     void PartitionFIFOCaching::new_file_deletion_event(FileMetadata *file_metadata) {
         priority_list_.erase(file_metadata->sequence_number_);
+        print_priority_list();
     }
 
 
