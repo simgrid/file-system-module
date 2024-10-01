@@ -111,14 +111,23 @@ namespace simgrid::fsmod {
         if (dst_metadata && dst_metadata->get_file_refcount()) {
             throw FileIsOpenException(XBT_THROW_POINT, dst_dir_path + "/" + dst_file_name);
         }
+
         // Create space if needed
         if (dst_metadata) {
             auto src_size = src_metadata->get_current_size();
             auto dst_size = dst_metadata->get_current_size();
+
             if (dst_size < src_size) {
                 if (src_size - dst_size > this->get_free_space()) {
                     this->create_space(src_size - dst_size);
                 }
+            }
+
+            // Update free space
+            if (dst_size < src_size) {
+                this->decrease_free_space(src_size - dst_size);
+            } else {
+                this->increase_free_space(dst_size - src_size);
             }
         }
 
@@ -131,6 +140,9 @@ namespace simgrid::fsmod {
         content_[dst_dir_path][dst_file_name] = std::move(uniq_ptr);
         this->new_file_creation_event(content_[dst_dir_path][dst_file_name].get());
         content_[dst_dir_path][dst_file_name]->set_access_date(s4u::Engine::get_clock());
+
+
+
     }
 
     std::set<std::string, std::less<>> Partition::list_files_in_directory(const std::string &dir_path) const {

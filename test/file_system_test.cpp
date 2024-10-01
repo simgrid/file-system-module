@@ -189,7 +189,7 @@ TEST_F(FileSystemTest, FileMove)  {
             ASSERT_NO_THROW(fs_->move_file("/dev/a/b/c/foo.txt", "/dev/a/stuff.txt"));
             ASSERT_FALSE(fs_->file_exists("/dev/a/b/c/foo.txt"));
             ASSERT_TRUE(fs_->file_exists("/dev/a/stuff.txt"));
-            ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a/")->get_free_space(), 90*1000);
+            ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a/")->get_free_space(), 80*1000);
 
             auto ods = sgfs::OneDiskStorage::create("my_storage", disk_two_);
             XBT_INFO("Mount a new partition");

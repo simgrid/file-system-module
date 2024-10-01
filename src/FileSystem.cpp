@@ -91,13 +91,14 @@ namespace simgrid::fsmod {
         }
         // Adding a terminal "/" to not trigger spurious prefix errors
         cleanup_mount_point += "/";
-        std::cerr << "TRYING TO ADD MOUNT POINT " << cleanup_mount_point << "\n";
         for (auto const &[mp, p]: this->partitions_) {
-            std::cerr << "COMPARING TO " << mp << "\n";
-            if ((mp.rfind(cleanup_mount_point, 0) == 0) || (cleanup_mount_point.rfind(mp, 0) == 0)) {
+            if (((mp + "/").rfind(cleanup_mount_point, 0) == 0) || (cleanup_mount_point.rfind(mp + "/", 0) == 0)) {
                 throw std::invalid_argument("Mount point already exists or is prefix of existing mount point");
             }
         }
+        // Remove the terminal
+        PathUtil::remove_trailing_slashes(cleanup_mount_point);
+
 
         switch (caching_scheme) {
             case Partition::CachingScheme::FIFO:
