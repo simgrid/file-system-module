@@ -157,14 +157,10 @@ namespace simgrid::fsmod {
      */
     sg_size_t File::write(sg_size_t num_bytes, bool simulate_it) {
 
-        std::cerr << "IN FILE WRITE!\n";
-
         if (num_bytes == 0) /* Nothing to write, return */
             return 0;
-        std::cerr << "CALLING WRITE_INIT_CHECKS\n";
         int my_sequence_number = write_init_checks(num_bytes);
 
-        std::cerr << "IN FILE WRITE\n";
         // Do the I/O simulation if need be
         if (simulate_it) {
             try {
@@ -173,7 +169,6 @@ namespace simgrid::fsmod {
                 throw xbt::UnimplementedError("Handling of hardware resource failures not implemented");
             }
         }
-        std::cerr << "IN FILE WRITE: CALLED PARTITION WRITE\n";
 
         // Update
         metadata_->set_access_date(s4u::Engine::get_clock());

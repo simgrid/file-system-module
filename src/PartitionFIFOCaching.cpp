@@ -14,7 +14,7 @@ namespace simgrid::fsmod {
         sg_size_t space_that_can_be_created = 0.0;
         std::vector<unsigned long> files_to_remove_to_create_space;
 
-        std::cerr << "IN CREATE SPACE!\n";
+        std::cerr << "** IN CREATE SPACE!\n";
 
         for (auto const& [victim, victim_metadata]: priority_list_) {
             std::cerr << "LOOKING AT VICTIM " << victim_metadata->file_name_ << "\n";
@@ -37,12 +37,14 @@ namespace simgrid::fsmod {
             throw NotEnoughSpaceException(XBT_THROW_POINT, "Unable to evict files to create enough space");
         }
         for (auto const &victim: files_to_remove_to_create_space) {
+            std::cerr << "EVICTING VICTIM: " << this->priority_list_[victim]->file_name_ << "\n";
             this->delete_file(this->priority_list_[victim]->dir_path_, this->priority_list_[victim]->file_name_);
         }
+        std::cerr << "** RETURNING FROM CREATE SPACE\n";
     }
 
     void PartitionFIFOCaching::print_priority_list() {
-        std::cerr << "PLIST = ";
+        std::cerr << "PLIST " << this->get_name() << " = ";
         for (auto const &i : priority_list_) {
             std::cerr << " " << i.second->file_name_ << " ";
         }
