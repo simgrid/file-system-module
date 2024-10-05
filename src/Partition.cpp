@@ -169,13 +169,16 @@ namespace simgrid::fsmod {
             throw DirectoryDoesNotExistException(XBT_THROW_POINT, dir_path);
         }
         // Check that no file is open
+        sg_size_t freed_space = 0;
         for (const auto &[filename, metadata]: content_.at(dir_path)) {
             if (metadata->get_file_refcount() != 0) {
                 throw FileIsOpenException(XBT_THROW_POINT, "No content deleted in directory before file " + filename + " is open");
             }
+            freed_space += metadata->get_current_size();
         }
-        // Wipe everything out
+        // Wipe everything out and update free space!
         content_.erase(dir_path);
+        this->increase_free_space(freed_space);
     }
 
     void Partition::truncate_file(const std::string &dir_path, const std::string &file_name, sg_size_t num_bytes) {
