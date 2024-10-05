@@ -60,7 +60,8 @@ namespace simgrid::fsmod {
      * @return True if mount_point is a prefix of  simplified_absolute_path, false otherwise
      */
     bool PathUtil::is_at_mount_point(std::string_view simplified_absolute_path, std::string_view mount_point) {
-        return simplified_absolute_path.rfind(mount_point, 0) == 0;
+        bool to_return =  simplified_absolute_path.rfind(mount_point, 0) == 0;
+        return to_return;
     }
 
     /**

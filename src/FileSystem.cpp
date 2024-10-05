@@ -295,7 +295,6 @@ namespace simgrid::fsmod {
       * @return
       */
     std::shared_ptr<File> FileSystem::open(const std::string &full_path, const std::string& access_mode) {
-        std::cerr << "FSMON: OPENING FILE\n";
         // "Get a file descriptor"
         if (this->num_open_files_ >= this->max_num_open_files_) {
             throw TooManyOpenFilesException(XBT_THROW_POINT);
@@ -337,7 +336,6 @@ namespace simgrid::fsmod {
             file->current_position_ = metadata->get_current_size();
 
         this->num_open_files_++;
-        std::cerr << "FSMON: DONE OPENING FILE\n";
         return file;
     }
 
@@ -466,5 +464,18 @@ namespace simgrid::fsmod {
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
         partition->delete_directory(path_at_mount_point);
     }
+
+
+    /**
+     * @brief Returns the free space on the path's partition
+     * @param full_path: a path
+     * @return a number of bytes
+     */
+    sg_size_t FileSystem::get_free_space_at_path(const std::string &full_path) const {
+        std::string simplified_path = PathUtil::simplify_path_string(full_path);
+        auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
+        return partition->get_free_space();
+    }
+
 
 }

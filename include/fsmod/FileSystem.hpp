@@ -92,6 +92,8 @@ namespace simgrid::fsmod {
         [[nodiscard]] std::vector<std::shared_ptr<Partition>> get_partitions() const;
         [[nodiscard]] std::shared_ptr<Partition> get_partition_for_path_or_null(const std::string& full_path) const;
 
+        [[nodiscard]] sg_size_t get_free_space_at_path(const std::string &full_path) const;
+
     private:
         friend class File;
 
