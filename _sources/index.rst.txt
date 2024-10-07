@@ -1,7 +1,7 @@
 .. _mainpage:
 
 
-The SimGrid File System Module: API Reference
+The Data Transport Layer Module: API Reference
 *********************************************
 
 Explore the API using the left search box and navigation bar.
@@ -12,4 +12,3 @@ Explore the API using the left search box and navigation bar.
   :glob:
 
   api_user/*
-
