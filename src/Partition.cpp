@@ -69,11 +69,11 @@ namespace simgrid::fsmod {
     void Partition::delete_file(const std::string &dir_path, const std::string &file_name) {
         auto* metadata_ptr = this->get_file_metadata(dir_path, file_name);
         if (not metadata_ptr) {
-            throw FileNotFoundException(XBT_THROW_POINT, dir_path + "/" + file_name);
+            throw FileNotFoundException(XBT_THROW_POINT, "delete: " + dir_path + "/" + file_name);
         }
 
         if (metadata_ptr->get_file_refcount() > 0) {
-            throw FileIsOpenException(XBT_THROW_POINT, dir_path + "/" + file_name);
+            throw FileIsOpenException(XBT_THROW_POINT, "delete: " + dir_path + "/" + file_name);
         }
 
         this->new_file_deletion_event(metadata_ptr);
@@ -106,10 +106,10 @@ namespace simgrid::fsmod {
 
         // Sanity checks
         if (src_metadata->get_file_refcount() > 0) {
-            throw FileIsOpenException(XBT_THROW_POINT, src_dir_path + "/" + src_file_name);
+            throw FileIsOpenException(XBT_THROW_POINT, "move: " + src_dir_path + "/" + src_file_name);
         }
         if (dst_metadata && dst_metadata->get_file_refcount()) {
-            throw FileIsOpenException(XBT_THROW_POINT, dst_dir_path + "/" + dst_file_name);
+            throw FileIsOpenException(XBT_THROW_POINT, "move: " + dst_dir_path + "/" + dst_file_name);
         }
 
         // Create space if needed
@@ -172,7 +172,7 @@ namespace simgrid::fsmod {
         sg_size_t freed_space = 0;
         for (const auto &[filename, metadata]: content_.at(dir_path)) {
             if (metadata->get_file_refcount() != 0) {
-                throw FileIsOpenException(XBT_THROW_POINT, "No content deleted in directory before file " + filename + " is open");
+                throw FileIsOpenException(XBT_THROW_POINT, "No content deleted in directory because file " + filename + " is open");
             }
             freed_space += metadata->get_current_size();
         }
