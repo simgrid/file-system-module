@@ -49,7 +49,6 @@ namespace simgrid::fsmod {
     void PartitionFIFOCaching::new_file_creation_event(FileMetadata *file_metadata) {
         file_metadata->sequence_number_ = sequence_number_++;
         priority_list_[file_metadata->sequence_number_] = file_metadata;
-        print_priority_list();
     }
 
     void PartitionFIFOCaching::new_file_access_event(FileMetadata *file_metadata) {
@@ -58,7 +57,6 @@ namespace simgrid::fsmod {
 
     void PartitionFIFOCaching::new_file_deletion_event(FileMetadata *file_metadata) {
         priority_list_.erase(file_metadata->sequence_number_);
-        print_priority_list();
     }
 
 
