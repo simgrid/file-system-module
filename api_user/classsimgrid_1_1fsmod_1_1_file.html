@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
@@ -6,20 +8,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>simgrid::fsmod::File &mdash; FSMOD 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.png"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=2709fde1"></script>
-        <script src="../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -39,9 +37,6 @@
             
               <img src="../_static/simgrid_logo.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                0.1
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -53,6 +48,7 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">simgrid::fsmod::File</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4FileE"><code class="docutils literal notranslate"><span class="pre">File</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File15get_file_systemEv"><code class="docutils literal notranslate"><span class="pre">File::get_file_system()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE"><code class="docutils literal notranslate"><span class="pre">File::get_num_bytes_read()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE"><code class="docutils literal notranslate"><span class="pre">File::get_num_bytes_written()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File4readERKNSt6stringEb"><code class="docutils literal notranslate"><span class="pre">File::read()</span></code></a></li>
@@ -110,6 +106,17 @@
 <dd><p>A class that implemented a file abstraction. </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod4File15get_file_systemEv">
+<span id="_CPPv3N7simgrid5fsmod4File15get_file_systemEv"></span><span id="_CPPv2N7simgrid5fsmod4File15get_file_systemEv"></span><span id="simgrid::fsmod::File::get_file_system"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1ab221702e95de2e9caf3e2a8b87f0d2c6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system.html#_CPPv4N7simgrid5fsmod10FileSystemE" title="simgrid::fsmod::FileSystem"><span class="n"><span class="pre">FileSystem</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_file_system</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod4File15get_file_systemEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Retrieve the file system that holds this file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A pointer to a <a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system.html#classsimgrid_1_1fsmod_1_1_file_system"><span class="std std-ref">FileSystem</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE">
 <span id="_CPPv3NK7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE"></span><span id="_CPPv2NK7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE"></span><span id="simgrid::fsmod::File::get_num_bytes_read__s4u::IoPtrCRC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a7efaf34ce2cf1baa7ecee2ae9c79538a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_num_bytes_read</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">IoPtr</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">read</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE" title="Link to this definition"></a><br /></dt>
