@@ -8,7 +8,6 @@
 
 #include "fsmod/Partition.hpp"
 #include "fsmod/FileMetadata.hpp"
-#include "fsmod/FileSystemException.hpp"
 
 namespace simgrid::fsmod {
 

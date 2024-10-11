@@ -122,7 +122,7 @@ namespace simgrid::fsmod {
     * @param netzone The SimGrid NetZone
     * @param fs The FSMOD file system
     */
-    void FileSystem::register_file_system(const s4u::NetZone* netzone, std::shared_ptr<FileSystem> fs) {
+    void FileSystem::register_file_system(const s4u::NetZone* netzone, const std::shared_ptr<FileSystem>& fs) {
         if (not FileSystemNetZoneImplExtension::EXTENSION_ID.valid()) {
             // This is the first time we register a FileSystem, register the NetZoneImpls extension properly
             FileSystemNetZoneImplExtension::EXTENSION_ID =
@@ -145,7 +145,7 @@ namespace simgrid::fsmod {
      * @return A file system map, using names as keys
      */
     const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>&
-    FileSystem::get_file_systems_by_actor(s4u::ActorPtr actor) {
+    FileSystem::get_file_systems_by_actor(const s4u::ActorPtr& actor) {
         const kernel::routing::NetZoneImpl* netzone_impl;
         if (not actor || simgrid::s4u::Actor::is_maestro()) {
             netzone_impl = s4u::Engine::get_instance()->get_netzone_root()->get_impl();
@@ -271,7 +271,7 @@ namespace simgrid::fsmod {
 
 
     /**
-     * @brief Set the evictability of a file so that it can or cannot be evicted
+     * @brief Set the evictable status of a file so that it can or cannot be evicted
      *        if stored on a partition that implements caching
      * @param full_path: an absolute file path
      * @param evictable: true if the file should be evictable, false if not

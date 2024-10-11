@@ -88,6 +88,39 @@ TEST_F(CachingTest, FIFOBasics)  {
     });
 }
 
+TEST_F(CachingTest, FIFOBasicsWithUnevictableFiles)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+        // Create one actor (for this test we could likely do it all in the maestro but what the hell)
+        sg4::Actor::create("TestActor", host_, [this]() {
+            std::shared_ptr<sgfs::File> file;
+            XBT_INFO("Create a 20MB file at /dev/fifo/20mb.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/fifo/20mb.txt", "20MB"));
+            XBT_INFO("Making the 20MB file at /dev/fifo/20mb.txt unevictable");
+            ASSERT_THROW(fs_->make_file_evictable("/dev/fifo/bogus.txt", false), sgfs::FileNotFoundException);
+            ASSERT_NO_THROW(fs_->make_file_evictable("/dev/fifo/20mb.txt", false));
+            XBT_INFO("Create a 60MB file at /dev/a/60mb.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/fifo/60mb.txt", "60MB"));
+            XBT_INFO("Create a 30MB file at /dev/fifo/60mb.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/fifo/30mb.txt", "30MB"));
+            XBT_INFO("Check that files are as they should be");
+            ASSERT_TRUE(fs_->file_exists("/dev/fifo/20mb.txt"));
+            ASSERT_FALSE(fs_->file_exists("/dev/fifo/60mb.txt"));
+            ASSERT_TRUE(fs_->file_exists("/dev/fifo/30mb.txt"));
+            ASSERT_NO_THROW(fs_->make_file_evictable("/dev/fifo/20mb.txt", true));
+            ASSERT_NO_THROW(fs_->create_file("/dev/fifo/60mb.txt", "60MB"));
+            ASSERT_FALSE(fs_->file_exists("/dev/fifo/20mb.txt"));
+            ASSERT_TRUE(fs_->file_exists("/dev/fifo/60mb.txt"));
+            ASSERT_TRUE(fs_->file_exists("/dev/fifo/30mb.txt"));
+
+
+        });
+
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
+
 TEST_F(CachingTest, FIFODontEvictOpenFiles) {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();

@@ -28,7 +28,7 @@ namespace simgrid::fsmod {
         static xbt::Extension<kernel::routing::NetZoneImpl, FileSystemNetZoneImplExtension> EXTENSION_ID;
 
         void register_file_system(const std::shared_ptr<FileSystem>& fs);
-        const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>& get_all_file_systems() const { return file_systems_;}
+        [[nodiscard]] const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>& get_all_file_systems() const { return file_systems_;}
     };
 
     /**
@@ -44,10 +44,10 @@ namespace simgrid::fsmod {
 
         static std::shared_ptr<FileSystem> create(const std::string &name, int max_num_open_files = 1024);
         static const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>&
-            get_file_systems_by_actor(s4u::ActorPtr actor);
+            get_file_systems_by_actor(const s4u::ActorPtr& actor);
         static const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>&
             get_file_systems_by_netzone(const s4u::NetZone* netzone);
-        static void register_file_system(const s4u::NetZone* netzone, std::shared_ptr<FileSystem> fs);
+        static void register_file_system(const s4u::NetZone* netzone, const std::shared_ptr<FileSystem>& fs);
 
         /**
          * @brief Retrieves the file system's name
