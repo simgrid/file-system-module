@@ -145,6 +145,7 @@ namespace simgrid::fsmod {
      * @brief Write data to the file
      * @param num_bytes: the number of bytes to write as a string with units
      * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
+     * @return The number of bytes written
      */
     sg_size_t File::write(const std::string& num_bytes, bool simulate_it) {
         return write(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")), simulate_it);
@@ -154,6 +155,7 @@ namespace simgrid::fsmod {
      * @brief Write data to the file
      * @param num_bytes: the number of bytes to write
      * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
+     * @return The number of bytes written
      */
     sg_size_t File::write(sg_size_t num_bytes, bool simulate_it) {
         if (num_bytes == 0) /* Nothing to write, return */
@@ -227,5 +229,49 @@ namespace simgrid::fsmod {
         metadata_->decrease_file_refcount();
         partition_->file_system_->num_open_files_--;
     }
+
+
+    /**
+     * @brief Get the number of bytes actually read by a given I/O Read activity
+     * @param write: the I/O (read) activity
+     * @return a number of bytes
+     */
+    sg_size_t File::get_num_bytes_read(const s4u::IoPtr& read) {
+        return read->get_performed_ioops();
+    }
+
+    /**
+     * @brief Get the number of bytes actually written by a given I/O Write activity
+     * @param write: the I/O (write) activity
+     * @return a number of bytes
+     */
+    sg_size_t File::get_num_bytes_written(const s4u::IoPtr& write) {
+        return write->get_performed_ioops();
+    }
+
+    /**
+     * @brief Get the file's access mode
+     * @return an access mode string
+     */
+    const std::string& File::get_access_mode() const {
+        return access_mode_;
+    }
+
+    /**
+     * @brief Get the file's full path
+     * @return a path string
+     */
+    const std::string& File::get_path() const {
+        return path_;
+    }
+
+    /**
+     * @brief Retrieve the file system that holds this file
+     * @return A pointer to a FileSystem
+     */
+    FileSystem *File::get_file_system() const {
+        return partition_->file_system_;
+    }
+
 
 }

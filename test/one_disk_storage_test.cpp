@@ -94,7 +94,7 @@ TEST_F(OneDiskStorageTest, SingleAsyncRead)  {
             ASSERT_NO_THROW(my_read->wait());
             XBT_INFO("Read complete. Clock should be at 2s");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 2.0);
-            ASSERT_DOUBLE_EQ(file->get_num_bytes_read(my_read), 4000000);
+            ASSERT_DOUBLE_EQ(sgfs::File::get_num_bytes_read(my_read), 4000000);
             XBT_INFO("Close the file");
             ASSERT_NO_THROW(file->close());
         });

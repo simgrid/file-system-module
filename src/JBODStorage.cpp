@@ -38,7 +38,19 @@ namespace simgrid::fsmod {
                                           [this]() { get_message_queue()->get<void*>(); })->daemonize());
     }
 
-    void JBODStorage::set_raid_level(RAID raid_level) {
+    /**
+     * @brief Retrieve the storage's RAID level
+     * @return A RAID level
+     */
+    JBODStorage::RAID JBODStorage::get_raid_level() const {
+        return raid_level_;
+    }
+
+    /**
+     * @brief Set the storage's RAID level
+     * @param raid_level: a RAID level
+     */
+    void JBODStorage::set_raid_level(JBODStorage::RAID raid_level) {
         if ((raid_level == RAID::RAID4 || raid_level == RAID::RAID5) && get_num_disks() < 3) {
             throw std::invalid_argument("RAID" + std::to_string((int)raid_level) +"  requires at least 3 disks");
         }

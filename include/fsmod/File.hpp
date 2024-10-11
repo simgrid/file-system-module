@@ -44,13 +44,11 @@ namespace simgrid::fsmod {
         File& operator=(const File&) = delete;
         virtual ~File() = default;
 
-        /** Get the number of bytes actually read by a given I/O Read activity */
-        sg_size_t get_num_bytes_read(const s4u::IoPtr& read) const { return read->get_performed_ioops(); }
+        static sg_size_t get_num_bytes_read(const s4u::IoPtr& read);
+        static sg_size_t get_num_bytes_written(const s4u::IoPtr& write);
 
-        /** Get the number of bytes actually written by a given I/O Write activity */
-        sg_size_t get_num_bytes_written(const s4u::IoPtr& write) const { return write->get_performed_ioops(); }
-        const std::string& get_access_mode() const { return access_mode_; }
-        const std::string& get_path() const { return path_; }
+        [[nodiscard]] const std::string& get_access_mode() const;
+        [[nodiscard]] const std::string& get_path() const;
 
         s4u::IoPtr read_async(const std::string& num_bytes);
         s4u::IoPtr read_async(sg_size_t num_bytes);
@@ -63,14 +61,9 @@ namespace simgrid::fsmod {
 
         void close() const;
 
-        /**
-         * @brief Retrieve the file system that holds this file
-         * @return A pointer to a FileSystem
-         */
-        [[nodiscard]] FileSystem *get_file_system() { return partition_->file_system_; }
+        [[nodiscard]] FileSystem *get_file_system() const;
 
-        void seek(sg_offset_t pos, int origin = SEEK_SET); /** Sets the file head to the given position from a given origin. */
-        /** Retrieves the current file position */
+        void seek(sg_offset_t pos, int origin = SEEK_SET);
         [[nodiscard]] sg_size_t tell() const { return current_position_; }
 
         [[nodiscard]] std::unique_ptr<FileStat> stat() const;

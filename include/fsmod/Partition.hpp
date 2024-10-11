@@ -22,6 +22,7 @@ namespace simgrid::fsmod {
 
     class XBT_PUBLIC Partition {
     public:
+
         /**
          * @brief An enum that defines the possible caching schemes that can
          *        be used by a partition
@@ -47,39 +48,11 @@ namespace simgrid::fsmod {
         /** \endcond */
 
 
-        /**
-         * @brief Retrieves the partition's name
-         * @return a name
-         */
-        [[nodiscard]] const std::string& get_name() const { return name_; }
-        /**
-         * @brief Retrieves the partition's name as a C-style string
-         * @return a name
-         */
-        [[nodiscard]] const char* get_cname() const { return name_.c_str(); }
-        /**
-         * @brief Retrieves the partition's size in bytes
-         * @return a number of bytes
-         */
-        [[nodiscard]] sg_size_t get_size() const { return size_; }
-
-        /**
-         * @brief Retrieves the partition's free space in bytes
-         * @return a number of bytes
-         */
-        [[nodiscard]] sg_size_t get_free_space() const { return free_space_; }
-
-        /**
-         * @brief Retrieves the number of files stored in the partition
-         * @return a number of files
-         */
-        [[nodiscard]] sg_size_t get_num_files() const {
-            sg_size_t to_return = 0;
-            for (auto const &[dir_path, files] : content_) {
-                to_return += files.size();
-            }
-            return to_return;
-        }
+        [[nodiscard]] const std::string& get_name() const;
+        [[nodiscard]] const char* get_cname() const;
+        [[nodiscard]] sg_size_t get_size() const;
+        [[nodiscard]] sg_size_t get_free_space() const;
+        [[nodiscard]] sg_size_t get_num_files() const;
 
     protected:
         friend class FileSystem;

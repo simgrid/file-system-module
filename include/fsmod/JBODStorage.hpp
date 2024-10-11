@@ -39,11 +39,8 @@ namespace simgrid::fsmod {
                                                    const std::vector<simgrid::s4u::Disk*>& disks,
                                                    JBODStorage::RAID raid_level = RAID::RAID0);
         ~JBODStorage() override = default;
-        /**
-         * @brief Retrieves the storage's RAID level
-         * @return A RAID level
-         */
-        [[nodiscard]] RAID get_raid_level() const { return raid_level_; }
+
+        [[nodiscard]] RAID get_raid_level() const;
 
         void set_raid_level(RAID raid_level);
 

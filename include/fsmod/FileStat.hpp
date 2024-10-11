@@ -13,7 +13,7 @@
 namespace simgrid::fsmod {
 
     /**
-     * @brief A class that implemented a file stat data structure
+     * @brief A class that implements a file stat data structure
      */
     struct XBT_PUBLIC FileStat {
         public:

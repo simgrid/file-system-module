@@ -464,7 +464,6 @@ namespace simgrid::fsmod {
         partition->delete_directory(path_at_mount_point);
     }
 
-
     /**
      * @brief Returns the free space on the path's partition
      * @param full_path: a path
@@ -476,5 +475,20 @@ namespace simgrid::fsmod {
         return partition->get_free_space();
     }
 
+    /**
+     * @brief Retrieves the file system's name
+     * @return a name
+     */
+    const std::string& FileSystem::get_name() const {
+        return name_;
+    }
+
+    /**
+     * @brief Retrieves the file system's name as a C-style string
+     * @return a name
+     */
+    const char* FileSystem::get_cname() const {
+        return name_.c_str();
+    }
 
 }

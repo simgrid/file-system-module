@@ -155,6 +155,9 @@ TEST_F(FileSystemTest, Directories)  {
             XBT_INFO("Try to unlink a directory in which one file is opened. This shouldn't work");
             std::shared_ptr<sgfs::File> file;
             ASSERT_NO_THROW(file = fs_->open("/dev/a/b/c/foo.txt", "r"));
+            ASSERT_EQ(file->get_path(), "/dev/a/b/c/foo.txt");
+            ASSERT_EQ(file->get_access_mode(), "r");
+            ASSERT_EQ(file->get_file_system(), fs_.get());
             ASSERT_THROW(fs_->unlink_directory("/dev/a/b/c"), sgfs::FileIsOpenException);
             ASSERT_NO_THROW(file->close());
             ASSERT_NO_THROW(fs_->unlink_directory("/dev/a/b/c"));

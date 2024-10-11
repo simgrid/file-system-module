@@ -49,16 +49,8 @@ namespace simgrid::fsmod {
             get_file_systems_by_netzone(const s4u::NetZone* netzone);
         static void register_file_system(const s4u::NetZone* netzone, const std::shared_ptr<FileSystem>& fs);
 
-        /**
-         * @brief Retrieves the file system's name
-         * @return a name
-         */
-        [[nodiscard]] const std::string& get_name() const { return name_; }
-        /**
-         * @brief Retrieves the file system's name as a C-style string
-         * @return a name
-         */
-        [[nodiscard]] const char* get_cname() const { return name_.c_str(); }
+        [[nodiscard]] const std::string& get_name() const;
+        [[nodiscard]] const char* get_cname() const;
 
         void mount_partition(const std::string &mount_point, std::shared_ptr<Storage> storage, sg_size_t size,
                              Partition::CachingScheme caching_scheme  = Partition::CachingScheme::NONE);

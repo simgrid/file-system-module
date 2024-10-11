@@ -24,6 +24,51 @@ namespace simgrid::fsmod {
             : name_(std::move(name)), file_system_(file_system), storage_(std::move(storage)), size_(size), free_space_(size) {
     }
 
+
+    /**
+       * @brief Retrieves the partition's name
+       * @return a name
+       */
+    const std::string& Partition::get_name() const {
+        return name_;
+    }
+
+    /**
+     * @brief Retrieves the partition's name as a C-style string
+     * @return a name
+     */
+    const char* Partition::get_cname() const {
+        return name_.c_str();
+    }
+
+    /**
+     * @brief Retrieves the partition's size in bytes
+     * @return a number of bytes
+     */
+    sg_size_t Partition::get_size() const {
+        return size_;
+    }
+
+    /**
+     * @brief Retrieves the partition's free space in bytes
+     * @return a number of bytes
+     */
+    sg_size_t Partition::get_free_space() const {
+        return free_space_;
+    }
+
+    /**
+     * @brief Retrieves the number of files stored in the partition
+     * @return a number of files
+     */
+    sg_size_t Partition::get_num_files() const {
+        sg_size_t to_return = 0;
+        for (auto const &[dir_path, files] : content_) {
+            to_return += files.size();
+        }
+        return to_return;
+    }
+    
     /**
      * @brief Retrieve the metadata for a file
      * @param dir_path: the path to the directory in which the file is located
