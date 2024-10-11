@@ -48,20 +48,21 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">simgrid::fsmod::File</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4FileE"><code class="docutils literal notranslate"><span class="pre">File</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File15get_file_systemEv"><code class="docutils literal notranslate"><span class="pre">File::get_file_system()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE"><code class="docutils literal notranslate"><span class="pre">File::get_num_bytes_read()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE"><code class="docutils literal notranslate"><span class="pre">File::get_num_bytes_written()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File15get_access_modeEv"><code class="docutils literal notranslate"><span class="pre">File::get_access_mode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File15get_file_systemEv"><code class="docutils literal notranslate"><span class="pre">File::get_file_system()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File8get_pathEv"><code class="docutils literal notranslate"><span class="pre">File::get_path()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File4readERKNSt6stringEb"><code class="docutils literal notranslate"><span class="pre">File::read()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File4readE9sg_size_tb"><code class="docutils literal notranslate"><span class="pre">File::read()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File10read_asyncERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">File::read_async()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File10read_asyncE9sg_size_t"><code class="docutils literal notranslate"><span class="pre">File::read_async()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File4seekE11sg_offset_ti"><code class="docutils literal notranslate"><span class="pre">File::seek()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File4statEv"><code class="docutils literal notranslate"><span class="pre">File::stat()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File4tellEv"><code class="docutils literal notranslate"><span class="pre">File::tell()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File5writeERKNSt6stringEb"><code class="docutils literal notranslate"><span class="pre">File::write()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File5writeE9sg_size_tb"><code class="docutils literal notranslate"><span class="pre">File::write()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File11write_asyncERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">File::write_async()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File11write_asyncE9sg_size_t"><code class="docutils literal notranslate"><span class="pre">File::write_async()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE"><code class="docutils literal notranslate"><span class="pre">File::get_num_bytes_read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE"><code class="docutils literal notranslate"><span class="pre">File::get_num_bytes_written()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -107,8 +108,19 @@
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod4File15get_file_systemEv">
-<span id="_CPPv3N7simgrid5fsmod4File15get_file_systemEv"></span><span id="_CPPv2N7simgrid5fsmod4File15get_file_systemEv"></span><span id="simgrid::fsmod::File::get_file_system"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1ab221702e95de2e9caf3e2a8b87f0d2c6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system.html#_CPPv4N7simgrid5fsmod10FileSystemE" title="simgrid::fsmod::FileSystem"><span class="n"><span class="pre">FileSystem</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_file_system</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod4File15get_file_systemEv" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod4File15get_access_modeEv">
+<span id="_CPPv3NK7simgrid5fsmod4File15get_access_modeEv"></span><span id="_CPPv2NK7simgrid5fsmod4File15get_access_modeEv"></span><span id="simgrid::fsmod::File::get_access_modeC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1ae0d3cc38604a58819571299c05d2e9a2"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_access_mode</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod4File15get_access_modeEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the file’s access mode. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an access mode string </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod4File15get_file_systemEv">
+<span id="_CPPv3NK7simgrid5fsmod4File15get_file_systemEv"></span><span id="_CPPv2NK7simgrid5fsmod4File15get_file_systemEv"></span><span id="simgrid::fsmod::File::get_file_systemC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1ab64362ea79328801665ca1d3bbf9849e"></span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system.html#_CPPv4N7simgrid5fsmod10FileSystemE" title="simgrid::fsmod::FileSystem"><span class="n"><span class="pre">FileSystem</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_file_system</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod4File15get_file_systemEv" title="Link to this definition"></a><br /></dt>
 <dd><p>Retrieve the file system that holds this file. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -118,15 +130,14 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE">
-<span id="_CPPv3NK7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE"></span><span id="_CPPv2NK7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE"></span><span id="simgrid::fsmod::File::get_num_bytes_read__s4u::IoPtrCRC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a7efaf34ce2cf1baa7ecee2ae9c79538a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_num_bytes_read</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">IoPtr</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">read</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE" title="Link to this definition"></a><br /></dt>
-<dd><p>Get the number of bytes actually read by a given I/O Read activity </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE">
-<span id="_CPPv3NK7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE"></span><span id="_CPPv2NK7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE"></span><span id="simgrid::fsmod::File::get_num_bytes_written__s4u::IoPtrCRC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a8f522626f3d0c60cb2d00d5eec951cab"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_num_bytes_written</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">IoPtr</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">write</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE" title="Link to this definition"></a><br /></dt>
-<dd><p>Get the number of bytes actually written by a given I/O Write activity </p>
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod4File8get_pathEv">
+<span id="_CPPv3NK7simgrid5fsmod4File8get_pathEv"></span><span id="_CPPv2NK7simgrid5fsmod4File8get_pathEv"></span><span id="simgrid::fsmod::File::get_pathC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a35c5daf5732b745458acdce0ca37de31"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_path</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod4File8get_pathEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the file’s full path. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a path string </p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="cpp function">
@@ -217,12 +228,6 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod4File4tellEv">
-<span id="_CPPv3NK7simgrid5fsmod4File4tellEv"></span><span id="_CPPv2NK7simgrid5fsmod4File4tellEv"></span><span id="simgrid::fsmod::File::tellC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1afd71631ddce15d476325fe7369835a15"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">tell</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod4File4tellEv" title="Link to this definition"></a><br /></dt>
-<dd><p>Sets the file head to the given position from a given origin. Retrieves the current file position </p>
-</dd></dl>
-
-<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod4File5writeERKNSt6stringEb">
 <span id="_CPPv3N7simgrid5fsmod4File5writeERKNSt6stringEb"></span><span id="_CPPv2N7simgrid5fsmod4File5writeERKNSt6stringEb"></span><span id="simgrid::fsmod::File::write__ssCR.b"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a4945c72e125af9991a7c23ae6ee75172"></span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">write</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">num_bytes</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">simulate_it</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod4File5writeERKNSt6stringEb" title="Link to this definition"></a><br /></dt>
 <dd><p>Write data to the file. </p>
@@ -232,6 +237,9 @@
 <li><p><strong>num_bytes</strong> – the number of bytes to write as a string with units </p></li>
 <li><p><strong>simulate_it</strong> – if true simulate the I/O, if false the I/O takes zero time </p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The number of bytes written </p>
 </dd>
 </dl>
 </dd></dl>
@@ -246,6 +254,9 @@
 <li><p><strong>num_bytes</strong> – the number of bytes to write </p></li>
 <li><p><strong>simulate_it</strong> – if true simulate the I/O, if false the I/O takes zero time </p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The number of bytes written </p>
 </dd>
 </dl>
 </dd></dl>
@@ -274,6 +285,37 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A smart pointer on the corresponding I/O activity </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE">
+<span id="_CPPv3N7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE"></span><span id="_CPPv2N7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE"></span><span id="simgrid::fsmod::File::get_num_bytes_read__s4u::IoPtrCR"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a39858a5f8b0ee8e250048d9f42e660d8"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_num_bytes_read</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">IoPtr</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">read</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the number of bytes actually read by a given I/O Read activity. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>write</strong> – the I/O (read) activity </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a number of bytes </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE">
+<span id="_CPPv3N7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE"></span><span id="_CPPv2N7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE"></span><span id="simgrid::fsmod::File::get_num_bytes_written__s4u::IoPtrCR"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a91600d0a7aff347dd3e0aef5170cf02f"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_num_bytes_written</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">IoPtr</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">write</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the number of bytes actually written by a given I/O Write activity. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>write</strong> – the I/O (write) activity </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a number of bytes </p>
 </dd>
 </dl>
 </dd></dl>
