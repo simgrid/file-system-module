@@ -21,7 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="simgrid::fsmod::FileSystem" href="classsimgrid_1_1fsmod_1_1_file_system.html" />
+    <link rel="next" title="simgrid::fsmod::FileStat" href="classsimgrid_1_1fsmod_1_1_file_stat.html" />
     <link rel="prev" title="The SimGrid File System Module: API Reference" href="../index.html" /> 
 </head>
 
@@ -67,6 +67,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_stat.html">simgrid::fsmod::FileStat</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system.html">simgrid::fsmod::FileSystem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system_net_zone_impl_extension.html">simgrid::fsmod::FileSystemNetZoneImplExtension</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage.html">simgrid::fsmod::JBODStorage</a></li>
@@ -183,7 +184,7 @@
 <dd class="field-odd"><p><strong>num_bytes</strong> – the number of bytes to read as a string with units </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A smart pointer on the corresponding I/O activity </p>
+<dd class="field-even"><p>An I/O activity </p>
 </dd>
 </dl>
 </dd></dl>
@@ -197,7 +198,7 @@
 <dd class="field-odd"><p><strong>num_bytes</strong> – the number of bytes to read </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A smart pointer on the corresponding I/O activity </p>
+<dd class="field-even"><p>An I/O activity </p>
 </dd>
 </dl>
 </dd></dl>
@@ -218,7 +219,7 @@
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod4File4statEv">
-<span id="_CPPv3NK7simgrid5fsmod4File4statEv"></span><span id="_CPPv2NK7simgrid5fsmod4File4statEv"></span><span id="simgrid::fsmod::File::statC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a65b03cdffadb9455bde67c3134e57fe1"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unique_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">FileStat</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">stat</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod4File4statEv" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3NK7simgrid5fsmod4File4statEv"></span><span id="_CPPv2NK7simgrid5fsmod4File4statEv"></span><span id="simgrid::fsmod::File::statC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_1a65b03cdffadb9455bde67c3134e57fe1"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unique_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_stat.html#_CPPv4N7simgrid5fsmod8FileStatE" title="simgrid::fsmod::FileStat"><span class="n"><span class="pre">FileStat</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">stat</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod4File4statEv" title="Link to this definition"></a><br /></dt>
 <dd><p>Obtain information about the file. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -270,7 +271,7 @@
 <dd class="field-odd"><p><strong>num_bytes</strong> – the number of bytes to read as a string with units </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A smart pointer on the corresponding I/O activity </p>
+<dd class="field-even"><p>An I/O activity </p>
 </dd>
 </dl>
 </dd></dl>
@@ -284,7 +285,7 @@
 <dd class="field-odd"><p><strong>num_bytes</strong> – the number of bytes to read </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A smart pointer on the corresponding I/O activity </p>
+<dd class="field-even"><p>An I/O activity </p>
 </dd>
 </dl>
 </dd></dl>
@@ -330,7 +331,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../index.html" class="btn btn-neutral float-left" title="The SimGrid File System Module: API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="classsimgrid_1_1fsmod_1_1_file_system.html" class="btn btn-neutral float-right" title="simgrid::fsmod::FileSystem" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="classsimgrid_1_1fsmod_1_1_file_stat.html" class="btn btn-neutral float-right" title="simgrid::fsmod::FileStat" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

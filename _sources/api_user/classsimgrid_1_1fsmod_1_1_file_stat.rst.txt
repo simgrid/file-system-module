@@ -1,0 +1,9 @@
+.. _simgrid::FileStat:
+
+simgrid::fsmod::FileStat
+************************
+
+.. doxygenclass:: simgrid::fsmod::FileStat
+   :project: user
+   :members:
+
