@@ -98,6 +98,9 @@ TEST_F(FileSystemTest, FileCreate)  {
             ASSERT_NO_THROW(partition = fs_->partition_by_name("/dev/a"););
             ASSERT_EQ(fs_->get_partition_for_path_or_null("/dev/a/foo.txt"), partition);
             ASSERT_EQ(fs_->get_partition_for_path_or_null("/dev/bogus/foo.txt"), nullptr);
+            ASSERT_EQ(fs_->partition_by_name("/dev/a")->get_name(), "/dev/a");
+            ASSERT_EQ(0, strcmp(partition->get_cname(), "/dev/a"));
+            ASSERT_EQ(100*1000, partition->get_size());
             ASSERT_EQ(1, fs_->partition_by_name("/dev/a")->get_num_files());
             XBT_INFO("Create the same file again at /dev/a/foo.txt, which should fail");
             ASSERT_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"), sgfs::FileAlreadyExistsException);
