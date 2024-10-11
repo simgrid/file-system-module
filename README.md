@@ -19,11 +19,11 @@ The simulated file system implementation in FSMod is not full-featured (e.g., no
 The biggest limitation is that a directory cannot contain another directory. That is,
 a directory `/dev/a/tmp` could contain a file `foo.txt`, and a directory `/dev/a/tmp/other/c` could
 contain a file `bar.txt`. But, directory `/dev/a/tmp` does **not** contain directory `other`.
-`/dev/a/tmp` and `/dev/a/tmp/other/c` are two completely unrelated directory (there is no directory `/dev/a/tmp/other`).
+`/dev/a/tmp` and `/dev/a/tmp/other/c` are two completely unrelated directories (there is no directory `/dev/a/tmp/other`).
 In other words, each directory simply has a path-like unique name and can only contain files.
 The rationale is that the intended use of this module is purely for simulation. As
 a result, full-fledged file system functionality is not (or rarely) needed (and would add
-overhead to the simulation). We expect that in most cases users will need/use a single directory.
+overhead to the simulation). In fact, we expect that most users will need/use a single directory.
 
 ## Dependencies and installation
 
