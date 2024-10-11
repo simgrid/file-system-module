@@ -15,7 +15,7 @@ namespace simgrid::fsmod {
     /**
      * @brief A class that implements a file stat data structure
      */
-    struct XBT_PUBLIC FileStat {
+    class XBT_PUBLIC FileStat {
         public:
             /** @brief The file's size in bytes **/
             sg_size_t size_in_bytes;
