@@ -45,7 +45,6 @@ namespace simgrid::fsmod {
      * @param size: the file size in bytes
      */
     void Partition::create_new_file(const std::string &dir_path, const std::string &file_name, sg_size_t size) {
-
         // Check that the file doesn't already exit
         if (this->get_file_metadata(dir_path, file_name)) {
             throw FileAlreadyExistsException(XBT_THROW_POINT, dir_path + "/" + file_name);
@@ -126,9 +125,6 @@ namespace simgrid::fsmod {
         content_[dst_dir_path][dst_file_name] = std::move(uniq_ptr);
         this->new_file_creation_event(content_[dst_dir_path][dst_file_name].get());
         content_[dst_dir_path][dst_file_name]->set_access_date(s4u::Engine::get_clock());
-
-
-
     }
 
     std::set<std::string, std::less<>> Partition::list_files_in_directory(const std::string &dir_path) const {

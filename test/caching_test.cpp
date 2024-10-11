@@ -112,8 +112,6 @@ TEST_F(CachingTest, FIFOBasicsWithUnevictableFiles)  {
             ASSERT_FALSE(fs_->file_exists("/dev/fifo/20mb.txt"));
             ASSERT_TRUE(fs_->file_exists("/dev/fifo/60mb.txt"));
             ASSERT_TRUE(fs_->file_exists("/dev/fifo/30mb.txt"));
-
-
         });
 
         // Run the simulation
