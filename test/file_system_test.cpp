@@ -117,6 +117,8 @@ TEST_F(FileSystemTest, Directories)  {
 
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
         sg4::Actor::create("TestActor", host_, [this]() {
+            XBT_INFO("Check that directory /dev/a/ exists");
+            ASSERT_TRUE(fs_->directory_exists("/dev/a/"));
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
             XBT_INFO("Create a 10kB file at /dev/a/b/c/foo.txt");
@@ -141,6 +143,7 @@ TEST_F(FileSystemTest, Directories)  {
             XBT_INFO("Try to unlink non-existing directory. This shouldn't work");
             ASSERT_THROW(fs_->unlink_directory("/dev/a/b/d"), sgfs::DirectoryDoesNotExistException);
             ASSERT_FALSE(fs_->directory_exists("/dev/a/b/d"));
+
 
             ASSERT_THROW(fs_->create_directory("/whatever/bogus"), sgfs::InvalidPathException);
             ASSERT_THROW(fs_->create_directory("/dev/a/foo.txt"), sgfs::InvalidPathException);
