@@ -18,7 +18,7 @@ namespace simgrid::fsmod {
      * @param name: the storage's name
      * @param disks: the storage's disks
      * @param raid_level: the RAID level
-     * @return
+     * @return a JBOD instance
      */
     std::shared_ptr<JBODStorage> JBODStorage::create(const std::string& name, const std::vector<s4u::Disk*>& disks, RAID raid_level) {
         auto storage = std::make_shared<JBODStorage>(name, disks);

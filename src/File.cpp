@@ -211,8 +211,8 @@ namespace simgrid::fsmod {
     }
 
     /**
-     * @brief Obtain information about the file as a
-     * @return A (
+     * @brief Obtain information about the file
+     * @return A file stat structure
      */
     std::unique_ptr<FileStat> File::stat() const {
         auto stat_struct = std::make_unique<FileStat>();

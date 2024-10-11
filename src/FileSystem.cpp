@@ -292,7 +292,7 @@ namespace simgrid::fsmod {
       * @brief Open a file. If no file corresponds to the given full path, a new file of size 0 is created.
       * @param full_path: an absolute file path
       * @param access_mode: access mode ("r", "w", or "a")
-      * @return
+      * @return an opened file handle
       */
     std::shared_ptr<File> FileSystem::open(const std::string &full_path, const std::string& access_mode) {
         // "Get a file descriptor"
@@ -444,9 +444,9 @@ namespace simgrid::fsmod {
     }
 
     /**
-     * @brief Retrieve the list of names of files in a directory
+     * @brief Retrieve the names of files in a directory
      * @param full_dir_path: the path to the directory
-     * @return
+     * @return a set of of file names
      */
     std::set<std::string, std::less<>> FileSystem::list_files_in_directory(const std::string &full_dir_path) const {
         std::string simplified_path = PathUtil::simplify_path_string(full_dir_path);
@@ -457,7 +457,6 @@ namespace simgrid::fsmod {
     /**
      * @brief Remove a directory and the files it contains
      * @param full_dir_path: the path to the directory
-     * @return
      */
     void FileSystem::unlink_directory(const std::string &full_dir_path) const {
         std::string simplified_path = PathUtil::simplify_path_string(full_dir_path);
