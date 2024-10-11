@@ -97,7 +97,7 @@ namespace simgrid::fsmod {
 
 
         std::string name_;
-        FileSystem *file_system_;FileSystem *file_system;
+        FileSystem *file_system_;
         std::shared_ptr<Storage> storage_;
         sg_size_t size_ = 0;
         sg_size_t free_space_ = 0;
@@ -110,7 +110,7 @@ namespace simgrid::fsmod {
 
         void create_new_directory(const std::string& dir_path);
         [[nodiscard]] bool directory_exists(const std::string& dir_path) const { return content_.find(dir_path) != content_.end(); }
-        std::set<std::string, std::less<>> list_files_in_directory(const std::string &dir_path) const;
+        [[nodiscard]] std::set<std::string, std::less<>> list_files_in_directory(const std::string &dir_path) const;
         void delete_directory(const std::string &dir_path);
 
         [[nodiscard]] FileMetadata* get_file_metadata(const std::string& dir_path, const std::string& file_name) const;

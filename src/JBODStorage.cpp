@@ -50,7 +50,7 @@ namespace simgrid::fsmod {
 
     s4u::IoPtr JBODStorage::read_async(sg_size_t size) {
         // Determine what to read from each disk
-        sg_size_t read_size = 0;
+        sg_size_t read_size;
         std::vector<s4u::Disk*> targets;
         std::stringstream debug_msg;
 
@@ -138,7 +138,7 @@ namespace simgrid::fsmod {
 
         // Determine what to write on each individual disk according to RAID level and which disk will store the
         // parity block
-        sg_size_t write_size = 0;
+        sg_size_t write_size;
         switch(raid_level_) {
             case RAID::RAID0:
                 write_size = size / num_disks_;
@@ -162,7 +162,7 @@ namespace simgrid::fsmod {
         }
 
         // Compute the parity block (if any)
-        s4u::ExecPtr parity_block_comp = nullptr;
+        s4u::ExecPtr parity_block_comp;
 
         if (raid_level_ == RAID::RAID4 || raid_level_ == RAID::RAID5 || raid_level_ == RAID::RAID6) {
             // Assume 1 flop per byte to write per parity block and two for RAID6.

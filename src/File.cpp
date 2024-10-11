@@ -85,7 +85,7 @@ namespace simgrid::fsmod {
         static int sequence_number = -1;
         int my_sequence_number;
 
-        if (access_mode_ != "w" && access_mode_ != "a")
+        if (access_mode_ != "w" && access_mode_ != "a" && access_mode_ != "r+")
             throw std::invalid_argument("Invalid access mode. Cannot write in 'r' mode'");
 
         if (access_mode_ == "a" && current_position_ < metadata_->get_future_size())
@@ -156,6 +156,7 @@ namespace simgrid::fsmod {
      * @param simulate_it: if true simulate the I/O, if false the I/O takes zero time
      */
     sg_size_t File::write(sg_size_t num_bytes, bool simulate_it) {
+
         if (num_bytes == 0) /* Nothing to write, return */
             return 0;
         int my_sequence_number = write_init_checks(num_bytes);

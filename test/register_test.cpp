@@ -73,6 +73,7 @@ TEST_F(RegisterTest, RetrieveByActor)  {
                     ASSERT_EQ(accessible_file_systems.size(), 2);
                     ASSERT_NO_THROW(fs = accessible_file_systems["my_fs_0"]);
                     ASSERT_EQ(fs->get_name(), "my_fs_0");
+                    ASSERT_EQ(strcmp(fs->get_cname(), "my_fs_0"), 0);
                     ASSERT_NO_THROW(fs = accessible_file_systems["my_extra_fs"]);
                     ASSERT_EQ(fs->get_name(), "my_extra_fs");
                 } else {

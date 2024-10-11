@@ -86,14 +86,19 @@ namespace simgrid::fsmod {
                                      Partition::CachingScheme caching_scheme) {
         auto cleanup_mount_point = mount_point;
         PathUtil::remove_trailing_slashes(cleanup_mount_point);
-        if (PathUtil::simplify_path_string(mount_point) != cleanup_mount_point) {
+        if (PathUtil::simplify_path_string(mount_point)  != cleanup_mount_point) {
             throw std::invalid_argument("Invalid partition path");
         }
+        // Adding a terminal "/" to not trigger spurious prefix errors
+        cleanup_mount_point += "/";
         for (auto const &[mp, p]: this->partitions_) {
-            if ((mp.rfind(cleanup_mount_point, 0) == 0) || (cleanup_mount_point.rfind(mp, 0) == 0)) {
+            if (((mp + "/").rfind(cleanup_mount_point, 0) == 0) || (cleanup_mount_point.rfind(mp + "/", 0) == 0)) {
                 throw std::invalid_argument("Mount point already exists or is prefix of existing mount point");
             }
         }
+        // Remove the terminal
+        PathUtil::remove_trailing_slashes(cleanup_mount_point);
+
 
         switch (caching_scheme) {
             case Partition::CachingScheme::FIFO:
@@ -117,7 +122,7 @@ namespace simgrid::fsmod {
     * @param netzone The SimGrid NetZone
     * @param fs The FSMOD file system
     */
-    void FileSystem::register_file_system(const s4u::NetZone* netzone, std::shared_ptr<FileSystem> fs) {
+    void FileSystem::register_file_system(const s4u::NetZone* netzone, const std::shared_ptr<FileSystem>& fs) {
         if (not FileSystemNetZoneImplExtension::EXTENSION_ID.valid()) {
             // This is the first time we register a FileSystem, register the NetZoneImpls extension properly
             FileSystemNetZoneImplExtension::EXTENSION_ID =
@@ -140,7 +145,7 @@ namespace simgrid::fsmod {
      * @return A file system map, using names as keys
      */
     const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>&
-    FileSystem::get_file_systems_by_actor(s4u::ActorPtr actor) {
+    FileSystem::get_file_systems_by_actor(const s4u::ActorPtr& actor) {
         const kernel::routing::NetZoneImpl* netzone_impl;
         if (not actor || simgrid::s4u::Actor::is_maestro()) {
             netzone_impl = s4u::Engine::get_instance()->get_netzone_root()->get_impl();
@@ -266,7 +271,7 @@ namespace simgrid::fsmod {
 
 
     /**
-     * @brief Set the evictability of a file so that it can or cannot be evicted
+     * @brief Set the evictable status of a file so that it can or cannot be evicted
      *        if stored on a partition that implements caching
      * @param full_path: an absolute file path
      * @param evictable: true if the file should be evictable, false if not
@@ -294,8 +299,8 @@ namespace simgrid::fsmod {
         if (this->num_open_files_ >= this->max_num_open_files_) {
             throw TooManyOpenFilesException(XBT_THROW_POINT);
         }
-        if (access_mode != "r" && access_mode != "w" && access_mode != "a") {
-            throw std::invalid_argument("Invalid access mode. Authorized values are: 'r', 'w', or 'a'");
+        if (access_mode != "r" && access_mode != "w" && access_mode != "a" && access_mode != "r+") {
+            throw std::invalid_argument("Invalid access mode. Authorized values are: 'r', 'w', 'a', or 'r+'");
         }
 
         // Get the partition and path
@@ -308,7 +313,7 @@ namespace simgrid::fsmod {
         // Get the file metadata
         auto metadata = partition->get_file_metadata(dir, file_name);
         if (not metadata) {
-            if (access_mode == "r")
+            if (access_mode == "r" or access_mode == "r+")
                 throw FileNotFoundException(XBT_THROW_POINT, full_path);
             create_file(full_path, "0B");
             metadata = partition->get_file_metadata(dir, file_name);
@@ -459,5 +464,18 @@ namespace simgrid::fsmod {
         auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
         partition->delete_directory(path_at_mount_point);
     }
+
+
+    /**
+     * @brief Returns the free space on the path's partition
+     * @param full_path: a path
+     * @return a number of bytes
+     */
+    sg_size_t FileSystem::get_free_space_at_path(const std::string &full_path) const {
+        std::string simplified_path = PathUtil::simplify_path_string(full_path);
+        auto [partition, path_at_mount_point] = this->find_path_at_mount_point(simplified_path);
+        return partition->get_free_space();
+    }
+
 
 }
