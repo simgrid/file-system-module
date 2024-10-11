@@ -47,7 +47,7 @@ public:
         XBT_INFO("Writing %llu to it at offset %llu...", num_bytes_, offset_);
         file->write(num_bytes_);
         XBT_INFO("Closing file...");
-        fs_->close(file);
+        file->close();
         XBT_INFO("The file size it: %llu", fs_->file_size(file_path_));
     }
 };
