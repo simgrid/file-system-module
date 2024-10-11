@@ -187,22 +187,22 @@ TEST_F(FileSystemTest, FileMove)  {
             ASSERT_NO_THROW(fs_->create_file("/dev/a/stuff.txt", "20kB"));
             ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a/")->get_free_space(), 70*1000);
 
-            // Moving a smaller file to a bigger file (saves space)
+            // Moving a smaller file to a bigger file
             XBT_INFO("Move file /dev/a/b/c/foo.txt to /dev/a/stuff.txt");
             ASSERT_NO_THROW(fs_->move_file("/dev/a/b/c/foo.txt", "/dev/a/stuff.txt"));
             ASSERT_FALSE(fs_->file_exists("/dev/a/b/c/foo.txt"));
             ASSERT_TRUE(fs_->file_exists("/dev/a/stuff.txt"));
-            ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a/")->get_free_space(), 80*1000);
+            ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a/")->get_free_space(), 90*1000);
 
-            // Moving a bigger file to a smaller file (takes space)
+            // Moving a bigger file to a smaller file
             XBT_INFO("Create a 20kB file at /dev/a/big.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/big.txt", "20kB"));
-            ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a/")->get_free_space(), 60*1000);
+            ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a/")->get_free_space(), 70*1000);
             XBT_INFO("Move file /dev/a/stuff.txt to /dev/a/big.txt");
             ASSERT_NO_THROW(fs_->move_file("/dev/a/stuff.txt", "/dev/a/big.txt"));
             ASSERT_FALSE(fs_->file_exists("/dev/a/stuff.txt"));
             ASSERT_TRUE(fs_->file_exists("/dev/a/big.txt"));
-            ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a/")->get_free_space(), 70*1000);
+            ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a/")->get_free_space(), 90*1000);
 
             auto ods = sgfs::OneDiskStorage::create("my_storage", disk_two_);
             XBT_INFO("Mount a new partition");

@@ -112,23 +112,9 @@ namespace simgrid::fsmod {
             throw FileIsOpenException(XBT_THROW_POINT, "move: " + dst_dir_path + "/" + dst_file_name);
         }
 
-        // Create space if needed
+        // Update free space if needed
         if (dst_metadata) {
-            auto src_size = src_metadata->get_current_size();
-            auto dst_size = dst_metadata->get_current_size();
-
-//            if (dst_size < src_size) {
-//                if (src_size - dst_size > this->get_free_space()) {
-//                    this->create_space(src_size - dst_size);
-//                }
-//            }
-
-            // Update free space
-            if (dst_size < src_size) {
-                this->decrease_free_space(src_size - dst_size);
-            } else {
-                this->increase_free_space(dst_size - src_size);
-            }
+            this->increase_free_space(dst_metadata->get_current_size());
         }
 
         // Do the move (reusing the original unique ptr, just in case)
