@@ -174,6 +174,8 @@ TEST_F(FileSystemTest, FileMove)  {
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
             ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a/")->get_free_space(), 90*1000);
+            ASSERT_DOUBLE_EQ(fs_->get_free_space_at_path("/dev/a/"), 90*1000);
+            ASSERT_DOUBLE_EQ(fs_->get_free_space_at_path("/dev/a/foo.txt"), 90*1000);
             XBT_INFO("Try to move file /dev/a/foo.txt to the same path. This should work (no-op)");
             ASSERT_NO_THROW(fs_->move_file("/dev/a/foo.txt", "/dev/a/foo.txt"));
             XBT_INFO("Move file /dev/a/foo.txt to /dev/a/b/c/foo.txt");
