@@ -117,11 +117,11 @@ namespace simgrid::fsmod {
             auto src_size = src_metadata->get_current_size();
             auto dst_size = dst_metadata->get_current_size();
 
-            if (dst_size < src_size) {
-                if (src_size - dst_size > this->get_free_space()) {
-                    this->create_space(src_size - dst_size);
-                }
-            }
+//            if (dst_size < src_size) {
+//                if (src_size - dst_size > this->get_free_space()) {
+//                    this->create_space(src_size - dst_size);
+//                }
+//            }
 
             // Update free space
             if (dst_size < src_size) {
