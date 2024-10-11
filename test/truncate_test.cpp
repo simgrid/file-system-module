@@ -56,6 +56,8 @@ TEST_F(TruncateTest, TruncateAndTell)  {
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "a"));
             XBT_INFO("Check current position, should be 100k ('append' mode)");
             ASSERT_DOUBLE_EQ(file->tell(), 100*1000);
+            XBT_INFO("Try to truncate an opened file, which should fail");
+            ASSERT_THROW(fs_->truncate_file("/dev/a/foo.txt", 50*1000), sgfs::InvalidTruncateException);
             XBT_INFO("Close the file");
             ASSERT_NO_THROW(file->close());
             XBT_INFO("Truncate the file to half its size");

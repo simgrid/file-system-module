@@ -41,7 +41,7 @@ namespace simgrid::fsmod {
     private:
         unsigned long sequence_number_ = 0;
         std::map<unsigned long, FileMetadata*> priority_list_;
-        void print_priority_list();
+//        void print_priority_list();
     };
 
     /** \endcond    */
