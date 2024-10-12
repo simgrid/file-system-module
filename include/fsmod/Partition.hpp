@@ -22,7 +22,6 @@ namespace simgrid::fsmod {
 
     class XBT_PUBLIC Partition {
     public:
-
         /**
          * @brief An enum that defines the possible caching schemes that can
          *        be used by a partition
