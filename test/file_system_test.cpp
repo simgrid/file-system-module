@@ -326,3 +326,28 @@ TEST_F(FileSystemTest, BadAccessMode) {
         ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
+
+TEST_F(FileSystemTest, ReadPlusMode) {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+        // Create one actor (for this test we could likely do it all in the maestro but what the hell)
+        sg4::Actor::create("TestActor", host_, [this]() {
+            std::shared_ptr<sgfs::File> file;
+            XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
+            XBT_INFO("Open the file in read+ mode ('r+')");
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r+"));
+            XBT_INFO("Seek to the mid point of the file");
+            ASSERT_NO_THROW(file->seek(-5000, SEEK_END));
+            XBT_INFO("Write 10Kb to the file");
+            ASSERT_NO_THROW(file->write("10kB"));
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(file->close());
+            XBT_INFO("Check the file size");
+            ASSERT_EQ(fs_->file_size("/dev/a/foo.txt"), 15000);
+        });
+
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
