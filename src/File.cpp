@@ -214,7 +214,7 @@ namespace simgrid::fsmod {
 
     /**
      * @brief Obtain information about the file
-     * @return A file stat structure
+     * @return A "file stat" object
      */
     std::unique_ptr<FileStat> File::stat() const {
         auto stat_struct = std::make_unique<FileStat>();
@@ -267,7 +267,7 @@ namespace simgrid::fsmod {
 
     /**
      * @brief Retrieve the file system that holds this file
-     * @return A pointer to a FileSystem
+     * @return A FileSystem
      */
     FileSystem *File::get_file_system() const {
         return partition_->file_system_;

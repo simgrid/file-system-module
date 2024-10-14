@@ -32,7 +32,7 @@ namespace simgrid::fsmod {
 
     /**
      * @brief Private method to find the partition and path at mount point for an absolute path
-     * @param simplified_path: an absolute simplified file path
+     * @param simplified_path: an absolute simplified absolute path
      * @return A pair that consists of a Partition and the path at the partition's mount point
      */
     std::pair<std::shared_ptr<Partition>, std::string>
@@ -162,6 +162,12 @@ namespace simgrid::fsmod {
         }
     }
 
+    /**
+     * @brief Get all the file systems in a netzone
+     *
+     * @param netzone A netzone
+     * @return A file system map, using names as keys
+     */
     const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>&
     FileSystem::get_file_systems_by_netzone(const s4u::NetZone* netzone) {
         const auto* extension = netzone->get_impl()->extension<FileSystemNetZoneImplExtension>();
@@ -213,7 +219,7 @@ namespace simgrid::fsmod {
 
     /**
      * @brief Retrieve the Partition that corresponds to an absolute full path
-     * @param full_path: a full absolute path
+     * @param full_path: an absolute path
      * @return A Partition instance or nullptr if the (invalid) path matches no known partition
      */
     std::shared_ptr<Partition> FileSystem::get_partition_for_path_or_null(const std::string& full_path) const {
@@ -229,7 +235,7 @@ namespace simgrid::fsmod {
 
     /**
      * @brief Create a new file on the file system in zero time
-     * @param full_path: the absolute path to the file
+     * @param full_path: the file's absolute path
      * @param size: the file size
      */
     void FileSystem::create_file(const std::string &full_path, const std::string &size) const {
@@ -257,7 +263,7 @@ namespace simgrid::fsmod {
 
     /**
      * @brief Truncate a file
-     * @param full_path: the absolute path to the file
+     * @param full_path: the file's absolute path
      * @param size: the number of bytes to truncate (if >= than the file size, the file will have size zero)
      */
     void FileSystem::truncate_file(const std::string& full_path, sg_size_t size) const {
@@ -273,7 +279,7 @@ namespace simgrid::fsmod {
     /**
      * @brief Set the evictable status of a file so that it can or cannot be evicted
      *        if stored on a partition that implements caching
-     * @param full_path: an absolute file path
+     * @param full_path: the file's absolute path
      * @param evictable: true if the file should be evictable, false if not
      */
     void FileSystem::make_file_evictable(const std::string& full_path, bool evictable) const {
@@ -290,7 +296,7 @@ namespace simgrid::fsmod {
 
     /**
       * @brief Open a file. If no file corresponds to the given full path, a new file of size 0 is created.
-      * @param full_path: an absolute file path
+      * @param full_path: the files' absolute path
       * @param access_mode: access mode ("r", "w", or "a")
       * @return an opened file handle
       */
@@ -341,7 +347,7 @@ namespace simgrid::fsmod {
 
     /**
      * @brief
-     * @param full_path: an absolute file path
+     * @param full_path: the file's absolute path
      * @return the file size in bytes
      */
     sg_size_t FileSystem::file_size(const std::string &full_path) const {
@@ -362,7 +368,7 @@ namespace simgrid::fsmod {
 
     /**
      * @brief Unlink a file
-     * @param full_path: the file path
+     * @param full_path: the file's absolute path
      */
     void FileSystem::unlink_file(const std::string &full_path) const {
         // Get the partition and path
@@ -375,8 +381,8 @@ namespace simgrid::fsmod {
 
     /**
      * @brief Move a file
-     * @param src_full_path: the source path
-     * @param dst_full_path: the destination path
+     * @param src_full_path: the source's absolute path
+     * @param dst_full_path: the destination's absolute path
      */
     void FileSystem::move_file(const std::string &src_full_path, const std::string &dst_full_path) const {
         std::string simplified_src_path = PathUtil::simplify_path_string(src_full_path);
@@ -399,7 +405,7 @@ namespace simgrid::fsmod {
 
     /**
      * @brief Check that a file exists at a given path
-     * @param full_path: the file path
+     * @param full_path: the file's absolute path
      * @return true if the file exists, false otherwise
      */
     bool FileSystem::file_exists(const std::string& full_path) const {
@@ -415,7 +421,7 @@ namespace simgrid::fsmod {
 
     /**
      * @brief Create a directory
-     * @param full_dir_path: the directory path
+     * @param full_dir_path: the directory's absolute path
      */
     void FileSystem::create_directory(const std::string& full_dir_path) const {
         std::string simplified_path = PathUtil::simplify_path_string(full_dir_path);
@@ -430,7 +436,7 @@ namespace simgrid::fsmod {
 
     /**
      * @brief Check that a directory exists at a given path
-     * @param full_path: the directory path
+     * @param full_path: the directory's absolute path
      * @return true if the directory exists, false otherwise
      */
     bool FileSystem::directory_exists(const std::string& full_path) const {
@@ -445,7 +451,7 @@ namespace simgrid::fsmod {
 
     /**
      * @brief Retrieve the names of files in a directory
-     * @param full_dir_path: the path to the directory
+     * @param full_dir_path: the directory's absolute path
      * @return a set of of file names
      */
     std::set<std::string, std::less<>> FileSystem::list_files_in_directory(const std::string &full_dir_path) const {
@@ -456,7 +462,7 @@ namespace simgrid::fsmod {
 
     /**
      * @brief Remove a directory and the files it contains
-     * @param full_dir_path: the path to the directory
+     * @param full_dir_path: the directory's absolute path
      */
     void FileSystem::unlink_directory(const std::string &full_dir_path) const {
         std::string simplified_path = PathUtil::simplify_path_string(full_dir_path);
@@ -466,7 +472,7 @@ namespace simgrid::fsmod {
 
     /**
      * @brief Returns the free space on the path's partition
-     * @param full_path: a path
+     * @param full_path: an absolute path
      * @return a number of bytes
      */
     sg_size_t FileSystem::get_free_space_at_path(const std::string &full_path) const {
