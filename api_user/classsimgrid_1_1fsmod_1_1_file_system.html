@@ -73,6 +73,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem11unlink_fileERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::unlink_file()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem6createERKNSt6stringEi"><code class="docutils literal notranslate"><span class="pre">FileSystem::create()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem25get_file_systems_by_actorERKN3s4u8ActorPtrE"><code class="docutils literal notranslate"><span class="pre">FileSystem::get_file_systems_by_actor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem27get_file_systems_by_netzoneEPKN3s4u7NetZoneE"><code class="docutils literal notranslate"><span class="pre">FileSystem::get_file_systems_by_netzone()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem20register_file_systemEPKN3s4u7NetZoneERKNSt10shared_ptrI10FileSystemEE"><code class="docutils literal notranslate"><span class="pre">FileSystem::register_file_system()</span></code></a></li>
 </ul>
 </li>
@@ -123,7 +124,7 @@
 <dd><p>Create a directory. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>full_dir_path</strong> – the directory path </p>
+<dd class="field-odd"><p><strong>full_dir_path</strong> – the directory’s absolute path </p>
 </dd>
 </dl>
 </dd></dl>
@@ -135,7 +136,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>full_path</strong> – the absolute path to the file </p></li>
+<li><p><strong>full_path</strong> – the file’s absolute path </p></li>
 <li><p><strong>size</strong> – the file size </p></li>
 </ul>
 </dd>
@@ -148,7 +149,7 @@
 <dd><p>Check that a directory exists at a given path. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>full_path</strong> – the directory path </p>
+<dd class="field-odd"><p><strong>full_path</strong> – the directory’s absolute path </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>true if the directory exists, false otherwise </p>
@@ -162,7 +163,7 @@
 <dd><p>Check that a file exists at a given path. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>full_path</strong> – the file path </p>
+<dd class="field-odd"><p><strong>full_path</strong> – the file’s absolute path </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>true if the file exists, false otherwise </p>
@@ -175,7 +176,7 @@
 <span id="_CPPv3NK7simgrid5fsmod10FileSystem9file_sizeERKNSt6stringE"></span><span id="_CPPv2NK7simgrid5fsmod10FileSystem9file_sizeERKNSt6stringE"></span><span id="simgrid::fsmod::FileSystem::file_size__ssCRC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system_1a57b20b6d0d6e8b2b45e4a1a4f5813ebb"></span><span class="n"><span class="pre">sg_size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">file_size</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">full_path</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod10FileSystem9file_sizeERKNSt6stringE" title="Link to this definition"></a><br /></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>full_path</strong> – an absolute file path </p>
+<dd class="field-odd"><p><strong>full_path</strong> – the file’s absolute path </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the file size in bytes </p>
@@ -200,7 +201,7 @@
 <dd><p>Returns the free space on the path’s partition. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>full_path</strong> – a path </p>
+<dd class="field-odd"><p><strong>full_path</strong> – an absolute path </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>a number of bytes </p>
@@ -225,7 +226,7 @@
 <dd><p>Retrieve the <a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html#classsimgrid_1_1fsmod_1_1_partition"><span class="std std-ref">Partition</span></a> that corresponds to an absolute full path. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>full_path</strong> – a full absolute path </p>
+<dd class="field-odd"><p><strong>full_path</strong> – an absolute path </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A <a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html#classsimgrid_1_1fsmod_1_1_partition"><span class="std std-ref">Partition</span></a> instance or nullptr if the (invalid) path matches no known partition </p>
@@ -250,7 +251,7 @@
 <dd><p>Retrieve the names of files in a directory. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>full_dir_path</strong> – the path to the directory </p>
+<dd class="field-odd"><p><strong>full_dir_path</strong> – the directory’s absolute path </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>a set of of file names </p>
@@ -265,7 +266,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>full_path</strong> – an absolute file path </p></li>
+<li><p><strong>full_path</strong> – the file’s absolute path </p></li>
 <li><p><strong>evictable</strong> – true if the file should be evictable, false if not </p></li>
 </ul>
 </dd>
@@ -311,8 +312,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>src_full_path</strong> – the source path </p></li>
-<li><p><strong>dst_full_path</strong> – the destination path </p></li>
+<li><p><strong>src_full_path</strong> – the source’s absolute path </p></li>
+<li><p><strong>dst_full_path</strong> – the destination’s absolute path </p></li>
 </ul>
 </dd>
 </dl>
@@ -325,7 +326,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>full_path</strong> – an absolute file path </p></li>
+<li><p><strong>full_path</strong> – the files’ absolute path </p></li>
 <li><p><strong>access_mode</strong> – access mode (“r”, “w”, or “a”) </p></li>
 </ul>
 </dd>
@@ -370,7 +371,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>full_path</strong> – the absolute path to the file </p></li>
+<li><p><strong>full_path</strong> – the file’s absolute path </p></li>
 <li><p><strong>size</strong> – the number of bytes to truncate (if &gt;= than the file size, the file will have size zero) </p></li>
 </ul>
 </dd>
@@ -383,7 +384,7 @@
 <dd><p>Remove a directory and the files it contains. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>full_dir_path</strong> – the path to the directory </p>
+<dd class="field-odd"><p><strong>full_dir_path</strong> – the directory’s absolute path </p>
 </dd>
 </dl>
 </dd></dl>
@@ -394,7 +395,7 @@
 <dd><p>Unlink a file. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>full_path</strong> – the file path </p>
+<dd class="field-odd"><p><strong>full_path</strong> – the file’s absolute path </p>
 </dd>
 </dl>
 </dd></dl>
@@ -427,6 +428,20 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>actor</strong> – The actor asking for all the file systems it can access </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A file system map, using names as keys </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod10FileSystem27get_file_systems_by_netzoneEPKN3s4u7NetZoneE">
+<span id="_CPPv3N7simgrid5fsmod10FileSystem27get_file_systems_by_netzoneEPKN3s4u7NetZoneE"></span><span id="_CPPv2N7simgrid5fsmod10FileSystem27get_file_systems_by_netzoneEPKN3s4u7NetZoneE"></span><span id="simgrid::fsmod::FileSystem::get_file_systems_by_netzone__s4u::NetZoneCP"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_file_system_1ac527ad1104fe2e30c236c89456e4df31"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">map</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystemE" title="simgrid::fsmod::FileSystem"><span class="n"><span class="pre">FileSystem</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">less</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_file_systems_by_netzone</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">NetZone</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">netzone</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod10FileSystem27get_file_systems_by_netzoneEPKN3s4u7NetZoneE" title="Link to this definition"></a><br /></dt>
+<dd><p>Get all the file systems in a netzone. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>netzone</strong> – A netzone </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A file system map, using names as keys </p>
