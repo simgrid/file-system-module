@@ -14,7 +14,7 @@ XBT_LOG_NEW_DEFAULT_CATEGORY(fsmod_jbod, "File System module: JBOD Storage relat
 namespace simgrid::fsmod {
 
     /**
-     * @brief Method to create an instance of a JBOD (Just a Bunch of Disks) storage
+     * @brief Create an instance of a JBOD (Just a Bunch of Disks) storage
      * @param name: the storage's name
      * @param disks: the storage's disks
      * @param raid_level: the RAID level

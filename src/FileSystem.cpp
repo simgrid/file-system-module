@@ -54,7 +54,7 @@ namespace simgrid::fsmod {
     /*********************** PUBLIC INTERFACE *****************************/
 
     /**
-     * @brief Method to create a FileSystem instance
+     * @brief Create a FileSystem instance
      * @param name: the file system's name (can be any string)
      * @param max_num_open_files: the file system's bound on the number of simultaneous opened files
      * @return A shared pointer to a FileSystem instance
@@ -482,7 +482,7 @@ namespace simgrid::fsmod {
     }
 
     /**
-     * @brief Retrieves the file system's name
+     * @brief Retrieve the file system's name
      * @return a name
      */
     const std::string& FileSystem::get_name() const {
@@ -490,7 +490,7 @@ namespace simgrid::fsmod {
     }
 
     /**
-     * @brief Retrieves the file system's name as a C-style string
+     * @brief Retrieve the file system's name as a C-style string
      * @return a name
      */
     const char* FileSystem::get_cname() const {

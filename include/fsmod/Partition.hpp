@@ -27,15 +27,15 @@ namespace simgrid::fsmod {
          *        be used by a partition
          */
         enum class CachingScheme {
-            /** @brief No caching behavior. When there is not sufficient space an exception is thrown */
+            /** @brief No caching. When there is not sufficient space an exception is thrown */
             NONE = 0,
             /** @brief FIFO caching behavior. When there is not sufficient space, an attempt is made to evict
-             * non-opened files in First-In-First-Out fashion (based on file creation timestamps)
+             * non-opened, evictable files in First-In-First-Out fashion (based on file creation dates)
              * to create space if possible, otherwise an exception is thrown
              */
             FIFO = 1,
             /** @brief LRU caching behavior. When there is not sufficient space, an attempt is made to evict
-             * non-opened files in Least-Recently-Used fashion (based on latest file creation/read/write timestamp)
+             * non-opened, evictable files in Least-Recently-Used fashion (based on latest file creation/read/write timestamp)
              * to create space if possible, otherwise an exception is thrown
              */
             LRU = 2

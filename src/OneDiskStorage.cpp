@@ -9,7 +9,7 @@
 namespace simgrid::fsmod {
 
     /**
-     * @brief Method to create an instance of a one-disk storage
+     * @brief Create an instance of a one-disk storage
      * @param name: the storage's name
      * @param disk: the storage's disk
      * @return a one-dist storage instance

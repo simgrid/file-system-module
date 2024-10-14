@@ -19,7 +19,7 @@
 namespace simgrid::fsmod {
 
     /**
-     * @brief A class that iplements a storage abstraction
+     * @brief A class that implements a storage abstraction
      */
     class XBT_PUBLIC Storage {
         std::string name_;

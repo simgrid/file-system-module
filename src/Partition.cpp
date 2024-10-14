@@ -26,7 +26,7 @@ namespace simgrid::fsmod {
 
 
     /**
-       * @brief Retrieves the partition's name
+       * @brief Retrieve the partition's name
        * @return a name
        */
     const std::string& Partition::get_name() const {
@@ -34,7 +34,7 @@ namespace simgrid::fsmod {
     }
 
     /**
-     * @brief Retrieves the partition's name as a C-style string
+     * @brief Retrieve the partition's name as a C-style string
      * @return a name
      */
     const char* Partition::get_cname() const {
@@ -42,7 +42,7 @@ namespace simgrid::fsmod {
     }
 
     /**
-     * @brief Retrieves the partition's size in bytes
+     * @brief Retrieve the partition's size in bytes
      * @return a number of bytes
      */
     sg_size_t Partition::get_size() const {
@@ -50,7 +50,7 @@ namespace simgrid::fsmod {
     }
 
     /**
-     * @brief Retrieves the partition's free space in bytes
+     * @brief Retrieve the partition's free space in bytes
      * @return a number of bytes
      */
     sg_size_t Partition::get_free_space() const {
@@ -58,7 +58,7 @@ namespace simgrid::fsmod {
     }
 
     /**
-     * @brief Retrieves the number of files stored in the partition
+     * @brief Retrieve the number of files stored in the partition
      * @return a number of files
      */
     sg_size_t Partition::get_num_files() const {
