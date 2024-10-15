@@ -68,7 +68,7 @@ namespace simgrid::fsmod {
         }
         return to_return;
     }
-    
+
     /**
      * @brief Retrieve the metadata for a file
      * @param dir_path: the path to the directory in which the file is located
@@ -223,7 +223,8 @@ namespace simgrid::fsmod {
         this->increase_free_space(num_bytes);
     }
 
-    void Partition::make_file_evictable(const std::string &dir_path, const std::string &file_name, bool evictable) {
+    void Partition::make_file_evictable(const std::string &dir_path, const std::string &file_name,
+                                        bool evictable) const {
         auto metadata = this->get_file_metadata(dir_path, file_name);
         if (not metadata) {
             throw FileNotFoundException(XBT_THROW_POINT, dir_path + "/" + file_name);

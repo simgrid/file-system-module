@@ -56,7 +56,7 @@ namespace simgrid::fsmod {
     protected:
         friend class FileSystem;
         // Methods to perform caching
-        void make_file_evictable(const std::string &dir_path, const std::string &file_name, bool evictable);
+        void make_file_evictable(const std::string &dir_path, const std::string &file_name, bool evictable) const;
         virtual void create_space(sg_size_t num_bytes);
         virtual void new_file_creation_event(FileMetadata *file_metadata);
         virtual void new_file_access_event(FileMetadata *file_metadata);

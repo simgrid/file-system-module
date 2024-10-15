@@ -38,14 +38,6 @@ namespace simgrid::fsmod {
         }
     }
 
-//    void PartitionFIFOCaching::print_priority_list() {
-//        std::cerr << "PLIST " << this->get_name() << " = ";
-//        for (auto const &i : priority_list_) {
-//            std::cerr << " " << i.second->file_name_ << " ";
-//        }
-//        std::cerr << "\n";
-//    }
-
     void PartitionFIFOCaching::new_file_creation_event(FileMetadata *file_metadata) {
         file_metadata->sequence_number_ = sequence_number_++;
         priority_list_[file_metadata->sequence_number_] = file_metadata;
