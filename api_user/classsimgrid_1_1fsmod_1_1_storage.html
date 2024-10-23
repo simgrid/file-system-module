@@ -53,7 +53,18 @@
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html">simgrid::fsmod::OneDiskStorage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html">simgrid::fsmod::Partition</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">simgrid::fsmod::Storage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod7StorageE"><code class="docutils literal notranslate"><span class="pre">Storage</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod7StorageE"><code class="docutils literal notranslate"><span class="pre">Storage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod7Storage9get_cnameEv"><code class="docutils literal notranslate"><span class="pre">Storage::get_cname()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod7Storage14get_controllerEv"><code class="docutils literal notranslate"><span class="pre">Storage::get_controller()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod7Storage19get_controller_hostEv"><code class="docutils literal notranslate"><span class="pre">Storage::get_controller_host()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod7Storage11get_disk_atEm"><code class="docutils literal notranslate"><span class="pre">Storage::get_disk_at()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod7Storage9get_disksEv"><code class="docutils literal notranslate"><span class="pre">Storage::get_disks()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod7Storage14get_first_diskEv"><code class="docutils literal notranslate"><span class="pre">Storage::get_first_disk()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod7Storage8get_nameEv"><code class="docutils literal notranslate"><span class="pre">Storage::get_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod7Storage13get_num_disksEv"><code class="docutils literal notranslate"><span class="pre">Storage::get_num_disks()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod7Storage16start_controllerEPN3s4u4HostERKNSt8functionIFvvEEE"><code class="docutils literal notranslate"><span class="pre">Storage::start_controller()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -89,6 +100,117 @@
 <span id="_CPPv3N7simgrid5fsmod7StorageE"></span><span id="_CPPv2N7simgrid5fsmod7StorageE"></span><span id="simgrid::fsmod::Storage"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_storage"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Storage</span></span></span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod7StorageE" title="Link to this definition"></a><br /></dt>
 <dd><p>A class that implements a storage abstraction. </p>
 <p>Subclassed by <a class="reference internal" href="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage.html#classsimgrid_1_1fsmod_1_1_j_b_o_d_storage"><span class="std std-ref">simgrid::fsmod::JBODStorage</span></a>, <a class="reference internal" href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html#classsimgrid_1_1fsmod_1_1_one_disk_storage"><span class="std std-ref">simgrid::fsmod::OneDiskStorage</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod7Storage9get_cnameEv">
+<span id="_CPPv3NK7simgrid5fsmod7Storage9get_cnameEv"></span><span id="_CPPv2NK7simgrid5fsmod7Storage9get_cnameEv"></span><span id="simgrid::fsmod::Storage::get_cnameC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_storage_1a6947f100347dd95aa8d24186d599f3b1"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_cname</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod7Storage9get_cnameEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Retrieve the storage’s name. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a C-style name string </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod7Storage14get_controllerEv">
+<span id="_CPPv3NK7simgrid5fsmod7Storage14get_controllerEv"></span><span id="_CPPv2NK7simgrid5fsmod7Storage14get_controllerEv"></span><span id="simgrid::fsmod::Storage::get_controllerC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_storage_1af2a13a5c64c7a4de20b6bbb34ea9d247"></span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ActorPtr</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_controller</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod7Storage14get_controllerEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Retrieve the controller actor. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The controller actor (or nullptr if no controller is running) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod7Storage19get_controller_hostEv">
+<span id="_CPPv3NK7simgrid5fsmod7Storage19get_controller_hostEv"></span><span id="_CPPv2NK7simgrid5fsmod7Storage19get_controller_hostEv"></span><span id="simgrid::fsmod::Storage::get_controller_hostC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_storage_1a941939476966f134f6d0e310c7c01e73"></span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Host</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_controller_host</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod7Storage19get_controller_hostEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Retrieve the controller’s host. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The host on which the controller is running (or nullptr if no controller is running) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod7Storage11get_disk_atEm">
+<span id="_CPPv3NK7simgrid5fsmod7Storage11get_disk_atEm"></span><span id="_CPPv2NK7simgrid5fsmod7Storage11get_disk_atEm"></span><span id="simgrid::fsmod::Storage::get_disk_at__unsigned-lC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_storage_1ad1094a9bbcfe55bd8218249a81e54172"></span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Disk</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_disk_at</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">position</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod7Storage11get_disk_atEm" title="Link to this definition"></a><br /></dt>
+<dd><p>Return a particular disk used by the storage. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>position</strong> – the index of the disk in the list of disks </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A disk </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod7Storage9get_disksEv">
+<span id="_CPPv3NK7simgrid5fsmod7Storage9get_disksEv"></span><span id="_CPPv2NK7simgrid5fsmod7Storage9get_disksEv"></span><span id="simgrid::fsmod::Storage::get_disksC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_storage_1af8c3a2aa7283faef2ce1ea54d5c21a3c"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Disk</span></span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_disks</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod7Storage9get_disksEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Return the list of disks used by the storage. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of disks </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod7Storage14get_first_diskEv">
+<span id="_CPPv3NK7simgrid5fsmod7Storage14get_first_diskEv"></span><span id="_CPPv2NK7simgrid5fsmod7Storage14get_first_diskEv"></span><span id="simgrid::fsmod::Storage::get_first_diskC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_storage_1a1919576e1364beb7a94d5f01429e6683"></span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Disk</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_first_disk</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod7Storage14get_first_diskEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Return the first disk used by the storage. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A disk </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod7Storage8get_nameEv">
+<span id="_CPPv3NK7simgrid5fsmod7Storage8get_nameEv"></span><span id="_CPPv2NK7simgrid5fsmod7Storage8get_nameEv"></span><span id="simgrid::fsmod::Storage::get_nameC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_storage_1a41cfe2a602ce8b9af58a20c40aa81279"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod7Storage8get_nameEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Retrieve the storage’s name. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a name string </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7simgrid5fsmod7Storage13get_num_disksEv">
+<span id="_CPPv3NK7simgrid5fsmod7Storage13get_num_disksEv"></span><span id="_CPPv2NK7simgrid5fsmod7Storage13get_num_disksEv"></span><span id="simgrid::fsmod::Storage::get_num_disksC"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_storage_1a33fcbd56fe74d30157a3a206692c27d6"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_num_disks</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7simgrid5fsmod7Storage13get_num_disksEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Return the number of disks used by the storage. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A number of disks </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod7Storage16start_controllerEPN3s4u4HostERKNSt8functionIFvvEEE">
+<span id="_CPPv3N7simgrid5fsmod7Storage16start_controllerEPN3s4u4HostERKNSt8functionIFvvEEE"></span><span id="_CPPv2N7simgrid5fsmod7Storage16start_controllerEPN3s4u4HostERKNSt8functionIFvvEEE"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_storage_1a7652b476765e631af6af1f37b4405e93"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ActorPtr</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">start_controller</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Host</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">host</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">void</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">func</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod7Storage16start_controllerEPN3s4u4HostERKNSt8functionIFvvEEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Start a controller actor on a host. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> – A host </p></li>
+<li><p><strong>func</strong> – A lambda that implements the controller actor’s code </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An actor </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
 </dd></dl>
 
 </section>
