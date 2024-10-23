@@ -37,8 +37,6 @@ namespace simgrid::fsmod {
         [[nodiscard]] virtual s4u::ActorPtr start_controller(s4u::Host* host, const std::function<void()> &func);
 
     protected:
-        s4u::Host* controller_host_ = nullptr;
-        s4u::ActorPtr controller_ = nullptr;
         explicit Storage(std::string name): name_(std::move(name)) {}
         virtual ~Storage() = default;
 
@@ -55,7 +53,8 @@ namespace simgrid::fsmod {
     private:
         std::string name_;
         std::vector<s4u::Disk*> disks_;
-
+        s4u::Host* controller_host_ = nullptr;
+        s4u::ActorPtr controller_ = nullptr;
     };
 
 } // namespace simgrid::fsmod
