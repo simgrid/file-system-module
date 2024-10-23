@@ -4,7 +4,6 @@
  * under the terms of the license (GNU LGPL) which comes with this package. */
 
 #include "fsmod/JBODStorage.hpp"
-#include <simgrid/s4u/Actor.hpp>
 #include <simgrid/s4u/Comm.hpp>
 #include <simgrid/s4u/Exec.hpp>
 #include <sstream>
@@ -32,10 +31,6 @@ namespace simgrid::fsmod {
           num_disks_(disks.size()) {
         set_disks(disks);
         parity_disk_idx_ = num_disks_ - 1;
-        set_controller_host(get_first_disk()->get_host());
-        // Create a no-op controller
-        set_controller(s4u::Actor::create(name+"_controller", get_controller_host(),
-                                          [this]() { get_message_queue()->get<void*>(); })->daemonize());
     }
 
     /**
@@ -110,7 +105,8 @@ namespace simgrid::fsmod {
 
         // Create a Comm to transfer data to the host that requested a read to the controller host of the JBOD
         // Do not assign the destination of the Comm yet, will be done after the completion of the IOs
-        auto comm = s4u::Comm::sendto_init()->set_source(get_controller_host())->set_payload_size(size);
+        auto source_host = (controller_host_ == nullptr ? this->get_first_disk()->get_host() : controller_host_);
+        auto comm = s4u::Comm::sendto_init()->set_source(source_host)->set_payload_size(size);
         comm->set_name("Transfer from JBod");
 
         // Create the I/O activities on individual disks
@@ -190,11 +186,12 @@ namespace simgrid::fsmod {
         // Do not start computing the parity block before the completion of the comm to the controller
         comm->add_successor(parity_block_comp);
         // Start the comm by setting its destination
-        comm->set_destination(get_controller_host());
+        auto destination_host = (controller_host_ == nullptr ? this->get_first_disk()->get_host() : controller_host_);
+        comm->set_destination(destination_host);
 
         // Parity Block Computation is now blocked by Comm, start it by assigning it to the controller host
         parity_block_comp->detach();
-        parity_block_comp->set_host(get_controller_host());
+        parity_block_comp->set_host(destination_host);
 
         // Create a no-op Activity that depends on the completion of all I/Os. This is the one ActivityPtr returned
         // to the caller

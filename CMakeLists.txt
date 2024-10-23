@@ -38,6 +38,7 @@ set(SOURCE_FILES
 		src/Partition.cpp
 		src/PartitionFIFOCaching.cpp
 		src/PartitionLRUCaching.cpp
+		src/Storage.cpp
         src/JBODStorage.cpp
 		src/OneDiskStorage.cpp
 		)
@@ -89,7 +90,7 @@ if(GTEST_LIBRARY)
 			test/stat_test.cpp
 			test/main.cpp
 			test/test_util.hpp
-			include/fsmod.hpp)
+			include/fsmod.hpp src/Storage.cpp)
 
 	add_definitions(-DGTEST_USED)
 	add_executable(unit_tests EXCLUDE_FROM_ALL ${SOURCE_FILES} ${HEADER_FILES} ${TEST_FILES})

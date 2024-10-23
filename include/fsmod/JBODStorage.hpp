@@ -44,12 +44,14 @@ namespace simgrid::fsmod {
 
         void set_raid_level(RAID raid_level);
 
+
+    protected:
+
         s4u::IoPtr read_async(sg_size_t size) override;
         void read(sg_size_t size) override;
         s4u::IoPtr write_async(sg_size_t size) override;
         void write(sg_size_t size) override;
 
-    protected:
         void update_parity_disk_idx() { parity_disk_idx_ = (parity_disk_idx_- 1) % num_disks_; }
 
         long get_next_read_disk_idx() { return (++read_disk_idx_) % num_disks_; }
