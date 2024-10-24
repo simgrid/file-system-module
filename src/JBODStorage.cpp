@@ -105,7 +105,10 @@ namespace simgrid::fsmod {
 
         // Create a Comm to transfer data to the host that requested a read to the controller host of the JBOD
         // Do not assign the destination of the Comm yet, will be done after the completion of the IOs
-        auto source_host = (controller_host_ == nullptr ? this->get_first_disk()->get_host() : controller_host_);
+        auto source_host = get_controller_host();
+        if (source_host == nullptr)
+            source_host = this->get_first_disk()->get_host();
+
         auto comm = s4u::Comm::sendto_init()->set_source(source_host)->set_payload_size(size);
         comm->set_name("Transfer from JBod");
 
@@ -186,7 +189,9 @@ namespace simgrid::fsmod {
         // Do not start computing the parity block before the completion of the comm to the controller
         comm->add_successor(parity_block_comp);
         // Start the comm by setting its destination
-        auto destination_host = (controller_host_ == nullptr ? this->get_first_disk()->get_host() : controller_host_);
+        auto destination_host = get_controller_host();
+        if (destination_host == nullptr)
+            destination_host = this->get_first_disk()->get_host();
         comm->set_destination(destination_host);
 
         // Parity Block Computation is now blocked by Comm, start it by assigning it to the controller host
