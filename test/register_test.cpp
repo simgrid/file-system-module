@@ -62,7 +62,7 @@ TEST_F(RegisterTest, RetrieveByActor)  {
         auto hosts = sg4::Engine::get_instance()->get_all_hosts();
         int index = 0;
         for (const auto& h : hosts) {
-            sg4::Actor::create("TestActor", h, [this, index]() {
+            sg4::Actor::create("TestActor", h, [index]() {
                 std::map<std::string, std::shared_ptr<sgfs::FileSystem>, std::less<>> accessible_file_systems;
                 std::shared_ptr<sgfs::FileSystem> fs;
                 std::shared_ptr<sgfs::File> file;
@@ -119,7 +119,7 @@ TEST_F(RegisterTest, RetrieveByZone)  {
 }
 
 TEST_F(RegisterTest, NoActor)  {
-    DO_TEST_WITH_FORK([this]() {
+    DO_TEST_WITH_FORK([]() {
         XBT_INFO("Creating a very small platform");
         auto *root_zone = sg4::create_full_zone("root_zone");
         auto host = root_zone->create_host("my_host", "100Gf");

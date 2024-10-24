@@ -10,7 +10,6 @@
 #include <simgrid/s4u/Actor.hpp>
 #include <simgrid/s4u/Engine.hpp>
 
-#include "fsmod/PathUtil.hpp"
 #include "fsmod/FileSystem.hpp"
 #include "fsmod/OneDiskStorage.hpp"
 #include "fsmod/FileSystemException.hpp"
