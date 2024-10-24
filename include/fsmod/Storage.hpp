@@ -24,7 +24,6 @@ namespace simgrid::fsmod {
      */
     class XBT_PUBLIC Storage {
 
-
     public:
         [[nodiscard]] const std::string& get_name() const;
         [[nodiscard]] const char* get_cname() const;
