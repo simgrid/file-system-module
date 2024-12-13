@@ -132,7 +132,7 @@ namespace simgrid::fsmod {
         // Start the comm by setting its destination
         comm->set_destination(s4u::Host::current());
 
-        // Completion activity is now blocked by tje Comm, start it by assigning it to the controller host first disk
+        // Completion activity is now blocked by the Comm, start it by assigning it to the controller host first disk
         completion_activity->set_disk(get_first_disk());
 
         return completion_activity;

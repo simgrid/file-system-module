@@ -12,7 +12,7 @@ namespace simgrid::fsmod {
      * @brief Create an instance of a one-disk storage
      * @param name: the storage's name
      * @param disk: the storage's disk
-     * @return a one-dist storage instance
+     * @return a one-disk storage instance
      */
     std::shared_ptr<OneDiskStorage> OneDiskStorage::create(const std::string& name, s4u::Disk* disk) {
         return std::make_shared<OneDiskStorage>(name, disk);
