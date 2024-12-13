@@ -1,0 +1,9 @@
+.. _simgrid::OneRemoteDiskStorage:
+
+simgrid::fsmod::OneRemoteDiskStorage
+************************************
+
+.. doxygenclass:: simgrid::fsmod::OneRemoteDiskStorage
+   :project: user
+   :members:
+

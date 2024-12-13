@@ -1,0 +1,151 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>simgrid::fsmod::OneRemoteDiskStorage &mdash; FSMOD 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="simgrid::fsmod::Partition" href="classsimgrid_1_1fsmod_1_1_partition.html" />
+    <link rel="prev" title="simgrid::fsmod::OneDiskStorage" href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/simgrid_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file.html">simgrid::fsmod::File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_stat.html">simgrid::fsmod::FileStat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system.html">simgrid::fsmod::FileSystem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system_net_zone_impl_extension.html">simgrid::fsmod::FileSystemNetZoneImplExtension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_j_b_o_d_storage.html">simgrid::fsmod::JBODStorage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html">simgrid::fsmod::OneDiskStorage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">simgrid::fsmod::OneRemoteDiskStorage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod20OneRemoteDiskStorageE"><code class="docutils literal notranslate"><span class="pre">OneRemoteDiskStorage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod20OneRemoteDiskStorage6createERKNSt6stringEPN7simgrid3s4u4DiskE"><code class="docutils literal notranslate"><span class="pre">OneRemoteDiskStorage::create()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_partition.html">simgrid::fsmod::Partition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_storage.html">simgrid::fsmod::Storage</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">FSMOD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">simgrid::fsmod::OneRemoteDiskStorage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api_user/classsimgrid_1_1fsmod_1_1_one_remote_disk_storage.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="simgrid-fsmod-oneremotediskstorage">
+<span id="simgrid-oneremotediskstorage"></span><h1>simgrid::fsmod::OneRemoteDiskStorage<a class="headerlink" href="#simgrid-fsmod-oneremotediskstorage" title="Link to this heading"></a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod20OneRemoteDiskStorageE">
+<span id="_CPPv3N7simgrid5fsmod20OneRemoteDiskStorageE"></span><span id="_CPPv2N7simgrid5fsmod20OneRemoteDiskStorageE"></span><span id="simgrid::fsmod::OneRemoteDiskStorage"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_one_remote_disk_storage"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">OneRemoteDiskStorage</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">simgrid</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">fsmod</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_storage.html#_CPPv4N7simgrid5fsmod7StorageE" title="simgrid::fsmod::Storage"><span class="n"><span class="pre">Storage</span></span></a><a class="headerlink" href="#_CPPv4N7simgrid5fsmod20OneRemoteDiskStorageE" title="Link to this definition"></a><br /></dt>
+<dd><p>A class that implements a one-disk storage. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7simgrid5fsmod20OneRemoteDiskStorage6createERKNSt6stringEPN7simgrid3s4u4DiskE">
+<span id="_CPPv3N7simgrid5fsmod20OneRemoteDiskStorage6createERKNSt6stringEPN7simgrid3s4u4DiskE"></span><span id="_CPPv2N7simgrid5fsmod20OneRemoteDiskStorage6createERKNSt6stringEPN7simgrid3s4u4DiskE"></span><span id="simgrid::fsmod::OneRemoteDiskStorage::create__ssCR.simgrid::s4u::DiskP"></span><span class="target" id="classsimgrid_1_1fsmod_1_1_one_remote_disk_storage_1a38114addbb34c23de6bd1677fabdba5c"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N7simgrid5fsmod20OneRemoteDiskStorageE" title="simgrid::fsmod::OneRemoteDiskStorage"><span class="n"><span class="pre">OneRemoteDiskStorage</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">create</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span>, <span class="n"><span class="pre">simgrid</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">s4u</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Disk</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">disk</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7simgrid5fsmod20OneRemoteDiskStorage6createERKNSt6stringEPN7simgrid3s4u4DiskE" title="Link to this definition"></a><br /></dt>
+<dd><p>Create an instance of a remote one-disk storage. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – the storage’s name </p></li>
+<li><p><strong>disk</strong> – the storage’s disk </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a remote one-disk storage instance </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html" class="btn btn-neutral float-left" title="simgrid::fsmod::OneDiskStorage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="classsimgrid_1_1fsmod_1_1_partition.html" class="btn btn-neutral float-right" title="simgrid::fsmod::Partition" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, FSMOD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
