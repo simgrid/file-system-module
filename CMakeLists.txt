@@ -41,6 +41,7 @@ set(SOURCE_FILES
 		src/Storage.cpp
         src/JBODStorage.cpp
 		src/OneDiskStorage.cpp
+		src/OneRemoteDiskStorage.cpp
 		)
 
 set(HEADER_FILES
@@ -55,6 +56,7 @@ set(HEADER_FILES
 		include/fsmod/PathUtil.hpp
 		include/fsmod/FileSystem.hpp
 		include/fsmod/OneDiskStorage.hpp
+		include/fsmod/OneRemoteDiskStorage.hpp
 		include/fsmod/Storage.hpp
 	)
 
@@ -81,6 +83,7 @@ if(GTEST_LIBRARY)
 	set(TEST_FILES
 			test/jbod_storage_test.cpp
 			test/one_disk_storage_test.cpp
+			test/one_remote_disk_storage_test.cpp
 			test/path_util_test.cpp
 			test/file_system_test.cpp
 			test/seek_test.cpp

@@ -11,7 +11,7 @@
 #include <simgrid/s4u/Engine.hpp>
 
 #include "fsmod/FileSystem.hpp"
-#include "fsmod/OneDiskStorage.hpp"
+#include "fsmod/OneRemoteDiskStorage.hpp"
 #include "fsmod/FileSystemException.hpp"
 
 #include "./test_util.hpp"
@@ -19,37 +19,41 @@
 namespace sgfs=simgrid::fsmod;
 namespace sg4=simgrid::s4u;
 
-XBT_LOG_NEW_DEFAULT_CATEGORY(ods_io_test, "OneDiskStorage I/O Test");
+XBT_LOG_NEW_DEFAULT_CATEGORY(rods_io_test, "OneRemoteDiskStorage I/O Test");
 
-class OneDiskStorageTest : public ::testing::Test {
+class OneRemoteDiskStorageTest : public ::testing::Test {
 public:
     std::shared_ptr<sgfs::FileSystem> fs_;
-    sg4::Host * host_;
+    sg4::Host * client_;
+    sg4::Host * server_;
     sg4::Disk * disk_;
 
-    OneDiskStorageTest() = default;
+    OneRemoteDiskStorageTest() = default;
 
     void setup_platform() {
-        XBT_INFO("Creating a platform with one host and one disk...");
+        XBT_INFO("Creating a platform with one client host and a server host with one disk...");
         auto *my_zone = sg4::create_full_zone("zone");
-        host_ = my_zone->create_host("my_host", "100Gf");
-        disk_ = host_->create_disk("disk_one", "2MBps", "1MBps");
+        client_ = my_zone->create_host("client", "100Gf");
+        server_ = my_zone->create_host("server", "100Gf");
+        disk_ = server_->create_disk("disk_one", "2MBps", "1MBps");
+        const auto* link = my_zone->create_link("link", 1e9);
+        my_zone->add_route(client_, server_, {link});
         my_zone->seal();
 
         XBT_INFO("Creating a one-disk storage on the host's disk...");
-        auto ods = sgfs::OneDiskStorage::create("my_storage", disk_);
+        auto rods = sgfs::OneRemoteDiskStorage::create("my_storage", disk_);
         XBT_INFO("Creating a file system...");
         fs_ = sgfs::FileSystem::create("my_fs");
         XBT_INFO("Mounting a 100MB partition...");
-        fs_->mount_partition("/dev/a/", ods, "100MB");
+        fs_->mount_partition("/dev/a/", rods, "100MB");
     }
 };
 
 
-TEST_F(OneDiskStorageTest, SingleRead)  {
+TEST_F(OneRemoteDiskStorageTest, SingleRead)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", host_, [this]() {
+        sg4::Actor::create("TestActor", client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
@@ -72,10 +76,10 @@ TEST_F(OneDiskStorageTest, SingleRead)  {
     });
 }
 
-TEST_F(OneDiskStorageTest, SingleAsyncRead)  {
+TEST_F(OneRemoteDiskStorageTest, SingleAsyncRead)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", host_, [this]() {
+        sg4::Actor::create("TestActor", client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             sg4::IoPtr my_read;
             sg_size_t num_bytes_read = 0;
@@ -102,10 +106,10 @@ TEST_F(OneDiskStorageTest, SingleAsyncRead)  {
     });
 }
 
-TEST_F(OneDiskStorageTest, SingleWrite)  {
+TEST_F(OneRemoteDiskStorageTest, SingleWrite)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", host_, [this]() {
+        sg4::Actor::create("TestActor", client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 1MB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "1MB"));
@@ -131,10 +135,10 @@ TEST_F(OneDiskStorageTest, SingleWrite)  {
     });
 }
 
-TEST_F(OneDiskStorageTest, SingleAsyncWrite)  {
+TEST_F(OneRemoteDiskStorageTest, SingleAsyncWrite)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", host_, [this]() {
+        sg4::Actor::create("TestActor", client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             sg4::IoPtr my_write;
             sg_size_t num_bytes_written = 0;
@@ -161,10 +165,10 @@ TEST_F(OneDiskStorageTest, SingleAsyncWrite)  {
     });
 }
 
-TEST_F(OneDiskStorageTest, DoubleAsyncAppend)  {
+TEST_F(OneRemoteDiskStorageTest, DoubleAsyncAppend)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", host_, [this]() {
+        sg4::Actor::create("TestActor", client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             sg4::ActivitySet pending_writes;
             XBT_INFO("Create an empty file at /dev/a/foo.txt");
@@ -189,10 +193,10 @@ TEST_F(OneDiskStorageTest, DoubleAsyncAppend)  {
     });
 }
 
-TEST_F(OneDiskStorageTest, SingleAppendWrite)  {
+TEST_F(OneRemoteDiskStorageTest, SingleAppendWrite)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", host_, [this]() {
+        sg4::Actor::create("TestActor", client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             sg4::IoPtr my_write;
             sg_size_t num_bytes_written = 0;
@@ -212,10 +216,10 @@ TEST_F(OneDiskStorageTest, SingleAppendWrite)  {
     });
 }
 
-TEST_F(OneDiskStorageTest, DiskFailure)  {
+TEST_F(OneRemoteDiskStorageTest, DiskFailure)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", host_, [this]() {
+        sg4::Actor::create("TestActor", client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             sg4::IoPtr my_write;
             sg_size_t num_bytes_written = 0;

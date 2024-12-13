@@ -17,5 +17,6 @@
 #include <fsmod/Storage.hpp>
 #include <fsmod/JBODStorage.hpp>
 #include <fsmod/OneDiskStorage.hpp>
+#include <fsmod/OneRemoteDiskStorage.hpp>
 
 #endif //FSMOD_FSMOD_HPP
