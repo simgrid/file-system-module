@@ -30,7 +30,7 @@ public:
 
     void setup_platform() {
         XBT_INFO("Creating a platform with one host and one disk...");
-        auto *my_zone = sg4::create_full_zone("zone");
+        auto *my_zone = sg4::Engine::get_instance()->get_netzone_root()->add_netzone_full("zone");
         host_ = my_zone->create_host("my_host", "100Gf");
         disk_ = host_->create_disk("disk", "1kBps", "2kBps");
         my_zone->seal();
@@ -49,7 +49,9 @@ public:
 TEST_F(CachingTest, LogicTest){
       DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", host_, [this]() {
+        auto* engine = sg4::Engine::get_instance();
+        // Create one actor (for this test we could likely do it all in the maestro but what the hell)
+        engine->add_actor("TestActor", host_, [this]() {
             auto ods = sgfs::OneDiskStorage::create("my_storage", disk_);
             XBT_INFO("Try to mount partition with empty name");
             ASSERT_THROW(fs_->mount_partition("", ods, "100MB"),
@@ -61,15 +63,16 @@ TEST_F(CachingTest, LogicTest){
             sg4::this_actor::sleep_for(1);
         });
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(CachingTest, FIFOBasics)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
+        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        sg4::Actor::create("TestActor", host_, [this]() {
+        engine->add_actor("TestActor", host_, [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 20MB file at /dev/fifo/20mb.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/fifo/20mb.txt", "20MB"));
@@ -84,15 +87,16 @@ TEST_F(CachingTest, FIFOBasics)  {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(CachingTest, FIFOBasicsWithUnevictableFiles)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
+        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        sg4::Actor::create("TestActor", host_, [this]() {
+        engine->add_actor("TestActor", host_, [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 20MB file at /dev/fifo/20mb.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/fifo/20mb.txt", "20MB"));
@@ -115,15 +119,16 @@ TEST_F(CachingTest, FIFOBasicsWithUnevictableFiles)  {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(CachingTest, FIFODontEvictOpenFiles) {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
+        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        sg4::Actor::create("TestActor", host_, [this]() {
+        engine->add_actor("TestActor", host_, [this]() {
             XBT_INFO("Create a 20MB file at /dev/fifo/20mb.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/fifo/20mb.txt", "20MB"));
             XBT_INFO("Create a 60MB file at /dev/fifo/60mb.txt");
@@ -145,15 +150,16 @@ TEST_F(CachingTest, FIFODontEvictOpenFiles) {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(CachingTest, FIFOExtensive)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
+        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        sg4::Actor::create("TestActor", host_, [this]() {
+        engine->add_actor("TestActor", host_, [this]() {
             std::vector<std::tuple<std::vector<std::string>, std::vector<std::string>, std::vector<std::string>>> experiments =
                     {
                             {{"create", "f1", "20MB"}, {"f1"}, {}},
@@ -191,15 +197,16 @@ TEST_F(CachingTest, FIFOExtensive)  {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(CachingTest, LRUBasics)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
+        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        sg4::Actor::create("TestActor", host_, [this]() {
+        engine->add_actor("TestActor", host_, [this]() {
             XBT_INFO("Create a 20MB file at /dev/lru/20mb.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/lru/20mb.txt", "20MB"));
             XBT_INFO("Create a 60MB file at /dev/lru/60mb.txt");
@@ -217,15 +224,16 @@ TEST_F(CachingTest, LRUBasics)  {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(CachingTest, LRUExtensive)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
+        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        sg4::Actor::create("TestActor", host_, [this]() {
+        engine->add_actor("TestActor", host_, [this]() {
             std::vector<std::tuple<std::vector<std::string>, std::vector<std::string>, std::vector<std::string>>> experiments =
                     {
                             {{"create", "f1", "20MB"}, {"f1"}, {}},
@@ -269,6 +277,6 @@ TEST_F(CachingTest, LRUExtensive)  {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }

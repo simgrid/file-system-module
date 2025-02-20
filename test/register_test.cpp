@@ -27,11 +27,11 @@ public:
 
     void setup_platform() {
         XBT_INFO("Creating a platform with 3 netzones with one host and one disk in each...");
-        auto *root_zone = sg4::create_full_zone("root_zone");
+        auto *root_zone = sg4::Engine::get_instance()->get_netzone_root()->add_netzone_full("root_zone");
         for (int i = 0; i < 3; i++) {
             std::string index = std::to_string(i);
             XBT_INFO("Creating Zone: my_zone_%d", i);
-            auto* my_zone = sg4::create_full_zone("my_zone_" + index)->set_parent(root_zone);
+            auto* my_zone = root_zone->add_netzone_full("my_zone_" + index);
             auto host = my_zone->create_host("my_host_" + index, "100Gf");
             auto disk = host->create_disk("disk_" + index, "1kBps", "2kBps");
             my_zone->seal();
@@ -59,10 +59,11 @@ public:
 TEST_F(RegisterTest, RetrieveByActor)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        auto hosts = sg4::Engine::get_instance()->get_all_hosts();
+        auto* engine = sg4::Engine::get_instance();
+        auto hosts = engine->get_all_hosts();
         int index = 0;
         for (const auto& h : hosts) {
-            sg4::Actor::create("TestActor", h, [index]() {
+            engine->add_actor("TestActor", h, [index]() {
                 std::map<std::string, std::shared_ptr<sgfs::FileSystem>, std::less<>> accessible_file_systems;
                 std::shared_ptr<sgfs::FileSystem> fs;
                 std::shared_ptr<sgfs::File> file;
@@ -87,20 +88,21 @@ TEST_F(RegisterTest, RetrieveByActor)  {
         }
 
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(RegisterTest, RetrieveByZone)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        auto netzones = sg4::Engine::get_instance()->get_all_netzones();
+        auto* engine = sg4::Engine::get_instance();
+        auto netzones = engine->get_all_netzones();
         int index = -1;
         for (const auto& nz : netzones) {
             XBT_INFO("Looking for file systems in NetZone '%s'", nz->get_cname());
             std::map<std::string, std::shared_ptr<sgfs::FileSystem>, std::less<>> accessible_file_systems;
             ASSERT_NO_THROW(accessible_file_systems = sgfs::FileSystem::get_file_systems_by_netzone(nz));
-            if (nz->get_name() == "root_zone") {
+            if (nz->get_name() == "_world_" || nz->get_name() == "root_zone") {
                 ASSERT_EQ(accessible_file_systems.size(), 0);
             } else if (index == 0) {
                 ASSERT_EQ(accessible_file_systems.size(), 2);
@@ -114,14 +116,15 @@ TEST_F(RegisterTest, RetrieveByZone)  {
         }
 
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(RegisterTest, NoActor)  {
     DO_TEST_WITH_FORK([]() {
         XBT_INFO("Creating a very small platform");
-        auto *root_zone = sg4::create_full_zone("root_zone");
+        auto* engine = sg4::Engine::get_instance();
+        auto* root_zone = engine->get_netzone_root();
         auto host = root_zone->create_host("my_host", "100Gf");
         auto disk = host->create_disk("disk", "1MBps", "2MBps");
         auto ods = sgfs::OneDiskStorage::create("my_storage", disk);
@@ -131,12 +134,12 @@ TEST_F(RegisterTest, NoActor)  {
         ASSERT_EQ(sgfs::FileSystem::get_file_systems_by_actor(nullptr).empty(), true);
 
         XBT_INFO("Create and register a file system in the Root NetZone...");
-        ASSERT_NO_THROW(sgfs::FileSystem::register_file_system(sg4::Engine::get_instance()->get_netzone_root(),
-                                                               sgfs::FileSystem::create("root_fs")));
+        ASSERT_NO_THROW(sgfs::FileSystem::register_file_system(root_zone, sgfs::FileSystem::create("root_fs")));
 
         XBT_INFO("Test if we can access to some file systems (we now should)");
         std::map<std::string, std::shared_ptr<sgfs::FileSystem>, std::less<>> accessible_file_systems;
         ASSERT_NO_THROW(accessible_file_systems = sgfs::FileSystem::get_file_systems_by_actor(nullptr));
+        ASSERT_EQ(accessible_file_systems.size(), 1);
 
         std::shared_ptr<sgfs::FileSystem> root_fs;
         std::shared_ptr<sgfs::File> file;
@@ -151,9 +154,9 @@ TEST_F(RegisterTest, NoActor)  {
         XBT_INFO("Write 1MB at /root/foo.txt");
         ASSERT_NO_THROW(my_write = file->write_async("1MB"));
 
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
         XBT_INFO("Simulation time %g", sg4::Engine::get_clock());
         ASSERT_NO_THROW(file->close());
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 };

@@ -30,7 +30,7 @@ public:
 
     void setup_platform() {
         XBT_INFO("Creating a platform with one host and two disks...");
-        auto *my_zone = sg4::create_full_zone("zone");
+        auto *my_zone = sg4::Engine::get_instance()->get_netzone_root()->add_netzone_full("zone");
         host_ = my_zone->create_host("my_host", "100Gf");
         disk_ = host_->create_disk("disk", "1kBps", "2kBps");
         my_zone->seal();
@@ -47,8 +47,9 @@ public:
 TEST_F(StatTest, Stat)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
+        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        sg4::Actor::create("TestActor", host_, [this]() {
+        engine->add_actor("TestActor", host_, [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 100kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "100kB"));
@@ -89,6 +90,6 @@ TEST_F(StatTest, Stat)  {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
