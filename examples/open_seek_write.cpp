@@ -57,8 +57,8 @@ int main(int argc, char **argv) {
 
     XBT_INFO("Creating a platform with one host and one disk...");
     auto *my_zone = engine.get_netzone_root()->add_netzone_full("zone");
-    auto my_host = my_zone->create_host("my_host", "100Gf");
-    auto my_disk = my_host->create_disk("my_disk", "1kBps", "2kBps");
+    auto my_host = my_zone->add_host("my_host", "100Gf");
+    auto my_disk = my_host->add_disk("my_disk", "1kBps", "2kBps");
     my_zone->seal();
 
     XBT_INFO("Creating a one-disk storage on the host's disk...");

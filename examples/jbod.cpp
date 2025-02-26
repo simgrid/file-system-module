@@ -46,13 +46,13 @@ int main(int argc, char **argv) {
 
     XBT_INFO("Creating a platform with two hosts, one having a bunch of disks...");
     auto *my_zone = engine.get_netzone_root()->add_netzone_full("zone");
-    auto fs_client = my_zone->create_host("fs_client", "100Gf");
-    auto fs_server = my_zone->create_host("fs_server", "100Gf");
+    auto fs_client = my_zone->add_host("fs_client", "100Gf");
+    auto fs_server = my_zone->add_host("fs_server", "100Gf");
     std::vector<sg4::Disk*> my_disks;
     for (int i = 0 ; i < 4 ; i++ )
-       my_disks.push_back(fs_server->create_disk("my_disk" + std::to_string(i), "1kBps", "2kBps"));
+       my_disks.push_back(fs_server->add_disk("my_disk" + std::to_string(i), "1kBps", "2kBps"));
 
-    const auto* link = my_zone->create_link("link", "1Gbps")->set_latency(0);
+    const auto* link = my_zone->add_link("link", "1Gbps")->set_latency(0);
     my_zone->add_route(fs_client, fs_server, {link});
     my_zone->seal();
 
