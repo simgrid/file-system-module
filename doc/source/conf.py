@@ -6,7 +6,7 @@ import sys
 # -- Project information -----------------------------------------------------
 
 project = 'FSMOD'
-copyright = '2024, FSMOD'
+copyright = '2024-2025, FSMOD'
 author = 'FSMOD Team'
 
 # -- General configuration ---------------------------------------------------
