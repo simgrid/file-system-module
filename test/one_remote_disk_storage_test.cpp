@@ -33,10 +33,10 @@ public:
     void setup_platform() {
         XBT_INFO("Creating a platform with one client host and a server host with one disk...");
         auto *my_zone = sg4::Engine::get_instance()->get_netzone_root()->add_netzone_full("zone");
-        client_ = my_zone->create_host("client", "100Gf");
-        server_ = my_zone->create_host("server", "100Gf");
-        disk_ = server_->create_disk("disk_one", "2MBps", "1MBps");
-        const auto* link = my_zone->create_link("link", 1e9);
+        client_ = my_zone->add_host("client", "100Gf");
+        server_ = my_zone->add_host("server", "100Gf");
+        disk_ = server_->add_disk("disk_one", "2MBps", "1MBps");
+        const auto* link = my_zone->add_link("link", 1e9);
         my_zone->add_route(client_, server_, {link});
         my_zone->seal();
 

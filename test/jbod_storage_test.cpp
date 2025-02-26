@@ -35,12 +35,12 @@ public:
         sg4::Engine::set_config("network/crosstraffic:0");
         XBT_INFO("Creating a platform with two hosts and a 4-disk JBOD...");
         auto *my_zone = sg4::Engine::get_instance()->get_netzone_root()->add_netzone_full("zone");
-        fs_client_ = my_zone->create_host("fs_client", "100Mf");
-        fs_server_ = my_zone->create_host("fs_server", "200Mf");
+        fs_client_ = my_zone->add_host("fs_client", "100Mf");
+        fs_server_ = my_zone->add_host("fs_server", "200Mf");
         for (int i = 0 ; i < 4 ; i++ )
-            disks_.push_back(fs_server_->create_disk("jds_disk" + std::to_string(i), "2MBps", "1MBps"));
+            disks_.push_back(fs_server_->add_disk("jds_disk" + std::to_string(i), "2MBps", "1MBps"));
 
-        const auto* link = my_zone->create_link("link", 120e6 / 0.97)->set_latency(0);
+        const auto* link = my_zone->add_link("link", 120e6 / 0.97)->set_latency(0);
         my_zone->add_route(fs_client_, fs_server_, {link});
         my_zone->seal();
 
@@ -62,10 +62,10 @@ TEST_F(JBODStorageTest, NotEnoughDisks)  {
         std::shared_ptr<sgfs::JBODStorage> jds3;
         std::shared_ptr<sgfs::JBODStorage> jds2;
         auto *my_zone = sg4::Engine::get_instance()->get_netzone_root()->add_netzone_full("zone");
-        auto host = my_zone->create_host("host", "100Mf");
-        disks.push_back(host->create_disk("jds_disk1", "2MBps", "1MBps"));
-        disks.push_back(host->create_disk("jds_disk2", "2MBps", "1MBps"));
-        disks.push_back(host->create_disk("jds_disk3", "2MBps", "1MBps"));
+        auto host = my_zone->add_host("host", "100Mf");
+        disks.push_back(host->add_disk("jds_disk1", "2MBps", "1MBps"));
+        disks.push_back(host->add_disk("jds_disk2", "2MBps", "1MBps"));
+        disks.push_back(host->add_disk("jds_disk3", "2MBps", "1MBps"));
         my_zone->seal();
         XBT_INFO("Create a 3-Disk JBOD storage using RAID0 by default");
         ASSERT_NO_THROW(jds3 = sgfs::JBODStorage::create("my_storage", disks));

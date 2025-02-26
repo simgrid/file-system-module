@@ -32,8 +32,8 @@ public:
             std::string index = std::to_string(i);
             XBT_INFO("Creating Zone: my_zone_%d", i);
             auto* my_zone = root_zone->add_netzone_full("my_zone_" + index);
-            auto host = my_zone->create_host("my_host_" + index, "100Gf");
-            auto disk = host->create_disk("disk_" + index, "1kBps", "2kBps");
+            auto host = my_zone->add_host("my_host_" + index, "100Gf");
+            auto disk = host->add_disk("disk_" + index, "1kBps", "2kBps");
             my_zone->seal();
             XBT_INFO("Creating a one-disk storage on the host's disk...");
             auto ods = sgfs::OneDiskStorage::create("my_storage_" + index, disk);
@@ -125,8 +125,8 @@ TEST_F(RegisterTest, NoActor)  {
         XBT_INFO("Creating a very small platform");
         auto* engine = sg4::Engine::get_instance();
         auto* root_zone = engine->get_netzone_root();
-        auto host = root_zone->create_host("my_host", "100Gf");
-        auto disk = host->create_disk("disk", "1MBps", "2MBps");
+        auto host = root_zone->add_host("my_host", "100Gf");
+        auto disk = host->add_disk("disk", "1MBps", "2MBps");
         auto ods = sgfs::OneDiskStorage::create("my_storage", disk);
         root_zone->seal();
 

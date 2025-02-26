@@ -32,8 +32,8 @@ public:
     void setup_platform() {
         XBT_INFO("Creating a platform with one host and one disk...");
         auto *my_zone  = sg4::Engine::get_instance()->get_netzone_root()->add_netzone_full("zone");
-        host_ = my_zone->create_host("my_host", "100Gf");
-        disk_ = host_->create_disk("disk_one", "2MBps", "1MBps");
+        host_ = my_zone->add_host("my_host", "100Gf");
+        disk_ = host_->add_disk("disk_one", "2MBps", "1MBps");
         my_zone->seal();
 
         XBT_INFO("Creating a one-disk storage on the host's disk...");
