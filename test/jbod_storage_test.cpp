@@ -34,7 +34,7 @@ public:
     void setup_platform() {
         sg4::Engine::set_config("network/crosstraffic:0");
         XBT_INFO("Creating a platform with two hosts and a 4-disk JBOD...");
-        auto *my_zone = sg4::create_full_zone("zone");
+        auto *my_zone = sg4::Engine::get_instance()->get_netzone_root()->add_netzone_full("zone");
         fs_client_ = my_zone->create_host("fs_client", "100Mf");
         fs_server_ = my_zone->create_host("fs_server", "200Mf");
         for (int i = 0 ; i < 4 ; i++ )
@@ -61,7 +61,7 @@ TEST_F(JBODStorageTest, NotEnoughDisks)  {
         std::vector<sg4::Disk*> disks;
         std::shared_ptr<sgfs::JBODStorage> jds3;
         std::shared_ptr<sgfs::JBODStorage> jds2;
-        auto *my_zone = sg4::create_full_zone("zone");
+        auto *my_zone = sg4::Engine::get_instance()->get_netzone_root()->add_netzone_full("zone");
         auto host = my_zone->create_host("host", "100Mf");
         disks.push_back(host->create_disk("jds_disk1", "2MBps", "1MBps"));
         disks.push_back(host->create_disk("jds_disk2", "2MBps", "1MBps"));
@@ -94,7 +94,8 @@ TEST_F(JBODStorageTest, NotEnoughDisks)  {
 TEST_F(JBODStorageTest, SingleRead)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", fs_client_, [this]() {
+        auto* engine = sg4::Engine::get_instance();
+        engine->add_actor("TestActor", fs_client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
@@ -115,14 +116,15 @@ TEST_F(JBODStorageTest, SingleRead)  {
             ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(JBODStorageTest, SingleAsyncRead)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", fs_client_, [this]() {
+        auto* engine = sg4::Engine::get_instance();
+        engine->add_actor("TestActor", fs_client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             sg4::IoPtr my_read;
             sg_size_t num_bytes_read = 0;
@@ -144,14 +146,15 @@ TEST_F(JBODStorageTest, SingleAsyncRead)  {
             ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(JBODStorageTest, SingleWrite)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", fs_client_, [this]() {
+        auto* engine = sg4::Engine::get_instance();
+        engine->add_actor("TestActor", fs_client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 1MB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "1MB"));
@@ -173,14 +176,15 @@ TEST_F(JBODStorageTest, SingleWrite)  {
             ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(JBODStorageTest, SingleAsyncWrite)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", fs_client_, [this]() {
+        auto* engine = sg4::Engine::get_instance();
+        engine->add_actor("TestActor", fs_client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             sg4::IoPtr my_write;
             sg_size_t num_bytes_written = 0;
@@ -202,14 +206,15 @@ TEST_F(JBODStorageTest, SingleAsyncWrite)  {
             ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(JBODStorageTest, ReadWriteUnsupportedRAID)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", fs_client_, [this]() {
+        auto* engine = sg4::Engine::get_instance();
+        engine->add_actor("TestActor", fs_client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             ASSERT_NO_THROW(jds_->set_raid_level(sgfs::JBODStorage::RAID::RAID2));
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
@@ -228,14 +233,15 @@ TEST_F(JBODStorageTest, ReadWriteUnsupportedRAID)  {
             ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(JBODStorageTest, ReadWriteRAID0)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", fs_client_, [this]() {
+        auto* engine = sg4::Engine::get_instance();
+        engine->add_actor("TestActor", fs_client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             ASSERT_NO_THROW(jds_->set_raid_level(sgfs::JBODStorage::RAID::RAID0));
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
@@ -257,14 +263,15 @@ TEST_F(JBODStorageTest, ReadWriteRAID0)  {
             ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(JBODStorageTest, ReadWriteRAID1)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", fs_client_, [this]() {
+        auto* engine = sg4::Engine::get_instance();
+        engine->add_actor("TestActor", fs_client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             ASSERT_NO_THROW(jds_->set_raid_level(sgfs::JBODStorage::RAID::RAID1));
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
@@ -286,14 +293,15 @@ TEST_F(JBODStorageTest, ReadWriteRAID1)  {
             ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(JBODStorageTest, ReadWriteRAID4)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", fs_client_, [this]() {
+        auto* engine = sg4::Engine::get_instance();
+        engine->add_actor("TestActor", fs_client_, [this]() {
             std::shared_ptr<sgfs::File> file;
             ASSERT_NO_THROW(jds_->set_raid_level(sgfs::JBODStorage::RAID::RAID4));
             XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
@@ -315,14 +323,15 @@ TEST_F(JBODStorageTest, ReadWriteRAID4)  {
             ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }
 
 TEST_F(JBODStorageTest, ReadWriteRAID6)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        sg4::Actor::create("TestActor", fs_client_, [this]() {
+        auto* engine = sg4::Engine::get_instance();
+        engine->add_actor("TestActor", fs_client_, [this]() {
             std::vector<std::string> expected_debug_outputs =
                 {"Parity disks are #1 and #2. Reading From: jds_disk0 jds_disk3 ",
                  "Parity disks are #0 and #1. Reading From: jds_disk2 jds_disk3 ",
@@ -366,6 +375,6 @@ TEST_F(JBODStorageTest, ReadWriteRAID6)  {
             ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
-        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+        ASSERT_NO_THROW(engine->run());
     });
 }

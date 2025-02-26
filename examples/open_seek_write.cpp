@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
     sg4::Engine engine(&argc, argv);
 
     XBT_INFO("Creating a platform with one host and one disk...");
-    auto *my_zone = sg4::create_full_zone("zone");
+    auto *my_zone = engine.get_netzone_root()->add_netzone_full("zone");
     auto my_host = my_zone->create_host("my_host", "100Gf");
     auto my_disk = my_host->create_disk("my_disk", "1kBps", "2kBps");
     my_zone->seal();
@@ -76,8 +76,8 @@ int main(int argc, char **argv) {
     XBT_INFO("%llu bytes free on %s", partition->get_free_space(), partition->get_cname());
 
     XBT_INFO("Creating file writer actors...");
-    sg4::Actor::create("MyActor1", my_host, FileWriterActor(fs, file_path, 10, 5*1000, 6*1000));
-    sg4::Actor::create("MyActor2", my_host, FileWriterActor(fs, file_path, 10.5, 5*1000, 8*1000));
+    engine.add_actor("MyActor1", my_host, FileWriterActor(fs, file_path, 10, 5*1000, 6*1000));
+    engine.add_actor("MyActor2", my_host, FileWriterActor(fs, file_path, 10.5, 5*1000, 8*1000));
 
     XBT_INFO("Launching the simulation...");
     engine.run();
