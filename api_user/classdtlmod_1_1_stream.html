@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>dtlmod::Stream &mdash; DTLMOD 0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
 
@@ -16,7 +16,7 @@
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=2709fde1"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -48,28 +48,24 @@
 <li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_d_t_l.html">dtlmod::DTL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_engine.html">dtlmod::Engine</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">dtlmod::Stream</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6StreamE"><code class="docutils literal notranslate"><span class="pre">Stream</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream4ModeE"><code class="docutils literal notranslate"><span class="pre">Stream::Mode</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream4Mode7PublishE"><code class="docutils literal notranslate"><span class="pre">Stream::Mode::Publish</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream4Mode9SubscribeE"><code class="docutils literal notranslate"><span class="pre">Stream::Mode::Subscribe</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15define_variableERKNSt6stringERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE6size_t"><code class="docutils literal notranslate"><span class="pre">Stream::define_variable()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15define_variableERKNSt6stringE6size_t"><code class="docutils literal notranslate"><span class="pre">Stream::define_variable()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream9get_cnameEv"><code class="docutils literal notranslate"><span class="pre">Stream::get_cname()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream19get_engine_type_strEv"><code class="docutils literal notranslate"><span class="pre">Stream::get_engine_type_str()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream8get_nameEv"><code class="docutils literal notranslate"><span class="pre">Stream::get_name()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream18get_num_publishersEv"><code class="docutils literal notranslate"><span class="pre">Stream::get_num_publishers()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream19get_num_subscribersEv"><code class="docutils literal notranslate"><span class="pre">Stream::get_num_subscribers()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream24get_transport_method_strEv"><code class="docutils literal notranslate"><span class="pre">Stream::get_transport_method_str()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream16inquire_variableERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">Stream::inquire_variable()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream4openERKNSt6stringE4Mode"><code class="docutils literal notranslate"><span class="pre">Stream::open()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15remove_variableERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">Stream::remove_variable()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15set_engine_typeERKN6Engine4TypeE"><code class="docutils literal notranslate"><span class="pre">Stream::set_engine_type()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15set_rendez_vousEv"><code class="docutils literal notranslate"><span class="pre">Stream::set_rendez_vous()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream20set_transport_methodERKN9Transport6MethodE"><code class="docutils literal notranslate"><span class="pre">Stream::set_transport_method()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6StreamE"><code class="docutils literal notranslate"><span class="pre">dtlmod::Stream</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream4ModeE"><code class="docutils literal notranslate"><span class="pre">Mode</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream4Mode7PublishE"><code class="docutils literal notranslate"><span class="pre">Publish</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream4Mode9SubscribeE"><code class="docutils literal notranslate"><span class="pre">Subscribe</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15define_variableERKNSt6stringERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE6size_t"><code class="docutils literal notranslate"><span class="pre">define_variable()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15define_variableERKNSt6stringE6size_t"><code class="docutils literal notranslate"><span class="pre">define_variable()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream9get_cnameEv"><code class="docutils literal notranslate"><span class="pre">get_cname()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream19get_engine_type_strEv"><code class="docutils literal notranslate"><span class="pre">get_engine_type_str()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream8get_nameEv"><code class="docutils literal notranslate"><span class="pre">get_name()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream18get_num_publishersEv"><code class="docutils literal notranslate"><span class="pre">get_num_publishers()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream19get_num_subscribersEv"><code class="docutils literal notranslate"><span class="pre">get_num_subscribers()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream24get_transport_method_strEv"><code class="docutils literal notranslate"><span class="pre">get_transport_method_str()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream16inquire_variableERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">inquire_variable()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream4openERKNSt6stringE4Mode"><code class="docutils literal notranslate"><span class="pre">open()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15remove_variableERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">remove_variable()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15set_engine_typeERKN6Engine4TypeE"><code class="docutils literal notranslate"><span class="pre">set_engine_type()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15set_rendez_vousEv"><code class="docutils literal notranslate"><span class="pre">set_rendez_vous()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream20set_transport_methodERKN9Transport6MethodE"><code class="docutils literal notranslate"><span class="pre">set_transport_method()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_variable.html">dtlmod::Variable</a></li>
@@ -174,7 +170,7 @@ This function creates a new scalar <a class="reference internal" href="classdtlm
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Stream9get_cnameEv">
-<span id="_CPPv3NK6dtlmod6Stream9get_cnameEv"></span><span id="_CPPv2NK6dtlmod6Stream9get_cnameEv"></span><span id="dtlmod::Stream::get_cnameC"></span><span class="target" id="classdtlmod_1_1_stream_1a105e086950f588fff1bc3290bb5be243"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_cname</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream9get_cnameEv" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3NK6dtlmod6Stream9get_cnameEv"></span><span id="_CPPv2NK6dtlmod6Stream9get_cnameEv"></span><span id="dtlmod::Stream::get_cnameC"></span><span class="target" id="classdtlmod_1_1_stream_1a90111164d50e083e91f8f53b8d11a438"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_cname</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream9get_cnameEv" title="Link to this definition"></a><br /></dt>
 <dd><p>Helper function to print out the name of the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -196,7 +192,7 @@ This function creates a new scalar <a class="reference internal" href="classdtlm
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Stream8get_nameEv">
-<span id="_CPPv3NK6dtlmod6Stream8get_nameEv"></span><span id="_CPPv2NK6dtlmod6Stream8get_nameEv"></span><span id="dtlmod::Stream::get_nameC"></span><span class="target" id="classdtlmod_1_1_stream_1a179cad4d720d965394bd34cf55c05e4d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream8get_nameEv" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3NK6dtlmod6Stream8get_nameEv"></span><span id="_CPPv2NK6dtlmod6Stream8get_nameEv"></span><span id="dtlmod::Stream::get_nameC"></span><span class="target" id="classdtlmod_1_1_stream_1ac93fa9747cf90045229fa7504670fe79"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream8get_nameEv" title="Link to this definition"></a><br /></dt>
 <dd><p>Helper function to print out the name of the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -348,7 +344,7 @@ Setting the rendez-vous mode for a <a class="reference internal" href="#classdtl
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, SWAT.</p>
+    <p>&#169; Copyright 2024-2025, SWAT.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

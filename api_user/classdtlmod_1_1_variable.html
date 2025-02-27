@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>dtlmod::Variable &mdash; DTLMOD 0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
 
@@ -16,7 +16,7 @@
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=2709fde1"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -48,18 +48,16 @@
 <li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_engine.html">dtlmod::Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_stream.html">dtlmod::Stream</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">dtlmod::Variable</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod8VariableE"><code class="docutils literal notranslate"><span class="pre">Variable</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable9get_cnameEv"><code class="docutils literal notranslate"><span class="pre">Variable::get_cname()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable16get_element_sizeEv"><code class="docutils literal notranslate"><span class="pre">Variable::get_element_size()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable15get_global_sizeEv"><code class="docutils literal notranslate"><span class="pre">Variable::get_global_size()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable14get_local_sizeEv"><code class="docutils literal notranslate"><span class="pre">Variable::get_local_size()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable8get_nameEv"><code class="docutils literal notranslate"><span class="pre">Variable::get_name()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable9get_shapeEv"><code class="docutils literal notranslate"><span class="pre">Variable::get_shape()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod8Variable13set_selectionERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE"><code class="docutils literal notranslate"><span class="pre">Variable::set_selection()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod8Variable25set_transaction_selectionEjj"><code class="docutils literal notranslate"><span class="pre">Variable::set_transaction_selection()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6dtlmod8Variable25set_transaction_selectionEj"><code class="docutils literal notranslate"><span class="pre">Variable::set_transaction_selection()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod8VariableE"><code class="docutils literal notranslate"><span class="pre">dtlmod::Variable</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable9get_cnameEv"><code class="docutils literal notranslate"><span class="pre">get_cname()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable16get_element_sizeEv"><code class="docutils literal notranslate"><span class="pre">get_element_size()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable15get_global_sizeEv"><code class="docutils literal notranslate"><span class="pre">get_global_size()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable14get_local_sizeEv"><code class="docutils literal notranslate"><span class="pre">get_local_size()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable8get_nameEv"><code class="docutils literal notranslate"><span class="pre">get_name()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod8Variable9get_shapeEv"><code class="docutils literal notranslate"><span class="pre">get_shape()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod8Variable13set_selectionERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE"><code class="docutils literal notranslate"><span class="pre">set_selection()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod8Variable25set_transaction_selectionEjj"><code class="docutils literal notranslate"><span class="pre">set_transaction_selection()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod8Variable25set_transaction_selectionEj"><code class="docutils literal notranslate"><span class="pre">set_transaction_selection()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -98,7 +96,7 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod8Variable9get_cnameEv">
-<span id="_CPPv3NK6dtlmod8Variable9get_cnameEv"></span><span id="_CPPv2NK6dtlmod8Variable9get_cnameEv"></span><span id="dtlmod::Variable::get_cnameC"></span><span class="target" id="classdtlmod_1_1_variable_1a1d757a3fa122d7573ff4f67e8ce4ac07"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_cname</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod8Variable9get_cnameEv" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3NK6dtlmod8Variable9get_cnameEv"></span><span id="_CPPv2NK6dtlmod8Variable9get_cnameEv"></span><span id="dtlmod::Variable::get_cnameC"></span><span class="target" id="classdtlmod_1_1_variable_1a62a359009937fd308009ec2fa17a8dce"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_cname</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod8Variable9get_cnameEv" title="Link to this definition"></a><br /></dt>
 <dd><p>Helper function to print out the name of the <a class="reference internal" href="#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -146,7 +144,7 @@ The local size of a <a class="reference internal" href="#classdtlmod_1_1_variabl
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod8Variable8get_nameEv">
-<span id="_CPPv3NK6dtlmod8Variable8get_nameEv"></span><span id="_CPPv2NK6dtlmod8Variable8get_nameEv"></span><span id="dtlmod::Variable::get_nameC"></span><span class="target" id="classdtlmod_1_1_variable_1a2c98c53ded45443296d333f4f58b0d12"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod8Variable8get_nameEv" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3NK6dtlmod8Variable8get_nameEv"></span><span id="_CPPv2NK6dtlmod8Variable8get_nameEv"></span><span id="dtlmod::Variable::get_nameC"></span><span class="target" id="classdtlmod_1_1_variable_1a5595def00ef1650152b22442911003aa"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod8Variable8get_nameEv" title="Link to this definition"></a><br /></dt>
 <dd><p>Helper function to print out the name of the <a class="reference internal" href="#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -157,7 +155,7 @@ The local size of a <a class="reference internal" href="#classdtlmod_1_1_variabl
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod8Variable9get_shapeEv">
-<span id="_CPPv3NK6dtlmod8Variable9get_shapeEv"></span><span id="_CPPv2NK6dtlmod8Variable9get_shapeEv"></span><span id="dtlmod::Variable::get_shapeC"></span><span class="target" id="classdtlmod_1_1_variable_1a868f6081b9c3911e3063ea1f7b377224"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">size_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_shape</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod8Variable9get_shapeEv" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3NK6dtlmod8Variable9get_shapeEv"></span><span id="_CPPv2NK6dtlmod8Variable9get_shapeEv"></span><span id="dtlmod::Variable::get_shapeC"></span><span class="target" id="classdtlmod_1_1_variable_1a00e603f208cb9df272078c0a2aef34ec"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">size_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_shape</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod8Variable9get_shapeEv" title="Link to this definition"></a><br /></dt>
 <dd><p>Get the shape of the <a class="reference internal" href="#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -220,7 +218,7 @@ The local size of a <a class="reference internal" href="#classdtlmod_1_1_variabl
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, SWAT.</p>
+    <p>&#169; Copyright 2024-2025, SWAT.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
