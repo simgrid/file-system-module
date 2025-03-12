@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.12)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/conf/cmake/")
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
@@ -6,7 +6,7 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 project(fsmod VERSION 0.1 DESCRIPTION "SimGrid-based File System simulation module")
 
 include(GNUInstallDirs)
-find_package(SimGrid 3.36.1 REQUIRED)
+find_package(SimGrid 4.0 REQUIRED)
 
 include_directories(
 		${CMAKE_SOURCE_DIR}/include
