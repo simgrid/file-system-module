@@ -26,7 +26,7 @@ if (DOXYGEN_FOUND)
         add_custom_target(doc-${SECTION_LOWER}
                 WORKING_DIRECTORY ${CMAKE_HOME_DIRECTORY}
                 COMMENT "Generating FSMOD ${SECTION} documentation" VERBATIM)
-        add_custom_command(TARGET doc-${SECTION_LOWER}
+        add_custom_command(TARGET doc-${SECTION_LOWER} POST_BUILD
 		COMMAND echo "HERE"
 		COMMAND mkdir -p ${CMAKE_CURRENT_BINARY_DIR}/docs/${FSMOD_RELEASE_VERSION}/${SECTION_LOWER}
 		COMMAND echo "CALLING DOXYGEN: ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}"
@@ -49,16 +49,16 @@ if (DOXYGEN_FOUND)
 
     add_custom_target(doc DEPENDS fsmod ${FSMOD_SECTIONS_LIST})
 
-    add_custom_command(TARGET doc
+    add_custom_command(TARGET doc POST_BUILD
 	    COMMAND rm -rf ${CMAKE_CURRENT_BINARY_DIR}/docs/source
 	    COMMAND cp -r ${CMAKE_HOME_DIRECTORY}/doc/source ${CMAKE_CURRENT_BINARY_DIR}/docs)
-    add_custom_command(TARGET doc 
+    add_custom_command(TARGET doc POST_BUILD
 	    COMMAND python3 ${CMAKE_HOME_DIRECTORY}/doc/scripts/generate_rst.py ${CMAKE_CURRENT_BINARY_DIR}/docs/${FSMOD_RELEASE_VERSION} ${CMAKE_CURRENT_BINARY_DIR}/docs/source ${FSMOD_RELEASE_VERSION})
-    add_custom_command(TARGET doc 
+    add_custom_command(TARGET doc POST_BUILD
 	    COMMAND sphinx-build ${CMAKE_CURRENT_BINARY_DIR}/docs/source ${CMAKE_CURRENT_BINARY_DIR}/docs/build/${FSMOD_RELEASE_VERSION})
-    add_custom_command(TARGET doc 
+    add_custom_command(TARGET doc POST_BUILD
 	    COMMAND cp -R ${CMAKE_CURRENT_BINARY_DIR}/docs/build/${FSMOD_RELEASE_VERSION} ${CMAKE_CURRENT_BINARY_DIR}/docs/build/latest)
-    add_custom_command(TARGET doc 
+    add_custom_command(TARGET doc POST_BUILD
 	    COMMAND rm -rf ${CMAKE_CURRENT_BINARY_DIR}/docs/${FSMOD_RELEASE_VERSION}
 	    COMMAND rm -rf ${CMAKE_CURRENT_BINARY_DIR}/docs/latest
 	    COMMAND rm -rf ${CMAKE_CURRENT_BINARY_DIR}/docs/logs
