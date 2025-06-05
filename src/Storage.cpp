@@ -81,7 +81,7 @@ namespace simgrid::fsmod {
      */
     s4u::ActorPtr Storage::start_controller(s4u::Host* host, const std::function<void()> &func) {
         controller_host_ = host;
-        controller_ = s4u::Engine::get_instance()->add_actor(name_+"_controller", controller_host_, func);
+        controller_ = controller_host_->add_actor(name_+"_controller", func);
         return controller_;
     }
 

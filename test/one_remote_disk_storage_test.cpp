@@ -53,8 +53,7 @@ public:
 TEST_F(OneRemoteDiskStorageTest, SingleRead)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        auto* engine = sg4::Engine::get_instance();
-        engine->add_actor("TestActor", client_, [this]() {
+        client_->add_actor("TestActor", [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
@@ -73,15 +72,14 @@ TEST_F(OneRemoteDiskStorageTest, SingleRead)  {
             ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
 
 TEST_F(OneRemoteDiskStorageTest, SingleAsyncRead)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        auto* engine = sg4::Engine::get_instance();
-        engine->add_actor("TestActor", client_, [this]() {
+        client_->add_actor("TestActor", [this]() {
             std::shared_ptr<sgfs::File> file;
             sg4::IoPtr my_read;
             sg_size_t num_bytes_read = 0;
@@ -104,14 +102,14 @@ TEST_F(OneRemoteDiskStorageTest, SingleAsyncRead)  {
             ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
 
 TEST_F(OneRemoteDiskStorageTest, SingleWrite)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        auto* engine = sg4::Engine::get_instance();engine->add_actor("TestActor", client_, [this]() {
+        client_->add_actor("TestActor", [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 1MB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "1MB"));
@@ -133,15 +131,14 @@ TEST_F(OneRemoteDiskStorageTest, SingleWrite)  {
             ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
 
 TEST_F(OneRemoteDiskStorageTest, SingleAsyncWrite)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        auto* engine = sg4::Engine::get_instance();
-        engine->add_actor("TestActor", client_, [this]() {
+        client_->add_actor("TestActor", [this]() {
             std::shared_ptr<sgfs::File> file;
             sg4::IoPtr my_write;
             sg_size_t num_bytes_written = 0;
@@ -164,15 +161,14 @@ TEST_F(OneRemoteDiskStorageTest, SingleAsyncWrite)  {
             ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
 
 TEST_F(OneRemoteDiskStorageTest, DoubleAsyncAppend)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        auto* engine = sg4::Engine::get_instance();
-        engine->add_actor("TestActor", client_, [this]() {
+        client_->add_actor("TestActor", [this]() {
             std::shared_ptr<sgfs::File> file;
             sg4::ActivitySet pending_writes;
             XBT_INFO("Create an empty file at /dev/a/foo.txt");
@@ -193,15 +189,14 @@ TEST_F(OneRemoteDiskStorageTest, DoubleAsyncAppend)  {
             ASSERT_EQ(fs_->file_size("/dev/a/foo.txt"), 4*1000*1000);
         });
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
 
 TEST_F(OneRemoteDiskStorageTest, SingleAppendWrite)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        auto* engine = sg4::Engine::get_instance();
-        engine->add_actor("TestActor", client_, [this]() {
+        client_->add_actor("TestActor", [this]() {
             std::shared_ptr<sgfs::File> file;
             sg4::IoPtr my_write;
             sg_size_t num_bytes_written = 0;
@@ -217,15 +212,14 @@ TEST_F(OneRemoteDiskStorageTest, SingleAppendWrite)  {
             ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
 
 TEST_F(OneRemoteDiskStorageTest, DiskFailure)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        auto* engine = sg4::Engine::get_instance();
-        engine->add_actor("TestActor", client_, [this]() {
+        client_->add_actor("TestActor", [this]() {
             std::shared_ptr<sgfs::File> file;
             sg4::IoPtr my_write;
             sg_size_t num_bytes_written = 0;
@@ -244,6 +238,6 @@ TEST_F(OneRemoteDiskStorageTest, DiskFailure)  {
             ASSERT_NO_THROW(file->close());
         });
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }

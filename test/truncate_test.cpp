@@ -47,9 +47,8 @@ public:
 TEST_F(TruncateTest, TruncateAndTell)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        engine->add_actor("TestActor", host_, [this]() {
+        host_->add_actor("TestActor", [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 100kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "100kB"));
@@ -80,6 +79,6 @@ TEST_F(TruncateTest, TruncateAndTell)  {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }

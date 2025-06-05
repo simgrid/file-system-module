@@ -63,7 +63,7 @@ TEST_F(RegisterTest, RetrieveByActor)  {
         auto hosts = engine->get_all_hosts();
         int index = 0;
         for (const auto& h : hosts) {
-            engine->add_actor("TestActor", h, [index]() {
+            h->add_actor("TestActor", [index]() {
                 std::map<std::string, std::shared_ptr<sgfs::FileSystem>, std::less<>> accessible_file_systems;
                 std::shared_ptr<sgfs::FileSystem> fs;
                 std::shared_ptr<sgfs::File> file;

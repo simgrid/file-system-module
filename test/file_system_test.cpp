@@ -49,9 +49,8 @@ public:
 TEST_F(FileSystemTest, MountPartition)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        engine->add_actor("TestActor", host_, [this]() {
+        host_->add_actor("TestActor", [this]() {
             XBT_INFO("Creating a one-disk storage on the host's second disk...");
             auto ods = sgfs::OneDiskStorage::create("my_storage", disk_two_);
             // Coverage
@@ -78,7 +77,7 @@ TEST_F(FileSystemTest, MountPartition)  {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
 
@@ -87,9 +86,8 @@ TEST_F(FileSystemTest, FileCreate)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
 
-        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        engine->add_actor("TestActor", host_, [this]() {
+        host_->add_actor("TestActor", [this]() {
             XBT_INFO("Create a 10MB file at /foo/foo.txt, which should fail");
             ASSERT_THROW(fs_->create_file("/foo/foo.txt", "10MB"), sgfs::InvalidPathException);
             try {
@@ -117,7 +115,7 @@ TEST_F(FileSystemTest, FileCreate)  {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
         ASSERT_DOUBLE_EQ(fs_->partition_by_name("/dev/a")->get_free_space(), 90 * 1000);
     });
 }
@@ -126,9 +124,8 @@ TEST_F(FileSystemTest, Directories)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
 
-        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        engine->add_actor("TestActor", host_, [this]() {
+        host_->add_actor("TestActor", [this]() {
             XBT_INFO("Check that directory /dev/a/ exists");
             ASSERT_TRUE(fs_->directory_exists("/dev/a/"));
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
@@ -177,7 +174,7 @@ TEST_F(FileSystemTest, Directories)  {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
 
@@ -185,9 +182,8 @@ TEST_F(FileSystemTest, FileMove)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
 
-        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        engine->add_actor("TestActor", host_, [this]() {
+        host_->add_actor("TestActor", [this]() {
             XBT_INFO("Try to move a non-existing file. This shouldn't work");
             ASSERT_THROW(fs_->move_file("/dev/a/foo.txt", "/dev/a/b/c/foo.txt"), sgfs::FileNotFoundException);
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
@@ -231,7 +227,7 @@ TEST_F(FileSystemTest, FileMove)  {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
 
@@ -239,9 +235,8 @@ TEST_F(FileSystemTest, FileOpenClose)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
 
-        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        engine->add_actor("TestActor", host_, [this]() {
+        host_->add_actor("TestActor", [this]() {
             XBT_INFO("Create a 10kB file at /dev/a/stuff/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/stuff/foo.txt", "10kB"));
             XBT_INFO("Create a 10kB file at /dev/a/stuff/other.txt");
@@ -268,16 +263,15 @@ TEST_F(FileSystemTest, FileOpenClose)  {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
 
 TEST_F(FileSystemTest, TooManyFilesOpened) {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        engine->add_actor("TestActor", host_, [this]() {
+        host_->add_actor("TestActor", [this]() {
             std::shared_ptr<sgfs::File> file;
             std::shared_ptr<sgfs::File> file2;
             std::shared_ptr<sgfs::File> file3;
@@ -302,16 +296,15 @@ TEST_F(FileSystemTest, TooManyFilesOpened) {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
 
 TEST_F(FileSystemTest, BadAccessMode) {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        engine->add_actor("TestActor", host_, [this]() {
+        host_->add_actor("TestActor", [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
@@ -336,16 +329,15 @@ TEST_F(FileSystemTest, BadAccessMode) {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
 
 TEST_F(FileSystemTest, ReadPlusMode) {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
-        auto* engine = sg4::Engine::get_instance();
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
-        engine->add_actor("TestActor", host_, [this]() {
+        host_->add_actor("TestActor", [this]() {
             std::shared_ptr<sgfs::File> file;
             XBT_INFO("Create a 10kB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10kB"));
@@ -362,6 +354,6 @@ TEST_F(FileSystemTest, ReadPlusMode) {
         });
 
         // Run the simulation
-        ASSERT_NO_THROW(engine->run());
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
     });
 }
