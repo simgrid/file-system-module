@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
     XBT_INFO("%llu bytes free on %s", partition->get_free_space(), partition->get_cname());
 
     XBT_INFO("Creating file writer actor...");
-    engine.add_actor("MyActor", fs_client, FileWriterActor(fs, file_path, 6*1000));
+    fs_client->add_actor("MyActor", FileWriterActor(fs, file_path, 6*1000));
 
     XBT_INFO("Launching the simulation...");
     engine.run();
