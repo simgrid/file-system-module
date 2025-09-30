@@ -63,18 +63,105 @@ PYBIND11_MODULE(fsmod, m)
   py::register_exception<simgrid::fsmod::TooManyOpenFilesException>(m, "TooManyOpenFilesException");
   py::register_exception<simgrid::fsmod::FileNotFoundException>(m, "FileNotFoundException");
   py::register_exception<simgrid::fsmod::InvalidSeekException>(m, "InvalidSeekException");
-  py::register_exception<simgrid::fsmod::InvalidMoveException>(m, "InvalidPathException");
+  py::register_exception<simgrid::fsmod::InvalidMoveException>(m, "InvalidMoveException");
   py::register_exception<simgrid::fsmod::InvalidTruncateException>(m, "InvalidTruncateException");
   py::register_exception<simgrid::fsmod::InvalidPathException>(m, "InvalidPathException");
+
+  /* Class File */
+  py::class_<File, std::shared_ptr<File>>(m, "File", "A File represents an open file in a file system")
+      .def_property_readonly("access_mode", &File::get_access_mode, "The access mode of the File (read-only)")
+      .def_property_readonly("path", &File::get_path, "The path of the File (read-only)")
+      .def_property_readonly("num_bytes_read", &File::get_num_bytes_read,
+                             "The total number of bytes read from the File (read-only)")
+      .def_property_readonly("num_bytes_written", &File::get_num_bytes_written,
+                             "The total number of bytes written to the File (read-only)")
+      .def_property_readonly("file_system", &File::get_file_system, "The FileSystem this File belongs to (read-only)")
+      .def_property_readonly("tell", &File::tell, "The current position of the File (read-only)")
+      .def("read_async", py::overload_cast<const std::string&>(&File::read_async), py::arg("num_bytes"),
+           "Asynchronously read data from the File")
+      .def("read_async", py::overload_cast<sg_size_t>(&File::read_async), py::arg("num_bytes"),
+           "Asynchronously read data from the File")
+      .def("read", py::overload_cast<const std::string&, bool>(&File::read), py::arg("num_bytes"),
+           py::arg("simulate_it") = true, "Read data from the File")
+      .def("read", py::overload_cast<sg_size_t, bool>(&File::read), py::arg("num_bytes"), py::arg("simulate_it") = true,
+           "Read data from the File")
+      .def("write_async", py::overload_cast<const std::string&>(&File::write_async), py::arg("num_bytes"),
+           "Asynchronously write data to the File")
+      .def("write_async", py::overload_cast<sg_size_t>(&File::write_async), py::arg("num_bytes"),
+           "Asynchronously write data to the File")
+      .def("write", py::overload_cast<const std::string&, bool>(&File::write), py::arg("num_bytes"),
+           py::arg("simulate_it") = true, "Write data to the File")
+      .def("write", py::overload_cast<sg_size_t, bool>(&File::write), py::arg("num_bytes"),
+           py::arg("simulate_it") = true, "Write data to the File")
+      .def("close", &File::close, "Close the File")
+      .def("seek", &File::seek, py::arg("pos"), py::arg("origin") = SEEK_SET, "Set the current position of the File")
+      .def("stat", &File::stat, "Get the FileStat of the File");
+
+  /* Class Partition */
+  py::class_<Partition, std::shared_ptr<Partition>> partition(
+      m, "Partition", "A Partition represents a partition mounted on a FileSystem");
+  partition.def_property_readonly("name", &Partition::get_name, "The name of the Partition (read-only)")
+      .def_property_readonly("size", &Partition::get_size, "The size of the Partition (read-only)")
+      .def_property_readonly("free_space", &Partition::get_free_space,
+                             "The free space available on the Partition (read-only)")
+      .def_property_readonly("num_files", &Partition::get_num_files,
+                             "The number of files stored on the Partition (read-only)");
+  py::enum_<Partition::CachingScheme>(partition, "CachingScheme",
+                                      "An enum that defines the possible caching schemes for a Partition")
+      .value("NONE", Partition::CachingScheme::NONE, "No caching")
+      .value("FIFO", Partition::CachingScheme::FIFO, "FIFO caching behavior")
+      .value("LRU", Partition::CachingScheme::LRU, "LRU caching behavior");
+
+  /* Class Storage */
+  py::class_<Storage, std::shared_ptr<Storage>> storage(m, "Storage", "A Storage represents a storage abstraction");
+  storage.def_property_readonly("name", &Storage::get_name, "The name of the Storage (read-only)")
+      .def_property_readonly("controller_host", &Storage::get_controller_host,
+                             "The Host that controls the Storage (read-only)")
+      .def_property_readonly("controller", &Storage::get_controller, "The Actor that controls the Storage (read-only)")
+      .def_property_readonly("disks", &Storage::get_disks, "The disks in the Storage (read-only)")
+      .def_property_readonly("num_disks", &Storage::get_num_disks, "The number of disks in the Storage (read-only)")
+      .def_property_readonly("first_disk", &Storage::get_first_disk, "The first disk in the Storage (read-only)")
+      .def("disk_at", &Storage::get_disk_at, py::arg("position"), "Get the disk at the given position in the Storage")
+      .def("start_controller", &Storage::start_controller, py::arg("host"), py::arg("func"),
+           "Start the controller Actor for the Storage on the given Host");
+
+  /* Class OneDiskStorage */
+  py::class_<OneDiskStorage, Storage, std::shared_ptr<OneDiskStorage>>(
+      m, "OneDiskStorage", "A OneDiskStorage represents a storage with a single disk")
+      .def_static("create", &OneDiskStorage::create, py::arg("name"), py::arg("disk"), "Create a new OneDiskStorage");
+  
+  /* Class OneRemoteDiskStorage */
+  py::class_<OneRemoteDiskStorage, Storage, std::shared_ptr<OneRemoteDiskStorage>>(
+      m, "OneRemoteDiskStorage", "A OneRemoteDiskStorage represents a storage with a single remote disk")
+      .def_static("create", &OneRemoteDiskStorage::create, py::arg("name"), py::arg("disk"),
+                  "Create a new OneRemoteDiskStorage");
+  /* Class JBODStorage */
+  py::class_<JBODStorage, Storage, std::shared_ptr<JBODStorage>> jbod(
+      m, "JBODStorage", "A JBODStorage represents a storage with multiple disks");
+  py::enum_<JBODStorage::RAID>(jbod, "RAID",
+                               "An enum that defines the possible RAID levels that can be used by a JBODStorage")
+      .value("RAID0", JBODStorage::RAID::RAID0, "RAID level 0")
+      .value("RAID1", JBODStorage::RAID::RAID1, "RAID level 1")
+      .value("RAID2", JBODStorage::RAID::RAID2, "RAID level 2 (unsupported)")
+      .value("RAID3", JBODStorage::RAID::RAID3, "RAID level 3 (unsupported)")
+      .value("RAID4", JBODStorage::RAID::RAID4, "RAID level 4")
+      .value("RAID5", JBODStorage::RAID::RAID5, "RAID level 5")
+      .value("RAID6", JBODStorage::RAID::RAID6, "RAID level 6");
+  jbod.def_static("create", &JBODStorage::create, py::arg("name"), py::arg("disks"), py::arg("raid_level") = JBODStorage::RAID::RAID0,
+                  "Create a new JBODStorage")
+      .def_property_readonly("raid_level", &JBODStorage::get_raid_level,
+                             "The RAID level of the JBODStorage (read-only)")
+      .def("set_raid_level", &JBODStorage::set_raid_level, py::arg("raid_level"),
+           "Set the RAID level of the JBODStorage");
 
   /* Class FileSystem */
   py::class_<::FileSystem, std::shared_ptr<::FileSystem>>(m, "FileSystem",
                                                           "A FileSystem represents a file system abstraction")
       .def_static("create", &FileSystem::create, py::arg("name"), py::arg("max_num_open_files") = 1024,
                   "Create a new FileSystem")
-      .def_static("get_file_systems_by_actor", &FileSystem::get_file_systems_by_actor, py::arg("actor"),
+      .def_static("file_systems_by_actor", &FileSystem::get_file_systems_by_actor, py::arg("actor"),
                   "Get all FileSystems available to the given Actor")
-      .def_static("get_file_systems_by_netzone", &FileSystem::get_file_systems_by_netzone, py::arg("netzone"),
+      .def_static("file_systems_by_netzone", &FileSystem::get_file_systems_by_netzone, py::arg("netzone"),
                   "Get all FileSystems available to the given NetZone")
       .def_static("register_file_system", &FileSystem::register_file_system, py::arg("netzone"), py::arg("fs"),
                   "Register a FileSystem to a NetZone")
@@ -124,35 +211,4 @@ PYBIND11_MODULE(fsmod, m)
            "Get the Partition that contains the given path (returns None if not found)")
       .def("free_space_at_path", &FileSystem::get_free_space_at_path, py::arg("full_path"),
            "Get the free space available at the given path");
-
-  /* Class File */
-  py::class_<File, std::shared_ptr<File>>(m, "File", "A File represents an open file in a file system")
-      .def_property_readonly("access_mode", &File::get_access_mode, "The access mode of the File (read-only)")
-      .def_property_readonly("path", &File::get_path, "The path of the File (read-only)")
-      .def_property_readonly("num_bytes_read", &File::get_num_bytes_read,
-                             "The total number of bytes read from the File (read-only)")
-      .def_property_readonly("num_bytes_written", &File::get_num_bytes_written,
-                             "The total number of bytes written to the File (read-only)")
-      .def_property_readonly("file_system", &File::get_file_system, "The FileSystem this File belongs to (read-only)")
-      .def_property_readonly("tell", &File::tell, "The current position of the File (read-only)")
-      .def("read_async", py::overload_cast<const std::string&>(&File::read_async), py::arg("num_bytes"),
-           "Asynchronously read data from the File")
-      .def("read_async", py::overload_cast<sg_size_t>(&File::read_async), py::arg("num_bytes"),
-           "Asynchronously read data from the File")
-      .def("read", py::overload_cast<const std::string&, bool>(&File::read), py::arg("num_bytes"),
-           py::arg("simulate_it") = true, "Read data from the File")
-      .def("read", py::overload_cast<sg_size_t, bool>(&File::read), py::arg("num_bytes"), py::arg("simulate_it") = true,
-           "Read data from the File")
-      .def("write_async", py::overload_cast<const std::string&>(&File::write_async), py::arg("num_bytes"),
-           "Asynchronously write data to the File")
-      .def("write_async", py::overload_cast<sg_size_t>(&File::write_async), py::arg("num_bytes"),
-           "Asynchronously write data to the File")
-      .def("write", py::overload_cast<const std::string&, bool>(&File::write), py::arg("num_bytes"),
-           py::arg("simulate_it") = true, "Write data to the File")
-      .def("write", py::overload_cast<sg_size_t, bool>(&File::write), py::arg("num_bytes"),
-           py::arg("simulate_it") = true, "Write data to the File")
-      .def("close", &File::close, "Close the File")
-      .def("seek", &File::seek, py::arg("pos"), py::arg("origin") = SEEK_SET, "Set the current position of the File")
-      .def("stat", &File::stat, "Get the FileStat of the File");
-
-} // namespace
+}

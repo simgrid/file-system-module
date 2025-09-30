@@ -35,9 +35,10 @@ namespace simgrid::fsmod {
         [[nodiscard]] s4u::Disk* get_disk_at(unsigned long position) const;
         [[nodiscard]] virtual s4u::ActorPtr start_controller(s4u::Host* host, const std::function<void()> &func);
 
+        virtual ~Storage() = default;
+        
     protected:
         explicit Storage(std::string name): name_(std::move(name)) {}
-        virtual ~Storage() = default;
 
         void set_disk(s4u::Disk* disk) { disks_.push_back(disk); }
         void set_disks(const std::vector<s4u::Disk*>& disks) { disks_ = disks; }
