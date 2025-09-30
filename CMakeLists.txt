@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.12)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/conf/cmake/")
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 
-project(fsmod VERSION 0.1 DESCRIPTION "SimGrid-based File System simulation module")
+project(fsmod VERSION 0.3 DESCRIPTION "SimGrid-based File System simulation module")
 
 include(GNUInstallDirs)
 find_package(SimGrid 4.0 REQUIRED)
@@ -20,9 +20,31 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # build the version number
 set(FSMOD_VERSION_MAJOR "0")
-set(FSMOD_VERSION_MINOR "1")
+set(FSMOD_VERSION_MINOR "3")
 set(FSMOD_VERSION_PATCH "0")
 set(FSMOD_VERSION_EXTRA "dev")
+
+## GIT version check
+####################
+
+if(EXISTS ${CMAKE_HOME_DIRECTORY}/.git/)
+  execute_process(COMMAND git rev-parse --verify --short HEAD
+     WORKING_DIRECTORY ${CMAKE_HOME_DIRECTORY}
+     OUTPUT_VARIABLE GIT_VERSION
+     OUTPUT_STRIP_TRAILING_WHITESPACE)
+  # Check for uncommitted changes
+  execute_process(COMMAND git diff --name-only HEAD
+    WORKING_DIRECTORY ${CMAKE_HOME_DIRECTORY}
+    OUTPUT_VARIABLE files_changed)
+  if(files_changed)
+    set(GIT_VERSION "${GIT_VERSION}-dirty")
+  endif()
+elseif(EXISTS ${CMAKE_HOME_DIRECTORY}/.gitversion)
+  FILE(STRINGS ${CMAKE_HOME_DIRECTORY}/.gitversion GIT_VERSION)
+else()
+  set(GIT_VERSION "none, release version")
+endif()
+message(STATUS "Git version: ${GIT_VERSION}")
 
 if (${FSMOD_VERSION_PATCH} EQUAL "0")
     set(FSMOD_RELEASE_VERSION "${FSMOD_VERSION_MAJOR}.${FSMOD_VERSION_MINOR}")
@@ -30,6 +52,79 @@ else ()
     set(FSMOD_RELEASE_VERSION "${FSMOD_VERSION_MAJOR}.${FSMOD_VERSION_MINOR}.${FSMOD_VERSION_PATCH}")
 endif ()
 
+# Python binding (with pybind11)
+################
+if((NOT DEFINED enable_python) OR enable_python)
+  find_package(Python3 COMPONENTS Interpreter)
+  if(NOT Python3_Interpreter_FOUND)
+    message(FATAL_ERROR "Please install Python (version 3 or higher) to compile FSMod Python bindings.")
+  endif() 
+  set(PYTHON_EXECUTABLE ${Python3_EXECUTABLE})
+
+  find_package(pybind11 CONFIG)
+  message(STATUS "Pybind11 version: ${pybind11_VERSION}")
+  if (pybind11_VERSION VERSION_LESS 2.4)
+    message(STATUS "FSMod needs at least v2.4 of pybind11. Disabling the Python bindings.")
+    set(pybind11_FOUND OFF)
+  endif()
+endif()
+
+find_package(Python3 COMPONENTS Development)
+if(NOT Python3_Development_FOUND OR NOT pybind11_FOUND)
+  message(STATUS "FSMod Python bindings cannot be built on this system.")
+  set(default_enable_python OFF)
+else()
+  set(default_enable_python ON)
+endif()
+
+option(enable_python "Whether the Python bindings are activated." ${default_enable_python}) # ON by default if dependencies are met
+
+if(enable_python)
+  if(NOT Python3_Development_FOUND)
+    message(FATAL_ERROR "Please install the development components of Python (python3-dev on Debian) to build the Python bindings (or disable that option).")
+  endif()
+  if(pybind11_FOUND)
+    message(STATUS "Python bindings will be built.")
+    set(python_files ${CMAKE_SOURCE_DIR}/src/bindings/python/fsmod_python.cpp)
+
+    message(STATUS "Files to compile: ${python_files}")
+    pybind11_add_module(python-bindings
+                        ${python_files}
+                        ${pybind11_options})
+
+    target_compile_features(python-bindings PRIVATE cxx_std_14)
+    target_link_libraries(python-bindings PUBLIC fsmod)
+    set_target_properties(python-bindings PROPERTIES
+                          LIBRARY_OUTPUT_NAME fsmod
+                          CXX_VISIBILITY_PRESET "default"
+                          INTERPROCEDURAL_OPTIMIZATION FALSE)
+   
+    set_property(TARGET python-bindings
+                 APPEND PROPERTY INCLUDE_DIRECTORIES "${INTERNAL_INCLUDES}")
+
+    if("${FSMOD_PYTHON_LIBDIR}" STREQUAL "") # value not manually set
+      if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr")
+        set(FSMOD_PYTHON_LIBDIR ${Python3_SITEARCH})
+      else("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr")
+        string(REGEX REPLACE "^/usr/local/" "${CMAKE_INSTALL_PREFIX}/" FSMOD_PYTHON_LIBDIR ${Python3_SITEARCH})
+      endif("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr")
+    endif()
+    install(TARGETS python-bindings
+      	    LIBRARY DESTINATION "${FSMOD_PYTHON_LIBDIR}")
+  else()
+    message(FATAL_ERROR "Please install pybind11-dev to build the Python bindings (or disable that option).")
+  endif()
+endif()
+mark_as_advanced(PYBIND11_PYTHON_VERSION)
+mark_as_advanced(pybind11_DIR)
+
+if(pybind11_FOUND)
+  message("        Compile Python bindings .....: ${enable_python}")
+  message("          module ....................: ${PYTHON_MODULE_PREFIX}fsmod${PYTHON_MODULE_EXTENSION}")
+  message("          install path ..............: ${FSMOD_PYTHON_LIBDIR} (force another value with -DFSMOD_PYTHON_LIBDIR)")
+else()
+  message("        Compile Python bindings .....: OFF (disabled, or pybind11 not found)")
+endif()
 set(SOURCE_FILES
 		src/PathUtil.cpp
 		src/FileSystem.cpp
