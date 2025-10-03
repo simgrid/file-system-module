@@ -6,7 +6,7 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 project(fsmod VERSION 0.4 DESCRIPTION "SimGrid-based File System simulation module")
 
 include(GNUInstallDirs)
-find_package(SimGrid 4.1 REQUIRED)
+find_package(SimGrid 4.0.1 REQUIRED)
 
 include_directories(
 		${CMAKE_SOURCE_DIR}/include
