@@ -126,11 +126,11 @@ TEST_F(JBODStorageTest, SingleAsyncRead)  {
             std::shared_ptr<sgfs::File> file;
             sg4::IoPtr my_read;
             sg_size_t num_bytes_read = 0;
-            XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
+            XBT_INFO("Create a 60MB file at /dev/a/foo.txt");
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "60MB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
-            XBT_INFO("Asynchronously read 6MB at /dev/a/foo.txt");
+            XBT_INFO("Asynchronously read 12MB at /dev/a/foo.txt");
             ASSERT_NO_THROW(my_read = file->read_async("12MB"));
             XBT_INFO("Sleep for 1 second");
             ASSERT_NO_THROW(sg4::this_actor::sleep_for(1));
@@ -188,7 +188,7 @@ TEST_F(JBODStorageTest, SingleAsyncWrite)  {
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "w"));
-            XBT_INFO("Asynchronously write 2MB at /dev/a/foo.txt");
+            XBT_INFO("Asynchronously write 12MB at /dev/a/foo.txt");
             ASSERT_NO_THROW(my_write = file->write_async("12MB"));
             XBT_INFO("Sleep for 1 second");
             ASSERT_NO_THROW(sg4::this_actor::sleep_for(1));
@@ -242,7 +242,7 @@ TEST_F(JBODStorageTest, ReadWriteRAID0)  {
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
             XBT_INFO("Open File '/dev/a/foo.txt' in write mode");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "w"));
-            XBT_INFO("Write 2MB at /dev/a/foo.txt");
+            XBT_INFO("Write 12MB at /dev/a/foo.txt");
             ASSERT_DOUBLE_EQ(file->write("12MB"), 12000000);
             XBT_INFO("Write complete. Clock is at 3.1s (.1s to transfer, 3s to write)");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 3.1);

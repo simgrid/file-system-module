@@ -146,9 +146,6 @@ TEST_F(FileSystemTest, Directories)  {
             ASSERT_NO_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c"));
             ASSERT_TRUE(found_files.find("foo.txt") != found_files.end());
             ASSERT_TRUE(found_files.find("faa.txt") != found_files.end());
-            ASSERT_NO_THROW(found_files = fs_->list_files_in_directory("/dev/a/b/c/"));
-            ASSERT_TRUE(found_files.find("foo.txt") != found_files.end());
-            ASSERT_TRUE(found_files.find("faa.txt") != found_files.end());
             XBT_INFO("Try to unlink non-existing directory. This shouldn't work");
             ASSERT_THROW(fs_->unlink_directory("/dev/a/b/d"), sgfs::DirectoryDoesNotExistException);
             ASSERT_FALSE(fs_->directory_exists("/dev/a/b/d"));

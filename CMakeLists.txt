@@ -17,6 +17,7 @@ include_directories(
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "-O3 -funroll-loops -fno-strict-aliasing -flto=auto")
 
 # build the version number
 set(FSMOD_VERSION_MAJOR "0")
@@ -134,7 +135,7 @@ set(SOURCE_FILES
 		src/PartitionFIFOCaching.cpp
 		src/PartitionLRUCaching.cpp
 		src/Storage.cpp
-        src/JBODStorage.cpp
+    src/JBODStorage.cpp
 		src/OneDiskStorage.cpp
 		src/OneRemoteDiskStorage.cpp
 		)

@@ -21,7 +21,6 @@ namespace simgrid::fsmod {
     public:
         static std::string simplify_path_string(const std::string& path);
         static void remove_trailing_slashes(std::string &path);
-        static void add_trailing_slash(std::string &path);
         static std::pair<std::string, std::string> split_path(std::string_view path);
         static bool is_at_mount_point(std::string_view simplified_absolute_path, std::string_view mount_point);
         static std::string path_at_mount_point(const std::string& simplified_absolute_path, std::string_view mount_point);
