@@ -22,6 +22,7 @@
 #include <fsmod/PartitionLRUCaching.hpp>
 #include <fsmod/PathUtil.hpp>
 #include <fsmod/Storage.hpp>
+#include <fsmod/version.hpp>
 
 #include <xbt/log.h>
 
@@ -42,14 +43,14 @@ using simgrid::fsmod::Storage;
 XBT_LOG_NEW_DEFAULT_CATEGORY(python, "python");
 
 namespace {
-// std::string get_fsmod_version()
-// {
-//   int major;
-//   int minor;
-//   int patch;
-//   fsmod_version_get(&major, &minor, &patch);
-//   return simgrid::xbt::string_printf("%i.%i.%i", major, minor, patch);
-// }
+std::string get_fsmod_version()
+{
+  int major;
+  int minor;
+  int patch;
+  fsmod_version_get(&major, &minor, &patch);
+  return simgrid::xbt::string_printf("%i.%i.%i", major, minor, patch);
+}
 }
 
 PYBIND11_DECLARE_HOLDER_TYPE(T, boost::intrusive_ptr<T>)
@@ -58,7 +59,7 @@ PYBIND11_MODULE(fsmod, m)
 {
   m.doc() = "FSMOD userspace API";
 
-  // m.attr("fsmod_version") = get_fsmod_version();
+  m.attr("fsmod_version") = get_fsmod_version();
 
   py::register_exception<simgrid::fsmod::NotEnoughSpaceException>(m, "NotEnoughSpaceException");
   py::register_exception<simgrid::fsmod::FileIsOpenException>(m, "FileIsOpenException");
@@ -135,8 +136,8 @@ PYBIND11_MODULE(fsmod, m)
       .def_property_readonly("num_disks", &Storage::get_num_disks, "The number of disks in the Storage (read-only)")
       .def_property_readonly("first_disk", &Storage::get_first_disk, "The first disk in the Storage (read-only)")
       .def("disk_at", &Storage::get_disk_at, py::arg("position"), "Get the disk at the given position in the Storage")
-      .def("start_controller", &Storage::start_controller, py::arg("host"), py::arg("func"),
-           "Start the controller Actor for the Storage on the given Host");
+      .def("start_controller", &Storage::start_controller, py::call_guard<py::gil_scoped_release>(), py::arg("host"), 
+           py::arg("func"), "Start the controller Actor for the Storage on the given Host");
 
   /* Class OneDiskStorage */
   py::class_<OneDiskStorage, Storage, std::shared_ptr<OneDiskStorage>>(

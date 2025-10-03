@@ -1,7 +1,7 @@
 import io
 import sys
 import multiprocessing
-from simgrid import Engine, this_actor
+from simgrid import Engine, this_actor, Host
 from fsmod import FileSystem, OneDiskStorage, InvalidPathException, NotEnoughSpaceException, FileAlreadyExistsException, DirectoryDoesNotExistException, DirectoryAlreadyExistsException, FileIsOpenException, FileNotFoundException, TooManyOpenFilesException, InvalidMoveException
 
 def setup_platform():
@@ -35,7 +35,7 @@ def run_test_mount_partition():
         assert "my_storage" == ods.name
         assert None == ods.controller_host
         assert None == ods.controller
-        # TODO actor = ods.start_controller(disk_one.host, )
+        ods.start_controller(disk_one.host, lambda: None)
 
         this_actor.info("Mount a new partition with a name that's not a clean path, which shouldn't work")
         try:

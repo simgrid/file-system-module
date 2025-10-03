@@ -3,10 +3,10 @@ cmake_minimum_required(VERSION 3.12)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/conf/cmake/")
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 
-project(fsmod VERSION 0.3 DESCRIPTION "SimGrid-based File System simulation module")
+project(fsmod VERSION 0.4 DESCRIPTION "SimGrid-based File System simulation module")
 
 include(GNUInstallDirs)
-find_package(SimGrid 4.0 REQUIRED)
+find_package(SimGrid 4.1 REQUIRED)
 
 include_directories(
 		${CMAKE_SOURCE_DIR}/include
@@ -21,7 +21,7 @@ set(CMAKE_CXX_FLAGS "-O3 -funroll-loops -fno-strict-aliasing -flto=auto")
 
 # build the version number
 set(FSMOD_VERSION_MAJOR "0")
-set(FSMOD_VERSION_MINOR "3")
+set(FSMOD_VERSION_MINOR "4")
 set(FSMOD_VERSION_PATCH "0")
 set(FSMOD_VERSION_EXTRA "dev")
 
@@ -52,6 +52,14 @@ if (${FSMOD_VERSION_PATCH} EQUAL "0")
 else ()
     set(FSMOD_RELEASE_VERSION "${FSMOD_VERSION_MAJOR}.${FSMOD_VERSION_MINOR}.${FSMOD_VERSION_PATCH}")
 endif ()
+
+### Generate the required headers
+#################################
+
+# Avoid triggering a (full) rebuild by touching the files if they did not really change
+configure_file("${CMAKE_HOME_DIRECTORY}/include/fsmod/version.hpp.in" "${CMAKE_BINARY_DIR}/include/fsmod/version.hpp.generated" @ONLY IMMEDIATE)
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_BINARY_DIR}/include/fsmod/version.hpp.generated ${CMAKE_BINARY_DIR}/include/fsmod/version.hpp)
+file(REMOVE ${CMAKE_BINARY_DIR}/include/fsmod/version.hpp.generated)
 
 # Python binding (with pybind11)
 ################
@@ -138,6 +146,7 @@ set(SOURCE_FILES
     src/JBODStorage.cpp
 		src/OneDiskStorage.cpp
 		src/OneRemoteDiskStorage.cpp
+    src/fsmod_version.cpp
 		)
 
 set(HEADER_FILES
@@ -154,6 +163,7 @@ set(HEADER_FILES
 		include/fsmod/OneDiskStorage.hpp
 		include/fsmod/OneRemoteDiskStorage.hpp
 		include/fsmod/Storage.hpp
+    include/fsmod/version.hpp.in
 	)
 
 add_library(fsmod SHARED ${SOURCE_FILES})
