@@ -212,6 +212,15 @@ else()
 	add_custom_target(unit_tests echo "ERROR: Cannot build unit_tests because Google Test (libgtest) was not found by cmake." COMMAND echo "       If you have installed Google Test, re-run cmake." VERBATIM)
 endif()
 
+# Python test
+add_custom_target(copy_python_tests ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/test/python
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_SOURCE_DIR}/test/python
+            ${CMAKE_BINARY_DIR}/test/python
+    COMMENT "Copying Python test scripts to build directory"
+)
+
 # Documentation
 include(${CMAKE_HOME_DIRECTORY}/conf/cmake/Documentation.cmake)
 
