@@ -61,9 +61,11 @@ jobs:
           sudo make install
           make -j4 unit_tests examples
           ./unit_tests
-          python ./unit_tests_python.py
           ./examples/open_seek_write
           ./examples/jbod
+          cd test/python
+          python ./unit_tests_python.py
+          cd ../../
           lcov --keep-going --directory . --directory examples/ --capture --output-file coverage.info
           lcov --remove coverage.info '*/test/*' '*/examples/*' '*/include/*'
           bash <(curl -s https://codecov.io/bash) -f coverage.info -t ${CODECOV_TOKEN}
