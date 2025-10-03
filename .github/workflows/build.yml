@@ -61,6 +61,7 @@ jobs:
           sudo make install
           make -j4 unit_tests examples
           ./unit_tests
+          python ./unit_tests_python.py
           ./examples/open_seek_write
           ./examples/jbod
           lcov --keep-going --directory . --directory examples/ --capture --output-file coverage.info
