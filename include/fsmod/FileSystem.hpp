@@ -39,8 +39,13 @@ namespace simgrid::fsmod {
         int max_num_open_files_;
 
     public:
-        explicit FileSystem(std::string name, int max_num_open_files) : name_(std::move(name)), max_num_open_files_(max_num_open_files) {};
-
+        explicit FileSystem(std::string name, int max_num_open_files)
+           : name_(std::move(name)), max_num_open_files_(max_num_open_files) {};
+        /// \cond EXCLUDE_FROM_DOCUMENTATION
+        ~FileSystem() noexcept = default;
+        FileSystem(const FileSystem& other) noexcept = default;
+        FileSystem& operator=(const FileSystem& other) noexcept = default;
+        /// \endcond
 
         static std::shared_ptr<FileSystem> create(const std::string &name, int max_num_open_files = 1024);
         static const std::map<std::string, std::shared_ptr<FileSystem>, std::less<>>&
