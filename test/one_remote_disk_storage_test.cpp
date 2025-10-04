@@ -87,7 +87,7 @@ TEST_F(OneRemoteDiskStorageTest, SingleAsyncRead)  {
             ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
             XBT_INFO("Open File '/dev/a/foo.txt'");
             ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "r"));
-            XBT_INFO("Asynchronously read 2MB at /dev/a/foo.txt");
+            XBT_INFO("Asynchronously read 4MB at /dev/a/foo.txt");
             ASSERT_NO_THROW(my_read = file->read_async("4MB"));
             XBT_INFO("Sleep for 1 second");
             ASSERT_NO_THROW(sg4::this_actor::sleep_for(1));

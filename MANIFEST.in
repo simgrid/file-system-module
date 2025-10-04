@@ -1,0 +1,33 @@
+# Include license and documentation
+include LICENSE
+include README.md
+include FindFSMod.cmake
+
+include conf/doxygen/Doxyfile.in
+include doc/scripts/generate_rst.py
+include doc/source/conf.py
+include doc/source/favicon.png
+include doc/source/index.rst
+include doc/source/requirements.txt
+include doc/source/_static/css/custom.css
+
+# Include CMake build files
+include CMakeLists.txt
+recursive-include cmake *
+recursive-include conf *.cmake
+
+# Include source and header files
+recursive-include include *.hpp
+recursive-include src *.cpp
+include include/dtlmod/version.hpp.in
+
+# Include Python bindings
+recursive-include src/bindings *.cpp
+
+# Include tests files
+recursive-include test *.cpp
+recursive-include test *.py
+include test/test_util.hpp
+
+# Include setup.py
+include setup.py

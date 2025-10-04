@@ -29,7 +29,7 @@ public:
     SeekTest() = default;
 
     void setup_platform() {
-        XBT_INFO("Creating a platform with one host and two disks...");
+        XBT_INFO("Creating a platform with one host and one disk...");
         auto *my_zone = sg4::Engine::get_instance()->get_netzone_root()->add_netzone_full("zone");
         host_ = my_zone->add_host("my_host", "100Gf");
         disk_ = host_->add_disk("disk", "1kBps", "2kBps");
