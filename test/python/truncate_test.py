@@ -49,9 +49,9 @@ def run_test_truncate_and_tell():
         this_actor.info("Truncate the file to half its size")
         fs.truncate_file("/dev/a/foo.txt", 50*1000)
         this_actor.info("Check file size")
-        fs.file_size("/dev/a/foo.txt") == 50*1000
+        assert fs.file_size("/dev/a/foo.txt") == 50*1000
         this_actor.info("Check free space")
-        fs.partitions[0].free_space == 1000*1000 - 50*1000
+        assert fs.partitions[0].free_space == 1000*1000 - 50*1000
         this_actor.info("Open File '/dev/a/foo.txt'")
         file = fs.open("/dev/a/foo.txt", "a")
         this_actor.info("Write 1kB")
@@ -59,9 +59,9 @@ def run_test_truncate_and_tell():
         this_actor.info("Close the file")
         file.close()
         this_actor.info("Check file size")
-        fs.file_size("/dev/a/foo.txt") ==  51*1000
+        assert fs.file_size("/dev/a/foo.txt") ==  51*1000
         this_actor.info("Check free space")
-        fs.partitions[0].free_space == 1000*1000 - 51000
+        assert fs.partitions[0].free_space == 1000*1000 - 51000
  
     host.add_actor("TestActor", test_actor)
     e.run()

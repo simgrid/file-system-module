@@ -176,9 +176,9 @@ def run_test_file_move():
             pass
         this_actor.info("Create a 10kB file at /dev/a/foo.txt")
         fs.create_file("/dev/a/foo.txt", "10kB")
-        fs.partition_by_name("/dev/a/").free_space ==  90*1000
-        fs.free_space_at_path("/dev/a/") == 90*1000
-        fs.free_space_at_path("/dev/a/foo.txt") == 90*1000
+        assert fs.partition_by_name("/dev/a/").free_space ==  90*1000
+        assert fs.free_space_at_path("/dev/a/") == 90*1000
+        assert fs.free_space_at_path("/dev/a/foo.txt") == 90*1000
         this_actor.info("Try to move file /dev/a/foo.txt to the same path. This should work (no-op)")
         fs.move_file("/dev/a/foo.txt", "/dev/a/foo.txt")
         this_actor.info("Move file /dev/a/foo.txt to /dev/a/b/c/foo.txt")
@@ -188,24 +188,24 @@ def run_test_file_move():
 
         this_actor.info("Create a 20kB file at /dev/a/stuff.txt")
         fs.create_file("/dev/a/stuff.txt", "20kB")
-        fs.partition_by_name("/dev/a/").free_space ==  70*1000
+        assert fs.partition_by_name("/dev/a/").free_space ==  70*1000
 
         # Moving a smaller file to a bigger file
         this_actor.info("Move file /dev/a/b/c/foo.txt to /dev/a/stuff.txt")
         fs.move_file("/dev/a/b/c/foo.txt", "/dev/a/stuff.txt")
         assert False == fs.file_exists("/dev/a/b/c/foo.txt")
         assert True ==fs.file_exists("/dev/a/stuff.txt")
-        fs.partition_by_name("/dev/a/").free_space ==  90*1000
+        assert fs.partition_by_name("/dev/a/").free_space ==  90*1000
 
         # Moving a bigger file to a smaller file
         this_actor.info("Create a 20kB file at /dev/a/big.txt")
         fs.create_file("/dev/a/big.txt", "20kB")
-        fs.partition_by_name("/dev/a/").free_space ==  70*1000
+        assert fs.partition_by_name("/dev/a/").free_space ==  70*1000
         this_actor.info("Move file /dev/a/stuff.txt to /dev/a/big.txt")
         fs.move_file("/dev/a/stuff.txt", "/dev/a/big.txt")
         assert False == fs.file_exists("/dev/a/stuff.txt")
         assert True ==fs.file_exists("/dev/a/big.txt")
-        fs.partition_by_name("/dev/a/").free_space ==  90*1000
+        assert fs.partition_by_name("/dev/a/").free_space ==  90*1000
 
         ods = OneDiskStorage.create("my_storage", disk_two)
         this_actor.info("Mount a new partition")

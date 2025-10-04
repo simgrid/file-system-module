@@ -4,6 +4,7 @@
 # under the terms of the license (GNU LGPL) which comes with this package.
 
 import io
+import math
 import os
 import sys
 import tempfile
@@ -100,7 +101,7 @@ def run_test_single_async_read():
         this_actor.info("Wait for read completion")
         my_read.wait()
         this_actor.info("Read complete. Clock should be at 2.1s (2s to read, 0.1 to transfer)")
-        assert Engine.clock == 2.1
+        assert math.isclose(Engine.clock, 2.1)
 
     client.add_actor("TestActor", actor)
     e.run()
@@ -152,7 +153,7 @@ def run_test_single_async_write():
         this_actor.info("Wait for write completion")
         my_write.wait()
         this_actor.info("Write complete. Clock  is at 4.12s (.1s to transfer, 0.02 to compute parity, 4s to write)")
-        assert Engine.clock == 4.12
+        assert math.isclose(Engine.clock, 4.12)
         this_actor.info("Close the file")
         file.close()
 
@@ -173,7 +174,7 @@ def run_test_read_write_raid0():
         this_actor.info("Write 12MB at '/dev/a/foo.txt'")
         assert file.write("12MB") == 12_000_000
         this_actor.info("Write complete. Clock is at 3.1s (.1s to transfer, 3s to write)")
-        assert Engine.clock == 3.1
+        assert math.isclose(Engine.clock, 3.1)
         this_actor.info("Close the file")
         file.close()
 
@@ -181,7 +182,7 @@ def run_test_read_write_raid0():
         file = fs.open("/dev/a/foo.txt", "r")
         assert file.read("12MB") == 12_000_000
         this_actor.info("Read complete. Clock is at 4.7s (1.5s to read, .1s to transfer)")
-        assert round(Engine.clock,1) == 4.7
+        assert math.isclose(Engine.clock,  4.7)
         this_actor.info("Close the file")
         file.close()
 
@@ -201,7 +202,7 @@ def run_test_read_write_raid1():
         this_actor.info("Write 6MB at '/dev/a/foo.txt'")
         assert file.write("6MB") == 6_000_000
         this_actor.info("Write complete. Clock is at 6.05s (.5s to transfer, 6s to write)")
-        assert round(Engine.clock, 2) == 6.05
+        assert math.isclose(Engine.clock, 6.05)
         this_actor.info("Close the file")
         file.close()
 
@@ -209,7 +210,7 @@ def run_test_read_write_raid1():
         file = fs.open("/dev/a/foo.txt", "r")
         assert file.read("6MB") == 6_000_000
         this_actor.info("Read complete. Clock is at 9.1s (3s to read, .05s to transfer)")
-        assert round(Engine.clock, 1) == 9.1
+        assert math.isclose(Engine.clock, 9.1)
         this_actor.info("Close the file")
         file.close()
 
@@ -229,7 +230,7 @@ def run_test_read_write_raid4():
         this_actor.info("Write 6MB at '/dev/a/foo.txt'")
         assert file.write("6MB") == 6_000_000
         this_actor.info("Write complete. Clock is at 2.06s (.5s to transfer, 0.01 to compute parity, 2s to write)")
-        assert round(Engine.clock, 2) == 2.06
+        assert math.isclose(Engine.clock, 2.06)
         this_actor.info("Close the file")
         file.close()
 
@@ -237,7 +238,7 @@ def run_test_read_write_raid4():
         file = fs.open("/dev/a/foo.txt", "r")
         assert file.read("6MB") == 6_000_000
         this_actor.info("Read complete. Clock is at 3.11s (1s to read, .05s to transfer)")
-        assert round(Engine.clock, 2) == 3.11
+        assert math.isclose(Engine.clock, 3.11)
         this_actor.info("Close the file")
         file.close()
 
@@ -257,7 +258,7 @@ def run_test_read_write_raid6():
         this_actor.info("Write 6MB at '/dev/a/foo.txt'")
         assert file.write("6MB") == 6_000_000
         this_actor.info("Write complete. Clock is at 2.06s (.05s to transfer, 0.02 to compute parity, 3s to write)")
-        assert round(Engine.clock, 2) == 3.08
+        assert math.isclose(Engine.clock, 3.08)
         this_actor.info("Close the file")
         file.close()
 
@@ -265,7 +266,7 @@ def run_test_read_write_raid6():
         file = fs.open("/dev/a/foo.txt", "r")
         assert file.read("6MB") == 6_000_000
         this_actor.info("Read complete. Clock is at 4.63s (1.5s to read, .05s to transfer)")
-        assert round(Engine.clock, 2) == 4.63
+        assert math.isclose(Engine.clock, 4.63)
         this_actor.info("Close the file")
         file.close()
         this_actor.info("Test the evolution of parity disks")
