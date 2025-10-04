@@ -5,7 +5,7 @@ import sys
 scripts = [
     "caching_test.py",
     "file_system_test.py",
-    "job_storage_test.py",
+    "jbod_storage_test.py",
     "one_disk_storage_test.py",
     "one_remote_disk_storage_test.py",
     "path_util_test.py",
