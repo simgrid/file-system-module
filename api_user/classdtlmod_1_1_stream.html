@@ -54,6 +54,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream4Mode9SubscribeE"><code class="docutils literal notranslate"><span class="pre">Subscribe</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15define_variableERKNSt6stringERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE6size_t"><code class="docutils literal notranslate"><span class="pre">define_variable()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15define_variableERKNSt6stringE6size_t"><code class="docutils literal notranslate"><span class="pre">define_variable()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream20does_export_metadataEv"><code class="docutils literal notranslate"><span class="pre">does_export_metadata()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream9get_cnameEv"><code class="docutils literal notranslate"><span class="pre">get_cname()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream19get_engine_type_strEv"><code class="docutils literal notranslate"><span class="pre">get_engine_type_str()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream8get_nameEv"><code class="docutils literal notranslate"><span class="pre">get_name()</span></code></a></li>
@@ -64,7 +65,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream4openERKNSt6stringE4Mode"><code class="docutils literal notranslate"><span class="pre">open()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15remove_variableERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">remove_variable()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15set_engine_typeERKN6Engine4TypeE"><code class="docutils literal notranslate"><span class="pre">set_engine_type()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream19set_metadata_exportEv"><code class="docutils literal notranslate"><span class="pre">set_metadata_export()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream20set_transport_methodERKN9Transport6MethodE"><code class="docutils literal notranslate"><span class="pre">set_transport_method()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream21unset_metadata_exportEv"><code class="docutils literal notranslate"><span class="pre">unset_metadata_export()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="classdtlmod_1_1_variable.html">dtlmod::Variable</a></li>
@@ -163,6 +166,17 @@ This function creates a new scalar <a class="reference internal" href="classdtlm
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A shared pointer on the newly created <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Stream20does_export_metadataEv">
+<span id="_CPPv3NK6dtlmod6Stream20does_export_metadataEv"></span><span id="_CPPv2NK6dtlmod6Stream20does_export_metadataEv"></span><span id="dtlmod::Stream::does_export_metadataC"></span><span class="target" id="classdtlmod_1_1_stream_1a4cbdd13db27f3164801f97b52e2f6344"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">does_export_metadata</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream20does_export_metadataEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Helper function to print out the access Mode of the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The corresponding C-string </p>
 </dd>
 </dl>
 </dd></dl>
@@ -285,15 +299,22 @@ When multiple actors open the same <a class="reference internal" href="#classdtl
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Stream15set_engine_typeERKN6Engine4TypeE">
 <span id="_CPPv3N6dtlmod6Stream15set_engine_typeERKN6Engine4TypeE"></span><span id="_CPPv2N6dtlmod6Stream15set_engine_typeERKN6Engine4TypeE"></span><span id="dtlmod::Stream::set_engine_type__Engine::TypeCR"></span><span class="target" id="classdtlmod_1_1_stream_1af913c813e1cc4671bec7548907743ef2"></span><a class="reference internal" href="#_CPPv4N6dtlmod6StreamE" title="dtlmod::Stream"><span class="n"><span class="pre">Stream</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">set_engine_type</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classdtlmod_1_1_engine.html#_CPPv4N6dtlmod6EngineE" title="dtlmod::Engine"><span class="n"><span class="pre">Engine</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="classdtlmod_1_1_engine.html#_CPPv4N6dtlmod6Engine4TypeE" title="dtlmod::Engine::Type"><span class="n"><span class="pre">Type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">engine_type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod6Stream15set_engine_typeERKN6Engine4TypeE" title="Link to this definition"></a><br /></dt>
-<dd><p>Helper function to print out the access Mode of the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
-<p><a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> configuration function: set the <a class="reference internal" href="classdtlmod_1_1_engine.html#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a> type to create. </p>
+<dd><p><a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> configuration function: set the <a class="reference internal" href="classdtlmod_1_1_engine.html#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a> type to create. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>engine_type</strong> – The type of <a class="reference internal" href="classdtlmod_1_1_engine.html#classdtlmod_1_1_engine"><span class="std std-ref">Engine</span></a> to create when opening the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The corresponding C-string</p>
+<dd class="field-even"><p>The calling <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> (enable method chaining). </p>
 </dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Stream19set_metadata_exportEv">
+<span id="_CPPv3N6dtlmod6Stream19set_metadata_exportEv"></span><span id="_CPPv2N6dtlmod6Stream19set_metadata_exportEv"></span><span id="dtlmod::Stream::set_metadata_export"></span><span class="target" id="classdtlmod_1_1_stream_1a0866461912f7fe75fa5f97b251ce0498"></span><a class="reference internal" href="#_CPPv4N6dtlmod6StreamE" title="dtlmod::Stream"><span class="n"><span class="pre">Stream</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">set_metadata_export</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod6Stream19set_metadata_exportEv" title="Link to this definition"></a><br /></dt>
+<dd><p><a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> configuration function: specify that metadata must be exported. </p>
+<dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The calling <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> (enable method chaining). </p>
 </dd>
@@ -310,6 +331,17 @@ When multiple actors open the same <a class="reference internal" href="#classdtl
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The calling <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> (enable method chaining). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6dtlmod6Stream21unset_metadata_exportEv">
+<span id="_CPPv3N6dtlmod6Stream21unset_metadata_exportEv"></span><span id="_CPPv2N6dtlmod6Stream21unset_metadata_exportEv"></span><span id="dtlmod::Stream::unset_metadata_export"></span><span class="target" id="classdtlmod_1_1_stream_1acedcbb6e7798170e3e3255b9fa7ec031"></span><a class="reference internal" href="#_CPPv4N6dtlmod6StreamE" title="dtlmod::Stream"><span class="n"><span class="pre">Stream</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">unset_metadata_export</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6dtlmod6Stream21unset_metadata_exportEv" title="Link to this definition"></a><br /></dt>
+<dd><p><a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> configuration function: specify that metadata must not be exported. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The calling <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> (enable method chaining). </p>
 </dd>
 </dl>
 </dd></dl>
