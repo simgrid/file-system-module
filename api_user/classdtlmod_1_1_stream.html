@@ -55,6 +55,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15define_variableERKNSt6stringERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEERKNSt6vectorI6size_tEE6size_t"><code class="docutils literal notranslate"><span class="pre">define_variable()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4N6dtlmod6Stream15define_variableERKNSt6stringE6size_t"><code class="docutils literal notranslate"><span class="pre">define_variable()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream20does_export_metadataEv"><code class="docutils literal notranslate"><span class="pre">does_export_metadata()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream15get_access_modeEv"><code class="docutils literal notranslate"><span class="pre">get_access_mode()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream19get_access_mode_strEv"><code class="docutils literal notranslate"><span class="pre">get_access_mode_str()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream17get_all_variablesEv"><code class="docutils literal notranslate"><span class="pre">get_all_variables()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream9get_cnameEv"><code class="docutils literal notranslate"><span class="pre">get_cname()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream19get_engine_type_strEv"><code class="docutils literal notranslate"><span class="pre">get_engine_type_str()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK6dtlmod6Stream8get_nameEv"><code class="docutils literal notranslate"><span class="pre">get_name()</span></code></a></li>
@@ -173,10 +176,43 @@ This function creates a new scalar <a class="reference internal" href="classdtlm
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Stream20does_export_metadataEv">
 <span id="_CPPv3NK6dtlmod6Stream20does_export_metadataEv"></span><span id="_CPPv2NK6dtlmod6Stream20does_export_metadataEv"></span><span id="dtlmod::Stream::does_export_metadataC"></span><span class="target" id="classdtlmod_1_1_stream_1a4cbdd13db27f3164801f97b52e2f6344"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">does_export_metadata</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream20does_export_metadataEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Helper function to know if the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> does export metadata or not. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a boolean indicating if the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a> does export metadata or not </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Stream15get_access_modeEv">
+<span id="_CPPv3NK6dtlmod6Stream15get_access_modeEv"></span><span id="_CPPv2NK6dtlmod6Stream15get_access_modeEv"></span><span id="dtlmod::Stream::get_access_modeC"></span><span class="target" id="classdtlmod_1_1_stream_1a84f7f3fa86426b54807deb4331af6029"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6dtlmod6Stream4ModeE" title="dtlmod::Stream::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_access_mode</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream15get_access_modeEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Helper function to know the access Mode of the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The corresponding <a class="reference internal" href="#classdtlmod_1_1_stream_1a616232144c1efc7d2a6b591081707fd2"><span class="std std-ref">Stream::Mode</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Stream19get_access_mode_strEv">
+<span id="_CPPv3NK6dtlmod6Stream19get_access_mode_strEv"></span><span id="_CPPv2NK6dtlmod6Stream19get_access_mode_strEv"></span><span id="dtlmod::Stream::get_access_mode_strC"></span><span class="target" id="classdtlmod_1_1_stream_1ab3b15aa6e08f24533a45108b39adb8b7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_access_mode_str</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream19get_access_mode_strEv" title="Link to this definition"></a><br /></dt>
 <dd><p>Helper function to print out the access Mode of the <a class="reference internal" href="#classdtlmod_1_1_stream"><span class="std std-ref">Stream</span></a>. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The corresponding C-string </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6dtlmod6Stream17get_all_variablesEv">
+<span id="_CPPv3NK6dtlmod6Stream17get_all_variablesEv"></span><span id="_CPPv2NK6dtlmod6Stream17get_all_variablesEv"></span><span id="dtlmod::Stream::get_all_variablesC"></span><span class="target" id="classdtlmod_1_1_stream_1a13f8e378457183a0c94fd3be919f98d9"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_all_variables</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6dtlmod6Stream17get_all_variablesEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Retrieve the list of Variables defined on this stream. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list of <a class="reference internal" href="classdtlmod_1_1_variable.html#classdtlmod_1_1_variable"><span class="std std-ref">Variable</span></a> names </p>
 </dd>
 </dl>
 </dd></dl>
