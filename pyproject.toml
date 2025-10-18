@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=42", "wheel", "pybind11", "cmake"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fsmod"
+version = "0.4.0"
+description = "A simulated file system module for SimGrid"
+authors = [
+    { name = "FSMod Team", email = "simgrid-community@inria.fr" }
+]
+readme = "README.md"
+license = { text = "LGPL-2.1-only" }
+requires-python = ">=3.7"
+dependencies = [
+    "pybind11>=2.4",
+    "simgrid>=4.1"
+]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: C++",
+    "License :: OSI Approved :: GNU Lesser General Public License v2 (LGPLv2)",
+    "Operating System :: POSIX",
+    "Operating System :: MacOS",
+    "Topic :: System :: Distributed Computing"
+]
+
+[project.urls]
+Source = "https://github.com/simgrid/file-system-module"
