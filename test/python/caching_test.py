@@ -75,7 +75,7 @@ def run_test_FIFO_basics_with_unevictable_files():
     def test_actor():
         this_actor.info("Create a 20MB file at /dev/fifo/20mb.txt")
         fs.create_file("/dev/fifo/20mb.txt", "20MB")
-        this_actor.info("Making the 20MB file at /dev/fifo/20mb.txt unevictable");
+        this_actor.info("Making the 20MB file at /dev/fifo/20mb.txt unevictable")
         try:
             fs.make_file_evictable("/dev/fifo/bogus.txt", False)
         except FileNotFoundException:
@@ -130,7 +130,7 @@ def run_test_FIFO_extensive():
             [["create", "f1", "20MB"], ["f1"], []],
             [["create", "f2", "50MB"], ["f1", "f2"], []],
             [["create", "f3", "30MB"], ["f1", "f2", "f3"], []],
-            [["delete", "f1"],         ["f2", "f3"], ["f1"]],
+            [["delete", "f1"], ["f2", "f3"], ["f1"]],
             [["create", "f4", "30MB"], ["f3", "f4"], ["f2"]],
             [["create", "f5", "50MB"], ["f4", "f5"], ["f3"]],
             [["create", "f6", "10MB"], ["f4", "f5", "f6"], []],
@@ -190,12 +190,12 @@ def run_test_LRU_extensive():
             [["create", "f1", "20MB"], ["f1"], []],
             [["create", "f2", "50MB"], ["f1", "f2"], []],
             [["create", "f3", "30MB"], ["f1", "f2", "f3"], []],
-            [["access", "f1"],         ["f1", "f2", "f3"], []],
+            [["access", "f1"], ["f1", "f2", "f3"], []],
             [["create", "f4", "30MB"], ["f1", "f3", "f4"], ["f2"]],
-            [["delete", "f1"],         ["f3", "f4"], ["f1"]],
+            [["delete", "f1"], ["f3", "f4"], ["f1"]],
             [["create", "f5", "10MB"], ["f3", "f4", "f5"], []],
             [["create", "f6", "80MB"], ["f5", "f6"], ["f3", "f4"]],
-            [["access", "f5"],         ["f5", "f6"], []],
+            [["access", "f5"], ["f5", "f6"], []],
             [["create", "f7", "20MB"], ["f5", "f7"], ["f6"]]
         ]
 

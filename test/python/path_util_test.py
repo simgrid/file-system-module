@@ -26,10 +26,10 @@ def run_test_path_simplification():
 
 def run_test_split_path():
     input_output = [
-        ("/a/b/c/d",                     ("/a/b/c", "d")),
-        ("/a/b////c/d",                  ("/a/b/c", "d")),
-        ("/",                            ("/", "")),
-        ("a",                            ("/", "a"))
+        ("/a/b/c/d", ("/a/b/c", "d")),
+        ("/a/b////c/d", ("/a/b/c", "d")),
+        ("/", ("/", "")),
+        ("a", ("/", "a"))
     ]
     for (input, output) in input_output:
         simplified_path = PathUtil.simplify_path_string(input)
@@ -43,21 +43,21 @@ def run_test_split_path():
 
 def run_test_path_at_mount_point():
     input_output = [
-            ("////../",                 "/dev/a",    "Exception"),
-            ("/dev/a/foo/bar/",         "/dev/a",    "/foo/bar"),
-            ("/dev/a/foo/../bar/",      "/dev/a/",   "/bar"),
-            ("/dev/a/foo/../bar////",   "/dev/a///", "/bar"),
-            ("/dev/a////foo/../../",    "dev/a",     "Exception"),
+            ("////../", "/dev/a", "Exception"),
+            ("/dev/a/foo/bar/", "/dev/a", "/foo/bar"),
+            ("/dev/a/foo/../bar/", "/dev/a/", "/bar"),
+            ("/dev/a/foo/../bar////", "/dev/a///", "/bar"),
+            ("/dev/a////foo/../../", "dev/a", "Exception"),
             ("/dev/b/foo/../bar/bar2/", "/bar/bar2", "Exception"),
-            ("/dev/b/foo/../bar/bar2",  "/dev/a",    "Exception"),
-            ("/foo/dev/b/foo/bar/../",  "/dev/a",    "Exception"),
-            ("/dev/a/../a/fioo",        "/dev/a",    "/fioo")
+            ("/dev/b/foo/../bar/bar2", "/dev/a", "Exception"),
+            ("/foo/dev/b/foo/bar/../", "/dev/a", "Exception"),
+            ("/dev/a/../a/fioo", "/dev/a", "/fioo")
     ]
     for (path, mp, output) in input_output:
         simplified_path = PathUtil.simplify_path_string(path)
         try :
             path_at_mp = PathUtil.path_at_mount_point(simplified_path, "/dev/a")
-            assert output == path_at_mp,  f"({path},{mp})"
+            assert output == path_at_mp, f"({path},{mp})"
         except ValueError:
             assert output == "Exception", f"({path},{mp})"
 

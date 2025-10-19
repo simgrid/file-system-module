@@ -23,7 +23,6 @@ namespace simgrid::fsmod {
      * @brief A class that implements a storage abstraction
      */
     class XBT_PUBLIC Storage {
-
     public:
         [[nodiscard]] const std::string& get_name() const;
         [[nodiscard]] const char* get_cname() const;

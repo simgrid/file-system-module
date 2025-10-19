@@ -59,7 +59,7 @@ def run_test_truncate_and_tell():
         this_actor.info("Close the file")
         file.close()
         this_actor.info("Check file size")
-        assert fs.file_size("/dev/a/foo.txt") ==  51*1000
+        assert fs.file_size("/dev/a/foo.txt") == 51*1000
         this_actor.info("Check free space")
         assert fs.partitions[0].free_space == 1000*1000 - 51000
  

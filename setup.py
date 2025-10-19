@@ -27,7 +27,7 @@ class CMakeExtension(Extension):
 class CMakeBuild(build_ext):
     def run(self):
         try:
-            subprocess.check_output(["cmake", "--version"])
+            subprocess.check_output(["/usr/bin/cmake", "--version"])
         except OSError:
             raise RuntimeError("CMake must be installed to build the file-system-module")
 
@@ -47,7 +47,7 @@ class CMakeBuild(build_ext):
 
         os.makedirs(self.build_temp, exist_ok=True)
         subprocess.check_call(["cmake", ext.sourcedir] + cmake_args, cwd=self.build_temp)
-        subprocess.check_call(["cmake", "--build", "."], cwd=self.build_temp)
+        subprocess.check_call(["/usr/bin/cmake", "--build", "."], cwd=self.build_temp)
 
 setup(
     ext_modules=[CMakeExtension("fsmod")],

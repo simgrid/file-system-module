@@ -182,7 +182,7 @@ def run_test_read_write_raid0():
         file = fs.open("/dev/a/foo.txt", "r")
         assert file.read("12MB") == 12_000_000
         this_actor.info("Read complete. Clock is at 4.7s (1.5s to read, .1s to transfer)")
-        assert math.isclose(Engine.clock,  4.7)
+        assert math.isclose(Engine.clock, 4.7)
         this_actor.info("Close the file")
         file.close()
 
