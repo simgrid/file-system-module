@@ -33,11 +33,17 @@ namespace simgrid::fsmod {
         this->read_async(size)->wait();
     }
 
-    s4u::IoPtr OneRemoteDiskStorage::write_async(sg_size_t size) {
+    s4u::IoPtr OneRemoteDiskStorage::write_async(sg_size_t size, bool detached) {
        auto destination_host = get_controller_host();
        if (destination_host == nullptr)
            destination_host= this->get_first_disk()->get_host();
-       return s4u::Io::streamto_async(s4u::Host::current(), nullptr, destination_host, get_first_disk(), size);
+       auto io = s4u::Io::streamto_init(s4u::Host::current(), nullptr, destination_host, get_first_disk())->set_size(size);
+       if (detached)
+         io->detach();
+       else
+         io->start();
+
+       return io;
     }
 
     void OneRemoteDiskStorage::write(sg_size_t size) {

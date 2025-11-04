@@ -68,7 +68,7 @@ def run_test_single_async_read():
         my_read.wait()
         this_actor.info("Read complete. Clock should be at 2s")
         assert Engine.clock == 2
-        assert File.num_bytes_read(my_read) == 4000000
+        assert file.num_bytes_read(my_read) == 4000000
         this_actor.info("Close the file")
         file.close()
 
@@ -102,7 +102,7 @@ def run_test_single_write():
         file.close()
 
     host.add_actor("TestActor", test_actor)
-    e.run()    
+    e.run()
 
 def run_test_single_async_write():
     e, host, disk, fs = setup_platform()
@@ -121,11 +121,37 @@ def run_test_single_async_write():
         my_write.wait()
         this_actor.info("Write complete. Clock should be at 2s")
         assert Engine.clock == 2
-        assert File.num_bytes_written(my_write) == 2000000
+        assert file.num_bytes_written(my_write) == 2000000
         this_actor.info("Close the file")
         file.close()
 
     host.add_actor("TestActor", test_actor)
+    e.run()
+
+def run_test_single_detached_write():
+    e, client, disk, fs = setup_platform()
+    def test_actor():
+        this_actor.info("Create a 1MB file at /dev/a/foo.txt")
+        fs.create_file("/dev/a/foo.txt", "10MB")
+        this_actor.info("Open File '/dev/a/foo.txt' in append mode ('a')")
+        file = fs.open("/dev/a/foo.txt", "a")
+        this_actor.info("Asynchronously write 2MB at /dev/a/foo.txt")
+        my_write = file.write_async("2MB", True)
+        this_actor.info("Sleep for 1 second")
+        this_actor.sleep_for(1)
+        this_actor.info("Sleep complete. Clock should be at 1s and nothing should be written yet")
+        assert Engine.clock == 1
+        assert file.num_bytes_written(my_write) == 0
+        this_actor.info("Sleep for 1 more second")
+        this_actor.sleep_for(1)
+        this_actor.info("Clock should be at 2s, and write be complete")
+        this_actor.info("Write complete. Clock should be at 2s")
+        assert Engine.clock == 2
+        assert file.num_bytes_written(my_write) == 2000000
+        this_actor.info("Close the file")
+        file.close()
+
+    client.add_actor("TestActor", test_actor)
     e.run()
 
 def run_test_double_async_append():
@@ -199,6 +225,7 @@ if __name__ == '__main__':
       run_test_single_async_read,
       run_test_single_write,
       run_test_single_async_write,
+      run_test_single_detached_write,
       run_test_double_async_append,
       run_test_single_append_write,
       run_test_disk_failure

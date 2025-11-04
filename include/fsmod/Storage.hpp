@@ -46,7 +46,7 @@ namespace simgrid::fsmod {
         virtual s4u::IoPtr read_async(sg_size_t size) = 0;
         virtual void read(sg_size_t size) = 0;
 
-        virtual s4u::IoPtr write_async(sg_size_t size) = 0;
+        virtual s4u::IoPtr write_async(sg_size_t size, bool detached = false) = 0;
         virtual void write(sg_size_t size) = 0;
 
     private:

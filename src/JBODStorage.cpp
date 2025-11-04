@@ -142,7 +142,7 @@ namespace simgrid::fsmod {
         read_async(size)->wait();
     }
 
-    s4u::IoPtr JBODStorage::write_async(sg_size_t size) {
+    s4u::IoPtr JBODStorage::write_async(sg_size_t size, bool detached) {
         // Transfer data from the host that requested a write to the controller host of the JBOD
         auto comm = s4u::Comm::sendto_init()->set_payload_size(size)->set_source(s4u::Host::current());
         comm->set_name("Transfer to JBod");
@@ -218,6 +218,9 @@ namespace simgrid::fsmod {
 
         // Completion activity is now blocked by I/Os, start it by assigning it to the controller host first disk
         completion_activity->set_disk(get_first_disk());
+
+        if (detached)
+          completion_activity->detach();
 
         return completion_activity;
     }

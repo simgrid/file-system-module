@@ -30,8 +30,14 @@ namespace simgrid::fsmod {
         get_first_disk()->read(size);
     }
 
-    s4u::IoPtr OneDiskStorage::write_async(sg_size_t size) {
-        return get_first_disk()->write_async(size);
+    s4u::IoPtr OneDiskStorage::write_async(sg_size_t size, bool detached) {
+      auto io = s4u::IoPtr(get_first_disk()->io_init(size, s4u::Io::OpType::WRITE));
+      if (detached)
+        io->detach();
+      else
+        io->start();
+
+      return io;
     }
 
     void OneDiskStorage::write(sg_size_t size) {

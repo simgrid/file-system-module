@@ -161,6 +161,37 @@ TEST_F(OneDiskStorageTest, SingleAsyncWrite)  {
     });
 }
 
+TEST_F(OneDiskStorageTest, SingleDetachedWrite)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+        host_->add_actor("TestActor", [this]() {
+            std::shared_ptr<sgfs::File> file;
+            sg4::IoPtr my_write;
+            sg_size_t num_bytes_written = 0;
+            XBT_INFO("Create a 10MB file at /dev/a/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/foo.txt", "10MB"));
+            XBT_INFO("Open File '/dev/a/foo.txt'");
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/foo.txt", "w"));
+            XBT_INFO("Asynchronously write 2MB at /dev/a/foo.txt");
+            ASSERT_NO_THROW(my_write = file->write_async("2MB", true));
+            XBT_INFO("Sleep for 1 second");
+            ASSERT_NO_THROW(sg4::this_actor::sleep_for(1));
+            XBT_INFO("Sleep complete. Clock should be at 1s and nothing should be written yet");
+            ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 1.0);
+            ASSERT_EQ(file->get_num_bytes_written(my_write), 0);
+            XBT_INFO("Sleep for 1 more second");
+            ASSERT_NO_THROW(sg4::this_actor::sleep_for(1));
+            XBT_INFO("Clock should be at 2s, and write be complete");
+            ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 2.0);
+            ASSERT_DOUBLE_EQ(file->get_num_bytes_written(my_write), 2000000);
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(file->close());
+        });
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
+
 TEST_F(OneDiskStorageTest, DoubleAsyncAppend)  {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();

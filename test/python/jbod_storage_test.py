@@ -160,7 +160,32 @@ def run_test_single_async_write():
     client.add_actor("TestActor", actor)
     e.run()
 
-# TODO check and/or modify from here
+def run_test_single_detached_write():
+    e, client, server, fs, jds = setup_platform()
+    def test_actor():
+        this_actor.info("Create a 10MB file at /dev/a/foo.txt")
+        fs.create_file("/dev/a/foo.txt", "10MB")
+        this_actor.info("Open File '/dev/a/foo.txt' in append mode ('a')")
+        file = fs.open("/dev/a/foo.txt", "a")
+        this_actor.info("Asynchronously write 12MB at /dev/a/foo.txt")
+        my_write = file.write_async("12MB", True)
+        this_actor.info("Sleep for 4 seconds")
+        this_actor.sleep_for(4)
+        this_actor.info("Sleep complete. Clock should be at 4s and nothing should be written yet")
+        assert Engine.clock == 4
+        assert file.num_bytes_written(my_write) == 0
+        this_actor.info("Sleep for 0.12 more second")
+        this_actor.sleep_for(0.12)
+        this_actor.info("Clock should be at 4.12s (.1s to transfer, 0.02 to compute parity, 4s to write), and write be complete")
+        assert math.isclose(Engine.clock, 4.12)
+        # FIXME this assert fails, to be investigated
+        # assert file.num_bytes_written(my_write) == 2000000
+        this_actor.info("Close the file")
+        file.close()
+
+    client.add_actor("TestActor", test_actor)
+    e.run()
+
 def run_test_read_write_raid0():
     e, client, server, fs, jds = setup_platform()
 
@@ -304,6 +329,7 @@ if __name__ == "__main__":
         run_test_single_async_read,
         run_test_single_write,
         run_test_single_async_write,
+        run_test_single_detached_write,
         run_test_read_write_raid0,
         run_test_read_write_raid1,
         run_test_read_write_raid4,

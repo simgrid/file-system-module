@@ -120,8 +120,8 @@ namespace simgrid::fsmod {
      * @param num_bytes: the number of bytes to read as a string with units
      * @return An I/O activity
      */
-     s4u::IoPtr File::write_async(const std::string& num_bytes) {
-        return write_async(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")));
+     s4u::IoPtr File::write_async(const std::string& num_bytes, bool detached) {
+        return write_async(static_cast<sg_size_t>(xbt_parse_get_size("", 0, num_bytes, "")), detached);
     }
 
     /**
@@ -129,9 +129,9 @@ namespace simgrid::fsmod {
      * @param num_bytes: the number of bytes to read
      * @return An I/O activity
      */
-    s4u::IoPtr File::write_async(sg_size_t num_bytes) {
+    s4u::IoPtr File::write_async(sg_size_t num_bytes, bool detached) {
         int my_sequence_number = write_init_checks(num_bytes);
-        s4u::IoPtr io = boost::dynamic_pointer_cast<s4u::Io>(partition_->get_storage()->write_async(num_bytes));
+        s4u::IoPtr io = boost::dynamic_pointer_cast<s4u::Io>(partition_->get_storage()->write_async(num_bytes, detached));
         io->on_this_completion_cb([this, my_sequence_number](s4u::Io const&) {
             // Update
             metadata_->set_access_date(s4u::Engine::get_clock());

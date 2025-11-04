@@ -54,8 +54,8 @@ namespace simgrid::fsmod {
         s4u::IoPtr read_async(sg_size_t num_bytes);
         sg_size_t read(const std::string& num_bytes, bool simulate_it=true);
         sg_size_t read(sg_size_t num_bytes, bool simulate_it=true);
-        s4u::IoPtr write_async(const std::string& num_bytes);
-        s4u::IoPtr write_async(sg_size_t num_bytes);
+        s4u::IoPtr write_async(const std::string& num_bytes, bool detached=false);
+        s4u::IoPtr write_async(sg_size_t num_bytes, bool detached=false);
         sg_size_t write(const std::string& num_bytes, bool simulate_it=true);
         sg_size_t write(sg_size_t num_bytes, bool simulate_it=true);
 

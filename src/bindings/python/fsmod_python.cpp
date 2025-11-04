@@ -91,10 +91,10 @@ PYBIND11_MODULE(fsmod, m)
            py::arg("simulate_it") = true, "Read data from the File")
       .def("read", py::overload_cast<sg_size_t, bool>(&File::read), py::arg("num_bytes"), py::arg("simulate_it") = true,
            "Read data from the File")
-      .def("write_async", py::overload_cast<const std::string&>(&File::write_async), py::arg("num_bytes"),
-           "Asynchronously write data to the File")
-      .def("write_async", py::overload_cast<sg_size_t>(&File::write_async), py::arg("num_bytes"),
-           "Asynchronously write data to the File")
+      .def("write_async", py::overload_cast<const std::string&, bool>(&File::write_async), py::arg("num_bytes"),
+           py::arg("detached") = false, "Asynchronously write data to the File")
+      .def("write_async", py::overload_cast<sg_size_t, bool>(&File::write_async), py::arg("num_bytes"),
+           py::arg("detached") = false, "Asynchronously write data to the File")
       .def("write", py::overload_cast<const std::string&, bool>(&File::write), py::arg("num_bytes"),
            py::arg("simulate_it") = true, "Write data to the File")
       .def("write", py::overload_cast<sg_size_t, bool>(&File::write), py::arg("num_bytes"),
