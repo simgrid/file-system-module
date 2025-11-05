@@ -150,6 +150,8 @@ namespace simgrid::fsmod {
         // Determine what to write on each individual disk according to RAID level and which disk will store the
         // parity block
         sg_size_t write_size;
+        double parity_block_comp_cost = 0.0;
+
         switch(raid_level_) {
             case RAID::RAID0:
                 write_size = size / num_disks_;
@@ -159,31 +161,27 @@ namespace simgrid::fsmod {
                 break;
             case RAID::RAID4:
                 write_size = size / (num_disks_ - 1);
+                // Assume 1 flop per byte to write per parity block.
+                parity_block_comp_cost = static_cast<double>(write_size);
                 break;
             case RAID::RAID5:
                 update_parity_disk_idx();
                 write_size = size / (num_disks_ - 1);
+                // Assume 1 flop per byte to write per parity block.
+                parity_block_comp_cost = static_cast<double>(write_size);
                 break;
             case RAID::RAID6:
                 update_parity_disk_idx();
                 write_size = size / (num_disks_ - 2);
+                // Assume 2 flops per byte to write per parity block.
+                parity_block_comp_cost = static_cast<double>(2 * write_size);
                 break;
             default:
                 throw std::invalid_argument("Unsupported RAID level. Supported level are: 0, 1, 4, 5, and 6");
         }
 
         // Compute the parity block (if any)
-        s4u::ExecPtr parity_block_comp;
-
-        if (raid_level_ == RAID::RAID4 || raid_level_ == RAID::RAID5 || raid_level_ == RAID::RAID6) {
-            // Assume 1 flop per byte to write per parity block and two for RAID6.
-            // Do not assign the Exec yet, will be done after the completion of the CommPtr
-            if (raid_level_ == RAID::RAID6)
-                parity_block_comp = s4u::Exec::init()->set_flops_amount(static_cast<double>(2 * write_size));
-            else
-                parity_block_comp = s4u::Exec::init()->set_flops_amount(static_cast<double>(write_size));
-        } else // Create a no-op activity
-            parity_block_comp = s4u::Exec::init()->set_flops_amount(0);
+        s4u::ExecPtr parity_block_comp = s4u::Exec::init()->set_flops_amount(parity_block_comp_cost);
         parity_block_comp->set_name("Parity Block Computation");
 
         // Do not start computing the parity block before the completion of the comm to the controller
@@ -200,7 +198,7 @@ namespace simgrid::fsmod {
 
         // Create a no-op Activity that depends on the completion of all I/Os. This is the one ActivityPtr returned
         // to the caller
-        s4u::IoPtr completion_activity = s4u::Io::init()->set_op_type(s4u::Io::OpType::WRITE)->set_size(0);
+        auto completion_activity = s4u::Io::init()->set_op_type(s4u::Io::OpType::WRITE)->set_size(0);
         completion_activity->set_name("JBOD Write Completion");
 
         // Create the I/O activities on individual disks
