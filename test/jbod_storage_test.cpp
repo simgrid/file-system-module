@@ -208,7 +208,6 @@ TEST_F(JBODStorageTest, SingleAsyncWrite)  {
 
 TEST_F(JBODStorageTest, SingleDetachedWrite)  {
     DO_TEST_WITH_FORK([this]() {
-        xbt_log_control_set("root.thresh:info");
         this->setup_platform();
         fs_client_->add_actor("TestActor", [this]() {
             std::shared_ptr<sgfs::File> file;
