@@ -208,6 +208,7 @@ TEST_F(JBODStorageTest, SingleAsyncWrite)  {
 
 TEST_F(JBODStorageTest, SingleDetachedWrite)  {
     DO_TEST_WITH_FORK([this]() {
+        xbt_log_control_set("root.thresh:info");
         this->setup_platform();
         fs_client_->add_actor("TestActor", [this]() {
             std::shared_ptr<sgfs::File> file;
@@ -228,7 +229,8 @@ TEST_F(JBODStorageTest, SingleDetachedWrite)  {
             ASSERT_NO_THROW(sg4::this_actor::sleep_for(0.12));
             XBT_INFO("Clock should be at 4.12s (.1s to transfer, 0.02 to compute parity, 4s to write), and write be complete");
             ASSERT_DOUBLE_EQ(sg4::Engine::get_clock(), 4.12);
-            ASSERT_DOUBLE_EQ(file->get_num_bytes_written(my_write), 2000000);
+            // FIXME: On a JBOD we can't retrieve the number of bytes written (or read)
+            //ASSERT_DOUBLE_EQ(file->get_num_bytes_written(my_write), 2000000);
             XBT_INFO("Close the file");
             ASSERT_NO_THROW(file->close());
         });

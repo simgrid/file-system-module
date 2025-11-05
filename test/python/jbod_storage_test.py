@@ -178,7 +178,7 @@ def run_test_single_detached_write():
         this_actor.sleep_for(0.12)
         this_actor.info("Clock should be at 4.12s (.1s to transfer, 0.02 to compute parity, 4s to write), and write be complete")
         assert math.isclose(Engine.clock, 4.12)
-        # FIXME this assert fails, to be investigated
+        # FIXME On a JBOD we can't retrieve the number of bytes written (or read)
         # assert file.num_bytes_written(my_write) == 2000000
         this_actor.info("Close the file")
         file.close()
