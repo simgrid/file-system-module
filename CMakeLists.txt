@@ -6,7 +6,7 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 project(fsmod VERSION 0.4 DESCRIPTION "SimGrid-based File System simulation module")
 
 include(GNUInstallDirs)
-find_package(SimGrid 4.0.1 REQUIRED)
+find_package(SimGrid 4.1 REQUIRED)
 
 include_directories(
 		${CMAKE_SOURCE_DIR}/include
@@ -67,7 +67,7 @@ if((NOT DEFINED enable_python) OR enable_python)
   find_package(Python3 COMPONENTS Interpreter)
   if(NOT Python3_Interpreter_FOUND)
     message(FATAL_ERROR "Please install Python (version 3 or higher) to compile FSMod Python bindings.")
-  endif() 
+  endif()
   set(PYTHON_EXECUTABLE ${Python3_EXECUTABLE})
 
   find_package(pybind11 CONFIG)
@@ -107,7 +107,7 @@ if(enable_python)
                           LIBRARY_OUTPUT_NAME fsmod
                           CXX_VISIBILITY_PRESET "default"
                           INTERPROCEDURAL_OPTIMIZATION FALSE)
-   
+
     set_property(TARGET python-bindings
                  APPEND PROPERTY INCLUDE_DIRECTORIES "${INTERNAL_INCLUDES}")
 
@@ -119,7 +119,7 @@ if(enable_python)
       endif("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr")
     endif()
     install(TARGETS python-bindings
-      	    LIBRARY DESTINATION "${FSMOD_PYTHON_LIBDIR}")
+            LIBRARY DESTINATION "${FSMOD_PYTHON_LIBDIR}")
   else()
     message(FATAL_ERROR "Please install pybind11-dev to build the Python bindings (or disable that option).")
   endif()
@@ -147,7 +147,7 @@ set(SOURCE_FILES
 		src/OneDiskStorage.cpp
 		src/OneRemoteDiskStorage.cpp
     src/fsmod_version.cpp
-		)
+)
 
 set(HEADER_FILES
 		include/fsmod/File.hpp

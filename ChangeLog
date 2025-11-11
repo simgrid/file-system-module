@@ -1,5 +1,15 @@
 ----------------------------------------------------------------------------
 
+FSMod (0.4) November 12. 2025
+
+  - Full Python bindings
+  - Enable asynchronous writes in fire-and-forget mode
+  - Minor improvements over the recent 0.3 release:
+    - Upgrade to SimGrid 4.1
+    - Minor code cleanup and bug fixes
+
+----------------------------------------------------------------------------
+
 FSMod (0.3) March 12. 2025
 
   - Minor improvements over the recent 0.2 release:
