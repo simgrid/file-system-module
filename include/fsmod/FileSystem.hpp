@@ -44,7 +44,7 @@ namespace simgrid::fsmod {
         /// \cond EXCLUDE_FROM_DOCUMENTATION
         ~FileSystem() noexcept = default;
         FileSystem(const FileSystem& other) noexcept = default;
-        FileSystem& operator=(const FileSystem& other) noexcept = default;
+        FileSystem& operator=(const FileSystem& other) noexcept = delete;
         /// \endcond
 
         static std::shared_ptr<FileSystem> create(const std::string &name, int max_num_open_files = 1024);
