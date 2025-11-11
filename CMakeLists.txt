@@ -169,7 +169,7 @@ set(HEADER_FILES
 add_library(fsmod SHARED ${SOURCE_FILES})
 
 set_target_properties(fsmod PROPERTIES
-		SOVERSION 0.1
+		SOVERSION 0.4
 		LINKER_LANGUAGE CXX
 		PUBLIC_HEADER "${HEADER_FILES}")
 
