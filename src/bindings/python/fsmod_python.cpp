@@ -1,4 +1,4 @@
-/* Copyright (c) 2025. The FSMOD Team. All rights reserved.          */
+/* Copyright (c) 2025-2026. The FSMOD Team. All rights reserved.          */
 
 /* This program is free software; you can redistribute it and/or modify it
  * under the terms of the license (GNU LGPL) which comes with this package. */
