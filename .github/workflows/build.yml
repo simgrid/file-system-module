@@ -84,7 +84,7 @@ jobs:
 #         name: codecov-umbrella
 
       - name: Install sonar-scanner and build-wrapper
-       uses: SonarSource/sonarqube-scan-action/install-build-wrapper@v7
+        uses: SonarSource/sonarqube-scan-action/install-build-wrapper@v7
       - name: Run build-wrapper
         run: |
           mkdir build
