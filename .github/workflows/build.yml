@@ -31,7 +31,8 @@ jobs:
             doxygen \
             python3-breathe \
             python3-sphinx \
-            python3-sphinx-rtd-theme
+            python3-sphinx-rtd-theme \
+            python3-defusedxml
 
       - name: Cache SimGrid
         uses: actions/cache@v4
