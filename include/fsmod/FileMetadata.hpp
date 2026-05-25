@@ -60,8 +60,11 @@ namespace simgrid::fsmod {
         }
 
         void notify_write_end(int write_id) {
-            current_size_ = ongoing_writes_.at(write_id);
-            ongoing_writes_.erase(write_id);
+            auto it = ongoing_writes_.find(write_id);
+            if (it == ongoing_writes_.end())
+                return; // already ended (e.g., callback fired twice due to cancel + erase)
+            current_size_ = it->second;
+            ongoing_writes_.erase(it);
         }
     };
 
