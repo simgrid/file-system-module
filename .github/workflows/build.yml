@@ -107,6 +107,16 @@ jobs:
         run: |
           bash <(curl -s https://codecov.io/bash) -f build/coverage.info -t ${CODECOV_TOKEN}
 
+      - name: SonarQube Scan
+        if: env.SONAR_TOKEN != ''
+        uses: SonarSource/sonarqube-scan-action@v7
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.cfamily.compile-commands=build/compile_commands.json
+            -Dsonar.coverageReportPaths=build/coverage.xml
+
       - name: Build and deploy documentation
         if: github.ref == 'refs/heads/main' && env.TOKEN_GITHUB != ''
         env:
