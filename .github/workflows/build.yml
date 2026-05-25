@@ -14,133 +14,113 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      BUILD_WRAPPER_OUT_DIR: bw-outputs
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Install prereqs
+
+      - name: Install system prerequisites
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgraphviz-dev libboost-all-dev pybind11-dev
+          sudo apt-get install -y \
+            libgraphviz-dev \
+            libboost-all-dev \
+            pybind11-dev \
+            lcov \
+            gcovr \
+            doxygen \
+            python3-breathe \
+            python3-sphinx \
+            python3-sphinx-rtd-theme
+
+      - name: Cache SimGrid
+        uses: actions/cache@v4
+        id: cache-simgrid
+        with:
+          path: /opt/simgrid
+          key: ${{ runner.os }}-simgrid-python-v1
 
       - name: Install SimGrid
+        if: steps.cache-simgrid.outputs.cache-hit != 'true'
         run: |
-          git clone https://framagit.org/simgrid/simgrid.git
+          git clone --depth 1 https://framagit.org/simgrid/simgrid.git
           cd simgrid
-          mkdir build
-          cd build
-          cmake -Denable_smpi=OFF -Denable_model-checking=OFF ..
-          make -j4
-          sudo make install
+          cmake -B build -Denable_smpi=OFF -Denable_model-checking=OFF -Denable_python=ON -DCMAKE_INSTALL_PREFIX=/opt/simgrid
+          cmake --build build -j$(nproc)
+          sudo cmake --install build
 
-      - name: Install Google Tests
+      - name: Cache Google Test
+        uses: actions/cache@v4
+        id: cache-gtest
+        with:
+          path: /opt/gtest
+          key: ${{ runner.os }}-gtest-v1
+
+      - name: Install Google Test
+        if: steps.cache-gtest.outputs.cache-hit != 'true'
         run: |
-          wget https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz
+          wget -q https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz
           tar xf release-1.11.0.tar.gz
           cd googletest-release-1.11.0
-          cmake .
-          make -j4
-          sudo make install
+          cmake -B build -DCMAKE_INSTALL_PREFIX=/opt/gtest
+          cmake --build build -j$(nproc)
+          sudo cmake --install build
 
-      - name: Install lcov and gcovr
+      - name: Build and test with coverage
         run: |
-          sudo apt-get -y install lcov gcovr
+          SIMGRID_PYTHON_PATH=$(find /opt/simgrid/lib -type d -path "*/python*/site-packages" 2>/dev/null | head -1)
+          if [ -z "$SIMGRID_PYTHON_PATH" ]; then
+            SIMGRID_PYTHON_PATH=$(find /opt/simgrid/lib -type d -path "*/python*/dist-packages" 2>/dev/null | head -1)
+          fi
+          echo "Using SimGrid Python path: $SIMGRID_PYTHON_PATH"
 
-      - name: Run tests, compute coverage
+          export LD_LIBRARY_PATH=build/lib:/opt/simgrid/lib:/usr/local/lib
+          export PYTHONPATH="$SIMGRID_PYTHON_PATH:build/lib"
+          export CMAKE_PREFIX_PATH=/opt/simgrid:/opt/gtest
+
+          cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug
+          cmake --build build -j$(nproc)
+          cmake --build build --target unit_tests --target examples -j$(nproc)
+          cd build
+          ./unit_tests
+          ./examples/open_seek_write
+          ./examples/jbod
+          cd test/python
+          python3 ./unit_tests_python.py
+
+      - name: Generate coverage report
+        run: |
+          cd build
+          lcov --keep-going --ignore-errors mismatch --directory . --capture --output-file coverage.info
+          lcov --ignore-errors mismatch --remove coverage.info '*/test/*' '*/examples/*' -o coverage.info
+          gcovr --root .. -e '../test' -e '../examples' --sonarqube -o coverage.xml \
+                --exclude-throw-branches --gcov-ignore-parse-errors --exclude-unreachable-branches
+
+      - name: Upload coverage to Codecov
+        if: env.CODECOV_TOKEN != ''
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: |
-          git clone https://github.com/simgrid/file-system-module.git
-          cd file-system-module
-          mkdir build
-          cd build
-          cmake ..
-          make -j4
-          sudo make install
-          make -j4 unit_tests examples
-          ./unit_tests
-          ./examples/open_seek_write
-          ./examples/jbod
-          export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
-          export PYTHONPATH="/usr/local/lib/python3.12/dist-packages/"
-          cd test/python
-          python ./unit_tests_python.py
-          cd ../../
-          lcov --keep-going --directory . --directory examples/ --capture --output-file coverage.info
-          lcov --remove coverage.info '*/test/*' '*/examples/*' '*/include/*'
-          bash <(curl -s https://codecov.io/bash) -f coverage.info -t ${CODECOV_TOKEN}
+          bash <(curl -s https://codecov.io/bash) -f build/coverage.info -t ${CODECOV_TOKEN}
 
-
-          #        with:
-          #token: ${{ secrets.CODECOV_TOKEN }}
-          #verbose: true
-#         directory: ./coverage/reports/
-#         env_vars: OS,PYTHON
-#         fail_ci_if_error: true
-#         files: ./coverage1.xml,./coverage2.xml,!./cache
-#         flags: unit_tests
-#         name: codecov-umbrella
-
-      - name: Install sonar-scanner and build-wrapper
-        uses: SonarSource/sonarqube-scan-action/install-build-wrapper@v7
-      - name: Run build-wrapper
-        run: |
-          mkdir build
-          cmake -S . -B build
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
-      - name: Run tests to generate coverage statistics
-        run: |
-          cd build
-          make -j4 unit_tests examples
-          ./unit_tests
-          ./examples/open_seek_write
-          ./examples/jbod
-          export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
-          export PYTHONPATH="/usr/local/lib/python3.12/dist-packages/"
-          cd test/python
-          python ./unit_tests_python.py
-          cd ../..
-      - name: Collect coverage into one XML report
-        run: |
-          gcovr -e test -e examples --sonarqube -u -o coverage.xml --exclude-throw-branches \
-                --gcov-ignore-parse-errors --exclude-unreachable-branches
-
-      - name: Sonar Scan
+      - name: SonarQube Scan
+        if: env.SONAR_TOKEN != ''
         uses: SonarSource/sonarqube-scan-action@v7
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=simgrid_dtlmod
-            -Dsonar.organization=simgrid
-            -Dsonar.cfamily.build-wrapper-output=${{ env.BUILD_WRAPPER_OUT_DIR }}
-            -Dsonar.coverageReportPaths=coverage.xml
+            -Dsonar.cfamily.compile-commands=build/compile_commands.json
+            -Dsonar.coverageReportPaths=build/coverage.xml
 
-      - name: Install Doxygen and Sphinx
-        run: |
-          sudo apt-get -y install doxygen
-          sudo apt-get -y install python3-sphinx
-          pip install sphinx_rtd_theme
-          pip install recommonmark
-          pip install breathe
-          pip install defusedxml
-
-      - name: Build and Deploy Documentation
+      - name: Build and deploy documentation
+        if: github.ref == 'refs/heads/main' && env.TOKEN_GITHUB != ''
         env:
           TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
         run: |
-          #git clone https://github.com/simgrid/file-system-module.git
-          echo "Building documentation..."
-          cd file-system-module/build
-          pwd
-          cmake ..
-          make doc
-          mkdir $HOME/gh-pages-to-deploy
-          cp -r ./docs/latest/* $HOME/gh-pages-to-deploy/
-          cd ../..
-          echo "Updating gh-pages branch..."
+          cmake --build build --target doc
+          mkdir -p $HOME/gh-pages-to-deploy
+          cp -r build/docs/latest/* $HOME/gh-pages-to-deploy/
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
           git clone --quiet --branch=gh-pages https://${TOKEN_GITHUB}@github.com/simgrid/file-system-module.git gh-pages > /dev/null
