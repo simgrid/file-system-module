@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
@@ -8,16 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>simgrid::fsmod::File &mdash; FSMOD 0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=86f27845" />
       <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.png"/>
-      <script src="../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=7f00635f"></script>
-      <script src="../_static/doctools.js?v=888ff710"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+  
+        <script src="../_static/jquery.js?v=8dae8fb0"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=7f00635f"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -37,6 +36,9 @@
             
               <img src="../_static/simgrid_logo.png" class="logo" alt="Logo"/>
           </a>
+              <div class="version">
+                0.4
+              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -47,22 +49,24 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">simgrid::fsmod::File</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4FileE"><code class="docutils literal notranslate"><span class="pre">simgrid::fsmod::File</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File15get_access_modeEv"><code class="docutils literal notranslate"><span class="pre">get_access_mode()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File15get_file_systemEv"><code class="docutils literal notranslate"><span class="pre">get_file_system()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File8get_pathEv"><code class="docutils literal notranslate"><span class="pre">get_path()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File4readERKNSt6stringEb"><code class="docutils literal notranslate"><span class="pre">read()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File4readE9sg_size_tb"><code class="docutils literal notranslate"><span class="pre">read()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File10read_asyncERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">read_async()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File10read_asyncE9sg_size_t"><code class="docutils literal notranslate"><span class="pre">read_async()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File4seekE11sg_offset_ti"><code class="docutils literal notranslate"><span class="pre">seek()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File4statEv"><code class="docutils literal notranslate"><span class="pre">stat()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File5writeERKNSt6stringEb"><code class="docutils literal notranslate"><span class="pre">write()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File5writeE9sg_size_tb"><code class="docutils literal notranslate"><span class="pre">write()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File11write_asyncERKNSt6stringEb"><code class="docutils literal notranslate"><span class="pre">write_async()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File11write_asyncE9sg_size_tb"><code class="docutils literal notranslate"><span class="pre">write_async()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE"><code class="docutils literal notranslate"><span class="pre">get_num_bytes_read()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE"><code class="docutils literal notranslate"><span class="pre">get_num_bytes_written()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4FileE"><code class="docutils literal notranslate"><span class="pre">File</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File15get_access_modeEv"><code class="docutils literal notranslate"><span class="pre">File::get_access_mode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File15get_file_systemEv"><code class="docutils literal notranslate"><span class="pre">File::get_file_system()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File8get_pathEv"><code class="docutils literal notranslate"><span class="pre">File::get_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File4readERKNSt6stringEb"><code class="docutils literal notranslate"><span class="pre">File::read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File4readE9sg_size_tb"><code class="docutils literal notranslate"><span class="pre">File::read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File10read_asyncERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">File::read_async()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File10read_asyncE9sg_size_t"><code class="docutils literal notranslate"><span class="pre">File::read_async()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File4seekE11sg_offset_ti"><code class="docutils literal notranslate"><span class="pre">File::seek()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod4File4statEv"><code class="docutils literal notranslate"><span class="pre">File::stat()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File5writeERKNSt6stringEb"><code class="docutils literal notranslate"><span class="pre">File::write()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File5writeE9sg_size_tb"><code class="docutils literal notranslate"><span class="pre">File::write()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File11write_asyncERKNSt6stringEb"><code class="docutils literal notranslate"><span class="pre">File::write_async()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File11write_asyncE9sg_size_tb"><code class="docutils literal notranslate"><span class="pre">File::write_async()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File18get_num_bytes_readERKN3s4u5IoPtrE"><code class="docutils literal notranslate"><span class="pre">File::get_num_bytes_read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod4File21get_num_bytes_writtenERKN3s4u5IoPtrE"><code class="docutils literal notranslate"><span class="pre">File::get_num_bytes_written()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_stat.html">simgrid::fsmod::FileStat</a></li>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
@@ -8,16 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>simgrid::fsmod::Partition &mdash; FSMOD 0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=86f27845" />
       <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.png"/>
-      <script src="../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=7f00635f"></script>
-      <script src="../_static/doctools.js?v=888ff710"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+  
+        <script src="../_static/jquery.js?v=8dae8fb0"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=7f00635f"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -37,6 +36,9 @@
             
               <img src="../_static/simgrid_logo.png" class="logo" alt="Logo"/>
           </a>
+              <div class="version">
+                0.4
+              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -54,16 +56,20 @@
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_one_disk_storage.html">simgrid::fsmod::OneDiskStorage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_one_remote_disk_storage.html">simgrid::fsmod::OneRemoteDiskStorage</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">simgrid::fsmod::Partition</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod9PartitionE"><code class="docutils literal notranslate"><span class="pre">simgrid::fsmod::Partition</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod9Partition13CachingSchemeE"><code class="docutils literal notranslate"><span class="pre">CachingScheme</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod9Partition13CachingScheme4NONEE"><code class="docutils literal notranslate"><span class="pre">NONE</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod9Partition13CachingScheme4FIFOE"><code class="docutils literal notranslate"><span class="pre">FIFO</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod9Partition13CachingScheme3LRUE"><code class="docutils literal notranslate"><span class="pre">LRU</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod9Partition9get_cnameEv"><code class="docutils literal notranslate"><span class="pre">get_cname()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod9Partition14get_free_spaceEv"><code class="docutils literal notranslate"><span class="pre">get_free_space()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod9Partition8get_nameEv"><code class="docutils literal notranslate"><span class="pre">get_name()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod9Partition13get_num_filesEv"><code class="docutils literal notranslate"><span class="pre">get_num_files()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod9Partition8get_sizeEv"><code class="docutils literal notranslate"><span class="pre">get_size()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod9PartitionE"><code class="docutils literal notranslate"><span class="pre">Partition</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod9Partition13CachingSchemeE"><code class="docutils literal notranslate"><span class="pre">Partition::CachingScheme</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod9Partition13CachingScheme4NONEE"><code class="docutils literal notranslate"><span class="pre">Partition::CachingScheme::NONE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod9Partition13CachingScheme4FIFOE"><code class="docutils literal notranslate"><span class="pre">Partition::CachingScheme::FIFO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod9Partition13CachingScheme3LRUE"><code class="docutils literal notranslate"><span class="pre">Partition::CachingScheme::LRU</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod9Partition9get_cnameEv"><code class="docutils literal notranslate"><span class="pre">Partition::get_cname()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod9Partition14get_free_spaceEv"><code class="docutils literal notranslate"><span class="pre">Partition::get_free_space()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod9Partition8get_nameEv"><code class="docutils literal notranslate"><span class="pre">Partition::get_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod9Partition13get_num_filesEv"><code class="docutils literal notranslate"><span class="pre">Partition::get_num_files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod9Partition8get_sizeEv"><code class="docutils literal notranslate"><span class="pre">Partition::get_size()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_storage.html">simgrid::fsmod::Storage</a></li>

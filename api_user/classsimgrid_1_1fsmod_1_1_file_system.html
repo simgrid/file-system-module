@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
@@ -8,16 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>simgrid::fsmod::FileSystem &mdash; FSMOD 0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=86f27845" />
       <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=fe0a527d" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.png"/>
-      <script src="../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=7f00635f"></script>
-      <script src="../_static/doctools.js?v=888ff710"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+  
+        <script src="../_static/jquery.js?v=8dae8fb0"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=7f00635f"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -37,6 +36,9 @@
             
               <img src="../_static/simgrid_logo.png" class="logo" alt="Logo"/>
           </a>
+              <div class="version">
+                0.4
+              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -49,32 +51,34 @@
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file.html">simgrid::fsmod::File</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_stat.html">simgrid::fsmod::FileStat</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">simgrid::fsmod::FileSystem</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystemE"><code class="docutils literal notranslate"><span class="pre">simgrid::fsmod::FileSystem</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem16create_directoryERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">create_directory()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem11create_fileERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">create_file()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem16directory_existsERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">directory_exists()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem11file_existsERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">file_exists()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem9file_sizeERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">file_size()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem9get_cnameEv"><code class="docutils literal notranslate"><span class="pre">get_cname()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem22get_free_space_at_pathERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">get_free_space_at_path()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem8get_nameEv"><code class="docutils literal notranslate"><span class="pre">get_name()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem30get_partition_for_path_or_nullERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">get_partition_for_path_or_null()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem14get_partitionsEv"><code class="docutils literal notranslate"><span class="pre">get_partitions()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem23list_files_in_directoryERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">list_files_in_directory()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem19make_file_evictableERKNSt6stringEb"><code class="docutils literal notranslate"><span class="pre">make_file_evictable()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEERKNSt6stringEN9Partition13CachingSchemeE"><code class="docutils literal notranslate"><span class="pre">mount_partition()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEE9sg_size_tN9Partition13CachingSchemeE"><code class="docutils literal notranslate"><span class="pre">mount_partition()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem9move_fileERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">move_file()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem4openERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">open()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem17partition_by_nameERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">partition_by_name()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem25partition_by_name_or_nullERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">partition_by_name_or_null()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem13truncate_fileERKNSt6stringE9sg_size_t"><code class="docutils literal notranslate"><span class="pre">truncate_file()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem16unlink_directoryERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">unlink_directory()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem11unlink_fileERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">unlink_file()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem6createERKNSt6stringEi"><code class="docutils literal notranslate"><span class="pre">create()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem25get_file_systems_by_actorERKN3s4u8ActorPtrE"><code class="docutils literal notranslate"><span class="pre">get_file_systems_by_actor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem27get_file_systems_by_netzoneEPKN3s4u7NetZoneE"><code class="docutils literal notranslate"><span class="pre">get_file_systems_by_netzone()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem20register_file_systemEPKN3s4u7NetZoneERKNSt10shared_ptrI10FileSystemEE"><code class="docutils literal notranslate"><span class="pre">register_file_system()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystemE"><code class="docutils literal notranslate"><span class="pre">FileSystem</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem16create_directoryERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::create_directory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem11create_fileERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::create_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem16directory_existsERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::directory_exists()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem11file_existsERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::file_exists()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem9file_sizeERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::file_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem9get_cnameEv"><code class="docutils literal notranslate"><span class="pre">FileSystem::get_cname()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem22get_free_space_at_pathERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::get_free_space_at_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem8get_nameEv"><code class="docutils literal notranslate"><span class="pre">FileSystem::get_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem30get_partition_for_path_or_nullERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::get_partition_for_path_or_null()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem14get_partitionsEv"><code class="docutils literal notranslate"><span class="pre">FileSystem::get_partitions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem23list_files_in_directoryERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::list_files_in_directory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem19make_file_evictableERKNSt6stringEb"><code class="docutils literal notranslate"><span class="pre">FileSystem::make_file_evictable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEERKNSt6stringEN9Partition13CachingSchemeE"><code class="docutils literal notranslate"><span class="pre">FileSystem::mount_partition()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem15mount_partitionERKNSt6stringENSt10shared_ptrI7StorageEE9sg_size_tN9Partition13CachingSchemeE"><code class="docutils literal notranslate"><span class="pre">FileSystem::mount_partition()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem9move_fileERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::move_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem4openERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem17partition_by_nameERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::partition_by_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem25partition_by_name_or_nullERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::partition_by_name_or_null()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem13truncate_fileERKNSt6stringE9sg_size_t"><code class="docutils literal notranslate"><span class="pre">FileSystem::truncate_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem16unlink_directoryERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::unlink_directory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4NK7simgrid5fsmod10FileSystem11unlink_fileERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">FileSystem::unlink_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem6createERKNSt6stringEi"><code class="docutils literal notranslate"><span class="pre">FileSystem::create()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem25get_file_systems_by_actorERKN3s4u8ActorPtrE"><code class="docutils literal notranslate"><span class="pre">FileSystem::get_file_systems_by_actor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem27get_file_systems_by_netzoneEPKN3s4u7NetZoneE"><code class="docutils literal notranslate"><span class="pre">FileSystem::get_file_systems_by_netzone()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7simgrid5fsmod10FileSystem20register_file_systemEPKN3s4u7NetZoneERKNSt10shared_ptrI10FileSystemEE"><code class="docutils literal notranslate"><span class="pre">FileSystem::register_file_system()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="classsimgrid_1_1fsmod_1_1_file_system_net_zone_impl_extension.html">simgrid::fsmod::FileSystemNetZoneImplExtension</a></li>
