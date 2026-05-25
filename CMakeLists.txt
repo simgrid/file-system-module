@@ -22,7 +22,7 @@ set(CMAKE_CXX_FLAGS "-O3 -funroll-loops -fno-strict-aliasing -flto=auto")
 # build the version number
 set(FSMOD_VERSION_MAJOR "0")
 set(FSMOD_VERSION_MINOR "4")
-set(FSMOD_VERSION_PATCH "0")
+set(FSMOD_VERSION_PATCH "1")
 set(FSMOD_VERSION_EXTRA "dev")
 
 ## GIT version check

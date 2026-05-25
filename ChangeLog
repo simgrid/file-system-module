@@ -1,5 +1,12 @@
 ----------------------------------------------------------------------------
 
+FSMod (0.4.1) May 25. 2026
+
+  - Bug fix in FileMetadata::notify_write_end()
+  - Modernize github actions with caching
+
+----------------------------------------------------------------------------
+
 FSMod (0.4) November 11. 2025
 
   - Full Python bindings

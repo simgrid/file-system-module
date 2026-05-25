@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fsmod"
-version = "0.4.0"
+version = "0.4.1"
 description = "A simulated file system module for SimGrid"
 authors = [
     { name = "FSMod Team", email = "simgrid-community@inria.fr" }
