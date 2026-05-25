@@ -74,8 +74,9 @@ jobs:
           fi
           echo "Using SimGrid Python path: $SIMGRID_PYTHON_PATH"
 
-          export LD_LIBRARY_PATH=build/lib:/opt/simgrid/lib:/usr/local/lib
-          export PYTHONPATH="$SIMGRID_PYTHON_PATH:build/lib"
+          REPO_ROOT=$(pwd)
+          export LD_LIBRARY_PATH=$REPO_ROOT/build/lib:/opt/simgrid/lib:/usr/local/lib
+          export PYTHONPATH="$SIMGRID_PYTHON_PATH:$REPO_ROOT/build/lib"
           cmake -B build \
             -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
             -DCMAKE_BUILD_TYPE=Debug \
