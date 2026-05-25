@@ -76,9 +76,10 @@ jobs:
 
           export LD_LIBRARY_PATH=build/lib:/opt/simgrid/lib:/usr/local/lib
           export PYTHONPATH="$SIMGRID_PYTHON_PATH:build/lib"
-          export CMAKE_PREFIX_PATH=/opt/simgrid:/opt/gtest
-
-          cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug
+          cmake -B build \
+            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_PREFIX_PATH=/opt/simgrid:/opt/gtest
           cmake --build build -j$(nproc)
           cmake --build build --target unit_tests --target examples -j$(nproc)
           cd build

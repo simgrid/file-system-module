@@ -184,8 +184,8 @@ install(FILES include/fsmod.hpp DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 add_custom_target(examples    COMMENT "Recompiling the examples")
 
 # Google test
-find_library(GTEST_LIBRARY NAMES gtest)
-if(GTEST_LIBRARY)
+find_package(GTest)
+if(GTEST_FOUND)
 	set(TEST_FILES
 			test/jbod_storage_test.cpp
 			test/one_disk_storage_test.cpp
@@ -203,8 +203,8 @@ if(GTEST_LIBRARY)
 
 	add_definitions(-DGTEST_USED)
 	add_executable(unit_tests EXCLUDE_FROM_ALL ${SOURCE_FILES} ${HEADER_FILES} ${TEST_FILES})
-	target_include_directories(unit_tests PRIVATE include)
-	target_link_libraries(unit_tests ${GTEST_LIBRARY} ${SIMGRID_LIBRARY} fsmod -lpthread -lm)
+	target_include_directories(unit_tests PRIVATE include ${GTEST_INCLUDE_DIRS})
+	target_link_libraries(unit_tests ${GTEST_LIBRARIES} ${SIMGRID_LIBRARY} fsmod -lpthread -lm)
 	set_target_properties(unit_tests PROPERTIES COMPILE_FLAGS "-g -O0 --coverage")
 	set_target_properties(unit_tests PROPERTIES LINK_FLAGS "--coverage")
 	#add_custom_command(TARGET unit_tests COMMAND find . -name *.gcda -delete)
