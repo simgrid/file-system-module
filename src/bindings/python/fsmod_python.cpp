@@ -24,6 +24,7 @@
 #include <fsmod/Storage.hpp>
 #include <fsmod/version.hpp>
 
+#include <simgrid/python.hpp>
 #include <xbt/log.h>
 
 namespace py = pybind11;
@@ -136,7 +137,7 @@ PYBIND11_MODULE(fsmod, m)
       .def_property_readonly("num_disks", &Storage::get_num_disks, "The number of disks in the Storage (read-only)")
       .def_property_readonly("first_disk", &Storage::get_first_disk, "The first disk in the Storage (read-only)")
       .def("disk_at", &Storage::get_disk_at, py::arg("position"), "Get the disk at the given position in the Storage")
-      .def("start_controller", &Storage::start_controller, py::call_guard<py::gil_scoped_release>(), py::arg("host"), 
+      .def("start_controller", &Storage::start_controller, py::call_guard<simgrid::SimGridGilGuard>(), py::arg("host"),
            py::arg("func"), "Start the controller Actor for the Storage on the given Host");
 
   /* Class OneDiskStorage */
