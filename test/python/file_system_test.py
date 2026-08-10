@@ -260,6 +260,34 @@ def run_test_file_open_close():
     host.add_actor("TestActor", test_actor)
     e.run()
 
+def run_test_erase_partition_content():
+    e, host, disk_one, disk_two, fs = setup_platform()
+    def test_actor():
+        this_actor.info("Mounting a 100kB partition...")
+        fs.mount_partition("/dev/to_erase", ods, "100kB")
+        partition = fs.partition_for_path_or_null("/dev/to_erase")
+        partition_size = partition.size
+        this_actor.info("Create a 10kB file at /dev/to_erase/stuff/foo.txt")
+        fs.create_file("/dev/to_erase/stuff/foo.txt", "10kB")
+
+        this_actor.info("Opening the file")
+        file = fs.open("/dev/to_erase/stuff/foo.txt", "r")
+
+        this_actor.info("Trying to erase the partition")
+        try:
+            partition.erase_all_content()
+        except FileIsOpenException:
+            pass
+
+        this_actor.info("Close the file")
+        file.close()
+
+        partition.erase_all_content()
+        assert partition.get_free_space() == partition_size
+
+    host.add_actor("TestActor", test_actor)
+    e.run()
+
 def run_test_too_many_files_opened():
     e, host, disk_one, disk_two, fs = setup_platform()
     def test_actor():
@@ -356,6 +384,7 @@ if __name__ == '__main__':
       run_test_directories,
       run_test_file_move,
       run_test_file_open_close,
+      run_test_erase_partition_content,
       run_test_too_many_files_opened,
       run_test_bad_access_mode,
       run_test_read_plus_mode

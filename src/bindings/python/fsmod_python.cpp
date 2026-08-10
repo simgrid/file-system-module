@@ -120,7 +120,8 @@ PYBIND11_MODULE(fsmod, m)
       .def_property_readonly("free_space", &Partition::get_free_space,
                              "The free space available on the Partition (read-only)")
       .def_property_readonly("num_files", &Partition::get_num_files,
-                             "The number of files stored on the Partition (read-only)");
+                             "The number of files stored on the Partition (read-only)")
+      .def("erase_all_content", &Partition::erase_all_content, "Erase all content from the partition");
   py::enum_<Partition::CachingScheme>(partition, "CachingScheme",
                                       "An enum that defines the possible caching schemes for a Partition")
       .value("NONE", Partition::CachingScheme::NONE, "No caching")
