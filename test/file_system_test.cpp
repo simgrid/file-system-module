@@ -270,16 +270,20 @@ TEST_F(FileSystemTest, ErasePartitionContent)  {
 
         // Create one actor (for this test we could likely do it all in the maestro but what the hell)
         host_->add_actor("TestActor", [this]() {
-            auto partition = fs_->get_partition_for_path_or_null("/dev/a/");
+            XBT_INFO("Creating a one-disk storage on the host's first disk...");
+            auto ods = sgfs::OneDiskStorage::create("my_storage", disk_one_);
+            XBT_INFO("Creating a file system...");
+            fs_ = sgfs::FileSystem::create("my_fs");
+            XBT_INFO("Mounting a 100kB partition...");
+            fs_->mount_partition("/dev/to_erase", ods, "100kB");
+            auto partition = fs_->get_partition_for_path_or_null("/dev/to_erase");
             auto partition_size = partition->get_size();
-            XBT_INFO("Create a 10kB file at /dev/a/stuff/foo.txt");
-            ASSERT_NO_THROW(fs_->create_file("/dev/a/stuff/foo.txt", "10kB"));
-            XBT_INFO("Create a 10kB file at /dev/a/stuff/other.txt");
-            ASSERT_NO_THROW(fs_->create_file("/dev/a/stuff/other.txt", "10kB"));
+            XBT_INFO("Create a 10kB file at /dev/to_erase/stuff/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/to_erase/stuff/foo.txt", "10kB"));
 
             XBT_INFO("Opening the file");
             std::shared_ptr<sgfs::File> file;
-            ASSERT_NO_THROW(file = fs_->open("/dev/a/stuff/foo.txt", "r"));
+            ASSERT_NO_THROW(file = fs_->open("/dev/to_erase/stuff/foo.txt", "r"));
 
             XBT_INFO("Trying to erase the partition");
             ASSERT_THROW(partition->erase_all_content(), sgfs::FileIsOpenException);
