@@ -52,6 +52,7 @@ namespace simgrid::fsmod {
         [[nodiscard]] sg_size_t get_size() const;
         [[nodiscard]] sg_size_t get_free_space() const;
         [[nodiscard]] sg_size_t get_num_files() const;
+        void erase_all_content();
 
     protected:
         friend class FileSystem;

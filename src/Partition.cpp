@@ -70,6 +70,23 @@ namespace simgrid::fsmod {
     }
 
     /**
+     * @brief Erase all content from the partition
+     */
+    void Partition::erase_all_content() {
+        // Check that there is no open files in this partition
+        for (auto const &[dir_path, files] : content_) {
+            for (auto const &[file, file_metadata] : files) {
+                if (file_metadata->get_file_refcount() > 0) {
+                    throw FileIsOpenException(XBT_THROW_POINT, "delete: " + dir_path + "/" + file);
+                }
+            }
+        }
+        // Clear the whole content
+        content_.clear();
+        free_space_ = size_;
+    }
+
+    /**
      * @brief Retrieve the metadata for a file
      * @param dir_path: the path to the directory in which the file is located
      * @param file_name: the file name
@@ -231,8 +248,6 @@ namespace simgrid::fsmod {
         }
         metadata->evictable_ = evictable;
     }
-
-
 
     void Partition::create_space(sg_size_t num_bytes) {
         throw NotEnoughSpaceException(XBT_THROW_POINT);

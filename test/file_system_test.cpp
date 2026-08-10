@@ -264,6 +264,39 @@ TEST_F(FileSystemTest, FileOpenClose)  {
     });
 }
 
+TEST_F(FileSystemTest, ErasePartitionContent)  {
+    DO_TEST_WITH_FORK([this]() {
+        this->setup_platform();
+
+        // Create one actor (for this test we could likely do it all in the maestro but what the hell)
+        host_->add_actor("TestActor", [this]() {
+            auto partition = fs_->get_partition_for_path_or_null("/dev/a/");
+            auto partition_size = partition->get_size();
+            XBT_INFO("Create a 10kB file at /dev/a/stuff/foo.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/stuff/foo.txt", "10kB"));
+            XBT_INFO("Create a 10kB file at /dev/a/stuff/other.txt");
+            ASSERT_NO_THROW(fs_->create_file("/dev/a/stuff/other.txt", "10kB"));
+
+            XBT_INFO("Opening the file");
+            std::shared_ptr<sgfs::File> file;
+            ASSERT_NO_THROW(file = fs_->open("/dev/a/stuff/foo.txt", "r"));
+
+            XBT_INFO("Trying to erase the partition");
+            ASSERT_THROW(partition->erase_all_content(), sgfs::FileIsOpenException);
+
+            XBT_INFO("Close the file");
+            ASSERT_NO_THROW(file->close());
+
+            ASSERT_NO_THROW(partition->erase_all_content());
+            ASSERT_EQ(partition->get_free_space(), partition_size);
+
+        });
+
+        // Run the simulation
+        ASSERT_NO_THROW(sg4::Engine::get_instance()->run());
+    });
+}
+
 TEST_F(FileSystemTest, TooManyFilesOpened) {
     DO_TEST_WITH_FORK([this]() {
         this->setup_platform();
