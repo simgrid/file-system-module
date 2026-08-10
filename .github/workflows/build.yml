@@ -40,7 +40,7 @@ jobs:
         id: cache-simgrid
         with:
           path: /opt/simgrid
-          key: ${{ runner.os }}-simgrid-python-v3
+          key: ${{ runner.os }}-simgrid-python-v4
 
       - name: Install SimGrid
         if: steps.cache-simgrid.outputs.cache-hit != 'true'
